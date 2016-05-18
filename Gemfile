@@ -37,7 +37,13 @@ group :development, :test do
   gem 'byebug'
 end
 
+# Bootstrap according to mluukkai's ror wepa
+gem 'bootstrap-sass'
+
 group :development do
+  # Bootstrap according to mluukkai's ror wepa
+  gem 'rails_layout'
+  
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
