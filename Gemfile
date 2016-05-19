@@ -46,6 +46,9 @@ end
 # Bootstrap according to mluukkai's ror wepa
 gem 'bootstrap-sass'
 
+# Pack AngularJS templates
+gem 'angular-rails-templates'
+
 group :development do
   # Bootstrap according to mluukkai's ror wepa
   gem 'rails_layout'
