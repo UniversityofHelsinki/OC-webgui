@@ -49,6 +49,9 @@ gem 'bootstrap-sass'
 # Pack AngularJS templates
 gem 'angular-rails-templates'
 
+# Allow minifying AngularJS dependency injection function syntax
+gem 'ngannotate-rails'
+
 group :development do
   # Bootstrap according to mluukkai's ror wepa
   gem 'rails_layout'

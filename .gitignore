@@ -29,3 +29,6 @@ node_modules/
 
 # Ignore npm script error log
 npm-debug.log
+
+# Production assets
+/public/assets
