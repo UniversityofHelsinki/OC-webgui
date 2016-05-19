@@ -6,13 +6,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body ng-app="ocWebGui" ng-controller="MainCtrl">
-  {{ message }}
-
-  <div ng-repeat="user in users">
-  {{ user.name }}
-  </div>
-
-
+<body ng-app="ocWebGui">
+  <ui-view></ui-view>
 </body>
 </html>
