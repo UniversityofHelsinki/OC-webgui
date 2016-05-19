@@ -26,3 +26,6 @@
 
 # Ignore folder from bower install
 node_modules/
+
+# Ignore npm script error log
+npm-debug.log
