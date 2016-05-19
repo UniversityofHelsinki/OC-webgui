@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @testis.name %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @testis.city %>
+</p>
+
+<p>
+  <strong>Age:</strong>
+  <%= @testis.age %>
+</p>
+
+<%= link_to 'Edit', edit_testis_path(@testis) %> |
+<%= link_to 'Back', testis_path %>
