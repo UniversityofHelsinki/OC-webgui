@@ -8,5 +8,11 @@
 </head>
 <body ng-app="ocWebGui" ng-controller="MainCtrl">
   {{ message }}
+
+  <div ng-repeat="user in users">
+  {{ user.name }}
+  </div>
+
+
 </body>
 </html>
