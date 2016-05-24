@@ -9,7 +9,7 @@
   "scripts": {
     "postinstall": "bower install",
     "lint": "eslint app/assets/javascripts",
-    "test": "karma start karma.conf.js"
+    "test": "karma start karma.conf.js --single-run"
   },
   "repository": {
     "type": "git",
