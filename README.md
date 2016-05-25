@@ -4,5 +4,5 @@
 # OC-webgui
 Helpdeskin taulunäyttöprojekti / GUI Orange Contactille
 
-#Burndown for trello
+#Burndown chart
 https://BurndownForTrello.com/share/v6cxs9gkzo
