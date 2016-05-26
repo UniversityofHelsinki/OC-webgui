@@ -17,4 +17,7 @@
 //= require angular-resource
 //= require angular-rails-templates
 //= require angular-ui-router
-//= require_tree .
+//= require_tree ./home
+//= stub ./screen/screenController.spec.js
+//= require_tree ./screen
+//= require ./app.js

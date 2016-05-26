@@ -7,7 +7,7 @@ module.exports = function(config) {
             '../../../vendor/assets/bower_components/angular-mocks/angular-mocks.js',
             '../../../vendor/assets/bower_components/angular-resource/angular-resource.js',
             '../../../vendor/assets/bower_components/angular-ui-router/release/angular-ui-router.js',
-            '*.js',
+            '**/*.js',
             '*.html',
         ],
         autoWatch: true,
