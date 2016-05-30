@@ -62,13 +62,14 @@ class TestikesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_testike
-      @testike = Testike.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def testike_params
-      params.require(:testike).permit(:asd)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_testike
+    @testike = Testike.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def testike_params
+    params.require(:testike).permit(:asd)
+  end
 end

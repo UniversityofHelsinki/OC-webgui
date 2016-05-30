@@ -62,13 +62,14 @@ class TestisController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_testis
-      @testis = Testi.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def testis_params
-      params.require(:testis).permit(:name, :city, :age)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_testis
+    @testis = Testi.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def testis_params
+    params.require(:testis).permit(:name, :city, :age)
+  end
 end

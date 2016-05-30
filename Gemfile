@@ -52,6 +52,9 @@ gem 'angular-rails-templates'
 # Allow minifying AngularJS dependency injection function syntax
 gem 'ngannotate-rails'
 
+# Ruby style lint
+gem 'rubocop', require: false
+
 group :development do
   # Bootstrap according to mluukkai's ror wepa
   gem 'rails_layout'
