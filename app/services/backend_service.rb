@@ -1,6 +1,7 @@
 require 'savon'
 require 'dotenv'
 
+# This class communicates with Elisa Orange Contact SOAP API.
 class BackendService
   def initialize
     @client = Savon.client(
@@ -17,10 +18,10 @@ class BackendService
 
   def get_agent_online_state
     reply = @client.call(:get_agent_online_state)
-    data = reply.body.dig(:get_agent_online_state_response, :get_agent_online_state_result, :array_of_string)
-    if not data
-      return []
-    end
+    data = reply.body.dig(:get_agent_online_state_response,
+                          :get_agent_online_state_result,
+                          :array_of_string)
+    return [] unless data
     data.map do |attrs|
       {
         agent_id: attrs[:string][0],
