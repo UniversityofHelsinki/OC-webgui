@@ -10,7 +10,7 @@ class BackendService
       follow_redirects: true,
       soap_header: {
         'oc:ServiceAuthHeader' => {
-          'oc:WebServicePassword' => ENV['PASSWORD']
+          'oc:WebServicePassword' => ENV['ORANGE_CONTACT_PASSWORD']
         }
       }
     )
