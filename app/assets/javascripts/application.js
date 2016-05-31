@@ -21,4 +21,6 @@
 //= require_tree ./home
 //= stub ./screen/screenController.spec.js
 //= require_tree ./screen
+//= stub ./queue/queueController.spec.js
+//= require_tree ./queue
 //= require ./app.js
