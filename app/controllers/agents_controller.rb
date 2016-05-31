@@ -4,13 +4,13 @@ class AgentsController < ApplicationController
   # GET /agents
   # GET /agents.json
   def index
-    @agents = []
-    agentsArray = BackendService.new.get_agent_online_state
-    agentsArray.each do |agent|
-      attris = agent[:string]
-      @agents.push(Agent.create(agent_id: attris[0], name: attris[1], team: attris[2], status: attris[3], time_in_status: attris[4]))
+    @agents = BackendService.new.get_agent_online_state.map do |data|
+      Agent.create(agent_id: data[:agent_id],
+                   name: data[:full_name],
+                   team: data[:team],
+                   status: data[:status],
+                   time_in_status: data[:time_in_status])
     end
-
   end
 
   # GET /agents/1

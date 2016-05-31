@@ -21,6 +21,14 @@ class BackendService
     if not data
       return []
     end
-    data
+    data.map do |attrs|
+      {
+        agent_id: attrs[:string][0],
+        full_name: attrs[:string][1],
+        team: attrs[:string][2],
+        status: attrs[:string][3],
+        time_in_status: attrs[:string][4]
+      }
+    end
   end
 end
