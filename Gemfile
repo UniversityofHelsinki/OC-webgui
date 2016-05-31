@@ -68,3 +68,5 @@ group :development do
   gem 'spring'
 end
 
+# Use dotenv for storing environment variables
+gem 'dotenv-rails', :groups => [:development, :test]
