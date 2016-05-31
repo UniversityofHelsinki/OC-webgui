@@ -32,4 +32,19 @@ class BackendService
       }
     end
   end
+
+  def get_general_queue
+    reply = @client.call(:get_general_queue)
+    data = reply.body.dig(:get_general_queue_response,
+                          :get_general_queue_result,
+                          :array_of_string)
+    return [] unless data
+
+    # TODO change variable names
+    data.map do |attrs|
+      {
+        first: attrs[:string][0]
+      }
+    end
+  end
 end
