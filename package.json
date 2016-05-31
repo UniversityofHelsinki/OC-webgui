@@ -8,17 +8,13 @@
   },
   "scripts": {
     "postinstall": "bower install",
-
     "prelint": "npm install",
     "lint": "eslint app/assets/javascripts",
-
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js --single-run",
-
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
-
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor e2e-tests/protractor.conf.js"
   },
@@ -33,6 +29,7 @@
   },
   "homepage": "https://github.com/UniversityofHelsinki/OC-webgui#readme",
   "devDependencies": {
+    "angular-mocks": "^1.5.6",
     "bower": "^1.7.9",
     "eslint": "^2.10.2",
     "eslint-config-angular": "^0.5.0",
