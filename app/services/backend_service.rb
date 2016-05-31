@@ -17,7 +17,11 @@ class BackendService
 		  }
 		)
 		reply = client.call(:get_agent_online_state)
-		reply.body[:get_agent_online_state_response][:get_agent_online_state_result][:array_of_string]
+		data = reply.body.dig(:get_agent_online_state_response, :get_agent_online_state_result, :array_of_string)
+		if not data
+			return []
+		end
+		data
 	end
 
 end
