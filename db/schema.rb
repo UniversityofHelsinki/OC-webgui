@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531112207) do
+ActiveRecord::Schema.define(version: 20160601121151) do
 
   create_table "agents", force: :cascade do |t|
     t.integer  "agent_id"
@@ -21,6 +21,14 @@ ActiveRecord::Schema.define(version: 20160531112207) do
     t.integer  "time_in_status"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "queue_items", force: :cascade do |t|
+    t.integer  "line"
+    t.string   "label"
+    t.integer  "time_in_queue"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "testis", force: :cascade do |t|

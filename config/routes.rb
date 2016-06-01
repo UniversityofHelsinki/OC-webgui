@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  # tää oli railsin oletus?
-  # get 'queue/index'
-  get 'queue' => 'queue#index'
-
+  
   #resources :agents
   resources :testis
   # The priority is based upon order of creation: first created -> highest priority.
@@ -12,6 +9,7 @@ Rails.application.routes.draw do
   root 'application#angular'
 
   get 'agents' => 'agents#index'
+  get 'queue' => 'queue_items#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
