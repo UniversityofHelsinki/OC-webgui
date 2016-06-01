@@ -1,6 +1,10 @@
-<h1>{{ message }}</h1>
-<div ng-repeat="agent in agents" class="agent-card">
-    <div>
-        {{ agent.name }}: {{ agent.status }}
+<div class="screen_background">
+    <div ng-repeat="agent in agents" class="agent-card" style=".col-md-12">
+        <div style=".col-md-4" class="agent-state-color"> <!-- väripallo -->  </div>
+        <div style=".col-md-8" class="agent-name">
+            {{ agent.name }}
+        </div>
+        <div class="agent-status"> {{ agent.status }}</div>
+        <div class="status-timer"> {{ agent.time_in_status | secondsToDateTime | date:'HH:mm:ss' }} </div>
     </div>
 </div>
