@@ -8,7 +8,7 @@
 */
 
 .screen_background {
-  background-color: silver;
+  background-color: #87aade;
   height: 100vh;
   width: 100%;
   display: flex;
@@ -19,7 +19,7 @@ body {
   padding: 0;
 }
 
-$cards-gutter: 1em;
+$cards-gutter: 0.5em;
 
 .cards {
   display: flex;
@@ -35,9 +35,13 @@ $cards-gutter: 1em;
   width: calc(25% - #{$cards-gutter});
   box-sizing: border-box;
   margin: $cards-gutter / 2;
-  border: 1px solid black;
   text-align: center;
   background-color: rgba(255,255,255,0.75);
+  font-size: 200%;
+  line-height: 1.5;
+  border-radius: 4px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 0.25em;
 }
 
 .agent-card .agent-status-color {
@@ -54,7 +58,6 @@ $cards-gutter: 1em;
 
 .sidebar {
   display: flex;
-  border: 1px solid black;
   background-color: rgba(255,255,255,0.75);
   //position: absolute;
   //top: 0;
@@ -66,6 +69,7 @@ $cards-gutter: 1em;
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  box-shadow: -1px 0 4px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar .agent-status-count:first-child {
@@ -77,24 +81,19 @@ $cards-gutter: 1em;
 }
 
 .agent-status-color {
-  background-color: greenyellow;
+  background-color: #37c837;
   padding: 3%;
   width: 1em;
   height: 1em;
+  border-radius: 4px;
 }
 
 .agent-name {
   display: inline-block;
-  padding: 3%;
-  font-size: large;
 }
 
 .agent-status {
-  padding: 3%;
-  font-size: medium;
 }
 
 .status-timer {
-  padding: 3%;
-  font-size: medium;
 }
