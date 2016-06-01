@@ -2,9 +2,17 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+/* TODO
+*   - tekstit skaalaa
+*   - cardit ei veny alas
+*/
+
 .screen_background {
   background-color: silver;
   height: 100vh;
+  width: 100%;
+  display: flex;
 }
 
 body {
@@ -12,11 +20,18 @@ body {
   padding: 0;
 }
 
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
 .agent-card {
-  display: inline-block;
-  width: 20%;
+  //display: inline-block;
+  width: calc(25% - 1em);
+  box-sizing: border-box;
+  margin: .5em;
   border: 1px solid black;
-  margin: 1%;
   text-align: center;
   background-color: rgba(255,255,255,0.75);
 }
@@ -37,10 +52,10 @@ body {
   display: flex;
   border: 1px solid black;
   background-color: rgba(255,255,255,0.75);
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  //position: absolute;
+  //top: 0;
+  //right: 0;
+  //bottom: 0;
   width: 6%;
   text-align: center;
   font-size: 200%;
