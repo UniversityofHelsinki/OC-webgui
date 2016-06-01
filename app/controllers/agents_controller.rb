@@ -5,7 +5,7 @@ class AgentsController < ApplicationController
   # GET /agents.json
   def index
     @agents = BackendService.new.get_agent_online_state.map do |data|
-      Agent.create(agent_id: data[:agent_id],
+      Agent.new(agent_id: data[:agent_id],
                    name: data[:full_name],
                    team: data[:team],
                    status: data[:status],
