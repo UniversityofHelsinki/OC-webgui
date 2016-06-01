@@ -54,12 +54,12 @@ describe('queue', function() {
                         {
                             line: 1,
                             label: "sssssssss",
-                            time_in_queue: 263,
+                            time_in_queue: 265,
                         },
                         {
                             line: 133,
                             label: "zzzzz",
-                            time_in_queue: 3,
+                            time_in_queue: 73,
                         }
                     ]);
                 });
@@ -70,8 +70,8 @@ describe('queue', function() {
         browser.get('#/queue');
         var queue = element.all(by.tagName('div'));
         expect(queue.count()).toBe(2);
-        expect(queue.get(0).getText()).toBe('1 sssssssss 263');
-        expect(queue.get(1).getText()).toBe('133 zzzzz 3');
+        expect(queue.get(0).getText()).toBe('1 sssssssss 04:25');
+        expect(queue.get(1).getText()).toBe('133 zzzzz 01:13');
     });
 });
 

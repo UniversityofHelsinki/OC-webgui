@@ -3,5 +3,5 @@
 <h2>{{ queue.length }}</h2>
 
 <div ng-repeat="queuer in queue">
-    {{ queuer.line }} {{ queuer.label }} {{ queuer.time_in_queue }}
+    {{ queuer.line }} {{ queuer.label }} {{ time_in_queue | secondsToDateTime | date:'mm:ss'}}
 </div>
