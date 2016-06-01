@@ -10,4 +10,9 @@ angular.module('ocWebGui.queue', ['ui.router', 'ngResource'])
     .controller('QueueController', function($resource, $interval, $scope) {
         $scope.message = 'Jono';
         $scope.queue = $resource('queue.json').query();
-    });
+    })
+    .filter('secondsToDateTime', [function() {
+    return function(seconds) {
+        return new Date(1970, 0, 1).setSeconds(seconds);
+    };
+}])
