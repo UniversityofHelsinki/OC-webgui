@@ -8,7 +8,6 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource'])
             });
     })
     .controller('ScreenController', function($resource, $interval, $scope) {
-        $scope.message = 'Hei maailma!';
-
-	$scope.agents = [ {name: "eka", state: "syömässä"}, {name: "toka", state: "puhelimessa"}];
+        $scope.message = 'Tilat';
+        $scope.agents = $resource('agents.json').query();
     });

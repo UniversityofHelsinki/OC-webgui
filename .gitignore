@@ -32,3 +32,6 @@ npm-debug.log
 
 # Production assets
 /public/assets
+
+# Environment variables
+.env

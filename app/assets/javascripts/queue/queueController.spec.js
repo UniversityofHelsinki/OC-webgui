@@ -1,8 +1,8 @@
 angular.module("templates", []);
 
-describe('ScreenController', function() {
+describe('QueueController', function() {
     beforeEach(module('ocWebGui'));
-    it('should have correct message', inject(function($controller) {
+/*    it('should have correct message', inject(function($controller) {
         var scope = {};
         var ctrl = $controller('ScreenController', {$scope: scope});
         expect(scope.message).toBe('Tilat');
@@ -13,5 +13,5 @@ describe('ScreenController', function() {
         var ctrl = $controller('ScreenController', {$scope: scope});
         expect(scope.agents).not.toBe(null);
     }));
-
+*/
 });
