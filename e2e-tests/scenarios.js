@@ -44,3 +44,35 @@ describe('screen', function() {
         expect(agents.get(1).getText()).toBe('Kanerva Aallotar: Sisäänkirjaus');
     });
 });
+
+describe('queue', function() {
+    beforeEach(function() {
+        browser.addMockModule('httpBackendMock', function() {
+            angular.module('httpBackendMock', ['ngMockE2E'])
+                .run(function($httpBackend) {
+                    $httpBackend.whenGET('queue.json').respond([
+                        {
+                            line: 136,
+                            label: "sssssssss",
+                            time_in_queue: 265,
+                        },
+                        {
+                            line: 133,
+                            label: "zzzzz",
+                            time_in_queue: 73,
+                        }
+                    ]);
+                });
+        });
+    });
+
+    it('should something', function() {
+        browser.get('#/queue');
+        var queue = element.all(by.tagName('div'));
+        expect(queue.count()).toBe(2);
+        expect(queue.get(0).getText()).toBe('Fin sssssssss 04:25');
+        expect(queue.get(1).getText()).toBe('Swe zzzzz 01:13');
+    });
+});
+
+

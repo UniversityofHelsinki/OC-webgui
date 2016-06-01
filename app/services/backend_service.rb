@@ -43,7 +43,9 @@ class BackendService
     # TODO change variable names
     data.map do |attrs|
       {
-        first: attrs[:string][0]
+        line: attrs[:string][0],
+        label: attrs[:string][1],
+        time_in_queue: attrs[:string][7]
       }
     end
   end
