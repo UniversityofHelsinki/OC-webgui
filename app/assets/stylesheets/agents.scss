@@ -19,19 +19,22 @@ body {
   padding: 0;
 }
 
+$cards-gutter: 1em;
+
 .cards {
   display: flex;
   flex-wrap: wrap;
   flex-grow: 1;
   align-content: flex-start;
   align-items: flex-start;
+  padding: $cards-gutter / 2;
 }
 
 .agent-card {
   //display: inline-block;
-  width: calc(25% - 1em);
+  width: calc(25% - #{$cards-gutter});
   box-sizing: border-box;
-  margin: .5em;
+  margin: $cards-gutter / 2;
   border: 1px solid black;
   text-align: center;
   background-color: rgba(255,255,255,0.75);
