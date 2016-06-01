@@ -1,7 +1,20 @@
-<h1>{{ message }}</h1>
-
-<h2>{{ queue.length }}</h2>
-
-<div ng-repeat="queuer in queue">
-    {{ language(queuer.line) }} {{ queuer.label }} {{ queuer.time_in_queue | secondsToDateTime | date:'mm:ss'}}
+<div> <!-- PVM KLO VK --> </div>
+<div class="top-div">
+    <div class="queue-div">
+        <div class="queue_length">
+            <h2>{{ queue.length }}</h2>
+        </div>
+        <!--Show first five in queue-->
+        <div ng-repeat="queuer in queue | filter:{visible: true} | limitTo: 5" class="queuer">
+            <!--<span> {{ language(queuer.line) }}</span>-->
+            <!--<span> {{ queuer.label }}</span>-->
+            <!--<span> {{ queuer.time_in_queue | secondsToDateTime | date:'mm:ss'}}</span>-->
+            <span class="flag"> </span>
+            <span></span>
+            <span> 03:14</span>
+        </div>
+    </div>
+    <div class="stats">
+        <!--Do stats-->
+    </div>
 </div>

@@ -1,3 +1,30 @@
 // Place all the styles related to the queue controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.top-div {
+
+}
+
+.queue-div {
+
+}
+
+.queue-div {
+
+}
+
+.queuer {
+
+}
+
+$label: fi;
+.flag {
+  @if $label == fi {
+    background-color: dodgerblue;
+  }
+}
+
+.stats {
+
+}
