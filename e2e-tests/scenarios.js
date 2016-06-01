@@ -52,7 +52,7 @@ describe('queue', function() {
                 .run(function($httpBackend) {
                     $httpBackend.whenGET('queue.json').respond([
                         {
-                            line: 1,
+                            line: 136,
                             label: "sssssssss",
                             time_in_queue: 265,
                         },
@@ -70,8 +70,8 @@ describe('queue', function() {
         browser.get('#/queue');
         var queue = element.all(by.tagName('div'));
         expect(queue.count()).toBe(2);
-        expect(queue.get(0).getText()).toBe('1 sssssssss 04:25');
-        expect(queue.get(1).getText()).toBe('133 zzzzz 01:13');
+        expect(queue.get(0).getText()).toBe('Fin sssssssss 04:25');
+        expect(queue.get(1).getText()).toBe('Swe zzzzz 01:13');
     });
 });
 
