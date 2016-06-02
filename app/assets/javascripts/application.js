@@ -23,3 +23,4 @@
 //= stub ./queue/queueController.spec.js
 //= require_tree ./queue
 //= require ./app.js
+//= require angular-i18n/angular-locale_fi.js
