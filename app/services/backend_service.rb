@@ -22,6 +22,7 @@ class BackendService
                           :get_agent_online_state_result,
                           :array_of_string)
     return [] unless data
+    data = [data] unless data.is_a? Array
     data.map do |attrs|
       {
         agent_id: attrs[:string][0],
