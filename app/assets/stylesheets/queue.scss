@@ -16,22 +16,52 @@ body {
 
 .queue_length {
   text-align: center;
+  //flex-grow: 1;
+  min-height: 26%;
+  max-height: 26%;
+}
+
+.queue_length span {
+  font-size: 75%;
+}
+
+.queue_length div { // 7
+  font-size: 2em;
+  padding-top: 0.2em;
 }
 
 .queue-div {
-  //border: 1px solid black;
   width: 50%;
   font-size: 500%;
   line-height: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .queuer {
   //width: 100%;
   //border: 1px solid black;
+  //flex-grow: 0.1;
+  //line-height: 2;
+  padding: 0.6em;
+  display: flex;
+  text-align: center;
+}
+
+.queuer-index {
+  width: 20%;
+}
+
+.queuer-time {
+  //flex-grow: 1;
+  width: 60%
+}
+
+.queuer-flag {
+  width: 20%;
 }
 
 .stats {
-  //border: 1px solid black;
   width: 50%;
   font-size: 500%;
   text-align: center;
@@ -43,5 +73,4 @@ body {
   font-size: 100%;
   line-height: 1;
   padding: 0.1em;
-  //white-space: nowrap;
 }

@@ -3,14 +3,14 @@
 <div class="screen_background">
     <div class="queue-div">
         <div class="queue_length card">
-            <div> To 02.06.2016 vk ??</div>
-            <h2>{{ queue.length }}</h2>
+            <span> To 02.06.2016 vk ??</span>
+            <div>{{ queue.length }}</div>
         </div>
         <!--Show first five in queue-->
         <div  ng-repeat="queuer in queue | limitTo: 5" class="queuer card">
-            <span> {{ $index +1 }}. </span>
-            <span> {{ queuer.time_in_queue | secondsToDateTime | date:'mm:ss'}}</span>
-            <span> {{ language(queuer.line) }}</span>
+            <span class="queuer-index"> {{ $index +1 }}. </span>
+            <span class="queuer-time"> {{ queuer.time_in_queue | secondsToDateTime | date:'mm:ss'}}</span>
+            <span class="queuer-flag"> {{ language(queuer.line) }}</span>
         </div>
     </div>
     <div class="stats card">
