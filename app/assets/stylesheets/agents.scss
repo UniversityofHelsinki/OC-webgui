@@ -3,10 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-/* TODO
-*   - tekstit skaalaa
-*/
-
 .screen_background {
   background-color: #87aade;
   height: 100vh;
@@ -37,11 +33,12 @@ $cards-gutter: 0.5em;
   margin: $cards-gutter / 2;
   text-align: center;
   background-color: rgba(255,255,255,0.75);
-  font-size: 200%;
+  font-size: 300%;
   line-height: 1.5;
   border-radius: 4px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
   padding: 0.25em;
+  overflow: hidden;
 }
 
 .agent-card .agent-status-color {
@@ -65,7 +62,7 @@ $cards-gutter: 0.5em;
   //bottom: 0;
   width: 6%;
   text-align: center;
-  font-size: 200%;
+  font-size: 300%;
   align-items: center;
   flex-direction: column;
   justify-content: center;
