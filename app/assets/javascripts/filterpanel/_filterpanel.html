@@ -4,6 +4,7 @@
     <input
       type="checkbox"
       name="selectedTeams[]"
+      id="{{ team }}"
       value="{{ team }}"
       ng-checked="selectedTeams.indexOf(team) > -1"
       ng-click="toggleSelection(team)"
@@ -14,6 +15,7 @@
     <input
       type="checkbox"
       name="selectedStates[]"
+      id="{{ state }}"
       value="{{ state }}"
       ng-checked="selectedStates.indexOf(state) > -1"
       ng-click="toggleSelection2(state)"
