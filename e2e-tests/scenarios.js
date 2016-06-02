@@ -20,7 +20,7 @@ describe('screen', function() {
                             agent_id: 1234,
                             name: 'Kekkonen Benjamin',
                             team: 'Helpdesk',
-                            status: 'PALAVERI',
+                            status: 'TAUKO',
                             time_in_status: 6485
                         },
                         {
@@ -38,10 +38,10 @@ describe('screen', function() {
 
     it('should something', function() {
         browser.get('#/screen');
-        var agents = element.all(by.tagName('div'));
+        var agents = element.all(by.tagName('h5'));
         expect(agents.count()).toBe(2);
-        expect(agents.get(0).getText()).toBe('Kekkonen Benjamin: PALAVERI');
-        expect(agents.get(1).getText()).toBe('Kanerva Aallotar: Sisäänkirjaus');
+        expect(agents.get(0).getText()).toBe('Kanerva Aallotar: Helpdesk: Sisäänkirjaus');
+        expect(agents.get(1).getText()).toBe('Kekkonen Benjamin: Helpdesk: TAUKO');
     });
 });
 
