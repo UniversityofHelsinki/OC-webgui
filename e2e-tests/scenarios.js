@@ -73,10 +73,15 @@ describe('queue', function() {
 
     it('should something', function() {
         browser.get('#/queue');
-        var queue = element.all(by.tagName('div'));
+        var queue = element.all(by.className('queuer'));
+
         expect(queue.count()).toBe(2);
-        expect(queue.get(0).getText()).toBe('Fin sssssssss 04:25');
-        expect(queue.get(1).getText()).toBe('Swe zzzzz 01:13');
+
+        expect(queue.get(0).element(by.className('queuer-time')).getText()).toBe('04:25');
+        expect(queue.get(0).element(by.className('queuer-flag')).getAttribute('class')).toMatch('queuer-flag-Fin');
+
+        expect(queue.get(1).element(by.className('queuer-time')).getText()).toBe('01:13');
+        expect(queue.get(1).element(by.className('queuer-flag')).getAttribute('class')).toMatch('queuer-flag-Swe');
     });
 });
 
