@@ -2,29 +2,46 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.top-div {
+body {
+  margin: 0;
+  padding: 0;
+}
 
+.queue-background {
+  background-color: silver;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
+.queue_length {
+  text-align: center;
 }
 
 .queue-div {
-
-}
-
-.queue-div {
-
+  border: 1px solid black;
+  width: 50%;
+  font-size: 500%;
+  line-height: 1;
 }
 
 .queuer {
-
-}
-
-$label: fi;
-.flag {
-  @if $label == fi {
-    background-color: dodgerblue;
-  }
+  width: 100%;
+  border: 1px solid green;
 }
 
 .stats {
+  border: 1px solid red;
+  width: 50%;
+  font-size: 500%;
+  text-align: center;
+  line-height: 1.5;
+}
 
+.stats-table td {
+  width: 50%;
+  font-size: 100%;
+  line-height: 1;
+  padding: 0.1em;
+  //white-space: nowrap;
 }

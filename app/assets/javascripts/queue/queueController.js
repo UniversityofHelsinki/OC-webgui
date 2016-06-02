@@ -9,7 +9,10 @@ angular.module('ocWebGui.queue', ['ui.router', 'ngResource'])
     })
     .controller('QueueController', function($resource, $interval, $scope) {
         $scope.message = 'Jono';
-        $scope.queue = $resource('queue.json').query();
+        // $scope.queue = $resource('queue.json').query();
+        
+        // mock data for testing css
+        $scope.queue = [{line: 135, time_in_queue:360}, {line:137, time_in_queue:123}, {line:125, time_in_queue:123}, {line:137, time_in_queue:123}, {line:133, time_in_queue:123}, {line:137, time_in_queue:123}, {line:121, time_in_queue:123}]
         $scope.language = function(line) {
           switch (line) {
             case 135:

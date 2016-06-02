@@ -1,20 +1,39 @@
-<div> <!-- PVM KLO VK --> </div>
-<div class="top-div">
+<!--<div> To 02.06.2016 vk ??</div>-->
+<div class="queue-background">
     <div class="queue-div">
         <div class="queue_length">
+            <div> To 02.06.2016 vk ??</div>
             <h2>{{ queue.length }}</h2>
         </div>
         <!--Show first five in queue-->
-        <div ng-repeat="queuer in queue | filter:{visible: true} | limitTo: 5" class="queuer">
-            <!--<span> {{ language(queuer.line) }}</span>-->
-            <!--<span> {{ queuer.label }}</span>-->
-            <!--<span> {{ queuer.time_in_queue | secondsToDateTime | date:'mm:ss'}}</span>-->
-            <span class="flag"> </span>
-            <span></span>
-            <span> 03:14</span>
+        <div  ng-repeat="queuer in queue | limitTo: 5" class="queuer">
+            <span> {{ $index +1 }}. </span>
+            <span> {{ queuer.time_in_queue | secondsToDateTime | date:'mm:ss'}}</span>
+            <span> {{ language(queuer.line) }}</span>
         </div>
     </div>
     <div class="stats">
-        <!--Do stats-->
+        <table class="stats-table">
+            <tr>
+                <td> Vastaus: </td>
+                <td> 96,3 % </td>
+            </tr>
+            <tr>
+                <td> Jonotus: </td>
+                <td> 00:47 </td>
+            </tr>
+            <tr>
+                <td> Luopuneet:  </td>
+                <td> 3 </td>
+            </tr>
+            <tr>
+                <td> Puhelujen lkm:  </td>
+                <td> 76 </td>
+            </tr>
+            <tr>
+                <td> Luopuneiden ka: </td>
+                <td> 05:12 </td>
+            </tr>
+        </table>
     </div>
 </div>
