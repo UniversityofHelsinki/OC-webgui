@@ -1,8 +1,9 @@
 <a ui-sref="filterpanel">Show filter screen</a>
 <h1>{{ message }}</h1>
-<h4 ng-repeat="s in selection">{{ s }}</h4>
-  <div ng-repeat="select in selection">
-    <div ng-repeat="agent in agents | filter: { team: select }">
+<div ng-repeat="select in selection">
+  <div ng-repeat="state in selectedStates">
+    <div ng-repeat="agent in agents | filter: { team: select, status: state }">
       {{ agent.name }}: {{ agent.team }} {{ agent.status }}
     </div>
   </div>
+</div>
