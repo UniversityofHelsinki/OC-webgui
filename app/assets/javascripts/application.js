@@ -23,4 +23,6 @@
 //= require_tree ./screen
 //= stub ./queue/queueController.spec.js
 //= require_tree ./queue
+//= stub ./filterpanel/filterpanelController.spec.js
+//= require_tree ./filterpanel
 //= require ./app.js

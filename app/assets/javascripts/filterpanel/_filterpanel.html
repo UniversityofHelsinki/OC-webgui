@@ -1,0 +1,17 @@
+<h1>{{ message }}</h1>
+
+<div ng-controller="SimpleArrayCtrl">
+  <label ng-repeat="team in teams">
+    <input
+      type="checkbox"
+      name="selectedTeams[]"
+      value="{{team}}"
+      ng-checked="selection.indexOf(team) > -1"
+      ng-click="toggleSelection(team)"
+    > {{team}}
+  </label>
+
+  <div ng-repeat="select in selection">
+    <h3>{{ select }}</h3>
+  </div>
+</div>
