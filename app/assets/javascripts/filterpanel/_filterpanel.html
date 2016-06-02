@@ -1,6 +1,5 @@
-<h1>{{ message }}</h1>
-
-<div ng-controller="SimpleArrayCtrl">
+<a ui-sref="screen">Show state screen</a>
+<div ng-controller="FilterpanelController">
   <label ng-repeat="team in teams">
     <input
       type="checkbox"
@@ -10,8 +9,4 @@
       ng-click="toggleSelection(team)"
     > {{team}}
   </label>
-
-  <div ng-repeat="select in selection">
-    <h3>{{ select }}</h3>
-  </div>
 </div>

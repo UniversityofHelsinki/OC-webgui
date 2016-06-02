@@ -1,20 +1,8 @@
+<a ui-sref="filterpanel">Show filter screen</a>
 <h1>{{ message }}</h1>
-
-<div ng-controller="SimpleArrayCtrl">
-
-  <label ng-repeat="team in teams">
-    <input
-      type="checkbox"
-      name="selectedTeams[]"
-      value="{{team}}"
-      ng-checked="selection.indexOf(team) > -1"
-      ng-click="toggleSelection(team)"
-    > {{team}}
-  </label>
-
+<h4 ng-repeat="s in selection">{{ s }}</h4>
   <div ng-repeat="select in selection">
     <div ng-repeat="agent in agents | filter: { team: select }">
       {{ agent.name }}: {{ agent.team }} {{ agent.status }}
     </div>
   </div>
-</div>
