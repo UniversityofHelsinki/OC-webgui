@@ -39,11 +39,7 @@ body {
 }
 
 .queuer {
-  //width: 100%;
-  //border: 1px solid black;
-  //flex-grow: 0.1;
-  //line-height: 2;
-  padding: 0.6em;
+  line-height: 1.5;
   display: flex;
   text-align: center;
 }
@@ -59,6 +55,21 @@ body {
 
 .queuer-flag {
   width: 20%;
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.queuer-flag-Fin {
+  background-image: url(Flag_of_Finland.svg);
+}
+
+.queuer-flag-Swe {
+  background-image: url(Flag_of_Sweden.svg);
+}
+
+.queuer-flag-Eng {
+  background-image: url("Flag_of_the_United_Kingdom_(3-5).svg");
 }
 
 .stats {

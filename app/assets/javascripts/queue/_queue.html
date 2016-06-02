@@ -10,7 +10,7 @@
         <div  ng-repeat="queuer in queue | limitTo: 5" class="queuer card">
             <span class="queuer-index"> {{ $index +1 }}. </span>
             <span class="queuer-time"> {{ queuer.time_in_queue | secondsToDateTime | date:'mm:ss'}}</span>
-            <span class="queuer-flag"> {{ language(queuer.line) }}</span>
+            <span class="queuer-flag queuer-flag-{{language(queuer.line)}}"></span>
         </div>
     </div>
     <div class="stats card">
