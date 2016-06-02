@@ -1,4 +1,4 @@
 <h1>{{ message }}</h1>
-<div ng-repeat="agent in agents">
-    {{ agent.name }}: {{ agent.status }}
+<div ng-repeat="agent in agents | filter: { team: 'Helpdesk' }">
+    {{ agent.name }}: {{ agent.team }} {{ agent.status }}
 </div>
