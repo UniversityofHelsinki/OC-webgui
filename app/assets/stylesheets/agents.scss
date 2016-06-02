@@ -26,19 +26,23 @@ $cards-gutter: 0.5em;
   padding: $cards-gutter / 2;
 }
 
-.agent-card {
+.card {
   //display: inline-block;
-  width: calc(25% - #{$cards-gutter});
   box-sizing: border-box;
   margin: $cards-gutter / 2;
-  text-align: center;
   background-color: rgba(255,255,255,0.75);
-  font-size: 300%;
-  line-height: 1.5;
   border-radius: 4px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
   padding: 0.25em;
   overflow: hidden;
+}
+
+.agent-card {
+  width: calc(25% - #{$cards-gutter});
+  font-size: 300%;
+  line-height: 1.5;
+  text-align: center;
+
 }
 
 .agent-card .agent-status-color {

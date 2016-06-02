@@ -1,18 +1,19 @@
 <!--<div> To 02.06.2016 vk ??</div>-->
-<div class="queue-background">
+<!--<div class="queue-background">-->
+<div class="screen_background">
     <div class="queue-div">
-        <div class="queue_length">
+        <div class="queue_length card">
             <div> To 02.06.2016 vk ??</div>
             <h2>{{ queue.length }}</h2>
         </div>
         <!--Show first five in queue-->
-        <div  ng-repeat="queuer in queue | limitTo: 5" class="queuer">
+        <div  ng-repeat="queuer in queue | limitTo: 5" class="queuer card">
             <span> {{ $index +1 }}. </span>
             <span> {{ queuer.time_in_queue | secondsToDateTime | date:'mm:ss'}}</span>
             <span> {{ language(queuer.line) }}</span>
         </div>
     </div>
-    <div class="stats">
+    <div class="stats card">
         <table class="stats-table">
             <tr>
                 <td> Vastaus: </td>
