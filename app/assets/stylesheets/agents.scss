@@ -1,3 +1,96 @@
 // Place all the styles related to the Agents controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.screen_background {
+  background-color: #87aade;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+$cards-gutter: 0.5em;
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  align-content: flex-start;
+  align-items: flex-start;
+  padding: $cards-gutter / 2;
+}
+
+.agent-card {
+  //display: inline-block;
+  width: calc(25% - #{$cards-gutter});
+  box-sizing: border-box;
+  margin: $cards-gutter / 2;
+  text-align: center;
+  background-color: rgba(255,255,255,0.75);
+  font-size: 300%;
+  line-height: 1.5;
+  border-radius: 4px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 0.25em;
+  overflow: hidden;
+}
+
+.agent-card .agent-status-color {
+  float: left;
+}
+
+.sidebar .agent-status-color {
+  margin: auto;
+  width: 1em;
+  height: 2em;
+  margin-bottom: 0.5em;
+  //margin-top: 3em;
+}
+
+.sidebar {
+  display: flex;
+  background-color: rgba(255,255,255,0.75);
+  //position: absolute;
+  //top: 0;
+  //right: 0;
+  //bottom: 0;
+  width: 6%;
+  text-align: center;
+  font-size: 300%;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: -1px 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar .agent-status-count:first-child {
+  margin-top: 0;
+}
+
+.agent-status-count {
+  margin-top: 3em;
+}
+
+.agent-status-color {
+  background-color: #37c837;
+  padding: 3%;
+  width: 1em;
+  height: 1em;
+  border-radius: 4px;
+}
+
+.agent-name {
+  display: inline-block;
+}
+
+.agent-status {
+}
+
+.status-timer {
+}

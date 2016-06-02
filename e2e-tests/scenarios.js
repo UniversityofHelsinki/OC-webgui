@@ -38,10 +38,15 @@ describe('screen', function() {
 
     it('should something', function() {
         browser.get('#/screen');
-        var agents = element.all(by.tagName('div'));
-        expect(agents.count()).toBe(2);
-        expect(agents.get(0).getText()).toBe('Kekkonen Benjamin: PALAVERI');
-        expect(agents.get(1).getText()).toBe('Kanerva Aallotar: Sisäänkirjaus');
+
+        var agentCards = element.all(by.className('agent-card'));
+        expect(agentCards.count()).toBe(2);
+
+        expect(agentCards.get(0).element(by.className('agent-name')).getText()).toBe('Kekkonen Benjamin');
+        expect(agentCards.get(0).element(by.className('agent-status')).getText()).toBe('PALAVERI');
+
+        expect(agentCards.get(1).element(by.className('agent-name')).getText()).toBe('Kanerva Aallotar');
+        expect(agentCards.get(1).element(by.className('agent-status')).getText()).toBe('Sisäänkirjaus');
     });
 });
 
