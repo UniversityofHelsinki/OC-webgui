@@ -7,7 +7,18 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource'])
                 controller: 'ScreenController'
             });
     })
-    .controller('ScreenController', function($resource, $interval, $scope) {
+    .filter('secondsToDateTime', [function() {
+        return function(seconds) {
+            return new Date(1970, 0, 1).setSeconds(seconds);
+        };
+    }])
+    .controller('ScreenController', function($resource, $interval, $scope, $rootScope) {
         $scope.message = 'Tilat';
-        $scope.agents = $resource('agents.json').query();
+        $resource('agents.json').query(function(agents) {
+          
+          $scope.agents = agents.filter(function(agent) {
+              return (($rootScope.selectedStates.indexOf(agent.status) != -1)
+                  && ($rootScope.selectedTeams.indexOf(agent.team) != 1));
+          });
+        });
     });

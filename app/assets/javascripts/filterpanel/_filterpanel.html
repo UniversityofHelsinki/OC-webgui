@@ -5,7 +5,7 @@
       type="checkbox"
       name="selectedTeams[]"
       value="{{ team }}"
-      ng-checked="selection.indexOf(team) > -1"
+      ng-checked="selectedTeams.indexOf(team) > -1"
       ng-click="toggleSelection(team)"
     > {{ team }}
   </label>

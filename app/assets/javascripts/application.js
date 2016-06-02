@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require angular
 //= require angular-resource
 //= require angular-rails-templates
@@ -26,3 +25,4 @@
 //= stub ./filterpanel/filterpanelController.spec.js
 //= require_tree ./filterpanel
 //= require ./app.js
+//= require angular-i18n/angular-locale_fi.js

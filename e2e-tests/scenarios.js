@@ -38,10 +38,14 @@ describe('screen', function() {
 
     it('should something', function() {
         browser.get('#/screen');
-        var agents = element.all(by.tagName('h5'));
-        expect(agents.count()).toBe(2);
-        expect(agents.get(0).getText()).toBe('Kanerva Aallotar: Helpdesk: Sisäänkirjaus');
-        expect(agents.get(1).getText()).toBe('Kekkonen Benjamin: Helpdesk: TAUKO');
+        var agentCards = element.all(by.className('agent-card'));
+        expect(agentCards.count()).toBe(2);
+
+        expect(agentCards.get(0).element(by.className('agent-name')).getText()).toBe('Kekkonen Benjamin');
+        expect(agentCards.get(0).element(by.className('agent-status')).getText()).toBe('PALAVERI');
+
+        expect(agentCards.get(1).element(by.className('agent-name')).getText()).toBe('Kanerva Aallotar');
+        expect(agentCards.get(1).element(by.className('agent-status')).getText()).toBe('Sisäänkirjaus');
     });
 });
 
@@ -68,10 +72,15 @@ describe('queue', function() {
 
     it('should something', function() {
         browser.get('#/queue');
-        var queue = element.all(by.tagName('div'));
+        var queue = element.all(by.className('queuer'));
+
         expect(queue.count()).toBe(2);
-        expect(queue.get(0).getText()).toBe('Fin sssssssss 04:25');
-        expect(queue.get(1).getText()).toBe('Swe zzzzz 01:13');
+
+        expect(queue.get(0).element(by.className('queuer-time')).getText()).toBe('04:25');
+        expect(queue.get(0).element(by.className('queuer-flag')).getAttribute('class')).toMatch('queuer-flag-Fin');
+
+        expect(queue.get(1).element(by.className('queuer-time')).getText()).toBe('01:13');
+        expect(queue.get(1).element(by.className('queuer-flag')).getAttribute('class')).toMatch('queuer-flag-Swe');
     });
 });
 

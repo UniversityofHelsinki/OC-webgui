@@ -1,7 +1,40 @@
-<h1>{{ message }}</h1>
-
-<h2>{{ queue.length }}</h2>
-
-<div ng-repeat="queuer in queue">
-    {{ language(queuer.line) }} {{ queuer.label }} {{ queuer.time_in_queue | secondsToDateTime | date:'mm:ss'}}
+<!--<div> To 02.06.2016 vk ??</div>-->
+<!--<div class="queue-background">-->
+<div class="screen_background">
+    <div class="queue-div">
+        <div class="queue_length card">
+            <span> {{ date | date:'EEE d.M. vk w ' }}</span>
+            <div>{{ queue.length }}</div>
+        </div>
+        <!--Show first five in queue-->
+        <div  ng-repeat="queuer in queue | limitTo: 5" class="queuer card">
+            <span class="queuer-index"> {{ $index +1 }}. </span>
+            <span class="queuer-time"> {{ queuer.time_in_queue | secondsToDateTime | date:'mm:ss'}}</span>
+            <span class="queuer-flag queuer-flag-{{language(queuer.line)}}"></span>
+        </div>
+    </div>
+    <div class="stats card">
+        <table class="stats-table">
+            <tr>
+                <th> Vastaus: </th>
+                <td> 96,3 % </td>
+            </tr>
+            <tr>
+                <th> Jonotus: </th>
+                <td> 00:47 </td>
+            </tr>
+            <tr>
+                <th> Luopuneet:  </th>
+                <td> 3 </td>
+            </tr>
+            <tr>
+                <th> Puhelujen lkm:  </th>
+                <td> 76 </td>
+            </tr>
+            <tr>
+                <th> Luopuneiden ka: </th>
+                <td> 05:12 </td>
+            </tr>
+        </table>
+    </div>
 </div>

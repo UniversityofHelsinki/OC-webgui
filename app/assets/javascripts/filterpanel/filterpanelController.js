@@ -13,11 +13,11 @@ angular.module('ocWebGui.filterpanel', ['ui.router', 'ngResource'])
       $scope.states = ["BACKOFFICE", "<TELJENTÄ>", "Sisäänkirjaus", "TAUKO", "12648", "PUHELU (Sisään)", "PUHELU (Ulos)"];
 
       $scope.toggleSelection = function toggleSelection(team) {
-        var idx = $rootScope.selection.indexOf(team);
+        var idx = $rootScope.selectedTeams.indexOf(team);
         if (idx > -1) {
-          $rootScope.selection.splice(idx, 1);
+          $rootScope.selectedTeams.splice(idx, 1);
         } else {
-          $rootScope.selection.push(team);
+          $rootScope.selectedTeams.push(team);
         }
       };
 
@@ -33,6 +33,6 @@ angular.module('ocWebGui.filterpanel', ['ui.router', 'ngResource'])
 
   .run(function ($rootScope) {
     // oletusvalinnat
-    $rootScope.selection = ["Helpdesk"];
+    $rootScope.selectedTeams = ["Helpdesk"];
     $rootScope.selectedStates = ["Sisäänkirjaus", "TAUKO", "PUHELU (Sisään)", "PUHELU (Ulos)"];
   });

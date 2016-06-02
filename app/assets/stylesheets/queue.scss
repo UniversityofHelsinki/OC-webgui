@@ -1,3 +1,101 @@
 // Place all the styles related to the queue controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.queue-background {
+  background-color: silver;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
+.queue_length {
+  text-align: center;
+  //flex-grow: 1;
+  min-height: 26%;
+  max-height: 26%;
+}
+
+.queue_length span {
+  font-size: 75%;
+}
+
+.queue_length div { // 7
+  font-size: 2em;
+  padding-top: 0.2em;
+}
+
+.queue-div {
+  width: 50%;
+  font-size: 500%;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.queuer {
+  line-height: 1.5;
+  display: flex;
+  text-align: center;
+}
+
+.queuer-index {
+  width: 20%;
+}
+
+.queuer-time {
+  //flex-grow: 1;
+  width: 60%
+}
+
+.queuer-flag {
+  width: 20%;
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.queuer-flag-Fin {
+  background-image: url(Flag_of_Finland.svg);
+}
+
+.queuer-flag-Swe {
+  background-image: url(Flag_of_Sweden.svg);
+}
+
+.queuer-flag-Eng {
+  background-image: url("Flag_of_the_United_Kingdom_(3-5).svg");
+}
+
+.stats {
+  width: 50%;
+  font-size: 500%;
+  text-align: center;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats-table {
+  border-spacing: 0em 1em;
+}
+
+.stats-table td {
+  width: 50%;
+  font-size: 100%;
+  line-height: 1;
+  padding: 0.1em;
+  text-align: right;
+}
+
+.stats-table th {
+  font-size: 75%;
+  font-weight: normal;
+  text-align: left;
+}
