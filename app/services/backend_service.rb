@@ -40,6 +40,7 @@ class BackendService
                           :get_general_queue_result,
                           :array_of_string)
     return [] unless data
+    data = [data] unless data.is_a? Array
 
     # TODO change variable names
     data.map do |attrs|
