@@ -12,7 +12,6 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource'])
         $scope.teams = ["Hakijapalvelut", "Helpdesk", "Opiskelijaneuvonta", "OrangeContact 1", "Puhelinvaihde", "Uaf"];
         $scope.agents = $resource('agents.json').query();
     })
-
     .controller('SimpleArrayCtrl', ['$scope', function SimpleArrayCtrl($scope) {
       $scope.teams = ["Hakijapalvelut", "Helpdesk", "Opiskelijaneuvonta", "OrangeContact 1", "Puhelinvaihde", "Uaf"];
       $scope.selection = ["Helpdesk"];

@@ -49,4 +49,24 @@ class BackendService
       }
     end
   end
+
+  def get_teams
+    reply = @client.call(:get_teams)
+    data = reply.body.dig(:get_teams_response,
+                          :get_teams_result,
+                          :string) # ei array_of_string
+#    return [] unless data
+#    data = [data] unless data.is_a? Array
+"""    data.map do |attrs|
+      {
+        agent_id: attrs[:string][0],
+        full_name: attrs[:string][1],
+        team: attrs[:string][2],
+        status: attrs[:string][3],
+        time_in_status: attrs[:string][4]
+      }
+    end
+"""
+  end
+
 end
