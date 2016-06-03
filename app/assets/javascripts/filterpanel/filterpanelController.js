@@ -7,32 +7,26 @@ angular.module('ocWebGui.filterpanel', ['ui.router', 'ngResource'])
                 controller: 'FilterpanelController'
             });
     })
-    .controller('FilterpanelController', function FilterpanelController($scope, $rootScope) {
-      // kaikki vaihtoehdot
-      $scope.teams = ["Hakijapalvelut", "Helpdesk", "Opiskelijaneuvonta", "OrangeContact 1", "Puhelinvaihde", "Uaf"];
-      $scope.states = ["BACKOFFICE", "<TELJENTÄ>", "Sisäänkirjaus", "TAUKO", "12648", "PUHELU (Sisään)", "PUHELU (Ulos)"];
-
-      $scope.toggleSelection = function toggleSelection(team) {
-        var idx = $rootScope.selectedTeams.indexOf(team);
-        if (idx > -1) {
-          $rootScope.selectedTeams.splice(idx, 1);
-        } else {
-          $rootScope.selectedTeams.push(team);
-        }
-      };
-
-      $scope.toggleSelection2 = function toggleSelection2(state) {
-        var idx = $rootScope.selectedStates.indexOf(state);
-        if (idx > -1) {
-          $rootScope.selectedStates.splice(idx, 1);
-        } else {
-          $rootScope.selectedStates.push(state);
-        }
-      };
+    .controller('FilterpanelController', function FilterpanelController($scope, shared) {
+      $scope.teams = shared.getTeams();
+      $scope.states = shared.getStates();
     })
+    .service('shared', function() {
+      var teams =  {"Hakijapalvelut": false, "Helpdesk": true, "Opiskelijaneuvonta": false, "OrangeContact 1": false, "Puhelinvaihde": false, "Uaf": false};
+      var states = {"BACKOFFICE": false, "<TELJENTÄ>": false, "Sisäänkirjaus": true, "TAUKO": true, "12648": false, "PUHELU (Sisään)": true, "PUHELU (Ulos)": true};
 
-  .run(function ($rootScope) {
-    // oletusvalinnat
-    $rootScope.selectedTeams = ["Helpdesk"];
-    $rootScope.selectedStates = ["Sisäänkirjaus", "TAUKO", "PUHELU (Sisään)", "PUHELU (Ulos)"];
-  });
+      return {
+        getTeams: function () {
+          return teams;
+        },
+        setTeams: function(value) {
+          teams = value;
+        },
+        getStates: function () {
+          return states;
+        },
+        setStates: function(value) {
+          states = value;
+        }
+      };
+    });

@@ -12,13 +12,15 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource'])
             return new Date(1970, 0, 1).setSeconds(seconds);
         };
     }])
-    .controller('ScreenController', function($resource, $interval, $scope, $rootScope) {
+    .controller('ScreenController', function($resource, $scope, shared) {
+        $scope.teams = shared.getTeams();
+        $scope.states = shared.getStates();
         $scope.message = 'Tilat';
         $resource('agents.json').query(function(agents) {
           
           $scope.agents = agents.filter(function(agent) {
-              return (($rootScope.selectedStates.indexOf(agent.status) != -1)
-                  && ($rootScope.selectedTeams.indexOf(agent.team) != 1));
+              return (($scope.states[agent.status] == true)
+                  && ($scope.teams[agent.team] == true));
           });
         });
     });

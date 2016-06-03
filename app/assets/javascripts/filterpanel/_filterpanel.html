@@ -1,26 +1,14 @@
 <div class="screen_background">
   <a ui-sref="screen">Show state screen</a>
   <div ng-controller="FilterpanelController">
-    <label ng-repeat="team in teams">
-      <input
-        type="checkbox"
-        name="selectedTeams[]"
-        id="{{ team }}"
-        value="{{ team }}"
-        ng-checked="selectedTeams.indexOf(team) > -1"
-        ng-click="toggleSelection(team)"
-      > {{ team }}
+    <label ng-repeat="(team,enabled) in teams">
+      <input type="checkbox" id="{{team}}" ng-model="teams[team]" /> {{team}} 
     </label>
+    <p>colors: {{teams}}</p>
     <hr />
-    <label ng-repeat="state in states">
-      <input
-        type="checkbox"
-        name="selectedStates[]"
-        id="{{ state }}"
-        value="{{ state }}"
-        ng-checked="selectedStates.indexOf(state) > -1"
-        ng-click="toggleSelection2(state)"
-     > {{ state }}
+    <label ng-repeat="(state,enabled) in states">
+      <input type="checkbox" id="{{state}}" ng-model="states[state]" /> {{state}} 
     </label>
+    <p>states: {{states}}</p>
   </div>
 </div>
