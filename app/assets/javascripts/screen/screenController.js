@@ -9,5 +9,17 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource', 'ocWebGui.shared.t
     })
     .controller('ScreenController', function($resource, $interval, $scope) {
         $scope.message = 'Tilat';
-        $scope.agents = $resource('agents.json').query();
+
+        $scope.agents = [];
+
+        function fetchData() {
+            $scope.agents = $resource('agents.json').query();
+        }
+
+        var fetchDataInterval = $interval(fetchData, 5000);
+        $scope.$on('$destroy', function() {
+            $interval.cancel(fetchDataInterval);
+        });
+
+        fetchData();
     });
