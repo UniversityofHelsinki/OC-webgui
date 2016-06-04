@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue', ['ui.router', 'ngResource'])
+angular.module('ocWebGui.queue', ['ui.router', 'ngResource', 'ocWebGui.shared.time'])
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('queue', {
@@ -28,9 +28,4 @@ angular.module('ocWebGui.queue', ['ui.router', 'ngResource'])
           }
         }
         $scope.date = new Date();
-    })
-    .filter('secondsToDateTime', [function() {
-    return function(seconds) {
-        return new Date(1970, 0, 1).setSeconds(seconds);
-    };
-}])
+    });

@@ -1,4 +1,4 @@
-angular.module('ocWebGui.screen', ['ui.router', 'ngResource'])
+angular.module('ocWebGui.screen', ['ui.router', 'ngResource', 'ocWebGui.shared.time'])
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('screen', {
@@ -7,11 +7,6 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource'])
                 controller: 'ScreenController'
             });
     })
-    .filter('secondsToDateTime', [function() {
-        return function(seconds) {
-            return new Date(1970, 0, 1).setSeconds(seconds);
-        };
-    }])
     .controller('ScreenController', function($resource, $interval, $scope) {
         $scope.message = 'Tilat';
         $scope.agents = $resource('agents.json').query();
