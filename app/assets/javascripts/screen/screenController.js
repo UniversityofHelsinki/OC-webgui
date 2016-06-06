@@ -14,5 +14,10 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource'])
     }])
     .controller('ScreenController', function($resource, $interval, $scope) {
         $scope.message = 'Tilat';
-        $scope.agents = $resource('agents.json').query();
+        
+        var agents = $resource('agents.json').query();
+        
+        console.log(agents);
+        
+        $scope.agents = agents;
     });

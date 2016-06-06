@@ -82,6 +82,22 @@ $cards-gutter: 0.5em;
 }
 
 .agent-status-color {
+  background-color: white; // Alkuperäinen väritysalue!!
+  padding: 3%;
+  width: 1em;
+  height: 1em;
+  border-radius: 4px;
+}
+
+.agent_status_color_default {
+  background-color: black;
+  padding: 3%;
+  width: 1em;
+  height: 1em;
+  border-radius: 4px;
+}
+
+.agent_status_color_green {
   background-color: #37c837;
   padding: 3%;
   width: 1em;
