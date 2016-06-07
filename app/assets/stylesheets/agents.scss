@@ -105,6 +105,22 @@ $cards-gutter: 0.5em;
   border-radius: 4px;
 }
 
+.agent_status_color_yellow {
+  background-color: yellow;
+  padding: 3%;
+  width: 1em;
+  height: 1em;
+  border-radius: 4px;
+}
+
+.agent_status_color_red {
+  background-color: red;
+  padding: 3%;
+  width: 1em;
+  height: 1em;
+  border-radius: 4px;
+}
+
 .agent-name {
   display: inline-block;
 }
