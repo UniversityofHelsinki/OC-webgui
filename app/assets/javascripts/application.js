@@ -17,6 +17,8 @@
 //= require angular-rails-templates
 //= require angular-ui-router
 //= require angular-mocks
+//= stub ./shared/time/timeDirective.spec.js
+//= require_tree ./shared
 //= require_tree ./home
 //= stub ./screen/screenController.spec.js
 //= require_tree ./screen

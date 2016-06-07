@@ -1,17 +1,27 @@
 angular.module("templates", []);
 
-describe('ScreenController', function() {
-    beforeEach(module('ocWebGui'));
-    it('should have correct message', inject(function($controller) {
-        var scope = {};
-        var ctrl = $controller('ScreenController', {$scope: scope});
-        expect(scope.message).toBe('Tilat');
-    }));
+describe('QueueController', function() {
+    var $controller, $rootScope;
 
-    it('should have agents\' states', inject(function($controller) {
-        var scope = {};
-        var ctrl = $controller('ScreenController', {$scope: scope});
-        expect(scope.agents).not.toBe(null);
-    }));
+    beforeEach(function() {
+        module('ocWebGui.queue');
+
+        inject(function(_$controller_, _$rootScope_) {
+            $controller = _$controller_;
+            $rootScope = _$rootScope_;
+        });
+    });
+
+    it('should have correct message', function() {
+        var scope = $rootScope.$new();
+        var ctrl = $controller('QueueController', {$scope: scope});
+        expect(scope.message).toBe('Jono');
+    });
+
+    it('should have queue data', function() {
+        var scope = $rootScope.$new();
+        var ctrl = $controller('QueueController', {$scope: scope});
+        expect(scope.queue.length).toBe(0);
+    });
 
 });

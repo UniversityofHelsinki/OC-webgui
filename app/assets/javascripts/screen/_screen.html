@@ -6,7 +6,7 @@
                 {{ agent.name }}
             </div>
             <div class="agent-status"> {{ agent.status }}</div>
-            <div class="status-timer"> {{ agent.time_in_status | secondsToDateTime | date:'HH:mm:ss' }} </div>
+            <oc-time seconds="agent.time_in_status" class="status-timer"></oc-time>
         </div>
     </div>
     <div class="sidebar">

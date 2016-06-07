@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue', ['ui.router', 'ngResource'])
+angular.module('ocWebGui.queue', ['ui.router', 'ngResource', 'ocWebGui.shared.time'])
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('queue', {
@@ -9,7 +9,19 @@ angular.module('ocWebGui.queue', ['ui.router', 'ngResource'])
     })
     .controller('QueueController', function($resource, $interval, $scope) {
         $scope.message = 'Jono';
-        $scope.queue = $resource('queue.json').query();
+
+        $scope.queue = [];
+
+        function fetchData() {
+            $scope.queue = $resource('queue.json').query();
+        }
+
+        var fetchDataInterval = $interval(fetchData, 5000);
+        $scope.$on('$destroy', function() {
+            $interval.cancel(fetchDataInterval);
+        });
+
+        fetchData();
         
         // mock data for testing css
         // $scope.queue = [{line: 135, time_in_queue:360}, {line:137, time_in_queue:123}, {line:125, time_in_queue:123}, {line:137, time_in_queue:123}, {line:133, time_in_queue:123}, {line:137, time_in_queue:123}, {line:121, time_in_queue:123}]
@@ -28,9 +40,4 @@ angular.module('ocWebGui.queue', ['ui.router', 'ngResource'])
           }
         }
         $scope.date = new Date();
-    })
-    .filter('secondsToDateTime', [function() {
-    return function(seconds) {
-        return new Date(1970, 0, 1).setSeconds(seconds);
-    };
-}])
+    });
