@@ -73,6 +73,19 @@ $cards-gutter: 0.5em;
   box-shadow: -1px 0 4px rgba(0, 0, 0, 0.2);
 }
 
+.sidebar .agent-status-color {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.status-yellow {
+  background-color: #dedb2b !important;
+}
+
+.status-red {
+  background-color: #ff3e2f !important;
+}
+
 .sidebar .agent-status-count:first-child {
   margin-top: 0;
 }
