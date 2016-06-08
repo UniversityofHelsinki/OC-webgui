@@ -2,12 +2,7 @@
 
     <div class="cards">
         <div ng-repeat="agent in agents" class="card agent-card">
-            <div class="agent-status-color" ng-switch on="agent.color"> <!-- väripallo -->
-                <div class= "agent_status_color_green" ng-switch-when="green"></div>
-                <div class= "agent_status_color_yellow" ng-switch-when="yellow"></div>
-                <div class= "agent_status_color_red" ng-switch-when="red"></div>  
-                <div class= "agent_status_color_default" ng-switch-when="black"></div>
-            </div>
+            <div class="agent-status-color agent-status-color-{{agent.color}}"></div>
             <div class="agent-name">
                 {{ agent.name }}
             </div>
@@ -17,15 +12,15 @@
     </div>
     <div class="sidebar">
         <div class="agent-status-count">
-            <div class="agent_status_color_green"></div>
+            <div class="agent-status-color agent-status-color-green"></div>
             <div> {{green}}</div>
         </div>
         <div class="agent-status-count">
-            <div class="agent_status_color_yellow"></div>
+            <div class="agent-status-color agent-status-color-yellow"></div>
             <div> {{yellow}} </div>
         </div>
         <div class="agent-status-count">
-            <div class="agent_status_color_red"></div>
+            <div class="agent-status-color agent-status-color-red"></div>
             <div> {{red}} </div>
         </div>
         <!--<div class="agent-status-count">-->

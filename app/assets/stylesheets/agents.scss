@@ -51,7 +51,7 @@ $cards-gutter: 0.5em;
 
 .sidebar .agent-status-color {
   margin: auto;
-  width: 1em;
+  width: 2em;
   height: 2em;
   margin-bottom: 0.5em;
   //margin-top: 3em;
@@ -82,51 +82,28 @@ $cards-gutter: 0.5em;
 }
 
 .agent-status-color {
-  background-color: white; // Alkuperäinen väritysalue!!
   padding: 3%;
   width: 1em;
   height: 1em;
   border-radius: 4px;
 }
 
-.agent_status_color_default {
+.agent-status-color-default {
   background-color: black;
-  padding: 3%;
-  width: 1em;
-  height: 1em;
-  border-radius: 4px;
 }
 
-.agent_status_color_green {
+.agent-status-color-green {
   background-color: #37c837;
-  padding: 3%;
-  width: 1em;
-  height: 1em;
-  border-radius: 4px;
 }
 
-.agent_status_color_yellow {
+.agent-status-color-yellow {
   background-color: yellow;
-  padding: 3%;
-  width: 1em;
-  height: 1em;
-  border-radius: 4px;
 }
 
-.agent_status_color_red {
+.agent-status-color-red {
   background-color: red;
-  padding: 3%;
-  width: 1em;
-  height: 1em;
-  border-radius: 4px;
 }
 
 .agent-name {
   display: inline-block;
-}
-
-.agent-status {
-}
-
-.status-timer {
 }
