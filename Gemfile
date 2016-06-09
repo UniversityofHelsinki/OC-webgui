@@ -71,3 +71,6 @@ end
 
 # Use dotenv for storing environment variables
 gem 'dotenv-rails', :groups => [:development, :test]
+
+# Mocking HTTP requests for RSpec
+gem 'webmock'

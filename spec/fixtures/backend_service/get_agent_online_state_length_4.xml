@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <GetAgentOnlineStateResponse xmlns="http://elisa.ccreport.fi/">
+      <GetAgentOnlineStateResult>
+        <ArrayOfString>
+          <string>1000081</string>
+          <string>Korhonen Matti</string>
+          <string>Helpdesk</string>
+          <string>BACKOFFICE</string>
+          <string>2565</string>
+        </ArrayOfString>
+        <ArrayOfString>
+          <string>1000021</string>
+          <string>Virtanen Timo</string>
+          <string>Opiskelijaneuvonta</string>
+          <string>Sisäänkirjaus</string>
+          <string>15068</string>
+        </ArrayOfString>
+        <ArrayOfString>
+          <string>1000061</string>
+          <string>Mäkinen Kari</string>
+          <string>Opiskelijaneuvonta</string>
+          <string>TAUKO</string>
+          <string>141</string>
+        </ArrayOfString>
+        <ArrayOfString>
+          <string>1000041</string>
+          <string>Nieminen Antti</string>
+          <string>Helpdesk</string>
+          <string>JÄLKIKIRJAUS</string>
+          <string>425</string>
+        </ArrayOfString>
+      </GetAgentOnlineStateResult>
+    </GetAgentOnlineStateResponse>
+  </soap:Body>
+</soap:Envelope>

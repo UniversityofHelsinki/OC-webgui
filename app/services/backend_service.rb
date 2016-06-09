@@ -32,6 +32,10 @@ class BackendService
         time_in_status: attrs[:string][4]
       }
     end
+  rescue Savon::HTTPError => error
+    puts error.http.code
+    #raise
+    return []
   end
 
   def get_general_queue
@@ -50,6 +54,10 @@ class BackendService
         time_in_queue: attrs[:string][7]
       }
     end
+  rescue Savon::HTTPError => error
+    puts error.http.code
+    #raise
+    return []
   end
 
   def get_teams
@@ -57,18 +65,13 @@ class BackendService
     data = reply.body.dig(:get_teams_response,
                           :get_teams_result,
                           :string) # ei array_of_string
-#    return [] unless data
-#    data = [data] unless data.is_a? Array
-"""    data.map do |attrs|
-      {
-        agent_id: attrs[:string][0],
-        full_name: attrs[:string][1],
-        team: attrs[:string][2],
-        status: attrs[:string][3],
-        time_in_status: attrs[:string][4]
-      }
-    end
-"""
+    return [] unless data
+    data = [data] unless data.is_a? Array
+    return data
+  rescue Savon::HTTPError => error
+    puts error.http.code
+    #raise
+    return []
   end
 
 end
