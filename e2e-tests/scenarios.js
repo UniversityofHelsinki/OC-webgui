@@ -30,6 +30,22 @@ describe('screen', function() {
                             team: 'Helpdesk',
                             status: 'Sisäänkirjaus',
                             time_in_status: 1278
+                        },
+                        {
+                            id: 3,
+                            agent_id: 5908,
+                            name: 'Juho Nevalinna',
+                            team: 'Helpdesk',
+                            status: 'JÄLKIKIRJAUS',
+                            time_in_status: 78
+                        },
+                        {
+                            id: 4,
+                            agent_id: 1918,
+                            name: 'Laura Siniaho',
+                            team: 'Helpdesk',
+                            status: 'VIKAPÄIVYSTYS',
+                            time_in_status: 9503
                         }
                     ]);
                 });
@@ -40,7 +56,7 @@ describe('screen', function() {
         browser.get('#/screen');
 
         var agentCards = element.all(by.className('agent-card'));
-        expect(agentCards.count()).toBe(2);
+        expect(agentCards.count()).toBe(4);
 
         expect(agentCards.get(0).element(by.className('agent-name')).getText()).toBe('Kekkonen Benjamin');
         expect(agentCards.get(0).element(by.className('agent-status')).getText()).toBe('PALAVERI');
@@ -48,6 +64,28 @@ describe('screen', function() {
         expect(agentCards.get(1).element(by.className('agent-name')).getText()).toBe('Kanerva Aallotar');
         expect(agentCards.get(1).element(by.className('agent-status')).getText()).toBe('Sisäänkirjaus');
     });
+    
+    it('Status color should match status text', function() {
+        browser.get('#/screen');
+
+        var agentCards = element.all(by.className('agent-card'));
+        
+        expect(agentCards.get(0).element(by.className('agent-status-color')).getAttribute('class')).toMatch('agent-status-color-red');
+        expect(agentCards.get(1).element(by.className('agent-status-color')).getAttribute('class')).toMatch('agent-status-color-green');
+        expect(agentCards.get(2).element(by.className('agent-status-color')).getAttribute('class')).toMatch('agent-status-color-yellow');
+        expect(agentCards.get(3).element(by.className('agent-status-color')).getAttribute('class')).toMatch('agent-status-color-red');
+    });
+    
+    it('Sidebar status view should be correct', function() {
+        browser.get('#/screen');
+        
+        var statusCount = element.all(by.className('agent-status-count'));
+        
+        expect(statusCount.get(0).element(by.className('green-count')).getText()).toBe('1');
+        expect(statusCount.get(1).element(by.className('yellow-count')).getText()).toBe('1');
+        expect(statusCount.get(2).element(by.className('red-count')).getText()).toBe('2');
+    });
+    
 });
 
 describe('queue', function() {

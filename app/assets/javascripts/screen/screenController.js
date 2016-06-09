@@ -15,29 +15,6 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource'])
     .controller('ScreenController', function($resource, $interval, $scope) {
         $scope.message = 'Tilat';
         
-        /*
-        var agents = $resource('agents.json', {}, {
-            'get': {
-                method: 'GET',
-                params: {},
-                isArray: true,
-                transformResponse: function(data, header){
-                    //Getting string data in response
-                    var jsonData = angular.fromJson(data);
-                    var notes = [];
-
-                    angular.forEach(jsonData, function(item){
-                        var note = new Note();
-                        note.noteTitle = item.title;  
-                        notes.push(note);
-                     });
-
-                    return notes;
-                                
-                }
-            }
-        }); */
-        
         // Agent status and colors classifications        
         $scope.agents = $resource('agents.json').query(function() {
             var agents = $scope.agents;
@@ -50,16 +27,14 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource'])
                     agents[i].color = "green";
                     green++;
                     
-                } else if (agents[i].status === "TAUKO") {
+                } else if (agents[i].status === "JÄLKIKIRJAUS") {
                     agents[i].color = "yellow";
                     yellow++;
                     
-                } else if(agents[i].status === "TÄYDENNÄ TÄHÄN!!!") {
+                } else {
                     agents[i].color = "red";
                     red++;
                     
-                } else {
-                    agents[i].color = "black";
                 }
             }
             
