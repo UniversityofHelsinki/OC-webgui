@@ -13,7 +13,9 @@ angular.module('ocWebGui.queue', ['ui.router', 'ngResource', 'ocWebGui.shared.ti
         $scope.queue = [];
 
         function fetchData() {
-            $scope.queue = $resource('queue.json').query();
+            $resource('queue.json').query(function (data) {
+                $scope.queue = data;
+            });
         }
 
         var fetchDataInterval = $interval(fetchData, 5000);
