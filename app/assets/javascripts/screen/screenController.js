@@ -11,6 +11,23 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource', 'ocWebGui.shared.t
         $scope.teams = shared.getTeams();
         $scope.states = shared.getStates();
         $scope.message = 'Tilat';
+        $scope.agents = [];
+
+        function fetchData() {
+            $resource('agents.json').query(function(agents) {
+                $scope.agents = agents.filter(function(agent) {
+                    return (($scope.states[agent.status] == true)
+                        && ($scope.teams[agent.team] == true));
+                });
+            });
+        }
+
+        var fetchDataInterval = $interval(fetchData, 5000);
+        $scope.$on('$destroy', function() {
+            $interval.cancel(fetchDataInterval);
+        });
+
+        fetchData();
         
         // Agent status and colors classifications        
         $scope.agents = $resource('agents.json').query(function() {
@@ -38,26 +55,5 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource', 'ocWebGui.shared.t
             $scope.green = green;
             $scope.yellow = yellow;
             $scope.red = red;
-            
-            // Ehkä loppu tulee tänne??
         });
-        
-        $scope.agents = [];
-
-        function fetchData() {
-            $resource('agents.json').query(function(agents) {
-                $scope.agents = agents.filter(function(agent) {
-                    return (($scope.states[agent.status] == true)
-                        && ($scope.teams[agent.team] == true));
-                });
-            });
-        }
-
-        var fetchDataInterval = $interval(fetchData, 5000);
-        $scope.$on('$destroy', function() {
-            $interval.cancel(fetchDataInterval);
-        });
-
-        fetchData();
-        
     });
