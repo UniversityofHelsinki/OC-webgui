@@ -1,4 +1,4 @@
-angular.module('ocWebGui.screen', ['ui.router', 'ngResource'])
+angular.module('ocWebGui.screen', ['ui.router', 'ngResource', 'ocWebGui.shared.time', 'ocWebGui.filterpanel'])
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('screen', {
@@ -7,12 +7,9 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource'])
                 controller: 'ScreenController'
             });
     })
-    .filter('secondsToDateTime', [function() {
-        return function(seconds) {
-            return new Date(1970, 0, 1).setSeconds(seconds);
-        };
-    }])
-    .controller('ScreenController', function($resource, $interval, $scope) {
+    .controller('ScreenController', function($resource, $interval, $scope, shared) {
+        $scope.teams = shared.getTeams();
+        $scope.states = shared.getStates();
         $scope.message = 'Tilat';
         
         // Agent status and colors classifications        
@@ -41,5 +38,26 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource'])
             $scope.green = green;
             $scope.yellow = yellow;
             $scope.red = red;
+            
+            // Ehkä loppu tulee tänne??
         });
+        
+        $scope.agents = [];
+
+        function fetchData() {
+            $resource('agents.json').query(function(agents) {
+                $scope.agents = agents.filter(function(agent) {
+                    return (($scope.states[agent.status] == true)
+                        && ($scope.teams[agent.team] == true));
+                });
+            });
+        }
+
+        var fetchDataInterval = $interval(fetchData, 5000);
+        $scope.$on('$destroy', function() {
+            $interval.cancel(fetchDataInterval);
+        });
+
+        fetchData();
+        
     });

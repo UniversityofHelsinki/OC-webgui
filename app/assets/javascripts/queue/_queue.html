@@ -9,7 +9,7 @@
         <!--Show first five in queue-->
         <div  ng-repeat="queuer in queue | limitTo: 5" class="queuer card">
             <span class="queuer-index"> {{ $index +1 }}. </span>
-            <span class="queuer-time"> {{ queuer.time_in_queue | secondsToDateTime | date:'mm:ss'}}</span>
+            <oc-time seconds="queuer.time_in_queue" class="queuer-time"></oc-time>
             <span class="queuer-flag queuer-flag-{{language(queuer.line)}}"></span>
         </div>
     </div>

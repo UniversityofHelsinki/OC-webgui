@@ -17,10 +17,14 @@
 //= require angular-rails-templates
 //= require angular-ui-router
 //= require angular-mocks
+//= stub ./shared/time/timeDirective.spec.js
+//= require_tree ./shared
 //= require_tree ./home
 //= stub ./screen/screenController.spec.js
 //= require_tree ./screen
 //= stub ./queue/queueController.spec.js
 //= require_tree ./queue
+//= stub ./filterpanel/filterpanelController.spec.js
+//= require_tree ./filterpanel
 //= require ./app.js
 //= require angular-i18n/angular-locale_fi.js

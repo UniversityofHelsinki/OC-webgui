@@ -1,5 +1,4 @@
 <div class="screen_background">
-
     <div class="cards">
         <div ng-repeat="agent in agents" class="card agent-card">
             <div class="agent-status-color agent-status-color-{{agent.color}}"></div>
@@ -7,7 +6,7 @@
                 {{ agent.name }}
             </div>
             <div class="agent-status"> {{ agent.status }}</div>
-            <div class="status-timer"> {{ agent.time_in_status | secondsToDateTime | date:'HH:mm:ss' }} </div>
+            <oc-time seconds="agent.time_in_status" class="status-timer"></oc-time>
         </div>
     </div>
     <div class="sidebar">
@@ -23,6 +22,7 @@
             <div class="agent-status-color agent-status-color-red"></div>
             <div class="red-count"> {{red}} </div>
         </div>
+        <div class="agent-status-count"><a ui-sref="filterpanel">rajaa</a></div>
         <!--<div class="agent-status-count">-->
         <!--<div class="agent-status-color"></div>-->
         <!--<div> 5</div>-->
