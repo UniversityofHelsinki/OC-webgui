@@ -15,13 +15,13 @@ describe('QueueController', function () {
 
   it('should have correct message', function () {
     var scope = $rootScope.$new();
-    $controller('QueueController', { $scope: scope });
-    expect(scope.message).toBe('Jono');
+    var ctrl = $controller('QueueController', { $scope: scope });
+    expect(ctrl.message).toBe('Jono');
   });
 
   it('should have queue data', function () {
     var scope = $rootScope.$new();
-    $controller('QueueController', { $scope: scope });
-    expect(scope.queue.length).toBe(0);
+    var ctrl = $controller('QueueController', { $scope: scope });
+    expect(ctrl.queue.length).toBe(0);
   });
 });

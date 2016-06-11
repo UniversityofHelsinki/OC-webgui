@@ -15,13 +15,13 @@ describe('ScreenController', function () {
 
   it('should have correct message', function () {
     var scope = $rootScope.$new();
-    $controller('ScreenController', { $scope: scope });
-    expect(scope.message).toBe('Tilat');
+    var ctrl = $controller('ScreenController', { $scope: scope });
+    expect(ctrl.message).toBe('Tilat');
   });
 
   it('should have agents\' states', function () {
     var scope = $rootScope.$new();
-    $controller('ScreenController', { $scope: scope });
-    expect(scope.agents.length).toBe(0);
+    var ctrl = $controller('ScreenController', { $scope: scope });
+    expect(ctrl.agents.length).toBe(0);
   });
 });
