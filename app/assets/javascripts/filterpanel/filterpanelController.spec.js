@@ -1,6 +1,6 @@
-angular.module("templates", []);
+angular.module('templates', []);
 
-describe('FilterpanelController', function() {
+describe('FilterpanelController', function () {
 /*
     beforeEach(module('ocWebGui'));
     it('should have correct message', inject(function($controller) {
