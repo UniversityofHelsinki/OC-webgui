@@ -36,7 +36,7 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource', 'ocWebGui.shared.t
             var yellow = 0;
             var red = 0;
             
-            for(i=0; i< agents.length; i++) {
+            for(var i=0; i< agents.length; i++) {
                 if(agents[i].status === "Sisäänkirjaus") {
                     agents[i].color = "green";
                     green++;
