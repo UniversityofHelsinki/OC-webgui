@@ -26,21 +26,24 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource', 'ocWebGui.shared.t
                 
                 var agents = $scope.agents;
             
-                for(var i=0; i< agents.length; i++) {
-                    if(agents[i].status === "Sisäänkirjaus") {
+            
+                // Agent status coloring and number tally.
+                
+                agents.map(function(agent) {
+                    if(agent.status === "Sisäänkirjaus") {
                         agents[i].color = "green";
                         green++;
                                     
-                    } else if (agents[i].status === "JÄLKIKIRJAUS") {
+                    } else if (agent.status === "JÄLKIKIRJAUS") {
                         agents[i].color = "yellow";
                         yellow++;
                     
                     } else {
-                        agents[i].color = "red";
+                        agent.color = "red";
                         red++;
                     
                     }
-                }
+                });
             
                 $scope.green = green;
                 $scope.yellow = yellow;
@@ -54,9 +57,4 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource', 'ocWebGui.shared.t
         });
 
         fetchData();
-        
-        /* Agent status and colors classifications        
-        $scope.agents = $resource('agents.json').query(function() {
-            
-        }); */
     });
