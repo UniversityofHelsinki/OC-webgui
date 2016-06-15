@@ -11,10 +11,13 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource', 'ocWebGui.shared.t
         $scope.teams = shared.getTeams();
         $scope.states = shared.getStates();
         $scope.message = 'Tilat';
+        $scope.agents = [];
+        $scope.green = 0;
+        $scope.yellow = 0;
+        $scope.red = 0;
 
         function fetchData() {
             $resource('agents.json').query(function(agents) {
-                $scope.agents = [];
                 var green = 0;
                 var yellow = 0;
                 var red = 0;
@@ -23,13 +26,9 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource', 'ocWebGui.shared.t
                     return (($scope.states[agent.status] == true)
                         && ($scope.teams[agent.team] == true));
                 });
-                
-                var agents = $scope.agents;
-            
             
                 // Agent status coloring and number tally.
-                
-                agents.map(function(agent) {
+                $scope.agents = $scope.agents.map(function(agent) {
                     if(agent.status === "Sisäänkirjaus") {
                         agent.color = "green";
                         green++;
@@ -43,12 +42,16 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource', 'ocWebGui.shared.t
                         red++;
                     
                     }
+                    
+                    return agent;
                 });
             
                 $scope.green = green;
                 $scope.yellow = yellow;
                 $scope.red = red;
+                
             });
+            
         }
 
         var fetchDataInterval = $interval(fetchData, 5000);
