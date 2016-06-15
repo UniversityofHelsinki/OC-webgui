@@ -27,7 +27,6 @@ $cards-gutter: 0.5em;
 }
 
 .card {
-  //display: inline-block;
   box-sizing: border-box;
   margin: $cards-gutter / 2;
   background-color: rgba(255,255,255,0.75);
@@ -51,19 +50,14 @@ $cards-gutter: 0.5em;
 
 .sidebar .agent-status-color {
   margin: auto;
-  width: 1em;
+  width: 2em;
   height: 2em;
   margin-bottom: 0.5em;
-  //margin-top: 3em;
 }
 
 .sidebar {
   display: flex;
   background-color: rgba(255,255,255,0.75);
-  //position: absolute;
-  //top: 0;
-  //right: 0;
-  //bottom: 0;
   width: 6%;
   text-align: center;
   font-size: 300%;
@@ -82,19 +76,24 @@ $cards-gutter: 0.5em;
 }
 
 .agent-status-color {
-  background-color: #37c837;
   padding: 3%;
   width: 1em;
   height: 1em;
   border-radius: 4px;
 }
 
-.agent-name {
-  display: inline-block;
+.agent-status-color-default {
+  background-color: black;
 }
 
-.agent-status {
+.agent-status-color-green {
+  background-color: #37c837;
 }
 
-.status-timer {
+.agent-status-color-yellow {
+  background-color: #ffff4d;
+}
+
+.agent-status-color-red {
+  background-color: #ff3333;
 }
