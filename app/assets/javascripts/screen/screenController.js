@@ -31,11 +31,11 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource', 'ocWebGui.shared.t
                 
                 agents.map(function(agent) {
                     if(agent.status === "Sisäänkirjaus") {
-                        agents[i].color = "green";
+                        agent.color = "green";
                         green++;
                                     
                     } else if (agent.status === "JÄLKIKIRJAUS") {
-                        agents[i].color = "yellow";
+                        agent.color = "yellow";
                         yellow++;
                     
                     } else {
