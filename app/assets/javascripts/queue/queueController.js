@@ -21,7 +21,7 @@ angular.module('ocWebGui.queue', ['ui.router', 'ngResource', 'ocWebGui.shared.ti
             });
         }
 
-        var fetchDataInterval = $interval(fetchData, 500000);
+        var fetchDataInterval = $interval(fetchData, 5000);
         $scope.$on('$destroy', function() {
             $interval.cancel(fetchDataInterval);
         });
