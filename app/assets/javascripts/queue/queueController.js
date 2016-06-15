@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue', ['ui.router', 'ngResource', 'ocWebGui.shared.time'])
+angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('queue', {
@@ -7,36 +7,6 @@ angular.module('ocWebGui.queue', ['ui.router', 'ngResource', 'ocWebGui.shared.ti
         controller: 'QueueController',
         controllerAs: 'queue'
       });
-  })
-  .factory('Queue', function ($resource) {
-    function getLanguage(line) {
-      switch (line) {
-        case 135:
-        case 137:
-        case 136:
-          return 'Fin';
-        case 125:
-        case 131:
-        case 121:
-          return 'Eng';
-        case 133:
-          return 'Swe';
-        default:
-          return 'Unknown';
-      }
-    }
-    return $resource('queue.json', {}, {
-      query: {
-        method: 'get',
-        isArray: true,
-        transformResponse: function (queue) {
-          return queue.map(function (queuer) {
-            queuer.language = getLanguage(queuer.line);
-            return queuer;
-          });
-        }
-      }
-    });
   })
   .controller('QueueController', function ($interval, $scope, Queue) {
     var vm = this;

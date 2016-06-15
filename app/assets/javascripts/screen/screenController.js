@@ -1,5 +1,4 @@
-angular.module('ocWebGui.screen', ['ui.router', 'ngResource',
-    'ocWebGui.shared.time', 'ocWebGui.filterpanel'])
+angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWebGui.shared.time'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('screen', {
@@ -8,21 +7,6 @@ angular.module('ocWebGui.screen', ['ui.router', 'ngResource',
         controller: 'ScreenController',
         controllerAs: 'screen'
       });
-  })
-  .factory('Agents', function ($resource, shared) {
-    var teams = shared.getTeams();
-    var states = shared.getStates();
-    return $resource('agents.json', {}, {
-      query: {
-        method: 'get',
-        isArray: true,
-        transformResponse: function (agents) {
-          return agents.filter(function (agent) {
-            return states[agent.status] && teams[agent.team];
-          });
-        }
-      }
-    });
   })
   .controller('ScreenController', function ($interval, $scope, Agents) {
     var fetchDataInterval;
