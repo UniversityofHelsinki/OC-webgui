@@ -37,9 +37,12 @@ body {
 
 .plus-5 {
   display: flex;
+  font-size: 1em;
+  font-size: 2.5vw;
   align-items: center;
   justify-content: center;
   color: white;
+  margin-bottom: 1%;
 }
 
 .time-date-week {
@@ -58,7 +61,9 @@ body {
 
 .queue-div {
   width: 50%;
-  font-size: 550%;
+  //font-size: 550%;
+  font-size: 1.5em;
+  font-size: 3.5vw;
   line-height: 1;
   display: flex;
   flex-direction: column;
@@ -67,19 +72,27 @@ body {
 .queuer {
   line-height: 1.5;
   display: flex;
+  flex-direction: row;
   text-align: center;
+  align-items: center;
+  justify-content: center;
   flex-grow: 1;
+  flex-wrap: nowrap;
 
   .queuer-index {
     width: 20%;
   }
 
   .queuer-time {
-    width: 60%
+    width: 60%;
   }
 
   .queuer-flag {
     width: 20%;
+    div {
+      // purkka :D
+      opacity: 0;
+    }
     background-size: contain;
     background-position: right;
     background-repeat: no-repeat;

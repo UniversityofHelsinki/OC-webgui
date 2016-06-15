@@ -10,11 +10,11 @@ angular.module('ocWebGui.queue', ['ui.router', 'ngResource', 'ocWebGui.shared.ti
     .controller('QueueController', function($resource, $interval, $scope) {
         $scope.message = 'Jono';
 
-        // $scope.queue = [];
+        $scope.queue = [];
         // mock data for testing css
-        $scope.queue = [{line: 135, time_in_queue:360}, {line:137, time_in_queue:123}, {line:125, time_in_queue:123}, {line:137, time_in_queue:123}, {line:133, time_in_queue:123}, {line:137, time_in_queue:123}, {line:121, time_in_queue:123}]
+        // $scope.queue = [{line: 135, time_in_queue:360}, {line:137, time_in_queue:123}, {line:125, time_in_queue:123}, {line:137, time_in_queue:123}, {line:133, time_in_queue:123}, {line:137, time_in_queue:123}, {line:121, time_in_queue:123}]
 
-        
+
         function fetchData() {
             $resource('queue.json').query(function (data) {
                 $scope.queue = data;
@@ -26,7 +26,7 @@ angular.module('ocWebGui.queue', ['ui.router', 'ngResource', 'ocWebGui.shared.ti
             $interval.cancel(fetchDataInterval);
         });
 
-        // fetchData();
+        fetchData();
         
 
         $scope.language = function(line) {
