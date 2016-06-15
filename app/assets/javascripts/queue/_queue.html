@@ -3,8 +3,16 @@
 <div class="screen_background">
     <div class="queue-div">
         <div class="queue_length card">
-            <span> {{ date | date:'EEE d.M. vk w ' }}</span>
-            <div>{{ queue.length }}</div>
+            <table class="q-table">
+                <tr class="date-queue">
+                    <td class="date"> {{ date | date:'EEE d.M.' }}</td>
+                    <td>{{ queue.length }}</td>
+                </tr>
+                <tr class="time-week">
+                    <td class="date"> {{ date | date:'HH.mm' }}</td>
+                    <td class="date"> {{ date | date:'viikko w' }}</td>
+                </tr>
+            </table>
         </div>
         <!--Show first five in queue-->
         <div  ng-repeat="queuer in queue | limitTo: 5" class="queuer card">

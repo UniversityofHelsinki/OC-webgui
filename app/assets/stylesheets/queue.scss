@@ -16,26 +16,31 @@ body {
 
 .queue_length {
   text-align: center;
-  //flex-grow: 1;
   min-height: 26%;
   max-height: 26%;
-}
 
-.queue_length span {
-  font-size: 75%;
-}
+  span {
+    font-size: 75%;
+    display: flex;
+    flex-direction: row;
+  }
 
-.queue_length div { // 7
-  font-size: 2em;
-  padding-top: 0.2em;
+  div {
+    font-size: 2em;
+    padding-top: 0.2em;
+  }
 }
 
 .queue-div {
   width: 50%;
-  font-size: 500%;
+  font-size: 550%;
   line-height: 1;
   display: flex;
   flex-direction: column;
+}
+
+.q-table {
+
 }
 
 .queuer {
@@ -49,7 +54,6 @@ body {
 }
 
 .queuer-time {
-  //flex-grow: 1;
   width: 60%
 }
 
@@ -84,18 +88,16 @@ body {
 
 .stats-table {
   border-spacing: 0em 1em;
-}
-
-.stats-table td {
-  width: 50%;
-  font-size: 100%;
-  line-height: 1;
-  padding: 0.1em;
-  text-align: right;
-}
-
-.stats-table th {
-  font-size: 75%;
-  font-weight: normal;
-  text-align: left;
+  td {
+    width: 50%;
+    font-size: 150%;
+    line-height: 1;
+    padding: 0.1em;
+    text-align: right;
+  }
+  th {
+    font-size: 75%;
+    font-weight: normal;
+    text-align: left;
+  }
 }
