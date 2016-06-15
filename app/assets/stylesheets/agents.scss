@@ -55,7 +55,7 @@ body {
 
   .agent-status-color {
     margin: auto;
-    width: 1em;
+    width: 2em;
     height: 2em;
     margin-bottom: 0.5em;
   }
@@ -70,13 +70,24 @@ body {
 }
 
 .agent-status-color {
-  background-color: #37c837;
   padding: 3%;
   width: 1em;
   height: 1em;
   border-radius: 4px;
 }
 
-.agent-name {
-  display: inline-block;
+.agent-status-color-default {
+  background-color: black;
+}
+
+.agent-status-color-green {
+  background-color: #37c837;
+}
+
+.agent-status-color-yellow {
+  background-color: #ffff4d;
+}
+
+.agent-status-color-red {
+  background-color: #f33;
 }

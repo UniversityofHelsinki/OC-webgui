@@ -3,15 +3,27 @@
 <div class="screen_background">
     <div class="queue-div">
         <div class="queue_length card">
-            <span> {{ queue.date | date:'EEE d.M. vk w ' }}</span>
-            <div>{{ queue.queue.length }}</div>
+            <!--
+                      |  TIME
+               LENGTH |  DATE
+                      |  WEEK
+            -->
+                <div class="q-length">
+                    <span>{{ queue.queue.length }}</span>
+                </div>
+                <div class="time-date-week">
+                    <div> {{ queue.date | date:'HH.mm' }}</div>
+                    <div> {{ queue.date | date:'EEE d.M.' }}</div>
+                    <div> {{ queue.date | date:'viikko w' }}</div>
+                </div>
         </div>
         <!--Show first five in queue-->
         <div  ng-repeat="queuer in queue.queue | limitTo: 5" class="queuer card">
             <span class="queuer-index"> {{ $index +1 }}. </span>
             <oc-time seconds="queuer.time_in_queue" class="queuer-time"></oc-time>
-            <span class="queuer-flag queuer-flag-{{queuer.language}}"></span>
+            <span class="queuer-flag queuer-flag-{{queuer.language}}"><div>purkka</div></span>
         </div>
+        <div ng-show="{{queue.length >= 5}}" class="plus-5"> &#9660 </div>
     </div>
     <div class="stats card">
         <table class="stats-table">

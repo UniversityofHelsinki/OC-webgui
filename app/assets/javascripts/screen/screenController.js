@@ -8,16 +8,42 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         controllerAs: 'screen'
       });
   })
-  .controller('ScreenController', function ($interval, $scope, Agents) {
-    var fetchDataInterval;
+  .controller('ScreenController', function ($interval, $scope, shared, Agents) {
     var vm = this;
+    var fetchDataInterval;
 
+    vm.teams = shared.getTeams();
+    vm.states = shared.getStates();
     vm.message = 'Tilat';
     vm.agents = [];
+    vm.green = 0;
+    vm.yellow = 0;
+    vm.red = 0;
 
     function fetchData() {
       Agents.query(function (agents) {
-        vm.agents = agents;
+        var green = 0;
+        var yellow = 0;
+        var red = 0;
+
+        // Agent status coloring and number tally.
+        vm.agents = agents.map(function (agent) {
+          if (agent.status === 'Sisäänkirjaus') {
+            agent.color = 'green';
+            green++;
+          } else if (agent.status === 'JÄLKIKIRJAUS') {
+            agent.color = 'yellow';
+            yellow++;
+          } else {
+            agent.color = 'red';
+            red++;
+          }
+          return agent;
+        });
+
+        vm.green = green;
+        vm.yellow = yellow;
+        vm.red = red;
       });
     }
 
