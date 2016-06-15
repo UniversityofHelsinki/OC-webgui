@@ -71,3 +71,5 @@ end
 
 # Use dotenv for storing environment variables
 gem 'dotenv-rails', :groups => [:development, :test]
+
+gem 'scss_lint', require: false

@@ -1,7 +1,3 @@
-// Place all the styles related to the queue controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 body {
   margin: 0;
   padding: 0;
@@ -16,18 +12,17 @@ body {
 
 .queue_length {
   text-align: center;
-  //flex-grow: 1;
   min-height: 26%;
   max-height: 26%;
-}
 
-.queue_length span {
-  font-size: 75%;
-}
+  span {
+    font-size: 75%;
+  }
 
-.queue_length div { // 7
-  font-size: 2em;
-  padding-top: 0.2em;
+  div {
+    font-size: 2em;
+    padding-top: 0.2em;
+  }
 }
 
 .queue-div {
@@ -49,8 +44,7 @@ body {
 }
 
 .queuer-time {
-  //flex-grow: 1;
-  width: 60%
+  width: 60%;
 }
 
 .queuer-flag {
@@ -61,11 +55,11 @@ body {
 }
 
 .queuer-flag-Fin {
-  background-image: url(Flag_of_Finland.svg);
+  background-image: url("Flag_of_Finland.svg");
 }
 
 .queuer-flag-Swe {
-  background-image: url(Flag_of_Sweden.svg);
+  background-image: url("Flag_of_Sweden.svg");
 }
 
 .queuer-flag-Eng {
@@ -83,19 +77,19 @@ body {
 }
 
 .stats-table {
-  border-spacing: 0em 1em;
-}
+  border-spacing: 0 1em;
 
-.stats-table td {
-  width: 50%;
-  font-size: 100%;
-  line-height: 1;
-  padding: 0.1em;
-  text-align: right;
-}
+  td {
+    width: 50%;
+    font-size: 100%;
+    line-height: 1;
+    padding: 0.1em;
+    text-align: right;
+  }
 
-.stats-table th {
-  font-size: 75%;
-  font-weight: normal;
-  text-align: left;
+  th {
+    font-size: 75%;
+    font-weight: normal;
+    text-align: left;
+  }
 }
