@@ -74,3 +74,6 @@ gem 'dotenv-rails', :groups => [:development, :test]
 
 # Mocking HTTP requests for RSpec
 gem 'webmock'
+
+# JSON for RSpec
+gem 'json_spec'
