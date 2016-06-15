@@ -11,9 +11,14 @@ angular.module('ocWebGui.queue', ['ui.router', 'ngResource', 'ocWebGui.shared.ti
         $scope.message = 'Jono';
 
         $scope.queue = [];
+        // mock data for testing css
+        // $scope.queue = [{line: 135, time_in_queue:360}, {line:137, time_in_queue:123}, {line:125, time_in_queue:123}, {line:137, time_in_queue:123}, {line:133, time_in_queue:123}, {line:137, time_in_queue:123}, {line:121, time_in_queue:123}]
+
 
         function fetchData() {
-            $scope.queue = $resource('queue.json').query();
+            $resource('queue.json').query(function (data) {
+                $scope.queue = data;
+            });
         }
 
         var fetchDataInterval = $interval(fetchData, 5000);
@@ -23,8 +28,7 @@ angular.module('ocWebGui.queue', ['ui.router', 'ngResource', 'ocWebGui.shared.ti
 
         fetchData();
         
-        // mock data for testing css
-        // $scope.queue = [{line: 135, time_in_queue:360}, {line:137, time_in_queue:123}, {line:125, time_in_queue:123}, {line:137, time_in_queue:123}, {line:133, time_in_queue:123}, {line:137, time_in_queue:123}, {line:121, time_in_queue:123}]
+
         $scope.language = function(line) {
           switch (line) {
             case 135:
