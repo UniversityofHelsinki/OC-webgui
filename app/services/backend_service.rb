@@ -33,6 +33,23 @@ class BackendService
     data.map do |attrs|
       {
 	ticket_id: attrs[:string][0],
+	call_arrived_to_queue: 
+	queued_seconds: 
+	call_forwarded_to_agent: 
+	call_answered_by_agent: 
+	call_ended: 
+	call_handling_ended: 
+	call_length: 
+	call_handling_total: 
+	service_type: 
+	contact_direction: 
+	contact_type: 
+	contact_phone_num: 
+	contact_handler: 
+	contact_number: 
+	contact_state: 
+	contact_total_handling: 
+	sub_group: )
       }
     end
   end
