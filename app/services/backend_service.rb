@@ -28,7 +28,8 @@ class BackendService
         agent_id: attrs[:string][0],
         full_name: attrs[:string][1],
         team: attrs[:string][2],
-        status: attrs[:string][3],
+        #Some states are randomly capitalized and include <> brackets, the brackets are trimmed out and each individual word in the state is capitalized. Unicode characters require a workaround using mb_chars.
+        status: normalize_unicode_string(attrs[:string][3]),
         time_in_status: attrs[:string][4]
       }
     end
@@ -52,21 +53,19 @@ class BackendService
     end
   end
 
-  # def get_teams
-  #   reply = @client.call(:get_teams)
-  #   data = reply.body.dig(:get_teams_response,
-  #                         :get_teams_result,
-  #                         :string) # ei array_of_string
-  #   return [] unless data
-  #   data = [data] unless data.is_a? Array
-  #   data.map do |attrs|
-  #     {
-  #       agent_id: attrs[:string][0],
-  #       full_name: attrs[:string][1],
-  #       team: attrs[:string][2],
-  #       status: attrs[:string][3],
-  #       time_in_status: attrs[:string][4]
-  #     }
-  #   end
-  # end
+  def get_teams
+   reply = @client.call(:get_teams)
+   data = reply.body.dig(:get_teams_response,
+     :get_teams_result,
+     :string)
+   return [] unless data
+   data = [data] unless data.is_a? Array
+ end
+
+ private 
+
+ def normalize_unicode_string(str)
+  str.tr('<->', '').mb_chars.titleize.wrapped_string
+ end
+
 end
