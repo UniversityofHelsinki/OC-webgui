@@ -1,5 +1,4 @@
 require "rails_helper"
-require 'pp'
 require_relative "../../app/controllers/agents_controller.rb"
 require_relative "../../app/controllers/application_controller.rb"
 require_relative "../../app/services/backend_service.rb"
