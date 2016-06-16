@@ -16,6 +16,27 @@ class BackendService
     )
   end
 
+ # Method for accessing customer contacts that specific agent
+ # has had.
+  def get_agent_contacts
+    message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
+    agentID: 2000049, startDate: '2016-06-14', endDate: '2016-06-15',
+    contactTypes: 'PBX', useServiceTime: true }
+
+    reply = @client.call(:get_contacts, message: message)
+    data = reply.body.dig(:get_contacts_response,
+			  :get_contacts_result,
+			  :array_of_string)
+
+    return [] unless data
+    data = [data] unless data_is_a? Array
+    data.map do |attrs|
+      {
+	ticket_id: attrs[:string][0],
+      }
+    end
+  end
+
   def get_agent_online_state
     reply = @client.call(:get_agent_online_state)
     data = reply.body.dig(:get_agent_online_state_response,
