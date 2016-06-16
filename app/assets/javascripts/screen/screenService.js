@@ -9,7 +9,7 @@ angular.module('ocWebGui.screen.service', ['ngResource', 'ocWebGui.filterpanel']
         transformResponse: function (data) {
           var agents = angular.fromJson(data);
           return agents.filter(function (agent) {
-            return states[agent.status] && teams[agent.team];
+            return teams[agent.team] && (states[agent.status] || (states["Muut"] && !Object.keys(states).includes(states[agent.status])));
           });
         }
       }
