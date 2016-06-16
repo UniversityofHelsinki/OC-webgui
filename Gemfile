@@ -6,6 +6,8 @@ ruby '2.3.0'
 # Use rb-readline to make stuff work :D
 gem 'rb-readline'
 
+gem 'pg'
+
 gem 'savon', '~> 2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
