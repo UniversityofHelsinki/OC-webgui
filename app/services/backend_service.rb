@@ -49,7 +49,7 @@ class BackendService
 	contact_number: 
 	contact_state: 
 	contact_total_handling: 
-	sub_group: )
+	sub_group:
       }
     end
   end
