@@ -1,27 +1,33 @@
 require "rails_helper"
 require_relative "../../app/controllers/agents_controller.rb"
 require_relative "../../app/controllers/application_controller.rb"
+require_relative "../../app/services/backend_service.rb"
 
 RSpec.describe AgentsController, type: :controller do
-  let(:agent) {
-      Agent.create!(:agent_id => '23',
-                    :name => 'Alice',
-                    :team => 'testi',
-                    :status => 'SISÄÄNKIRJAUS',
-                    :time_in_status => '34')
-  }
+  it 'get agent online state should work' do
+    expected = [{:agent_id=>"3300170",
+                 :full_name=>"joku vaan",
+                 :team=>"Hakijapalvelut",
+                 :status=>"Sisäänkirjaus",
+                 :time_in_status=>"5984"},
 
-  context "#to_json" do
-    it "includes names" do
-      agents = %({"id":1,"agent_id":23,"name":"Alice","team":"testi","status":"SISÄÄNKIRJAUS","time_in_status":34})
-      expect(agent.to_json).to be_json_eql(agents)
-    end
-  end
+                {:agent_id=>"2200044",
+                 :full_name=>"testaus ukko",
+                 :team=>"Opiskelijaneuvonta",
+                 :status=>"JÄLKIKIRJAUS",
+                 :time_in_status=>"1805"},
 
-  it 'Content-type should be json' do
-    # TODO ei kovin hyvä tapa
-    get :index, use_route: :agents, format: :json 
-    expect(response.header['Content-Type']).to include 'application/json'
+                {:agent_id=>"1100039",
+                 :full_name=>"kolmas test",
+                 :team=>"Opiskelijaneuvonta",
+                 :status=>"Sisäänkirjaus",
+                 :time_in_status=>"13616"}]
+
+    BackendService.any_instance.stub(:get_agent_online_state).and_return(expected)
+    agents = AgentsController.new
+    expect(agents.index[0][:name]).to eq("joku vaan")
+    expect(agents.index[1][:name]).to eq("testaus ukko")
+    expect(agents.index[2][:name]).to eq("kolmas test")
   end
 end
 
