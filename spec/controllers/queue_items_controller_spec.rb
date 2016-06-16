@@ -6,7 +6,7 @@ require_relative "../../app/services/backend_service.rb"
 RSpec.describe QueueItemsController, type: :controller do
   render_views
 
-  it 'get general queue should work' do
+  it 'queue json should work' do
     expected = [{:line => "136",
                  :label => "sssssssss",
                  :time_in_queue => "265"},
@@ -30,6 +30,17 @@ RSpec.describe QueueItemsController, type: :controller do
     queueitems = JSON.parse(response.body)
  
     expect(queueitems).to eq(expected_ilman_kaksoispisteitä)
+  end
+
+  it 'queue json should work with empty queue' do
+    expected = []
+    
+    BackendService.any_instance.stub(:get_general_queue).and_return(expected)
+    
+    get :index, format: :json
+    queueitems = JSON.parse(response.body)
+ 
+    expect(queueitems).to eq(expected)
   end
 end
 

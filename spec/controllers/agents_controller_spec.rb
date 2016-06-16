@@ -6,7 +6,7 @@ require_relative "../../app/services/backend_service.rb"
 RSpec.describe AgentsController, type: :controller do
   render_views
 
-  it 'get agent online state should work' do
+  it 'agents json should work' do
     expected = [{:agent_id=>"3300170",
                  :full_name=>"joku vaan",
                  :team=>"Hakijapalvelut",
@@ -57,5 +57,17 @@ RSpec.describe AgentsController, type: :controller do
 
     expect(agents).to eq(expected_ilman_kaksoispisteitä_ja_name_eikä_full_name)
   end
+
+  it 'agents json should work with empty' do
+    expected = []
+
+    BackendService.any_instance.stub(:get_agent_online_state).and_return(expected)
+    
+    get :index, format: :json
+    agents = JSON.parse(response.body)
+
+    expect(agents).to eq(expected)
+  end
+
 end
 
