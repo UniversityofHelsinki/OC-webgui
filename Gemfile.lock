@@ -97,6 +97,7 @@ GEM
     nori (2.6.0)
     parser (2.3.1.0)
       ast (~> 2.2)
+    pg (0.18.4)
     powerpack (0.1.1)
     rack (1.6.4)
     rack-test (0.6.3)
@@ -214,6 +215,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   ngannotate-rails
+  pg
   rails (= 4.2.6)
   rails_layout
   rb-readline
