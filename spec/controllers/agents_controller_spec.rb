@@ -1,7 +1,7 @@
-require "rails_helper"
-require_relative "../../app/controllers/agents_controller.rb"
-require_relative "../../app/controllers/application_controller.rb"
-require_relative "../../app/services/backend_service.rb"
+require 'rails_helper'
+require Rails.root.to_s + '/app/controllers/agents_controller.rb'
+require Rails.root.to_s + '/app/controllers/application_controller.rb'
+require Rails.root.to_s + '/app/services/backend_service.rb'
 
 RSpec.describe AgentsController, type: :controller do
   render_views

@@ -1,7 +1,7 @@
-require "rails_helper"
-require "savon/mock/spec_helper"
-require_relative "../../app/services/backend_service.rb"
-require_relative "../../app/controllers/application_controller.rb"
+require 'rails_helper'
+require 'savon/mock/spec_helper'
+require Rails.root.to_s + '/app/services/backend_service.rb'
+require Rails.root.to_s + '/app/controllers/application_controller.rb'
 
 RSpec.describe BackendService, type: :service do
   include Savon::SpecHelper
