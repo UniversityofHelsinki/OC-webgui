@@ -13,7 +13,7 @@ RSpec.describe BackendService, type: :service do
     fixture = File.read("spec/fixtures/backend_service/get_agent_online_state_length_4.xml")
     expected = [
       {:agent_id=>"1000081", :full_name=>"Korhonen Matti", :team=>"Helpdesk", :status=>"Backoffice", :time_in_status=>"2565"},
-      {:agent_id=>"1000021", :full_name=>"Virtanen Timo", :team=>"Opiskelijaneuvonta", :status=>"Sisäänkirjaus", :time_in_status=>"15068"},
+      {:agent_id=>"1000021", :full_name=>"Virtanen Timo", :team=>"Opiskelijaneuvonta", :status=>"Vapaa", :time_in_status=>"15068"},
       {:agent_id=>"1000061", :full_name=>"Mäkinen Kari", :team=>"Opiskelijaneuvonta", :status=>"Tauko", :time_in_status=>"141"},
       {:agent_id=>"1000041", :full_name=>"Nieminen Antti", :team=>"Helpdesk", :status=>"Jälkikirjaus", :time_in_status=>"425"}
     ]
