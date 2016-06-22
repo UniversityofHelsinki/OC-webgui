@@ -20,7 +20,7 @@ describe('screen', function () {
               agent_id: 1234,
               name: 'Kekkonen Benjamin',
               team: 'Helpdesk',
-              status: 'TAUKO',
+              status: 'Tauko',
               time_in_status: 6485
             },
             {
@@ -28,7 +28,7 @@ describe('screen', function () {
               agent_id: 4321,
               name: 'Kanerva Aallotar',
               team: 'Helpdesk',
-              status: 'Sisäänkirjaus',
+              status: 'Vapaa',
               time_in_status: 1278
             },
             {
@@ -36,7 +36,7 @@ describe('screen', function () {
               agent_id: 8754,
               name: 'Tuomas Ansala',
               team: 'Helpdesk',
-              status: 'TAUKO',
+              status: 'Tauko',
               time_in_status: 543
             },
             {
@@ -44,8 +44,20 @@ describe('screen', function () {
               agent_id: 666,
               name: 'Jenni Ahola',
               team: 'Helpdesk',
-              status: 'TAUKO',
+              status: 'Tauko',
               time_in_status: 343
+            }
+          ]);
+          $httpBackend.whenGET('teams.json').respond([
+            {
+              name: 'Helpdesk',
+              filter: true
+            }
+          ]);
+          $httpBackend.whenGET('states.json').respond([
+            {
+              name: 'Tauko',
+              filter: true
             }
           ]);
         });
@@ -59,16 +71,16 @@ describe('screen', function () {
     expect(agentCards.count()).toBe(4);
 
     expect(agentCards.get(0).element(by.className('agent-name')).getText()).toBe('Kekkonen Benjamin');
-    expect(agentCards.get(0).element(by.className('agent-status')).getText()).toBe('TAUKO');
+    expect(agentCards.get(0).element(by.className('agent-status')).getText()).toBe('Tauko');
 
     expect(agentCards.get(1).element(by.className('agent-name')).getText()).toBe('Kanerva Aallotar');
-    expect(agentCards.get(1).element(by.className('agent-status')).getText()).toBe('Sisäänkirjaus');
+    expect(agentCards.get(1).element(by.className('agent-status')).getText()).toBe('Vapaa');
 
     expect(agentCards.get(2).element(by.className('agent-name')).getText()).toBe('Tuomas Ansala');
-    expect(agentCards.get(2).element(by.className('agent-status')).getText()).toBe('TAUKO');
+    expect(agentCards.get(2).element(by.className('agent-status')).getText()).toBe('Tauko');
 
     expect(agentCards.get(3).element(by.className('agent-name')).getText()).toBe('Jenni Ahola');
-    expect(agentCards.get(3).element(by.className('agent-status')).getText()).toBe('TAUKO');
+    expect(agentCards.get(3).element(by.className('agent-status')).getText()).toBe('Tauko');
   });
 
   it('Status color should match status text', function () {
@@ -95,14 +107,14 @@ describe('screen', function () {
   it('should filter correctly', function () {
     var agentCards;
     element(by.linkText('rajaa')).click();
-    element(by.id('TAUKO')).click();
+    element(by.id('Tauko')).click();
     element(by.linkText('Show state screen')).click();
     agentCards = element.all(by.className('agent-card'));
     expect(agentCards.count()).toBe(1);
     expect(agentCards.get(0).element(by.className('agent-name')).getText())
       .toBe('Kanerva Aallotar');
     expect(agentCards.get(0).element(by.className('agent-status')).getText())
-      .toBe('Sisäänkirjaus');
+      .toBe('Vapaa');
   });
 });
 
