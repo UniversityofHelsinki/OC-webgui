@@ -14,24 +14,21 @@ angular.module('ocWebGui.filterpanel', ['ui.router', 'ngResource'])
     vm.teams = shared.getTeams();
     vm.states = shared.getStates();
   })
-  .factory('shared', function () {
-    var teams = {
-      'Hakijapalvelut': false,
-      'Helpdesk': true,
-      'Opiskelijaneuvonta': false,
-      'OrangeContact 1': false,
-      'Puhelinvaihde': false,
-      'Uaf': false
-    };
-    var states = {
-      'BACKOFFICE': false,
-      '<TELJENTÄ>': false,
-      'Sisäänkirjaus': true,
-      'TAUKO': true,
-      '12648': false,
-      'PUHELU (Sisään)': true,
-      'PUHELU (Ulos)': true
-    };
+  .factory('shared', function ($resource) {
+    var teams = {};
+    var states = { 'Muut': true };
+
+    $resource('teams.json').query(function (data) {
+      data.forEach(function (team) {
+        teams[team.name] = team.filter;
+      });
+    });
+
+    $resource('states.json').query(function (data) {
+      data.forEach(function (state) {
+        states[state.name] = state.filter;
+      });
+    });
 
     return {
       getTeams: function () {

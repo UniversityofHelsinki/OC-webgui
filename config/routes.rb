@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get 'agents' => 'agents#index'
   get 'queue' => 'queue_items#index'
+  get 'teams' => 'teams#index'
+  get 'states' => 'states#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
