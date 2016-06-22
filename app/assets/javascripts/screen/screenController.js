@@ -28,10 +28,10 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
 
         // Agent status coloring and number tally.
         vm.agents = agents.map(function (agent) {
-          if (agent.status === 'Sisäänkirjaus') {
+          if (agent.status === 'Vapaa') {
             agent.color = 'green';
             green++;
-          } else if (agent.status === 'JÄLKIKIRJAUS') {
+          } else if (agent.status === 'Jälkikirjaus') {
             agent.color = 'yellow';
             yellow++;
           } else {
