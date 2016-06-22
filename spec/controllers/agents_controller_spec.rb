@@ -69,8 +69,6 @@ RSpec.describe AgentsController, type: :controller do
     
     get :index, format: :json
     agents = JSON.parse(response.body)
-    puts "mrklgtmhlmk"
-    puts agents
     expect(agents).to eq(expected)
   end
 
