@@ -104,6 +104,7 @@ GEM
     nori (2.6.0)
     parser (2.3.1.0)
       ast (~> 2.2)
+    pg (0.18.4)
     powerpack (0.1.1)
     rack (1.6.4)
     rack-test (0.6.3)
@@ -182,6 +183,9 @@ GEM
       nokogiri (>= 1.4.0)
       nori (~> 2.4)
       wasabi (~> 3.4)
+    scss_lint (0.48.0)
+      rake (>= 0.9, < 12)
+      sass (~> 3.4.15)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
@@ -228,6 +232,7 @@ DEPENDENCIES
   jquery-rails
   json_spec
   ngannotate-rails
+  pg
   rails (= 4.2.6)
   rails_layout
   rb-readline
@@ -235,6 +240,7 @@ DEPENDENCIES
   rubocop
   sass-rails (~> 5.0)
   savon (~> 2.0)
+  scss_lint
   sdoc (~> 0.4.0)
   spring
   sqlite3

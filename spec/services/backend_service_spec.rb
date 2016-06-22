@@ -91,4 +91,3 @@ RSpec.describe BackendService, type: :service do
     expect(response).to be_empty
   end
 end
-

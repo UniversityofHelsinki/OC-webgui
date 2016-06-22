@@ -6,6 +6,8 @@ ruby '2.3.0'
 # Use rb-readline to make stuff work :D
 gem 'rb-readline'
 
+gem 'pg'
+
 gem 'savon', '~> 2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -18,7 +20,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .coffee assets and views
-#gem 'coffee-rails', '~> 4.1.0'
+# gem 'coffee-rails', '~> 4.1.0'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -26,7 +28,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-#gem 'turbolinks'
+# gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -47,7 +49,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
 end
 
-# Bootstrap for easy CSS 
+# Bootstrap for easy CSS
 gem 'bootstrap-sass'
 
 # Pack AngularJS templates
@@ -61,7 +63,7 @@ gem 'rubocop', require: false
 
 group :development do
   gem 'rails_layout'
-  
+
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
@@ -77,3 +79,4 @@ gem 'webmock'
 
 # JSON for RSpec
 gem 'json_spec'
+gem 'scss_lint', require: false

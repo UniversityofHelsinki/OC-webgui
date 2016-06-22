@@ -1,3 +1,17 @@
 {
-    "extends": ["eslint:recommended", "angular"]
+    "extends": ["airbnb-base/legacy", "angular"],
+    "env": {
+        "browser": true,
+        "jasmine": true,
+        "protractor": true
+    },
+    "globals": {
+        "module": true,
+        "inject": true
+    },
+    "rules": {
+        "func-names": "off",
+        "quote-props": ["error", "consistent"],
+        "no-param-reassign": ["error", { "props": false }]
+    }
 }

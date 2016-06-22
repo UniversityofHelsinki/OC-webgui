@@ -6,6 +6,10 @@ require_relative "../../app/services/backend_service.rb"
 RSpec.describe AgentsController, type: :controller do
   render_views
 
+  before(:each) do
+    Rails.cache.clear
+  end
+
   it 'agents json should work' do
     expected = [{:agent_id=>"3300170",
                  :full_name=>"joku vaan",
@@ -65,9 +69,9 @@ RSpec.describe AgentsController, type: :controller do
     
     get :index, format: :json
     agents = JSON.parse(response.body)
-
+    puts "mrklgtmhlmk"
+    puts agents
     expect(agents).to eq(expected)
   end
 
 end
-

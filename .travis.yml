@@ -2,6 +2,9 @@ language: ruby
 rvm:
   - 2.3.0
 
+services:
+  - postgresql 
+
 env:
   - TRAVIS_NODE_VERSION="4"
 
@@ -12,6 +15,7 @@ install:
   - npm run update-webdriver
 
 before_script:
+  - psql -c 'create database ocwebgui_test;' -U postgres
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - bundle exec rails server -p 3000 &

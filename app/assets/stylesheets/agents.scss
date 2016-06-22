@@ -1,7 +1,9 @@
-// Place all the styles related to the Agents controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$cards-gutter: 0.5em;
 
+body {
+  margin: 0;
+  padding: 0;
+}
 
 .screen_background {
   background-color: #87aade;
@@ -9,13 +11,6 @@
   width: 100%;
   display: flex;
 }
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
-$cards-gutter: 0.5em;
 
 .cards {
   display: flex;
@@ -27,10 +22,9 @@ $cards-gutter: 0.5em;
 }
 
 .card {
-  //display: inline-block;
   box-sizing: border-box;
   margin: $cards-gutter / 2;
-  background-color: rgba(255,255,255,0.75);
+  background-color: rgba(255, 255, 255, 0.75);
   border-radius: 4px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
   padding: 0.25em;
@@ -43,27 +37,14 @@ $cards-gutter: 0.5em;
   line-height: 1.5;
   text-align: center;
 
-}
-
-.agent-card .agent-status-color {
-  float: left;
-}
-
-.sidebar .agent-status-color {
-  margin: auto;
-  width: 1em;
-  height: 2em;
-  margin-bottom: 0.5em;
-  //margin-top: 3em;
+  .agent-status-color {
+    float: left;
+  }
 }
 
 .sidebar {
   display: flex;
-  background-color: rgba(255,255,255,0.75);
-  //position: absolute;
-  //top: 0;
-  //right: 0;
-  //bottom: 0;
+  background-color: rgba(255, 255, 255, 0.75);
   width: 6%;
   text-align: center;
   font-size: 300%;
@@ -71,10 +52,17 @@ $cards-gutter: 0.5em;
   flex-direction: column;
   justify-content: center;
   box-shadow: -1px 0 4px rgba(0, 0, 0, 0.2);
-}
 
-.sidebar .agent-status-count:first-child {
-  margin-top: 0;
+  .agent-status-color {
+    margin: auto;
+    width: 2em;
+    height: 2em;
+    margin-bottom: 0.5em;
+  }
+
+  .agent-status-count:first-child {
+    margin-top: 0;
+  }
 }
 
 .agent-status-count {
@@ -82,19 +70,24 @@ $cards-gutter: 0.5em;
 }
 
 .agent-status-color {
-  background-color: #37c837;
   padding: 3%;
   width: 1em;
   height: 1em;
   border-radius: 4px;
 }
 
-.agent-name {
-  display: inline-block;
+.agent-status-color-default {
+  background-color: black;
 }
 
-.agent-status {
+.agent-status-color-green {
+  background-color: #37c837;
 }
 
-.status-timer {
+.agent-status-color-yellow {
+  background-color: #ffff4d;
+}
+
+.agent-status-color-red {
+  background-color: #f33;
 }

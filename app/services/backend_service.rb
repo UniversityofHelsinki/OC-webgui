@@ -46,7 +46,7 @@ class BackendService
     return [] unless data
     data = [data] unless data.is_a? Array
 
-    # TODO change variable names
+    # TODO: change variable names
     data.map do |attrs|
       {
         line: attrs[:string][0],
@@ -73,5 +73,4 @@ class BackendService
     #raise
     return []
   end
-
 end

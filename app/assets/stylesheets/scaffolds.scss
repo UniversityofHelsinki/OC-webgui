@@ -6,7 +6,10 @@ body {
   line-height: 18px;
 }
 
-p, ol, ul, td {
+p,
+ol,
+ul,
+td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
@@ -32,7 +35,8 @@ a {
 }
 
 div {
-  &.field, &.actions {
+  &.field,
+  &.actions {
     margin-bottom: 10px;
   }
 }
@@ -61,7 +65,7 @@ div {
     padding: 5px 5px 5px 15px;
     font-size: 12px;
     margin: -7px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     background-color: #c00;
     color: #fff;
   }

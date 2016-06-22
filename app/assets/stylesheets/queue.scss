@@ -1,7 +1,3 @@
-// Place all the styles related to the queue controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 body {
   margin: 0;
   padding: 0;
@@ -16,23 +12,51 @@ body {
 
 .queue_length {
   text-align: center;
-  //flex-grow: 1;
   min-height: 26%;
-  max-height: 26%;
+  max-height: 26% !important;
+
+  display: flex;
+  flex-grow: 1;
 }
 
-.queue_length span {
-  font-size: 75%;
+.q-length {
+  width: 50%;
+  font-size: 12vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    margin: 0.25em;
+  }
 }
 
-.queue_length div { // 7
-  font-size: 2em;
-  padding-top: 0.2em;
+.plus-5 {
+  display: flex;
+  font-size: 2.5vw;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-bottom: 1%;
+}
+
+.time-date-week {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  font-size: 3.5vw;
+
+  div {
+    height: 33.3%;
+    padding: 3%;
+  }
 }
 
 .queue-div {
   width: 50%;
-  font-size: 500%;
+  font-size: 3.5vw;
   line-height: 1;
   display: flex;
   flex-direction: column;
@@ -41,31 +65,40 @@ body {
 .queuer {
   line-height: 1.5;
   display: flex;
+  flex-direction: row;
   text-align: center;
-}
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  flex-wrap: nowrap;
 
-.queuer-index {
-  width: 20%;
-}
+  .queuer-index {
+    width: 20%;
+  }
 
-.queuer-time {
-  //flex-grow: 1;
-  width: 60%
-}
+  .queuer-time {
+    width: 60%;
+  }
 
-.queuer-flag {
-  width: 20%;
-  background-size: contain;
-  background-position: right;
-  background-repeat: no-repeat;
+  .queuer-flag {
+    width: 20%;
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+
+    div {
+      // purkka :D
+      opacity: 0;
+    }
+  }
 }
 
 .queuer-flag-Fin {
-  background-image: url(Flag_of_Finland.svg);
+  background-image: url("Flag_of_Finland.svg");
 }
 
 .queuer-flag-Swe {
-  background-image: url(Flag_of_Sweden.svg);
+  background-image: url("Flag_of_Sweden.svg");
 }
 
 .queuer-flag-Eng {
@@ -83,19 +116,19 @@ body {
 }
 
 .stats-table {
-  border-spacing: 0em 1em;
-}
+  border-spacing: 0 1em;
 
-.stats-table td {
-  width: 50%;
-  font-size: 100%;
-  line-height: 1;
-  padding: 0.1em;
-  text-align: right;
-}
+  td {
+    width: 50%;
+    font-size: 150%;
+    line-height: 1;
+    padding: 0.1em;
+    text-align: right;
+  }
 
-.stats-table th {
-  font-size: 75%;
-  font-weight: normal;
-  text-align: left;
+  th {
+    font-size: 75%;
+    font-weight: normal;
+    text-align: left;
+  }
 }
