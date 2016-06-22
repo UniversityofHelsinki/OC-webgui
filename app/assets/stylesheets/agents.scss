@@ -1,16 +1,4 @@
-$cards-gutter: 0.5em;
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
-.screen_background {
-  background-color: #87aade;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-}
+@import "common";
 
 .cards {
   display: flex;
@@ -24,9 +12,9 @@ body {
 .card {
   box-sizing: border-box;
   margin: $cards-gutter / 2;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: $card-bg;
   border-radius: 4px;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: $card-shadow;
   padding: 0.25em;
   overflow: hidden;
 }
@@ -44,14 +32,14 @@ body {
 
 .sidebar {
   display: flex;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: $card-bg;
   width: 6%;
   text-align: center;
   font-size: 300%;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  box-shadow: -1px 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: -1px 0 4px $card-shadow-color;
 
   .agent-status-color {
     margin: auto;
