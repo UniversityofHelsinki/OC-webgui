@@ -1,5 +1,4 @@
 require 'savon'
-require 'dotenv'
 
 # This class communicates with Elisa Orange Contact SOAP API.
 class BackendService
