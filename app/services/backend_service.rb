@@ -69,7 +69,11 @@ class BackendService
      :string)
    return [] unless data
    data = [data] unless data.is_a? Array
- end
+  rescue Savon::HTTPError => error
+    puts error.http.code
+    #raise
+    return []
+  end
 
  private 
 
