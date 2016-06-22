@@ -15,21 +15,20 @@ angular.module('ocWebGui.filterpanel', ['ui.router', 'ngResource'])
     vm.states = shared.getStates();
   })
   .factory('shared', function ($resource) {
-
     var teams = {};
-    var states = {};
+    var states = { 'Muut': true };
 
-    $resource('teams.json').query(function(data) {
-      data.forEach(function(team) {
+    $resource('teams.json').query(function (data) {
+      data.forEach(function (team) {
         teams[team.name] = team.filter;
       });
-    })
+    });
 
-    $resource('states.json').query(function(data) {
-      data.forEach(function(state) {
+    $resource('states.json').query(function (data) {
+      data.forEach(function (state) {
         states[state.name] = state.filter;
       });
-    })
+    });
 
     return {
       getTeams: function () {
