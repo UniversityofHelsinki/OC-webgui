@@ -1,11 +1,10 @@
-class CreateAgents < ActiveRecord::Migration
+class CreateAgentStatuses < ActiveRecord::Migration
   def change
-    create_table :agents do |t|
+    create_table :agent_statuses do |t|
       t.integer :agent_id
-      t.string :name
       t.string :team
       t.string :status
-      t.integer :time_in_status
+      t.boolean :open
 
       t.timestamps null: false
     end

@@ -12,42 +12,42 @@ RSpec.describe AgentsController, type: :controller do
 
   it 'agents json should work' do
     expected = [{:agent_id=>"3300170",
-                 :full_name=>"joku vaan",
+                 :name=>"joku vaan",
                  :team=>"Hakijapalvelut",
                  :status=>"Sisäänkirjaus",
                  :time_in_status=>"5984"},
 
                 {:agent_id=>"2200044",
-                 :full_name=>"testaus ukko",
+                 :name=>"testaus ukko",
                  :team=>"Opiskelijaneuvonta",
                  :status=>"JÄLKIKIRJAUS",
                  :time_in_status=>"1805"},
 
                 {:agent_id=>"1100039",
-                 :full_name=>"kolmas test",
+                 :name=>"kolmas test",
                  :team=>"Opiskelijaneuvonta",
                  :status=>"Sisäänkirjaus",
                  :time_in_status=>"13616"}]
 
     # onko tässä ees järkee
     expected_ilman_kaksoispisteitä_ja_name_eikä_full_name =
-               [{"agent_id"=>3300170,
+               [{"agent_id"=>"3300170",
                  "name"=>"joku vaan",
                  "team"=>"Hakijapalvelut",
                  "status"=>"Sisäänkirjaus",
-                 "time_in_status"=>5984},
+                 "time_in_status"=>"5984"},
 
-                {"agent_id"=>2200044,
+                {"agent_id"=>"2200044",
                  "name"=>"testaus ukko",
                  "team"=>"Opiskelijaneuvonta",
                  "status"=>"JÄLKIKIRJAUS",
-                 "time_in_status"=>1805},
+                 "time_in_status"=>"1805"},
 
-                {"agent_id"=>1100039,
+                {"agent_id"=>"1100039",
                  "name"=>"kolmas test",
                  "team"=>"Opiskelijaneuvonta",
                  "status"=>"Sisäänkirjaus",
-                 "time_in_status"=>13616}]
+                 "time_in_status"=>"13616"}]
 
     BackendService.any_instance.stub(:get_agent_online_state).and_return(expected)
     

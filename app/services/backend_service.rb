@@ -26,7 +26,7 @@ class BackendService
     data.map do |attrs|
       {
         agent_id: attrs[:string][0],
-        full_name: attrs[:string][1],
+        name: attrs[:string][1],
         team: attrs[:string][2],
         #Some states are randomly capitalized and include <> brackets, the brackets are trimmed out and each individual word in the state is capitalized. Unicode characters require a workaround using mb_chars.
         status: normalize_status(normalize_unicode_string(attrs[:string][3])),

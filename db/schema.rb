@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616113650) do
+ActiveRecord::Schema.define(version: 20160623085618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "agent_statuses", force: :cascade do |t|
+    t.integer  "agent_id"
+    t.string   "team"
+    t.string   "status"
+    t.boolean  "open"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "agents", force: :cascade do |t|
     t.integer  "agent_id"
@@ -44,6 +53,14 @@ ActiveRecord::Schema.define(version: 20160616113650) do
   create_table "teams", force: :cascade do |t|
     t.string   "name"
     t.boolean  "filter"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "testis", force: :cascade do |t|
+    t.string   "name"
+    t.string   "city"
+    t.integer  "age"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
