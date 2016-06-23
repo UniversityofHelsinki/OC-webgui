@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <GetAgentOnlineStateResponse xmlns="http://elisa.ccreport.fi/">
+      <GetAgentOnlineStateResult>
+        <ArrayOfString>
+          <string>1000081</string>
+          <string>Korhonen Matti</string>
+          <string>Helpdesk</string>
+          <string>BACKOFFICE</string>
+          <string>2565</string>
+        </ArrayOfString>
+      </GetAgentOnlineStateResult>
+    </GetAgentOnlineStateResponse>
+  </soap:Body>
+</soap:Envelope>

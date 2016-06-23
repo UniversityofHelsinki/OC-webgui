@@ -74,4 +74,6 @@ end
 # Use dotenv for storing environment variables
 gem 'dotenv-rails', :groups => [:development, :test]
 
+# JSON for RSpec
+gem 'json_spec'
 gem 'scss_lint', require: false

@@ -23,7 +23,7 @@
             <oc-time seconds="queuer.time_in_queue" class="queuer-time"></oc-time>
             <span class="queuer-flag queuer-flag-{{queuer.language}}"><div>purkka</div></span>
         </div>
-        <div ng-show="{{queue.length >= 5}}" class="plus-5"> &#9660 </div>
+        <div ng-if="queue.queue.length >= 5" class="plus-5">&#9660</div>
     </div>
     <div class="stats card">
         <table class="stats-table">

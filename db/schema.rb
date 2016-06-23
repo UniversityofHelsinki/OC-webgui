@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601121151) do
+ActiveRecord::Schema.define(version: 20160616113650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,20 @@ ActiveRecord::Schema.define(version: 20160601121151) do
     t.integer  "time_in_queue"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "states", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "filter"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "filter"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
