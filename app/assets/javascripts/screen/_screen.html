@@ -5,8 +5,11 @@
             <div class="agent-name">
                 {{ agent.name }}
             </div>
-            <div class="agent-status"> {{ agent.status }}</div>
-            <oc-time seconds="agent.time_in_status" class="status-timer"></oc-time>
+            <div ng-style="agent.status === 'Vapaa' && {opacity: 0}">
+                <!-- If status is 'Vapaa', hide status and time_in_status -->
+                <div class="agent-status"> {{ agent.status }}</div>
+                <oc-time seconds="agent.time_in_status" class="status-timer"></oc-time>
+            </div>
         </div>
     </div>
     <div class="sidebar">
