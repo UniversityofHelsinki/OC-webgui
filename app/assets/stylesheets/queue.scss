@@ -97,8 +97,8 @@
 }
 
 .stats {
-  width: 50%;
-  font-size: 500%;
+  height: 70%;
+  font-size: 350%;
   text-align: center;
   line-height: 1.5;
   display: flex;
@@ -122,4 +122,14 @@
     font-weight: normal;
     text-align: left;
   }
+}
+
+.outer {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.chart {
+  height: 30%;
 }
