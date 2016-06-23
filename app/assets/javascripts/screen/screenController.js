@@ -19,6 +19,7 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
     vm.green = 0;
     vm.yellow = 0;
     vm.red = 0;
+    $scope.trimName = trimName;
 
     function fetchData() {
       Agents.query(function (agents) {
@@ -51,6 +52,18 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         vm.yellow = yellow;
         vm.red = red;
       });
+    }
+      
+    function trimName(wholename) {
+        // var name = string(agent.name);
+        
+        var name = wholename;
+        
+        var parts = name.split(" ");
+        name = parts.pop();
+        name += " " + parts[0].charAt(0);
+        
+        return name;
     }
 
     fetchDataInterval = $interval(fetchData, 5000);
