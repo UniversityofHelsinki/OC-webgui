@@ -33,6 +33,10 @@ class BackendService
         time_in_status: attrs[:string][4]
       }
     end
+  rescue Savon::HTTPError => error
+    puts error.http.code
+    #raise
+    return []
   end
 
   def get_general_queue
@@ -51,6 +55,10 @@ class BackendService
         time_in_queue: attrs[:string][7]
       }
     end
+  rescue Savon::HTTPError => error
+    puts error.http.code
+    #raise
+    return []
   end
 
   def get_teams
@@ -60,7 +68,11 @@ class BackendService
      :string)
    return [] unless data
    data = [data] unless data.is_a? Array
- end
+  rescue Savon::HTTPError => error
+    puts error.http.code
+    #raise
+    return []
+  end
 
  private 
 
@@ -81,5 +93,4 @@ class BackendService
   end
   status 
   end
-  
 end

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <GetGeneralQueueResponse xmlns="http://elisa.ccreport.fi/">
+      <GetGeneralQueueResult>
+        <ArrayOfString>
+          <string>124</string>
+          <string>Opiskelijaneuvonta</string>
+          <string>1</string>
+          <string>SIPTrunk</string>
+          <string>PBX</string>
+          <string>I</string>
+          <string>1</string>
+          <string>69</string>
+        </ArrayOfString>
+      </GetGeneralQueueResult>
+    </GetGeneralQueueResponse>
+  </soap:Body>
+</soap:Envelope>

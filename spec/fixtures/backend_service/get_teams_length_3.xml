@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <GetTeamsResponse xmlns="http://elisa.ccreport.fi/">
+      <GetTeamsResult>
+        <string>Väinämöinen</string>
+        <string>Joukahainen</string>
+        <string>Aino</string>
+      </GetTeamsResult>
+    </GetTeamsResponse>
+  </soap:Body>
+</soap:Envelope>
