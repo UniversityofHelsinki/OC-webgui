@@ -10,11 +10,13 @@ angular.module('ocWebGui.login', ['ui.router'])
   })
   .factory('User', function ($http) {
     var isAuthenticated = false;
+    var userData = { username: null };
     return {
       login: function (username, password, onSuccess, onError) {
         $http.post('login', { username: username, password: password })
           .then(function (response) {
             isAuthenticated = true;
+            userData = response.data;
             onSuccess();
           }, function (response) {
             isAuthenticated = false;
@@ -23,6 +25,16 @@ angular.module('ocWebGui.login', ['ui.router'])
       },
       isAuthenticated: function () {
         return isAuthenticated;
+      },
+      getUsername: function () {
+        return userData.username;
+      },
+      logout: function () {
+        $http.delete('logout')
+          .then(function () {
+            isAuthenticated = false;
+            userData = { username: null };
+          });
       }
     };
   })

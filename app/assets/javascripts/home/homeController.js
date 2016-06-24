@@ -10,4 +10,8 @@ angular.module('ocWebGui.home', ['ui.router', 'ocWebGui.login'])
     $urlRouterProvider.otherwise('home');
   })
   .controller('HomeController', function (User) {
+    var vm = this;
+    vm.isAuthenticated = User.isAuthenticated;
+    vm.username = User.getUsername;
+    vm.logout = User.logout;
   });
