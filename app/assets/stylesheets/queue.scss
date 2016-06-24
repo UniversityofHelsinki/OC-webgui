@@ -143,3 +143,9 @@
 .nvd3 g.nv-groups path.nv-line {
   stroke-width: 0px;
 }
+
+/* ettei näytä nollan kokosia pylväitä */
+/*
+.nvd3 rect[height="1"] {
+  display: none !important;
+}*/
