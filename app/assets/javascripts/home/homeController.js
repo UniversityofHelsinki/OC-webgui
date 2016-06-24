@@ -1,4 +1,4 @@
-angular.module('ocWebGui.home', ['ui.router'])
+angular.module('ocWebGui.home', ['ui.router', 'ocWebGui.login'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
@@ -9,5 +9,5 @@ angular.module('ocWebGui.home', ['ui.router'])
       });
     $urlRouterProvider.otherwise('home');
   })
-  .controller('HomeController', function () {
+  .controller('HomeController', function (User) {
   });
