@@ -2,8 +2,22 @@
 
 label {
   display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+input[type=checkbox] {
+  /* All browsers except webkit*/
+  transform: scale(2.0);
+
+  /* Webkit browsers*/
+  -webkit-transform: scale(2.0);
 }
 
 h2 {
   font-weight: normal;
+}
+
+.filter-card {
+  font-size: 300%;
 }
