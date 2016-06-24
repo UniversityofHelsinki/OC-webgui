@@ -133,3 +133,13 @@
 .chart {
   height: 30%;
 }
+
+.nv-point {
+  stroke-opacity: 1 !important;
+  stroke-width: 2px;
+  fill-opacity: 1 !important;
+}
+
+.nvd3 g.nv-groups path.nv-line {
+  stroke-width: 0px;
+}
