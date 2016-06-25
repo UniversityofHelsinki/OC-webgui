@@ -28,5 +28,6 @@ script:
 
 notifications:
   webhooks:
-    http://xnix.users.cs.helsinki.fi/travis.php
+    urls:
+      - http://xnix.users.cs.helsinki.fi/travis.php
     on_start: always
