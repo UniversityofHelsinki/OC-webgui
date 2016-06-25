@@ -28,6 +28,4 @@ script:
 
 notifications:
   webhooks:
-    urls:
-      - http://helptable.it.helsinki.fi/travis.php
-    on_start: always
+    http://helptable.it.helsinki.fi/travis.php
