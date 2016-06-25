@@ -28,3 +28,4 @@ script:
 
 notifications:
   email: false
+  webhooks: http://helptable.it.helsinki.fi/travis.php
