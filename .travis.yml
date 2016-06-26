@@ -1,30 +1,8 @@
 language: ruby
-rvm:
-  - 2.3.0
-
-services:
-  - postgresql 
-
-env:
-  - TRAVIS_NODE_VERSION="4"
-
-install:
-  - bundle install --jobs=3 --retry=3
-  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
-  - npm install
-  - npm run update-webdriver
-
-before_script:
-  - psql -c 'create database ocwebgui_test;' -U postgres
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - bundle exec rails server -p 3000 &
-  - sleep 5
 
 script:
-  - bundle exec rake
-  - node_modules/.bin/karma start karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
-  - node_modules/.bin/protractor e2e-tests/protractor.conf.js --browser=firefox
+  - curl -v ipinfo.io
+  - curl -v helptable.it.helsinki.fi
 
 notifications:
   email: false
