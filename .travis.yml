@@ -4,8 +4,8 @@ env:
   global:
     - secure: "KPVWgnLODxMeW6JHJcNI0WxEnGkShfUKdzG8KOyhGsnzLhgjYQkvtmZZh9klW35Obmr7+aLWbqW5iAT0MaTb+/yJCFxc+c7fxZBehOdHdKH2D6Qj4X3TPC727EoKcUR5lYAv7IP/yTm2DZ6p9s9Qio1FCmAI2nEACQAumycz52AMY4ZIwzUPwKzZSL3BDZ0wByyYuK3YdyagyV+B3ST4cjF5RJiESFtXqkgPJw9Q+o+xuIJeo6TUjKMfy7IbFPxNPorKhwf/0umH+khugzsv6bPZ/TblP2NZV7Xio/E3LbkPN6ukToDCV9WtsdQjPdDDDTbQrm/oQtHGEuAL3J+XT2DXh4QawLr3GifxV1dSOh5cq+DttLGuHLRXWqZAQPYGf4CDFZZu9E+rVX6GL/xS2zpvL9/+8fcaqJM7Uw5zpXe5fTtGyvg2AaylBix2wD6n5NKdT/w2Xy4c4aNsxVMC3xcMuIUP3NZVhOW7zE5DHwZpWYurF5khW8Y3uTXVNeWayB31SAIcRgE0mj76yPHUQrH1soBnW/epsun7NLNxIfnQoa9aVm01tOPKruLFwRk11+yvrD5k2ZJ2dMIK1XwIP/bqugJRYVTFU3+rZ/Mz6/5V89aQVC92ZYzffiigFwZtwBycQloXxEUm5/3qFdMqoWrG3hJAKM8/B3luDXQMRRA="
 
-script:
-  - curl -X POST -H 'SECRETPHP: 'testest'' "http://helptable.it.helsinki.fi/travistest.php"
+before_deploy:
+  - curl -X POST -H "SECRETPHP: 'testest'" "http://helptable.it.helsinki.fi/travistest.php"
   - curl -v ipinfo.io
   - curl -v helptable.it.helsinki.fi
   - echo $NOTSOSECRET
