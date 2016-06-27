@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'application#angular'
 
-  get 'agents' => 'agents#index'
+  get 'agent_statuses' => 'agent_statuses#index'
   get 'queue' => 'queue_items#index'
   get 'teams' => 'teams#index'
   get 'states' => 'states#index'
