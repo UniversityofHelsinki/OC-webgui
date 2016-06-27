@@ -6,66 +6,53 @@ require Rails.root.to_s + '/app/services/backend_service.rb'
 RSpec.describe AgentStatusesController, type: :controller do
   render_views
 
-  #before(:each) do
-  #  Rails.cache.clear
-  #end
+  it 'should return currently open agent statuses in JSON format and ignore non-open statuses' do
+    agent1 = {"agent_id"=>3300170,
+       "name"=>"joku vaan",
+       "team"=>"Hakijapalvelut",
+       "status"=>"Sisäänkirjaus",
+       "created_at"=>anything }
 
-  it 'agents json should work' do
-    expected = [{"agent_id"=>3300170,
-                 "name"=>"joku vaan",
-                 "team"=>"Hakijapalvelut",
-                 "status"=>"Sisäänkirjaus"},
+    agent2 = {"agent_id"=>2200044,
+        "name"=>"testaus ukko",
+        "team"=>"Opiskelijaneuvonta",
+        "status"=>"Jälkikirjaus",
+        "created_at"=>anything }
 
-                {:agent_id=>2200044,
-                 :name=>"testaus ukko",
-                 :team=>"Opiskelijaneuvonta",
-                 :status=>"JÄLKIKIRJAUS"},
+    agent3= {"agent_id"=>1100039,
+        "name"=>"kolmas test",
+        "team"=>"Opiskelijaneuvonta",
+        "status"=>"Sisäänkirjaus",
+        "created_at"=>anything }
 
-                {:agent_id=>1100039,
-                 :name=>"kolmas test",
-                 :team=>"Opiskelijaneuvonta",
-                 :status=>"Sisäänkirjaus"}]
+    agent4= {"agent_id"=>2525208,
+        "name"=>"kiinnioleva",
+        "team"=>"Helpdesk",
+        "status"=>"Sisäänkirjaus",
+        "created_at"=>anything }
 
-    # onko tässä ees järkee
-=begin expected_ilman_kaksoispisteitä_ja_name_eikä_full_name =
-               [{"agent_id"=>"3300170",
-                 "name"=>"joku vaan",
-                 "team"=>"Hakijapalvelut",
-                 "status"=>"Sisäänkirjaus",
-                 "time_in_status"=>"5984"},
 
-                {"agent_id"=>"2200044",
-                 "name"=>"testaus ukko",
-                 "team"=>"Opiskelijaneuvonta",
-                 "status"=>"JÄLKIKIRJAUS",
-                 "time_in_status"=>"1805"},
-
-                {"agent_id"=>"1100039",
-                 "name"=>"kolmas test",
-                 "team"=>"Opiskelijaneuvonta",
-                 "status"=>"Sisäänkirjaus",
-                 "time_in_status"=>"13616"}]
-=end 
-
-    #BackendService.any_instance.stub(:get_agent_online_state).and_return(expected)
     AgentStatus.create(agent_id: 3300170, name: "joku vaan", team: "Hakijapalvelut", status: "Sisäänkirjaus", open: true)
-    AgentStatus.create(agent_id: 2200044, name: "testaus ukko", team: "Opiskelijaneuvonta", status: "JÄLKIKIRJAUS", open: true)
+    AgentStatus.create(agent_id: 2200044, name: "testaus ukko", team: "Opiskelijaneuvonta", status: "Jälkikirjaus", open: true)
     AgentStatus.create(agent_id: 1100039, name: "kolmas test", team: "Opiskelijaneuvonta", status: "Sisäänkirjaus", open: true)
+    AgentStatus.create(agent_id: 2525208, name: "kiinnioleva", team: "Helpdesk", status: "Sisäänkirjaus", open: false)
+
     
     get :index, format: :json
     agents = JSON.parse(response.body)
 
-    expect(agents).to eq(expected)
+    expect(agents).to include(agent1)
+    expect(agents).to include(agent2)
+    expect(agents).to include(agent3)
+    expect(agents).not_to include(agent4)
+
   end
 
-  it 'agents json should work with empty' do
-    expected = []
+  it 'should return empty array if no open agent statuses exist' do
 
-    #BackendService.any_instance.stub(:get_agent_online_state).and_return(expected)
-    
     get :index, format: :json
     agents = JSON.parse(response.body)
-    expect(agents).to eq(expected)
+    expect(agents).to be_empty
   end
 
 end

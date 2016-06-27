@@ -6,10 +6,6 @@ require Rails.root.to_s + '/app/services/backend_service.rb'
 RSpec.describe QueueItemsController, type: :controller do
   render_views
 
-  #before(:each) do
-  #  Rails.cache.clear
-  #end
-
   it 'queue json should work' do
     expected = [{:line => "136",
                  :label => "sssssssss",
