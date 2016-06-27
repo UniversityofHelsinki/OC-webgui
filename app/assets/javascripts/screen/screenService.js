@@ -2,7 +2,7 @@ angular.module('ocWebGui.screen.service', ['ngResource', 'ocWebGui.filterpanel']
   .factory('Agents', function ($resource, shared) {
     var teams = shared.getTeams();
     var states = shared.getStates();
-    return $resource('agents.json', {}, {
+    return $resource('agent_statuses.json', {}, {
       query: {
         method: 'get',
         isArray: true,

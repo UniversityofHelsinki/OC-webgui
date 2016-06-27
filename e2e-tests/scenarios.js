@@ -14,14 +14,14 @@ describe('screen', function () {
     browser.addMockModule('httpBackendMock', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
         .run(function ($httpBackend) {
-          $httpBackend.whenGET('agents.json').respond([
+          $httpBackend.whenGET('agent_statuses.json').respond([
             {
               id: 1,
               agent_id: 1234,
               name: 'Kekkonen Benjamin',
               team: 'Helpdesk',
               status: 'Tauko',
-              time_in_status: 6485
+              created_at: Date.now()
             },
             {
               id: 2,
@@ -29,7 +29,7 @@ describe('screen', function () {
               name: 'Kanerva Aallotar',
               team: 'Helpdesk',
               status: 'Vapaa',
-              time_in_status: 1278
+              created_at: Date.now()
             },
             {
               id: 10,
@@ -37,7 +37,7 @@ describe('screen', function () {
               name: 'Tuomas Ansala',
               team: 'Helpdesk',
               status: 'Tauko',
-              time_in_status: 543
+              created_at: Date.now()
             },
             {
               id: 6,
@@ -45,7 +45,7 @@ describe('screen', function () {
               name: 'Jenni Ahola',
               team: 'Helpdesk',
               status: 'Tauko',
-              time_in_status: 343
+              created_at: Date.now()
             }
           ]);
           $httpBackend.whenGET('teams.json').respond([
