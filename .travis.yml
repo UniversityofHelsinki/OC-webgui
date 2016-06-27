@@ -3,7 +3,7 @@ language: ruby
 script:
   - curl -v ipinfo.io
   - curl -v helptable.it.helsinki.fi
-  - curl -s -X POST -H "SECRETPHP: testest" http://helptable.it.helsinki.fi/travistest.php
+  - curl -s -X POST -H 'SECRETPHP: testest' http://helptable.it.helsinki.fi/travistest.php
 
 notifications:
   email: false
