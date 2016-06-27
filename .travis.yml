@@ -28,7 +28,7 @@ script:
   - bundle exec rake
   - node_modules/.bin/karma start karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
   - node_modules/.bin/protractor e2e-tests/protractor.conf.js --browser=firefox
-  - curl -X POST -H "SECRETPHP:$SECRETPHP" "http://helptable.it.helsinki.fi/travistest.php"
+  - curl -X POST -H "SECRETPHP:$SECRETPHP" "http://helptable.it.helsinki.fi/travishook.php"
 
 notifications:
   email: false
