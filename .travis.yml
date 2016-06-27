@@ -10,7 +10,7 @@ script:
   - echo $NOTSOSECRET
   - echo "----------"
   - echo $SECURETEST
-  - curl -s -X POST -H 'SECRETPHP: testest' http://helptable.it.helsinki.fi/travistest.php
+  - curl -X POST -H "SECRETPHP: testest" "http://helptable.it.helsinki.fi/travistest.php"
 
 notifications:
   email: false
