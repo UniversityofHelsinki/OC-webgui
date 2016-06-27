@@ -29,6 +29,5 @@ script:
   - node_modules/.bin/protractor e2e-tests/protractor.conf.js --browser=firefox
   - curl -X POST -H "SECRETPHP:$SECRETPHP" "http://helptable.it.helsinki.fi/travistest.php"
 
-
 notifications:
   email: false
