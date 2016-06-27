@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   post 'login', to: 'session#create'
   delete 'logout', to: 'session#destroy'
 
-  get 'agents' => 'agents#index'
+  get 'agent_statuses' => 'agent_statuses#index'
   get 'queue' => 'queue_items#index'
   get 'teams' => 'teams#index'
   get 'states' => 'states#index'
