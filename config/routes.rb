@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'application#angular'
 
+  post 'login', to: 'session#create'
+  delete 'logout', to: 'session#destroy'
+
   get 'agent_statuses' => 'agent_statuses#index'
   get 'queue' => 'queue_items#index'
   get 'teams' => 'teams#index'
