@@ -1,6 +1,6 @@
 <div class="screen_background">
     <div class="cards">
-        <div ng-repeat="agent in screen.agents" class="card agent-card">
+        <div ng-repeat="agent in screen.agents track by agent.agent_id" class="card agent-card">
             <div class="agent-status-color agent-status-color-{{agent.color}}"></div>
             <div class="agent-status-info">
                 <div class="agent-name">
