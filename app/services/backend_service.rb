@@ -32,9 +32,10 @@ class BackendService
 			  :array_of_string)
 
     return [] unless data
-    data = [data] unless data_is_a? Array
-    data.map do |attrs|
+    data = [data] unless data.is_a? Array
+    data = data.map do |attrs|
       {
+  agent_id: agent_id,
 	ticket_id: attrs[:string][0],
 	call_arrived_to_queue: attrs[:string][1],
 	queued_seconds: attrs[:string][2],
@@ -56,7 +57,24 @@ class BackendService
       }
     end
 
-    data[0][:string] = 0
+    data.delete_at(0) if data[0][:contact_type] != "PBX" # First entry in array always seems to consist of weird numbers, not an actual contact 
+    data
+  end
+
+  def get_agents
+    reply = @client.call(:get_agents)
+
+    data = reply.body.dig(:get_agents_response,
+        :get_agents_result,
+        :array_of_string)
+    return [] unless data 
+    data = [data] unless data.is_a? Array
+
+    data.map do |attrs|
+      {
+        agent_id: attrs[:string][0],
+      }
+    end
   end
 
 
