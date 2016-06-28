@@ -1,9 +1,6 @@
 engines:
   rubocop:
     enabled: true
-  eslint:
-    enabled: true
-    channel: "eslint-2"
   scss-lint:
     enabled: true
   fixme:
@@ -18,5 +15,4 @@ engines:
 ratings:
    paths:
    - "**.rb"
-   - "**.js"
    - "**.scss"
