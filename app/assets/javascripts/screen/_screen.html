@@ -5,7 +5,7 @@
             <div class="agent-name">
                 {{ trimName(agent.name) }}
             </div>
-            <div ng-style="agent.status === 'Vapaa' && {opacity: 0}">
+            <div ng-if="agent.status !== 'Vapaa'">
                 <!-- If status is 'Vapaa', hide status and time_in_status -->
                 <div class="agent-status"> {{ agent.status }}</div>
                 <oc-time seconds="agent.time_in_status" class="status-timer"></oc-time>
