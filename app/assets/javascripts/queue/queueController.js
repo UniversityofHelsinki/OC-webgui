@@ -24,6 +24,8 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           return queuer.language !== 'Unknown';
         });
       });
+      // Also update date/time
+      vm.date = new Date();
     }
 
     fetchDataInterval = $interval(fetchData, 5000);
@@ -35,12 +37,12 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
 
     // mock data for testing css
     // vm.queue = [
-    //   { line: 135, time_in_queue: 360 },
-    //   { line: 137, time_in_queue: 123 },
-    //   { line: 125, time_in_queue: 123 },
-    //   { line: 137, time_in_queue: 123 },
-    //   { line: 133, time_in_queue: 123 },
-    //   { line: 137, time_in_queue: 123 },
-    //   { line: 121, time_in_queue: 123 }
+    //   { line: 135, language: 'Fin', time_in_queue: 360 },
+    //   { line: 137, language: 'Fin', time_in_queue: 123 },
+    //   { line: 125, language: 'Eng', time_in_queue: 123 },
+    //   { line: 137, language: 'Fin', time_in_queue: 123 },
+    //   { line: 133, language: 'Swe', time_in_queue: 53  },
+    //   { line: 131, language: 'Eng', time_in_queue: 123 },
+    //   { line: 121, language: 'Eng', time_in_queue: 214 }
     // ];
   });
