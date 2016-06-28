@@ -3,7 +3,7 @@
         <div ng-repeat="agent in screen.agents" class="card agent-card">
             <div class="agent-status-color agent-status-color-{{agent.color}}"></div>
             <div class="agent-name">
-                {{ trimName(agent.name) }}
+                {{ screen.trimName(agent.name) }}
             </div>
             <div ng-if="agent.status !== 'Vapaa'">
                 <!-- If status is 'Vapaa', hide status and time_in_status -->

@@ -19,7 +19,6 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
     vm.green = 0;
     vm.yellow = 0;
     vm.red = 0;
-    $scope.trimName = trimName;
 
     function fetchData() {
       Agents.query(function (agents) {
@@ -30,19 +29,19 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         // Agent status coloring and number tally.
         vm.agents = agents.map(function (agent) {
           switch (agent.status) {
-              case 'Vapaa':
-                    agent.color = 'green';
-                    green++;
-                    break;
-              // You may list multiple different statuses to trigger the same case like below
-              case 'Jälkikirjaus', 'Puhelu':
-                    agent.color = 'yellow';
-                    yellow++;
-                    break;
-              default:
-                    agent.color = 'red';
-                    red++;
-                    break;
+            case 'Vapaa':
+              agent.color = 'green';
+              green++;
+              break;
+            case 'Jälkikirjaus':
+            case 'Puhelu':
+              agent.color = 'yellow';
+              yellow++;
+              break;
+            default:
+              agent.color = 'red';
+              red++;
+              break;
           }
 
           return agent;
@@ -53,18 +52,16 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         vm.red = red;
       });
     }
-      
-    function trimName(wholename) {
-        // var name = string(agent.name);
-        
-        var name = wholename;
-        
-        var parts = name.split(" ");
-        name = parts.pop();
-        name += " " + parts[0].charAt(0);
-        
-        return name;
-    }
+
+    vm.trimName = function (wholename) {
+      var name = wholename;
+
+      var parts = name.split(' ');
+      name = parts.pop();
+      name += ' ' + parts[0].charAt(0);
+
+      return name;
+    };
 
     fetchDataInterval = $interval(fetchData, 5000);
     $scope.$on('$destroy', function () {
