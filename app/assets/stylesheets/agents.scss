@@ -31,6 +31,22 @@
   }
 }
 
+@keyframes blink {
+  0%, 30% {
+    background-color: $card-bg;
+  }
+
+  50%, 80% {
+    background-color: mix($card-bg, yellow, 85%);
+  }
+}
+
+.after-call {
+  animation-duration: 2s;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+}
+
 .agent-status-info {
   box-sizing: border-box;
   flex-grow: 1;
