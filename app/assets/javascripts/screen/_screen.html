@@ -2,13 +2,14 @@
     <div class="cards">
         <div ng-repeat="agent in screen.agents" class="card agent-card">
             <div class="agent-status-color agent-status-color-{{agent.color}}"></div>
-            <div class="agent-name">
-                {{ screen.trimName(agent.name) }}
-            </div>
-            <div ng-if="agent.status !== 'Vapaa'">
-                <!-- If status is 'Vapaa', hide status and time_in_status -->
-                <div class="agent-status"> {{ agent.status }}</div>
-                <oc-time seconds="agent.time_in_status" class="status-timer"></oc-time>
+            <div class="agent-status-info">
+                <div class="agent-name">
+                    {{ screen.trimName(agent.name) }}
+                </div>
+                <div ng-if="agent.status !== 'Vapaa'" class="agent-status-container">
+                    <div class="agent-status">{{ agent.status }}</div>
+                    <oc-time seconds="agent.time_in_status" class="status-timer"></oc-time>
+                </div>
             </div>
         </div>
     </div>

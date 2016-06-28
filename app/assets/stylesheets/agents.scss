@@ -7,6 +7,7 @@
   align-content: flex-start;
   align-items: stretch;
   padding: $cards-gutter / 2;
+  align-self: flex-start;
 }
 
 .card {
@@ -15,19 +16,38 @@
   background-color: $card-bg;
   border-radius: 4px;
   box-shadow: $card-shadow;
-  padding: 0.25em;
+  padding: $card-padding;
   overflow: hidden;
 }
 
 .agent-card {
   width: calc(25% - #{$cards-gutter});
-  font-size: 300%;
-  line-height: 1.5;
-  text-align: center;
+  font-size: 250%;
+  line-height: 1;
+  display: flex;
 
   .agent-status-color {
-    float: left;
+    margin-right: $card-padding;
   }
+}
+
+.agent-status-info {
+  box-sizing: border-box;
+  flex-grow: 1;
+}
+
+.agent-name {
+  font-size: 150%;
+}
+
+.agent-status-container {
+  display: flex;
+  color: gray;
+  margin-top: 0.2em;
+}
+
+.agent-status {
+  flex-grow: 1;
 }
 
 .sidebar {
@@ -58,9 +78,7 @@
 }
 
 .agent-status-color {
-  padding: 3%;
-  width: 1em;
-  height: 1em;
+  width: 2em;
   border-radius: 4px;
 }
 
