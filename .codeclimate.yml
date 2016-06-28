@@ -1,0 +1,22 @@
+engines:
+  rubocop:
+    enabled: true
+  eslint:
+    enabled: true
+    channel: "eslint-2"
+  scss-lint:
+    enabled: true
+  fixme:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - ruby
+      - javascript
+
+ratings:
+   paths:
+   - "**.rb"
+   - "**.js"
+   - "**.scss"
