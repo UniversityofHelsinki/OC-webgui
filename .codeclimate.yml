@@ -11,8 +11,13 @@ engines:
       languages:
       - ruby
       - javascript
+  brakeman:
+    enabled: true
+  bundler-audit:
+    enabled: true
 
 ratings:
    paths:
    - "**.rb"
    - "**.scss"
+   - Gemfile.lock
