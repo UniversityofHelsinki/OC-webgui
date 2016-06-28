@@ -53,14 +53,11 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
       });
     }
 
-    vm.trimName = function (wholename) {
-      var name = wholename;
-
-      var parts = name.split(' ');
-      name = parts.pop();
-      name += ' ' + parts[0].charAt(0);
-
-      return name;
+    vm.trimName = function (fullName) {
+      var names = fullName.split(' ');
+      var firstName = names.pop();
+      var lastName = names.shift();
+      return firstName + ' ' + lastName.charAt(0);
     };
 
     fetchDataInterval = $interval(fetchData, 5000);
