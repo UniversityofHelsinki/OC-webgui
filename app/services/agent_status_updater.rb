@@ -22,7 +22,8 @@ class AgentStatusUpdater
 
 	def close_last_open_status(agent)
 		open_statuses = AgentStatus.where(agent_id: agent.agent_id, open: true)
-		open_statuses.each { |status| status.open = false; status.closed = Time.now; status.save } #There should only ever be one open status at a time for each agent, looping through just in case
+		# There should only ever be one open status at a time for each agent, looping through just in case
+		open_statuses.each { |status| status.open = false; status.closed = Time.now; status.save } 
 	end
 
 	def save_new_status(agent)
