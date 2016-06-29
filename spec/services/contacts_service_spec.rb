@@ -61,7 +61,7 @@ RSpec.describe ContactsService, type: :service do
 
     it 'correctly accounts for after call status occurring right after the contact' do
       contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.zone.today} 08:00:00", "#{Time.zone.today} 08:06:00")
-      expect(contacts[0].handling_ended).to eq("#{Time.zone.today} 05:44:00")
+      expect(contacts[0].handling_ended).to eq("#{Time.zone.today} #{Time.parse("08:44:00").in_time_zone}")
     end
 
     it 'ignores after call status which might be connected to a different contact' do
