@@ -1,5 +1,5 @@
 <div class="screen_background">
-  <a ui-sref="screen">Show state screen</a>
+  <a ui-sref="status">Show state screen</a>
   <div ng-controller="FilterpanelController">
     <label ng-repeat="(team,enabled) in filterpanel.teams">
       <input type="checkbox" id="{{team}}" ng-model="filterpanel.teams[team]" /> {{team}} 

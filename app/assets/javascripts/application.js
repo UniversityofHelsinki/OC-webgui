@@ -21,8 +21,8 @@
 //= stub ./shared/time/timeDirective.spec.js
 //= require_tree ./shared
 //= require_tree ./home
-//= stub ./screen/screenController.spec.js
-//= require_tree ./screen
+//= stub ./status/statusController.spec.js
+//= require_tree ./status
 //= stub ./queue/queueController.spec.js
 //= require_tree ./queue
 //= stub ./filterpanel/filterpanelController.spec.js

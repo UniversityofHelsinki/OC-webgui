@@ -1,6 +1,6 @@
 <div class="screen_background">
     <div class="cards">
-        <div ng-repeat="agent in screen.agents" class="card agent-card">
+        <div ng-repeat="agent in status.agents" class="card agent-card">
             <div class="agent-status-color agent-status-color-{{agent.color}}"></div>
             <div class="agent-name">
                 {{ agent.name }}
@@ -12,15 +12,15 @@
     <div class="sidebar">
         <div class="agent-status-count">
             <div class="agent-status-color agent-status-color-green"></div>
-            <div class="green-count"> {{screen.green}}</div>
+            <div class="green-count"> {{status.green}}</div>
         </div>
         <div class="agent-status-count">
             <div class="agent-status-color agent-status-color-yellow"></div>
-            <div class="yellow-count"> {{screen.yellow}} </div>
+            <div class="yellow-count"> {{status.yellow}} </div>
         </div>
         <div class="agent-status-count">
             <div class="agent-status-color agent-status-color-red"></div>
-            <div class="red-count"> {{screen.red}} </div>
+            <div class="red-count"> {{status.red}} </div>
         </div>
         <div class="agent-status-count"><a ui-sref="filterpanel">rajaa</a></div>
     </div>

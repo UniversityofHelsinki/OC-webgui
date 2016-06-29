@@ -9,7 +9,7 @@ describe('homepage', function () {
   });
 });
 
-describe('screen', function () {
+describe('status', function () {
   beforeEach(function () {
     browser.addMockModule('httpBackendMock', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
@@ -62,7 +62,7 @@ describe('screen', function () {
           ]);
         });
     });
-    browser.get('#/screen');
+    browser.get('#/status');
   });
 
   it('should something', function () {

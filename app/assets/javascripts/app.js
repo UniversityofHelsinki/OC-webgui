@@ -1,4 +1,4 @@
-angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen',
+angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.status',
   'ocWebGui.queue', 'ocWebGui.filterpanel', 'ocWebGui.stats', 'ocWebGui.login'])
   .run(function ($rootScope, $state, User) {
     $rootScope.returnToState = 'home';
