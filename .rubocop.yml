@@ -6,7 +6,7 @@ AllCops:
 Rails:
   Enabled: true
 Metrics/LineLength:
-  Max: 150
+  Max: 200
 Metrics/MethodLength:
   Max: 20
 Metrics/AbcSize:
