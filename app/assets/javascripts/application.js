@@ -27,6 +27,8 @@
 //= require_tree ./queue
 //= stub ./filterpanel/filterpanelController.spec.js
 //= require_tree ./filterpanel
+//= require_tree ./stats
+//= require_tree ./login
 //= require ./app.js
 //= require angular-i18n/angular-locale_fi.js
 //= require angularjs-nvd3-directives
