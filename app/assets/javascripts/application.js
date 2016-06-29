@@ -31,3 +31,7 @@
 //= require_tree ./login
 //= require ./app.js
 //= require angular-i18n/angular-locale_fi.js
+//= require angularjs-nvd3-directives
+//= require d3
+//= require nvd3
+//= require angular-nvd3
