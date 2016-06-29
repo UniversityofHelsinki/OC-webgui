@@ -21,8 +21,6 @@
     "angular-i18n": "^1.5.6",
     "d3": "^3.5.17",
     "nvd3": "^1.8.3",
-    "angularjs-nvd3-directives": "^0.0.7",
-    "angular-chartjs-directive": "^1.0.0",
     "angular-nvd3": "^1.0.7"
   },
   "resolutions": {
