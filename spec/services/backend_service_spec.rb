@@ -68,6 +68,56 @@ RSpec.describe BackendService, type: :service do
     expect(response.length).to eq(2)
   end
 
+
+
+
+
+
+
+
+  it "Return unknown integers from GetContacts" do
+    fixture = File.read("spec/fixtures/backend_service/get_agent_contacts_1.xml")
+
+    message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
+    agentID: 2000049, startDate: "2016-06-14", endDate: "2016-06-15",
+    contactTypes: 'PBX', useServiceTime: true }
+
+    expected = [
+      {:ticket_id=>"21100", 
+:call_arrived_to_queue=>"21101", 
+:queued_seconds=>"21102", 
+:call_forwarded_to_agent=>"21103", 
+:call_answered_by_agent=>"21120", 
+:call_ended=>"21104", 
+:call_handling_ended=>"21105", 
+:call_length=>"21106", 
+:call_handling_total=>"20113",
+:service_type=>"21107", 
+:contact_direction=>"21108", 
+:contact_type=>"21109",
+:contact_phone_num=>"21110", 
+:contact_handler=>"21111", 
+:contact_number=>"21112",
+:contact_state=>"21113", 
+:contact_total_handling=>"21114", 
+:sub_group=>"21115"}
+    ]
+    savon.expects(:get_contacts).with(message: message).returns(fixture)
+
+puts "-----------"
+    response = BackendService.new.get_agent_contacts(2000049, "2016-06-14", "2016-06-15")
+
+puts "-----------"
+	puts response
+	puts "------------_"
+    expect(response).to eq(expected)
+  end
+
+
+
+
+
+
 =begin
   it "get_teams should return array of 3 if there exists 3 teams" do
     fixture = File.read("spec/fixtures/backend_service/get_teams_length_3.xml")

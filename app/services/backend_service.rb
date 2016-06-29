@@ -32,7 +32,7 @@ class BackendService
 			  :array_of_string)
 
     return [] unless data
-    data = [data] unless data_is_a? Array
+    data = [data] unless data.is_a? Array
     data.map do |attrs|
       {
 	ticket_id: attrs[:string][0],
@@ -56,7 +56,10 @@ class BackendService
       }
     end
 
-    data[0][:string] = 0
+    # First array-element of data-array contains integers without appararent use.
+    # Deletion of said integers.
+   # echo = data[0]
+   # data.delete(echo)
   end
 
 

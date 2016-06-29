@@ -2,14 +2,27 @@
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <soap:Body>
     <GetContactsResponse xmlns="http://elisa.ccreport.fi/">
-      <GetContactsResult>
-        <ArrayOfString>
-          <string></string>
-          <string></string>
-          <string></string>
-          <string></string>
-          <string></string>
-        </ArrayOfString>
+      <GetContactsResult>	
+	<ArrayOfString>
+	  <string>21100</string>
+	  <string>21101</string>
+	  <string>21102</string>
+	  <string>21103</string>
+	  <string>21120</string>
+	  <string>21104</string>
+	  <string>21105</string>
+	  <string>21106</string>
+	  <string>20113</string>
+	  <string>21107</string>
+	  <string>21108</string>
+	  <string>21109</string>
+	  <string>21110</string>
+	  <string>21111</string>
+	  <string>21112</string>
+	  <string>21113</string>
+	  <string>21114</string>
+	  <string>21115</string>
+	</ArrayOfString>
       </GetContactsResult>
     </GetContactsResponse>
   </soap:Body>

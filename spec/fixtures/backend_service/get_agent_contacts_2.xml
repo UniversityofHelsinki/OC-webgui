@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <GetContactsResponse xmlns="http://elisa.ccreport.fi/">
+      <GetContactsResult>	
+	<ArrayOfString>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	  <string></string>
+	</ArrayOfString>
+        <ArrayOfString>
+          <string>20160614091049336435</string>
+          <string>14.6.2016 9:11:43</string>
+          <string>1</string>
+          <string>14.6.2016 9:11:44</string>
+          <string>14.6.2016 9:11:57</string>
+          <string>14.6.2016 9:13:59</string>
+          <string>14.6.2016 9:21:41</string>
+          <string>598</string>
+          <string>597</string>
+          <string>Neuvonta Fin</string>
+          <string>I</string>
+          <string>PBX</string>
+          <string>0405882759</string>
+          <string>Seppänen Pekka</string>
+          <string>-1</string>
+          <string>Onnistunut kontakti</string>
+          <string>nil</string>
+          <string>-1</string>
+        </ArrayOfString>
+      </GetContactsResult>
+    </GetContactsResponse>
+  </soap:Body>
+</soap:Envelope>
