@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <GetContactsResponse xmlns="http://elisa.ccreport.fi/">
+      <GetContactsResult>
+        <ArrayOfString>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+        </ArrayOfString>
+      </GetContactsResult>
+    </GetContactsResponse>
+  </soap:Body>
+</soap:Envelope>
