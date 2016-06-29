@@ -80,10 +80,17 @@ describe('screen', function () {
   });
 
   it('should have agent statuses', function () {
-    expect(agentCards.get(0).element(by.className('agent-status')).getText()).toBe('Tauko');
-    expect(agentCards.get(1).isElementPresent(by.className('agent-status'))).toBe(false);
-    expect(agentCards.get(2).element(by.className('agent-status')).getText()).toBe('Tauko');
-    expect(agentCards.get(3).element(by.className('agent-status')).getText()).toBe('Tauko');
+    expect(agentCards.get(0).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+    expect(agentCards.get(1).element(by.className('agent-status')).getInnerHtml()).toBe('Vapaa');
+    expect(agentCards.get(2).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+    expect(agentCards.get(3).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+  });
+
+  it('should hide open status text', function() {
+    expect(agentCards.get(0).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
+    expect(agentCards.get(1).element(by.className('agent-status-container')).getCssValue('visibility')).toBe('hidden');
+    expect(agentCards.get(2).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
+    expect(agentCards.get(3).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
   });
 
   it('should have agent time in status', function () {

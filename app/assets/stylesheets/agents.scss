@@ -22,9 +22,8 @@
 
 .agent-card {
   width: calc(25% - #{$cards-gutter});
-  font-size: 250%;
-  line-height: 1;
   display: flex;
+  line-height: 1;
 
   .agent-status-color {
     margin-right: $card-padding;
@@ -53,13 +52,18 @@
 }
 
 .agent-name {
-  font-size: 150%;
+  font-size: 3em;
 }
 
 .agent-status-container {
   display: flex;
   color: gray;
   margin-top: 0.2em;
+  font-size: 2em;
+}
+
+.agent-status-open {
+  visibility: hidden;
 }
 
 .agent-status {
@@ -94,7 +98,7 @@
 }
 
 .agent-status-color {
-  width: 2em;
+  width: 3em;
   border-radius: 4px;
 }
 

@@ -6,7 +6,7 @@
                 <div class="agent-name">
                     {{ screen.trimName(agent.name) }}
                 </div>
-                <div ng-if="agent.status !== 'Vapaa'" class="agent-status-container">
+                <div ng-class="{'agent-status-container': true, 'agent-status-open': agent.status === 'Vapaa'}">
                     <div class="agent-status">{{ agent.status }}</div>
                     <oc-time seconds="agent.time_in_status" class="status-timer"></oc-time>
                 </div>
