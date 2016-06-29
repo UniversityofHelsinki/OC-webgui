@@ -6,6 +6,7 @@ ruby '2.3.0'
 # Use rb-readline to make stuff work :D
 gem 'rb-readline'
 
+gem 'daemons'
 gem 'clockwork', '~> 2.0'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
@@ -39,7 +40,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

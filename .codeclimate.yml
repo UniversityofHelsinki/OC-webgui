@@ -1,0 +1,23 @@
+engines:
+  rubocop:
+    enabled: true
+  scss-lint:
+    enabled: true
+  fixme:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - ruby
+      - javascript
+  brakeman:
+    enabled: true
+  bundler-audit:
+    enabled: true
+
+ratings:
+   paths:
+   - "**.rb"
+   - "**.scss"
+   - Gemfile.lock
