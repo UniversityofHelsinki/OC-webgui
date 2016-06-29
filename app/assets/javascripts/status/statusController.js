@@ -1,33 +1,33 @@
-angular.module('ocWebGui.agents', ['ocWebGui.agents.service', 'ui.router', 'ocWebGui.shared.time'])
+angular.module('ocWebGui.status', ['ocWebGui.status.service', 'ui.router', 'ocWebGui.shared.time'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('agents', {
-        url: '/agents',
-        templateUrl: 'agents/_agents.html',
-        controller: 'AgentsController',
-        controllerAs: 'agents'
+      .state('status', {
+        url: '/status',
+        templateUrl: 'status/_status.html',
+        controller: 'StatusController',
+        controllerAs: 'status'
       });
   })
-  .controller('AgentsController', function ($interval, $scope, shared, Agents) {
+  .controller('StatusController', function ($interval, $scope, shared, Status) {
     var vm = this;
     var fetchDataInterval;
 
     vm.teams = shared.getTeams();
     vm.states = shared.getStates();
     vm.message = 'Tilat';
-    vm.agents = [];
+    vm.status = [];
     vm.green = 0;
     vm.yellow = 0;
     vm.red = 0;
 
     function fetchData() {
-      Agents.query(function (agents) {
+      Status.query(function (status) {
         var green = 0;
         var yellow = 0;
         var red = 0;
 
         // Agent status coloring and number tally.
-        vm.agents = agents.map(function (agent) {
+        vm.status = agents.map(function (agent) {
           if (agent.status === 'Vapaa') {
             agent.color = 'green';
             green++;

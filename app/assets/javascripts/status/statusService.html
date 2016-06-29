@@ -1,5 +1,5 @@
-angular.module('ocWebGui.agents.service', ['ngResource', 'ocWebGui.filterpanel'])
-  .factory('Agents', function ($resource, shared) {
+angular.module('ocWebGui.status.service', ['ngResource', 'ocWebGui.filterpanel'])
+  .factory('Status', function ($resource, shared) {
     var teams = shared.getTeams();
     var states = shared.getStates();
     return $resource('agent_statuses.json', {}, {
@@ -7,8 +7,8 @@ angular.module('ocWebGui.agents.service', ['ngResource', 'ocWebGui.filterpanel']
         method: 'get',
         isArray: true,
         transformResponse: function (data) {
-          var agents = angular.fromJson(data);
-          return agents.filter(function (agent) {
+          var status = angular.fromJson(data);
+          return status.filter(function (agent) {
             return teams[agent.team] && (states[agent.status] || (states.Muut && !(agent.status in states)));
           });
         }
