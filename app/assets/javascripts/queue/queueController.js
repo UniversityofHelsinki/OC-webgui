@@ -14,7 +14,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     vm.options = {
       chart: {
         type: 'linePlusBarChart',
-        height: 250,
+        height: 400,
         margin: {
           top: 30,
           right: 40,
