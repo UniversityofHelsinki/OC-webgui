@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time'])
+angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'nvd3'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('queue', {
@@ -10,8 +10,75 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
   })
   .controller('QueueController', function ($interval, $scope, Queue) {
     var vm = this;
-    var fetchDataInterval;
 
+    vm.options = {
+      chart: {
+        type: 'linePlusBarChart',
+        height: 250,
+        margin: {
+          top: 30,
+          right: 40,
+          bottom: 60,
+          left: 40
+        },
+        // TODO tosi pöljätapa.........
+        x: function (d, i) { return i + 8; },
+        y: function (d, i) { return d[1]; },
+        bars: {
+          forceY: [0,111]
+        },
+        lines: {
+          forceY: [0,77]
+        },
+        xAxis: {
+          tickFormat: function(d) {
+            return d3.format(',f')(d);
+          },
+
+          axisLabel: "Kellonaika",
+          showMaxMin: true,
+          ticks: 10,
+          //tickValues: [5, 7, 10, 15, 20,24 ]
+        },
+      }
+    };
+    // huonojuttu: menee epä synkkaan jos on eri määrä arvoja pylväällä ja 
+    // viiva/pistediagrammilla
+    vm.data = [{
+      'key': 'foo',
+      'bar': true,
+      'color': 'skyblue',
+      'values': [
+        [8, 22],
+        [9, 11],
+        [10, null],
+        [11, 26],
+        [12, 15],
+        [13, 65],
+        [14, 34],
+        [15, 25],
+        [16,  5],
+        [17, 14]
+      ]
+    }, {
+      'key': 'bar',
+      'color': 'steelblue',
+      'values': [
+        [8, 31],
+        [9, 22],
+        [10, 44],
+        [11, 22],
+        [12, 64],
+        [13, null],
+        [14, 13],
+        [15, 4],
+        [16, 75],
+        [17, 3]
+      ]
+    }];
+
+    var fetchDataInterval;
+    
     vm.message = 'Jono';
 
     vm.queue = [];

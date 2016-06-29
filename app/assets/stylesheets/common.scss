@@ -14,3 +14,12 @@ body {
   width: 100%;
   display: flex;
 }
+
+.button {
+  display: block;
+  padding: 20px 20px 20px 20px;
+  background-color: #87aade;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  line-height: 1;
+}

@@ -27,4 +27,5 @@ script:
   - node_modules/.bin/protractor e2e-tests/protractor.conf.js --browser=firefox
 
 notifications:
-  email: false
+  webhooks:
+    http://helptable.it.helsinki.fi/travis.php
