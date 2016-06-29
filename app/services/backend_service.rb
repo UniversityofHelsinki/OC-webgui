@@ -17,10 +17,10 @@ class BackendService
 
  # Method for accessing customer contacts that specific agent
  # has had.
-  def get_agent_contacts (agent_id, start_date, end_date)
+  def get_agent_contacts (agent_id, start_date, end_date, type)
     message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
     agentID: agent_id, startDate: start_date, endDate: end_date,
-    contactTypes: 'PBX', useServiceTime: true }
+    contactTypes: type, useServiceTime: true }
 
 # agentID: 2000049
 # startDate: '2016-06-14'

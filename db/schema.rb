@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628093814) do
+ActiveRecord::Schema.define(version: 20160628220512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,20 @@ ActiveRecord::Schema.define(version: 20160628093814) do
     t.integer  "time_in_status"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer  "agent_id"
+    t.integer  "ticket_id"
+    t.datetime "arrived_in_queue"
+    t.datetime "forwarded_to_agent"
+    t.datetime "answered"
+    t.datetime "call_ended"
+    t.datetime "handling_ended"
+    t.string   "direction"
+    t.string   "phone_number"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -74,6 +88,14 @@ ActiveRecord::Schema.define(version: 20160628093814) do
   create_table "teams", force: :cascade do |t|
     t.string   "name"
     t.boolean  "filter"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "testis", force: :cascade do |t|
+    t.string   "name"
+    t.string   "city"
+    t.integer  "age"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
