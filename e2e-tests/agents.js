@@ -1,4 +1,4 @@
-describe('screen', function () {
+describe('agents', function () {
   beforeEach(function () {
     browser.addMockModule('httpBackendMock', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
@@ -51,7 +51,7 @@ describe('screen', function () {
           ]);
         });
     });
-    browser.get('#/screen');
+    browser.get('#/agents');
   });
 
   it('should something', function () {

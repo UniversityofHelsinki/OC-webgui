@@ -1,4 +1,4 @@
-angular.module('ocWebGui.screen.service', ['ngResource', 'ocWebGui.filterpanel'])
+angular.module('ocWebGui.agents.service', ['ngResource', 'ocWebGui.filterpanel'])
   .factory('Agents', function ($resource, shared) {
     var teams = shared.getTeams();
     var states = shared.getStates();

@@ -1,14 +1,14 @@
-angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWebGui.shared.time'])
+angular.module('ocWebGui.agents', ['ocWebGui.agents.service', 'ui.router', 'ocWebGui.shared.time'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('screen', {
-        url: '/screen',
-        templateUrl: 'screen/_screen.html',
-        controller: 'ScreenController',
-        controllerAs: 'screen'
+      .state('agents', {
+        url: '/agents',
+        templateUrl: 'agents/_agents.html',
+        controller: 'AgentsController',
+        controllerAs: 'agents'
       });
   })
-  .controller('ScreenController', function ($interval, $scope, shared, Agents) {
+  .controller('AgentsController', function ($interval, $scope, shared, Agents) {
     var vm = this;
     var fetchDataInterval;
 
