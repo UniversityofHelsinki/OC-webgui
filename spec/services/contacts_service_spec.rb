@@ -50,12 +50,12 @@ RSpec.describe ContactsService, type: :service do
 
     it 'sets the call start and end times according to status creatiion and closing times' do
       contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.zone.today} 08:00:00", "#{Time.zone.today} 09:00:00")
-      expect(contacts[0].answered).to eq("#{Time.zone.today} 05:05:00")
-      expect(contacts[0].call_ended).to eq("#{Time.zone.today} 05:25:00")
+      expect(contacts[0].answered).to eq("#{Time.zone.today} #{Time.parse("08:05:00").in_time_zone}")
+      expect(contacts[0].call_ended).to eq("#{Time.zone.today} #{Time.parse("08:25:00").in_time_zone}")
       expect(contacts[0].agent_id).to eq(123)
 
-      expect(contacts[1].answered).to eq("#{Time.zone.today} 05:25:00")
-      expect(contacts[1].call_ended).to eq("#{Time.zone.today} 05:35:00")
+      expect(contacts[1].answered).to eq("#{Time.zone.today} #{Time.parse("08:25:00").in_time_zone}")
+      expect(contacts[1].call_ended).to eq("#{Time.zone.today} #{Time.parse("08:35:00").in_time_zone}")
       expect(contacts[1].agent_id).to eq(225)
     end
 
