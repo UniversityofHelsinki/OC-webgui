@@ -19,8 +19,15 @@
   overflow: hidden;
 }
 
-.agent-card {
+.three-col {
+  width: calc(33% - #{$cards-gutter});
+}
+
+.four-col {
   width: calc(25% - #{$cards-gutter});
+}
+
+.agent-card {
   font-size: 300%;
   line-height: 1.5;
   text-align: center;
