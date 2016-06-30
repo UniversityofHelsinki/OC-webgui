@@ -31,5 +31,4 @@ script:
   - curl -X POST -H "SECRETPHP:$SECRETPHP" "http://helptable.it.helsinki.fi/travishook.php"
 
 notifications:
-  webhooks:
-    http://helptable.it.helsinki.fi/travis.php
+  email: false
