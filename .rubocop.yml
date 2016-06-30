@@ -3,16 +3,33 @@ AllCops:
     - 'bin/**/*'
     - 'config/**/*'
     - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'spec/**/*'
+    - 'app/controllers/application_controller.rb'
+    - 'Gemfile'
 Rails:
   Enabled: true
+Metrics/ClassLength:
+  Exclude:
+    - 'app/services/backend_service.rb'
 Metrics/LineLength:
-  Max: 200
+  Max: 140
 Metrics/MethodLength:
   Max: 20
+  Exclude:
+    - 'app/services/backend_service.rb'
 Metrics/AbcSize:
   Max: 20
+  Exclude: 
+    - 'app/services/backend_service.rb'
+Metrics/CyclomaticComplexity:
+  Max: 7
 Style/FrozenStringLiteralComment:
   Enabled: False
 Style/Documentation:
   Exclude:
-    - 'db/migrate/*'
+    - 'app/models/*'
+    - 'app/helpers/*'
+Style/AccessorMethodName:
+  Exclude: 
+    - 'app/services/backend_service.rb'

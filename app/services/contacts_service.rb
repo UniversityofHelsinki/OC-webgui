@@ -1,6 +1,5 @@
 # Provides service for calculating Contact objects out of AgentStatus data that corresponds to answered contacts
 class ContactsService
-
   def initialize
     @contact_statuses = ['Puhelu', 'Puhelu (Ulos)', 'Puhelu (Sisään)', 'Ulossoitto', 'Chat']
   end
@@ -13,7 +12,7 @@ class ContactsService
   private
 
   def convert_to_contacts(statuses)
-    contacts = statuses.map do |status|
+    statuses.map do |status|
       contact = Contact.new(agent_id: status.agent_id, answered: status.created_at, call_ended: status.closed)
       after_call = after_call_for(contact)
       contact.handling_ended = after_call.closed if after_call
