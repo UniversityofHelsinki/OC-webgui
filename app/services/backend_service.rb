@@ -98,7 +98,7 @@ class BackendService
       }
     end
   rescue Savon::HTTPError => error
-    logger.debug error.http.code
+    Rails.logger.debug error.http.code
     return []
   end
 
@@ -117,7 +117,7 @@ class BackendService
       }
     end
   rescue Savon::HTTPError => error
-    logger.debug error.http.code
+    Rails.logger.debug error.http.code
     return []
   end
 
