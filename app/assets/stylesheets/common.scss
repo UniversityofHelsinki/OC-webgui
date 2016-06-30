@@ -15,3 +15,13 @@ body {
   width: 100%;
   display: flex;
 }
+
+.button {
+  display: block;
+  font-size: 0.7em;
+  padding: 0.5em;
+  background-color: #87aade;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  line-height: 1;
+}
