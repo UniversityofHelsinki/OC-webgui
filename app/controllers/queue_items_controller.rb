@@ -1,3 +1,4 @@
+# API for Queue status data
 class QueueItemsController < ApplicationController
   def index
     @queue_items = Rails.cache.fetch('get_general_queue', expires_in: 5.seconds) do
