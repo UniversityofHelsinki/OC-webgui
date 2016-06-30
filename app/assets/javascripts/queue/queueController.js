@@ -21,7 +21,9 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           bottom: 60,
           left: 40
         },
-        // TODO tosi pöljätapa.........
+        // tosi pöljätapa toi + 8, se on kun
+        // kellon ajat alkaa klo 8? kun asiakaspalvelijoita ei ole ennen kello
+        // kahdeksaa niin turha näyttää statistiikkojakaan
         x: function (d, i) { return i + 8; },
         y: function (d, i) { return d[1]; },
         bars: {
