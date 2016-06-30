@@ -15,6 +15,7 @@ class BackendService
     )
   end
 
+# Method for getting agent contacts
   def get_agent_contacts(agent_id, start_date, end_date, serviceID)
     message = {
       serviceGroupID: 4,
