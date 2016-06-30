@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'teams' => 'teams#index'
   get 'states' => 'states#index'
   get 'contacts/today' => 'contacts#today'
+  get 'contacts/stats' => 'contacts#stats'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
