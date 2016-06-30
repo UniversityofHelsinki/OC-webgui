@@ -2,3 +2,9 @@
 <a ui-sref="screen">Show state screen</a>
 <a ui-sref="queue">Show queue screen</a>
 <a ui-sref="filterpanel">Show filter screen</a>
+<a ui-sref="stats">Show statistics screen</a>
+<a ui-sref="login" ng-if="!home.isAuthenticated()">Login</a>
+<span ng-if="home.isAuthenticated()">
+    Current user: {{ home.username() }}
+    <a href="" ng-click="home.logout()">Logout</a>
+</span>

@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616113650) do
+ActiveRecord::Schema.define(version: 20160628220512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "agent_statuses", force: :cascade do |t|
+    t.integer  "agent_id"
+    t.string   "team"
+    t.string   "status"
+    t.boolean  "open"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "closed"
+    t.string   "name"
+  end
 
   create_table "agents", force: :cascade do |t|
     t.integer  "agent_id"
@@ -26,12 +37,45 @@ ActiveRecord::Schema.define(version: 20160616113650) do
     t.datetime "updated_at",     null: false
   end
 
+  create_table "contacts", force: :cascade do |t|
+    t.integer  "agent_id"
+    t.integer  "ticket_id"
+    t.datetime "arrived_in_queue"
+    t.datetime "forwarded_to_agent"
+    t.datetime "answered"
+    t.datetime "call_ended"
+    t.datetime "handling_ended"
+    t.string   "direction"
+    t.string   "phone_number"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
   create_table "queue_items", force: :cascade do |t|
     t.integer  "line"
     t.string   "label"
     t.integer  "time_in_queue"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "team"
+    t.boolean  "open"
+    t.datetime "closed"
   end
 
   create_table "states", force: :cascade do |t|
@@ -46,6 +90,13 @@ ActiveRecord::Schema.define(version: 20160616113650) do
     t.boolean  "filter"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "username"
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end

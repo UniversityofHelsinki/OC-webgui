@@ -10,18 +10,20 @@ describe('homepage', function () {
 });
 
 describe('screen', function () {
+  var agentCards;
+
   beforeEach(function () {
     browser.addMockModule('httpBackendMock', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
         .run(function ($httpBackend) {
-          $httpBackend.whenGET('agents.json').respond([
+          $httpBackend.whenGET('agent_statuses.json').respond([
             {
               id: 1,
               agent_id: 1234,
               name: 'Kekkonen Benjamin',
               team: 'Helpdesk',
               status: 'Tauko',
-              time_in_status: 6485
+              created_at: Date.now() - (10 * 60 + 15) * 1000
             },
             {
               id: 2,
@@ -29,23 +31,23 @@ describe('screen', function () {
               name: 'Kanerva Aallotar',
               team: 'Helpdesk',
               status: 'Vapaa',
-              time_in_status: 1278
+              created_at: Date.now() - 45 * 1000
             },
             {
               id: 10,
               agent_id: 8754,
-              name: 'Tuomas Ansala',
+              name: 'Ansala Tuomas',
               team: 'Helpdesk',
               status: 'Tauko',
-              time_in_status: 543
+              created_at: Date.now() - 30 * 1000
             },
             {
               id: 6,
               agent_id: 666,
-              name: 'Jenni Ahola',
+              name: 'Ahola Jenni',
               team: 'Helpdesk',
               status: 'Tauko',
-              time_in_status: 343
+              created_at: Date.now() - (1 * 60 + 5) * 1000
             }
           ]);
           $httpBackend.whenGET('teams.json').respond([
@@ -63,29 +65,42 @@ describe('screen', function () {
         });
     });
     browser.get('#/screen');
+    agentCards = element.all(by.className('agent-card'));
   });
 
-  it('should something', function () {
-    var agentCards = element.all(by.className('agent-card'));
-
+  it('should have agent cards', function () {
     expect(agentCards.count()).toBe(4);
+  });
 
-    expect(agentCards.get(0).element(by.className('agent-name')).getText()).toBe('Kekkonen Benjamin');
-    expect(agentCards.get(0).element(by.className('agent-status')).getText()).toBe('Tauko');
+  it('should have agent names', function () {
+    expect(agentCards.get(0).element(by.className('agent-name')).getText()).toBe('Benjamin K');
+    expect(agentCards.get(1).element(by.className('agent-name')).getText()).toBe('Aallotar K');
+    expect(agentCards.get(2).element(by.className('agent-name')).getText()).toBe('Tuomas A');
+    expect(agentCards.get(3).element(by.className('agent-name')).getText()).toBe('Jenni A');
+  });
 
-    expect(agentCards.get(1).element(by.className('agent-name')).getText()).toBe('Kanerva Aallotar');
-    expect(agentCards.get(1).element(by.className('agent-status')).getText()).toBe('Vapaa');
+  it('should have agent statuses', function () {
+    expect(agentCards.get(0).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+    expect(agentCards.get(1).element(by.className('agent-status')).getInnerHtml()).toBe('Vapaa');
+    expect(agentCards.get(2).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+    expect(agentCards.get(3).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+  });
 
-    expect(agentCards.get(2).element(by.className('agent-name')).getText()).toBe('Tuomas Ansala');
-    expect(agentCards.get(2).element(by.className('agent-status')).getText()).toBe('Tauko');
+  it('should hide open status text', function() {
+    expect(agentCards.get(0).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
+    expect(agentCards.get(1).element(by.className('agent-status-container')).getCssValue('visibility')).toBe('hidden');
+    expect(agentCards.get(2).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
+    expect(agentCards.get(3).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
+  });
 
-    expect(agentCards.get(3).element(by.className('agent-name')).getText()).toBe('Jenni Ahola');
-    expect(agentCards.get(3).element(by.className('agent-status')).getText()).toBe('Tauko');
+  it('should have agent time in status', function () {
+    expect(agentCards.get(0).element(by.className('status-timer')).getText()).toBe('10:15');
+    expect(agentCards.get(1).element(by.className('status-timer')).getCssValue('visibility')).toBe('hidden');
+    expect(agentCards.get(2).element(by.className('status-timer')).getText()).toBe('00:30');
+    expect(agentCards.get(3).element(by.className('status-timer')).getText()).toBe('01:05');
   });
 
   it('Status color should match status text', function () {
-    var agentCards = element.all(by.className('agent-card'));
-
     expect(agentCards.get(0).element(by.className('agent-status-color')).getAttribute('class'))
       .toMatch('agent-status-color-red');
     expect(agentCards.get(1).element(by.className('agent-status-color')).getAttribute('class'))
@@ -105,16 +120,13 @@ describe('screen', function () {
   });
 
   it('should filter correctly', function () {
-    var agentCards;
     element(by.linkText('rajaa')).click();
     element(by.id('Tauko')).click();
     element(by.linkText('Show state screen')).click();
     agentCards = element.all(by.className('agent-card'));
     expect(agentCards.count()).toBe(1);
     expect(agentCards.get(0).element(by.className('agent-name')).getText())
-      .toBe('Kanerva Aallotar');
-    expect(agentCards.get(0).element(by.className('agent-status')).getText())
-      .toBe('Vapaa');
+      .toBe('Aallotar K');
   });
 });
 
@@ -195,5 +207,78 @@ describe('queue', function () {
     var queue = element.all(by.className('queuer'));
     expect(queue.count()).toBe(5);
     expect(browser.isElementPresent(by.className('plus-5'))).toBe(true);
+  });
+});
+
+describe('login', function () {
+  beforeEach(function () {
+    browser.addMockModule('httpBackendMock', function () {
+      angular.module('httpBackendMock', ['ngMockE2E'])
+        .run(function ($httpBackend) {
+          $httpBackend.whenPOST('login').respond(function (method, url, data) {
+            var creds = angular.fromJson(data);
+            if (creds.username === 'jooseppi') {
+              if (creds.password !== 'oikee') {
+                return [401, { error: 'wrong password' }];
+              }
+              return [200, { id: 1, username: 'jooseppi' }];
+            }
+            return [401, { error: 'invalid username' }];
+          });
+        });
+    });
+  });
+
+  it('should fail with invalid user', function () {
+    browser.get('#/login');
+
+    element(by.model('login.username')).sendKeys('hax0r');
+    element(by.model('login.password')).sendKeys('1337');
+    element(by.buttonText('Login')).click();
+
+    expect(element(by.className('error')).getText()).toBe('invalid username');
+  });
+
+  it('should fail with wrong password', function () {
+    browser.get('#/login');
+
+    element(by.model('login.username')).sendKeys('jooseppi');
+    element(by.model('login.password')).sendKeys('eioo');
+    element(by.buttonText('Login')).click();
+
+    expect(element(by.className('error')).getText()).toBe('wrong password');
+  });
+
+  it('should redirect to /home with no history', function () {
+    browser.get('#/login');
+
+    element(by.model('login.username')).sendKeys('jooseppi');
+    element(by.model('login.password')).sendKeys('oikee');
+    element(by.buttonText('Login')).click();
+
+    expect(browser.getLocationAbsUrl()).toMatch('/home');
+  });
+
+  it('should redirect back /home', function () {
+    browser.get('#/home');
+    element(by.linkText('Login')).click();
+
+    element(by.model('login.username')).sendKeys('jooseppi');
+    element(by.model('login.password')).sendKeys('oikee');
+    element(by.buttonText('Login')).click();
+
+    expect(browser.getLocationAbsUrl()).toMatch('/home');
+  });
+
+  it('should redirect back to protected route', function () {
+    browser.get('#/home');
+    element(by.linkText('Show statistics screen')).click();
+
+    expect(browser.getLocationAbsUrl()).toMatch('/login');
+    element(by.model('login.username')).sendKeys('jooseppi');
+    element(by.model('login.password')).sendKeys('oikee');
+    element(by.buttonText('Login')).click();
+
+    expect(browser.getLocationAbsUrl()).toMatch('/stats');
   });
 });
