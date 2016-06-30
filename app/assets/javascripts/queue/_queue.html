@@ -25,28 +25,35 @@
         </div>
         <div ng-if="queue.queue.length >= 5" class="plus-5">&#9660</div>
     </div>
-    <div class="stats card">
-        <table class="stats-table">
-            <tr>
-                <th> Vastaus: </th>
-                <td> 96,3 % </td>
-            </tr>
-            <tr>
-                <th> Jonotus: </th>
-                <td> 00:47 </td>
-            </tr>
-            <tr>
-                <th> Luopuneet:  </th>
-                <td> 3 </td>
-            </tr>
-            <tr>
-                <th> Puhelujen lkm:  </th>
-                <td> 76 </td>
-            </tr>
-            <tr>
-                <th> Luopuneiden ka: </th>
-                <td> 05:12 </td>
-            </tr>
-        </table>
+    <div class="outer">
+        <div class="stats card">
+            <table class="stats-table">
+                <tr>
+                    <th> Vastaus: </th>
+                    <td> 96,3 % </td>
+                </tr>
+                <tr>
+                    <th> Jonotus: </th>
+                    <td> 00:47 </td>
+                </tr>
+                <tr>
+                <tr>
+
+                    <th> Luopuneet:  </th>
+                    <td> 3 </td>
+                </tr>
+                <tr>
+                    <th> Puhelujen lkm:  </th>
+                    <td> 76 </td>
+                </tr>
+                <tr>
+                    <th> Luopuneiden ka: </th>
+                    <td> 05:12 </td>
+                </tr>
+            </table>
+        </div>
+        <div class="chart card">
+            <nvd3 options="queue.options" data="queue.data"></nvd3>
+        </div>
     </div>
 </div>

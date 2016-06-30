@@ -10,6 +10,8 @@ describe('homepage', function () {
 });
 
 describe('screen', function () {
+  var agentCards;
+
   beforeEach(function () {
     browser.addMockModule('httpBackendMock', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
@@ -21,7 +23,7 @@ describe('screen', function () {
               name: 'Kekkonen Benjamin',
               team: 'Helpdesk',
               status: 'Tauko',
-              created_at: Date.now()
+              created_at: Date.now() - (10 * 60 + 15) * 1000
             },
             {
               id: 2,
@@ -29,23 +31,23 @@ describe('screen', function () {
               name: 'Kanerva Aallotar',
               team: 'Helpdesk',
               status: 'Vapaa',
-              created_at: Date.now()
+              created_at: Date.now() - 45 * 1000
             },
             {
               id: 10,
               agent_id: 8754,
-              name: 'Tuomas Ansala',
+              name: 'Ansala Tuomas',
               team: 'Helpdesk',
               status: 'Tauko',
-              created_at: Date.now()
+              created_at: Date.now() - 30 * 1000
             },
             {
               id: 6,
               agent_id: 666,
-              name: 'Jenni Ahola',
+              name: 'Ahola Jenni',
               team: 'Helpdesk',
               status: 'Tauko',
-              created_at: Date.now()
+              created_at: Date.now() - (1 * 60 + 5) * 1000
             }
           ]);
           $httpBackend.whenGET('teams.json').respond([
@@ -63,29 +65,42 @@ describe('screen', function () {
         });
     });
     browser.get('#/screen');
+    agentCards = element.all(by.className('agent-card'));
   });
 
-  it('should something', function () {
-    var agentCards = element.all(by.className('agent-card'));
-
+  it('should have agent cards', function () {
     expect(agentCards.count()).toBe(4);
+  });
 
-    expect(agentCards.get(0).element(by.className('agent-name')).getText()).toBe('Kekkonen Benjamin');
-    expect(agentCards.get(0).element(by.className('agent-status')).getText()).toBe('Tauko');
+  it('should have agent names', function () {
+    expect(agentCards.get(0).element(by.className('agent-name')).getText()).toBe('Benjamin K');
+    expect(agentCards.get(1).element(by.className('agent-name')).getText()).toBe('Aallotar K');
+    expect(agentCards.get(2).element(by.className('agent-name')).getText()).toBe('Tuomas A');
+    expect(agentCards.get(3).element(by.className('agent-name')).getText()).toBe('Jenni A');
+  });
 
-    expect(agentCards.get(1).element(by.className('agent-name')).getText()).toBe('Kanerva Aallotar');
-    expect(agentCards.get(1).element(by.className('agent-status')).getText()).toBe('Vapaa');
+  it('should have agent statuses', function () {
+    expect(agentCards.get(0).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+    expect(agentCards.get(1).element(by.className('agent-status')).getInnerHtml()).toBe('Vapaa');
+    expect(agentCards.get(2).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+    expect(agentCards.get(3).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+  });
 
-    expect(agentCards.get(2).element(by.className('agent-name')).getText()).toBe('Tuomas Ansala');
-    expect(agentCards.get(2).element(by.className('agent-status')).getText()).toBe('Tauko');
+  it('should hide open status text', function() {
+    expect(agentCards.get(0).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
+    expect(agentCards.get(1).element(by.className('agent-status-container')).getCssValue('visibility')).toBe('hidden');
+    expect(agentCards.get(2).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
+    expect(agentCards.get(3).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
+  });
 
-    expect(agentCards.get(3).element(by.className('agent-name')).getText()).toBe('Jenni Ahola');
-    expect(agentCards.get(3).element(by.className('agent-status')).getText()).toBe('Tauko');
+  it('should have agent time in status', function () {
+    expect(agentCards.get(0).element(by.className('status-timer')).getText()).toBe('10:15');
+    expect(agentCards.get(1).element(by.className('status-timer')).getCssValue('visibility')).toBe('hidden');
+    expect(agentCards.get(2).element(by.className('status-timer')).getText()).toBe('00:30');
+    expect(agentCards.get(3).element(by.className('status-timer')).getText()).toBe('01:05');
   });
 
   it('Status color should match status text', function () {
-    var agentCards = element.all(by.className('agent-card'));
-
     expect(agentCards.get(0).element(by.className('agent-status-color')).getAttribute('class'))
       .toMatch('agent-status-color-red');
     expect(agentCards.get(1).element(by.className('agent-status-color')).getAttribute('class'))
@@ -105,16 +120,13 @@ describe('screen', function () {
   });
 
   it('should filter correctly', function () {
-    var agentCards;
     element(by.linkText('rajaa')).click();
     element(by.id('Tauko')).click();
     element(by.linkText('Show state screen')).click();
     agentCards = element.all(by.className('agent-card'));
     expect(agentCards.count()).toBe(1);
     expect(agentCards.get(0).element(by.className('agent-name')).getText())
-      .toBe('Kanerva Aallotar');
-    expect(agentCards.get(0).element(by.className('agent-status')).getText())
-      .toBe('Vapaa');
+      .toBe('Aallotar K');
   });
 });
 
