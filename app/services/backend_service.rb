@@ -32,8 +32,8 @@ class BackendService
                           :get_contacts_result,
                           :array_of_string)
 
-    return [] unless data
-    data = [data] unless data.is_a? Array
+    data = check_if_data_exists(data)
+
     data = data.map do |attrs|
       {
         agent_id: agent_id,
@@ -69,8 +69,7 @@ class BackendService
     data = reply.body.dig(:get_agents_response,
                           :get_agents_result,
                           :array_of_string)
-    return [] unless data
-    data = [data] unless data.is_a? Array
+    data = check_if_data_exists(data)
 
     data.map do |attrs|
       {
@@ -84,8 +83,7 @@ class BackendService
     data = reply.body.dig(:get_agent_online_state_response,
                           :get_agent_online_state_result,
                           :array_of_string)
-    return [] unless data
-    data = [data] unless data.is_a? Array
+    data = check_if_data_exists(data)
 
     data.map do |attrs|
       {
@@ -95,12 +93,12 @@ class BackendService
         # Some states are randomly capitalized and include <> brackets, the brackets are trimmed out
         # and each individual word in the state is capitalized.
         # Unicode characters require a workaround using mb_chars.
-        status: normalize_status(normalize_unicode_string(attrs[:string][3])),
+        status: normalize_unicode_string(attrs[:string][3]),
         time_in_status: attrs[:string][4]
       }
     end
   rescue Savon::HTTPError => error
-    puts error.http.code
+    Rails.logger.debug error.http.code
     return []
   end
 
@@ -109,9 +107,7 @@ class BackendService
     data = reply.body.dig(:get_general_queue_response,
                           :get_general_queue_result,
                           :array_of_string)
-    return [] unless data
-    data = [data] unless data.is_a? Array
-
+    data = check_if_data_exists(data)
     # TODO: change variable names
     data.map do |attrs|
       {
@@ -121,7 +117,7 @@ class BackendService
       }
     end
   rescue Savon::HTTPError => error
-    puts error.http.code
+    Rails.logger.debug error.http.code
     return []
   end
 
@@ -131,9 +127,9 @@ class BackendService
                           :get_teams_result,
                           :string)
     return [] unless data
-    data = [data] unless data.is_a? Array
+    check_if_data_exists(data)
   rescue Savon::HTTPError => error
-    puts error.http.code
+    logger.debug error.http.code
     return []
   end
 
@@ -143,15 +139,9 @@ class BackendService
     str.tr('<->', '').mb_chars.titleize.wrapped_string
   end
 
-  # Some statuses are merged into one or renamed according to client specifications
-  def normalize_status(status)
-    if status == 'Sisäänkirjaus' || status == 'Sisäänkirjautuminen'
-      return 'Vapaa'
-    end
-    if status == 'Puhelu (Ulos)' || status == 'Puhelu (Sisään)' || status == 'Ulossoitto'
-      return 'Puhelu'
-    end
-    return 'Chat' if status == 'Varattu (Chat)'
-    status
+  def check_if_data_exists(data)
+    return [] unless data
+    data = [data] unless data.is_a? Array
+    data
   end
 end

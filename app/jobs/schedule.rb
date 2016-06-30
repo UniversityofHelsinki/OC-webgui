@@ -6,5 +6,4 @@ require 'config/boot'
 
 module Clockwork 
 	every(5.seconds, 'track_agent_statuses.job') { Delayed::Job.enqueue TrackAgentStatusesJob.new }
-	every(1.seconds, 'track_queue_items.job') { Delayed::Job.enqueue TrackQueueItemsJob.new }
 end
