@@ -1,12 +1,16 @@
 <div class="screen_background">
     <div class="cards">
-        <div ng-repeat="agent in screen.agents" class="card agent-card">
+        <div ng-repeat="agent in screen.agents track by agent.agent_id" ng-class="{'card': true, 'agent-card': true, 'after-call': agent.status === 'Jälkikirjaus'}">
             <div class="agent-status-color agent-status-color-{{agent.color}}"></div>
-            <div class="agent-name">
-                {{ agent.name }}
+            <div class="agent-status-info">
+                <div class="agent-name">
+                    {{ screen.trimName(agent.name) }}
+                </div>
+                <div ng-class="{'agent-status-container': true, 'agent-status-open': agent.status === 'Vapaa'}">
+                    <div class="agent-status">{{ agent.status }}</div>
+                    <oc-time seconds="agent.time_in_status" class="status-timer"></oc-time>
+                </div>
             </div>
-            <div class="agent-status"> {{ agent.status }}</div>
-            <oc-time seconds="agent.time_in_status" class="status-timer"></oc-time>
         </div>
     </div>
     <div class="sidebar">
