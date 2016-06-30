@@ -31,25 +31,23 @@ class AgentStatusUpdater
   end
 
   def check_signed_out_agents
-    @previous_statuses.each do |previous_status|
-      previous_status = previous_status[1]
-      close_last_open_status(previous_status) unless @new_statuses[previous_status.agent_id]
+    @previous_statuses.each do |agent_id, agent|
+      close_last_open_status(agent) unless @new_statuses[agent_id]
     end
   end
 
   def update_statuses_from_new_results
-    @new_statuses.each do |agent|
-      agent = agent[1]
-
+    @new_statuses.each do |agent_id, agent|
       # Check if any agents are found who did not appear in the last results, and if so create a new open status for them
-      if !@previous_statuses[agent.agent_id]
+      if !@previous_statuses[agent_id]
         save_new_status(agent)
       else
-        previous = @previous_statuses[agent.agent_id]
+        previous = @previous_statuses[agent_id]
 
         # Check if previous agent is a different agent than the new one
         if previous.status != agent.status ||
            agent.time_in_status.to_i < previous.time_in_status.to_i
+
           close_last_open_status(previous)
           save_new_status(agent)
         end
