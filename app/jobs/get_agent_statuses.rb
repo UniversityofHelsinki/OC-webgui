@@ -1,31 +1,31 @@
 class GetAgentStatusesJob
 
-  def get_contacts
-    tracks = [137] # Add rest of the language tracks!
+  # Getting agents and their contacts from Orange Contact system
+  def get_agents_and_contacts
+    @tracks = [137] # Add rest of the language tracks!
+    @contacts = [];
     today = Time.zone.today
     yesterday = today - 1.day	# DAYLIGHT SAVING NOT FACTORED IN!!!
     agents = BackendService.new.get_agents
+    agent_id = 0;
     
-    agents.each {|agent|
-      tracks.each { |track|
-        contacts = BackendService.new.get_agent_contacts(agent.agent_id, start_date, end_date, track)
-      }
-
-    }
-
-
-=begin
-    current = BackendService.new.get_agent_contacts(agent_id, start_date, end_date, serviceID).map do |data|
-		AgentStatus.new(
-			agent_id: data[:agent_id],
-			team: data[:team],
-			name: data[:name],
-			status: data[:status],
-			time_in_status: data[:time_in_status]
-				)
-		end
-=end
-        
+    agents.each do |agent|
+      agent_id = agent.agent_id
+      tracks.each do |track|
+        agent_contacts = BackendService.new.get_agent_contacts(agent_id, today, yesterday, track)
+        @contacts.push(agent_contacts)
+      end
     end
+      
+    return @contacts  
+  end
+
+
+  # Method for transfering contacts got from Orange Contact system to database
+  def write_contacts_to_database
+
+
+
+  end
 
 end
