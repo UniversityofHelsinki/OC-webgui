@@ -23,7 +23,7 @@ describe('screen', function () {
               name: 'Kekkonen Benjamin',
               team: 'Helpdesk',
               status: 'Tauko',
-              created_at: Date.now()
+              created_at: Date.now() - (10 * 60 + 15) * 1000
             },
             {
               id: 2,
@@ -31,7 +31,7 @@ describe('screen', function () {
               name: 'Kanerva Aallotar',
               team: 'Helpdesk',
               status: 'Vapaa',
-              created_at: Date.now()
+              created_at: Date.now() - 45 * 1000
             },
             {
               id: 10,
@@ -39,7 +39,7 @@ describe('screen', function () {
               name: 'Ansala Tuomas',
               team: 'Helpdesk',
               status: 'Tauko',
-              created_at: Date.now()
+              created_at: Date.now() - 30 * 1000
             },
             {
               id: 6,
@@ -47,7 +47,7 @@ describe('screen', function () {
               name: 'Ahola Jenni',
               team: 'Helpdesk',
               status: 'Tauko',
-              created_at: Date.now()
+              created_at: Date.now() - (1 * 60 + 5) * 1000
             }
           ]);
           $httpBackend.whenGET('teams.json').respond([
@@ -94,11 +94,10 @@ describe('screen', function () {
   });
 
   it('should have agent time in status', function () {
-    // TODO: mock browser time
-    // expect(agentCards.get(0).element(by.className('status-timer')).getText()).toBe('108:05');
-    // expect(agentCards.get(1).isElementPresent(by.className('status-timer'))).toBe(false);
-    // expect(agentCards.get(2).element(by.className('status-timer')).getText()).toBe('09:03');
-    // expect(agentCards.get(3).element(by.className('status-timer')).getText()).toBe('05:43');
+    expect(agentCards.get(0).element(by.className('status-timer')).getText()).toBe('10:15');
+    expect(agentCards.get(1).element(by.className('status-timer')).getCssValue('visibility')).toBe('hidden');
+    expect(agentCards.get(2).element(by.className('status-timer')).getText()).toBe('00:30');
+    expect(agentCards.get(3).element(by.className('status-timer')).getText()).toBe('01:05');
   });
 
   it('Status color should match status text', function () {
