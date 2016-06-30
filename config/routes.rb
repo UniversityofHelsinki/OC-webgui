@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'queue' => 'queue_items#index'
   get 'teams' => 'teams#index'
   get 'states' => 'states#index'
+  get 'contacts/today' => 'contacts#today'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
