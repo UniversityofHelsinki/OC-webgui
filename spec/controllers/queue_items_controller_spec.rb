@@ -24,8 +24,8 @@ RSpec.describe QueueItemsController, type: :controller do
                  "label" => "zzzzz",
                  "time_in_queue" => 73}]
 
-    BackendService.any_instance.stub(:get_general_queue).and_return(expected)
-    
+    allow_any_instance_of(BackendService).to receive(:get_general_queue).and_return(expected)
+
     get :index, format: :json
     queueitems = JSON.parse(response.body)
  
@@ -34,9 +34,9 @@ RSpec.describe QueueItemsController, type: :controller do
 
   it 'queue json should work with empty queue' do
     expected = []
-    
-    BackendService.any_instance.stub(:get_general_queue).and_return(expected)
-    
+
+    allow_any_instance_of(BackendService).to receive(:get_general_queue).and_return(expected)
+
     get :index, format: :json
     queueitems = JSON.parse(response.body)
  
