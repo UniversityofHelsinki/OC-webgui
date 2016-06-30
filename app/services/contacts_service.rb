@@ -9,6 +9,18 @@ class ContactsService
     convert_to_contacts(statuses)
   end
 
+  def answered_calls(team_name, start_time, end_time)
+    AgentStatus.where(open: false, team: team_name, status: @contact_statuses, created_at: start_time..end_time).count
+  end
+
+  def average_call_duration(team_name, start_time, end_time)
+    average_status_duration(team_name, start_time, end_time, @contact_statuses)
+  end
+
+  def average_after_call_duration(team_name, start_time, end_time)
+    average_status_duration(team_name, start_time, end_time, 'Jälkikirjaus')
+  end
+
   private
 
   def convert_to_contacts(statuses)
@@ -28,5 +40,10 @@ class ContactsService
       return after_call
     end
     nil
+  end
+
+  def average_status_duration(team_name, start_time, end_time, statuses)
+    AgentStatus.select('AVG(EXTRACT(EPOCH FROM closed - created_at)) AS average_duration')
+               .where(open: false, team: team_name, status: statuses, created_at: start_time..end_time)[0]['average_duration']
   end
 end
