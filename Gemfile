@@ -10,7 +10,6 @@ gem 'daemons'
 gem 'clockwork', '~> 2.0'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
-gem 'clockworkd'
 
 gem 'pg'
 
