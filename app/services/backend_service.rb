@@ -151,7 +151,7 @@ class BackendService
     if status == 'Puhelu (Ulos)' || status == 'Puhelu (Sisään)' || status == 'Ulossoitto'
       return 'Puhelu'
     end
-    return Chat if status == 'Varattu (Chat)'
+    return 'Chat' if status == 'Varattu (Chat)'
     status
   end
 end

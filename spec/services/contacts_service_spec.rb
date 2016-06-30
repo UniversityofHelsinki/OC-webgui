@@ -1,5 +1,5 @@
 RSpec.describe ContactsService, type: :service do
-  context 'when database contains some agent statuses that corrsepond to a contact' do
+  context 'when database contains some agent statuses that correspond to a contact' do
     before(:example) do
       time = Time.parse("#{Time.zone.today} 08:00:00")
 
@@ -43,13 +43,13 @@ RSpec.describe ContactsService, type: :service do
     end
 
     it 'creates Contact objects of those objects and returns them correctly' do
-      contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.zone.today} 00:00:00", "#{Time.zone.today} 23:59:59")
+      contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.zone.today.beginning_of_day}", "#{Time.zone.today.end_of_day}")
       expect(contacts.length).to eq(22)
       contacts.each { |c| expect(c.is_a?(Contact)).to be(true) }
     end
 
     it 'sets the call start and end times according to status creatiion and closing times' do
-      contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.zone.today} 08:00:00", "#{Time.zone.today} 09:00:00")
+      contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.parse("08:00:00").in_time_zone}", "#{Time.parse("09:00:00").in_time_zone}")
       expect(contacts[0].answered).to eq("#{Time.zone.today} #{Time.parse("08:05:00").in_time_zone}")
       expect(contacts[0].call_ended).to eq("#{Time.zone.today} #{Time.parse("08:25:00").in_time_zone}")
       expect(contacts[0].agent_id).to eq(123)
@@ -60,12 +60,12 @@ RSpec.describe ContactsService, type: :service do
     end
 
     it 'correctly accounts for after call status occurring right after the contact' do
-      contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.zone.today} 08:00:00", "#{Time.zone.today} 08:06:00")
+      contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.parse("08:00:00").in_time_zone}", "#{Time.parse("08:06:00").in_time_zone}")
       expect(contacts[0].handling_ended).to eq("#{Time.zone.today} #{Time.parse("08:44:00").in_time_zone}")
     end
 
     it 'ignores after call status which might be connected to a different contact' do
-      contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.zone.today} 10:00:00", "#{Time.zone.today} 11:06:00")
+      contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.parse("10:00:00").in_time_zone}", "#{Time.parse("11:06:00").in_time_zone}")
       expect(contacts[0].handling_ended).to be(nil)
       expect(contacts[1].handling_ended).to be(nil)
     end

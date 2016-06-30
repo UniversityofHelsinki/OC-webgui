@@ -13,17 +13,14 @@ class AgentStatusUpdater
 		@new_statuses = Hash[new_statuses.map { |agent| [agent.agent_id, agent]}]
 
 		check_signed_out_agents
-
-		update_statuses_from_new_results
-		
+		update_statuses_from_new_results		
 	end
 
 	private
 
 	def close_last_open_status(agent)
-		open_statuses = AgentStatus.where(agent_id: agent.agent_id, open: true)
-		# There should only ever be one open status at a time for each agent, looping through just in case
-		open_statuses.each { |status| status.open = false; status.closed = Time.now; status.save } 
+	    AgentStatus.where(agent_id: agent.agent_id, open: true)
+	               .update_all( { open: false, closed: Time.now } )
 	end
 
 	def save_new_status(agent)
@@ -51,7 +48,8 @@ class AgentStatusUpdater
 				previous = @previous_statuses[agent.agent_id]
 				
 				#Check if previous agent is a different agent than the new one
-				if (previous.status != agent.status || agent.time_in_status.to_i < previous.time_in_status.to_i)
+				if (previous.status != agent.status ||
+				    agent.time_in_status.to_i < previous.time_in_status.to_i)
 					close_last_open_status(previous)
 					save_new_status(agent)
 				end
