@@ -20,7 +20,7 @@
         <!--Show first five in queue-->
         <div  ng-repeat="queuer in queue.queue | limitTo: 5" class="queuer card">
             <span class="queuer-index"> {{ $index +1 }}. </span>
-            <oc-time seconds="queuer.time_in_queue" class="queuer-time"></oc-time>
+            <oc-time seconds="queuer.time_in_queue" class="queuer-time" update="true"></oc-time>
             <span class="queuer-flag queuer-flag-{{queuer.language}}"><div>purkka</div></span>
         </div>
         <div ng-if="queue.queue.length >= 5" class="plus-5">&#9660</div>
@@ -29,26 +29,16 @@
         <div class="stats card">
             <table class="stats-table">
                 <tr>
-                    <th> Vastaus: </th>
-                    <td> 96,3 % </td>
+                    <th>Puhelut:</th>
+                    <td>{{ queue.stats.answered_calls }}</td>
                 </tr>
                 <tr>
-                    <th> Jonotus: </th>
-                    <td> 00:47 </td>
+                    <th>Puhelun ka:</th>
+                    <td><oc-time seconds="queue.stats.average_call_duration" update="false"></oc-time></td>
                 </tr>
                 <tr>
-                <tr>
-
-                    <th> Luopuneet:  </th>
-                    <td> 3 </td>
-                </tr>
-                <tr>
-                    <th> Puhelujen lkm:  </th>
-                    <td> 76 </td>
-                </tr>
-                <tr>
-                    <th> Luopuneiden ka: </th>
-                    <td> 05:12 </td>
+                    <th>Jälkikirjauksen ka:</th>
+                    <td><oc-time seconds="queue.stats.average_after_call_duration" update="false"></oc-time></td>
                 </tr>
             </table>
         </div>

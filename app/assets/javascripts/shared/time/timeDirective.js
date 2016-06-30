@@ -3,10 +3,10 @@ angular.module('ocWebGui.shared.time', [])
     return {
       restrict: 'E',
       scope: {
-        seconds: '='
+        seconds: '=',
+        update: '='
       },
       link: function (scope, element) {
-        var timeoutId;
         var currentSeconds = scope.seconds;
 
         function pad2(value) {
@@ -24,14 +24,16 @@ angular.module('ocWebGui.shared.time', [])
           updateTime();
         });
 
-        element.on('$destroy', function () {
-          $interval.cancel(timeoutId);
-        });
+        if (scope.update) {
+          var timeoutId = $interval(function () {
+            currentSeconds++;
+            updateTime();
+          }, 1000);
 
-        timeoutId = $interval(function () {
-          currentSeconds++;
-          updateTime();
-        }, 1000);
+          element.on('$destroy', function () {
+            $interval.cancel(timeoutId);
+          });
+        }
 
         updateTime();
       }

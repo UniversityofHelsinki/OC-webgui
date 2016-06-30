@@ -8,7 +8,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         controllerAs: 'queue'
       });
   })
-  .controller('QueueController', function ($interval, $scope, Queue) {
+  .controller('QueueController', function ($interval, $scope, Queue, $http) {
     var vm = this;
 
     vm.options = {
@@ -79,8 +79,12 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       ]
     }];
 
-    var fetchDataInterval;
-    
+    function fetchStats() {
+      $http.get('contacts/stats').then(function (response) {
+        vm.stats = response.data;
+      });
+    }
+
     vm.message = 'Jono';
 
     vm.queue = [];
@@ -97,12 +101,16 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       vm.date = new Date();
     }
 
-    fetchDataInterval = $interval(fetchData, 5000);
+
+    var fetchDataInterval = $interval(fetchData, 5 * 1000);
+    var fetchStatsInterval = $interval(fetchStats, 5 * 60 * 1000);
     $scope.$on('$destroy', function () {
       $interval.cancel(fetchDataInterval);
+      $interval.cancel(fetchStatsInterval);
     });
 
     fetchData();
+    fetchStats();
 
     // mock data for testing css
     // vm.queue = [
