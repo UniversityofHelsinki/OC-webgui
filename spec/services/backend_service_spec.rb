@@ -75,7 +75,7 @@ RSpec.describe BackendService, type: :service do
 
 
 
-  it "Return unknown integers from GetContacts" do
+  it "Return first contact from GetAgentsContacts" do
     fixture = File.read("spec/fixtures/backend_service/get_agent_contacts_1.xml")
 
     message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
@@ -83,33 +83,34 @@ RSpec.describe BackendService, type: :service do
     contactTypes: 'PBX', useServiceTime: true }
 
     expected = [
-      {:ticket_id=>"21100", 
-:call_arrived_to_queue=>"21101", 
-:queued_seconds=>"21102", 
-:call_forwarded_to_agent=>"21103", 
-:call_answered_by_agent=>"21120", 
-:call_ended=>"21104", 
-:call_handling_ended=>"21105", 
-:call_length=>"21106", 
-:call_handling_total=>"20113",
-:service_type=>"21107", 
-:contact_direction=>"21108", 
-:contact_type=>"21109",
-:contact_phone_num=>"21110", 
-:contact_handler=>"21111", 
-:contact_number=>"21112",
-:contact_state=>"21113", 
-:contact_total_handling=>"21114", 
-:sub_group=>"21115"}
+      {:agent_id=>2000049,
+:ticket_id=>"20160614091049336435", 
+:call_arrived_to_queue=>"14.6.2016 9:11:43", 
+:queued_seconds=>"1", 
+:call_forwarded_to_agent=>"14.6.2016 9:11:44", 
+:call_answered_by_agent=>"14.6.2016 9:11:57", 
+:call_ended=>"14.6.2016 9:13:59", 
+:call_handling_ended=>"14.6.2016 9:21:41", 
+:call_length=>"598", 
+:call_handling_total=>"597",
+:service_type=>"Neuvonta Fin", 
+:contact_direction=>"I", 
+:contact_type=>"PBX",
+:contact_phone_num=>"0405882759", 
+:contact_handler=>"Seppänen Pekka", 
+:contact_number=>"-1",
+:contact_state=>"Onnistunut kontakti", 
+:contact_total_handling=>"nil", 
+:sub_group=>"-1"}
     ]
     savon.expects(:get_contacts).with(message: message).returns(fixture)
 
 puts "-----------"
-    response = BackendService.new.get_agent_contacts(2000049, "2016-06-14", "2016-06-15")
+    response = BackendService.new.get_agent_contacts(2000049, "2016-06-14", "2016-06-15", 137)
 
-puts "-----------"
+puts "************"
 	puts response
-	puts "------------_"
+puts "************"
     expect(response).to eq(expected)
   end
 

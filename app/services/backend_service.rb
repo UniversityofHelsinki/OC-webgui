@@ -15,10 +15,10 @@ class BackendService
     )
   end
 
-  def get_agent_contacts(agent_id, start_date, end_date)
+  def get_agent_contacts(agent_id, start_date, end_date, serviceID)
     message = {
       serviceGroupID: 4,
-      serviceID: 137,
+      serviceID: serviceID,
       teamID: 'Helpdesk',
       agentID: agent_id,
       startDate: start_date,
