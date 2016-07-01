@@ -62,7 +62,7 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         vm.yellow = yellow;
         vm.red = red;
 
-        vm.number_of_columns = (agents.length > 6) ? 'four-col' : 'three-col';
+        vm.number_of_columns = (agents.length > 9) ? 'four-col' : 'three-col';
       });
     }
 

@@ -22,6 +22,8 @@
 
 .three-col {
   width: calc(33% - #{$cards-gutter});
+  font-size: 120%;
+  line-height: 2.7em !important;
 }
 
 .four-col {
