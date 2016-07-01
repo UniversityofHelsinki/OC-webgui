@@ -22,21 +22,36 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
 
     function fetchData() {
       Agents.query(function (agents) {
+        // Mock data
+        // agents = [
+        //   { agent_id: 1, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
+        //   { agent_id: 2, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
+        //   { agent_id: 3, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Puhelu', created_at: '2016-06-29T12:50:25.671Z' },
+        //   { agent_id: 4, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Jälkikirjaus', created_at: '2016-06-29T12:50:25.671Z' },
+        //   { agent_id: 5, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
+        //   { agent_id: 6, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
+        // ];
+
         var green = 0;
         var yellow = 0;
         var red = 0;
 
         // Agent status coloring and number tally.
         vm.agents = agents.map(function (agent) {
-          if (agent.status === 'Vapaa') {
-            agent.color = 'green';
-            green++;
-          } else if (agent.status === 'Jälkikirjaus') {
-            agent.color = 'yellow';
-            yellow++;
-          } else {
-            agent.color = 'red';
-            red++;
+          switch (agent.status) {
+            case 'Vapaa':
+              agent.color = 'green';
+              green++;
+              break;
+            case 'Jälkikirjaus':
+            case 'Puhelu':
+              agent.color = 'yellow';
+              yellow++;
+              break;
+            default:
+              agent.color = 'red';
+              red++;
+              break;
           }
           agent.time_in_status = Math.round(new Date().getTime() / 1000) - Math.round(new Date(agent.created_at).getTime() / 1000)
           return agent;
@@ -47,6 +62,13 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         vm.red = red;
       });
     }
+
+    vm.trimName = function (fullName) {
+      var names = fullName.split(' ');
+      var firstName = names.pop();
+      var lastName = names.shift();
+      return firstName + ' ' + lastName.charAt(0);
+    };
 
     fetchDataInterval = $interval(fetchData, 5000);
     $scope.$on('$destroy', function () {

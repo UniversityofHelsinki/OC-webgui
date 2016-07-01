@@ -10,7 +10,7 @@ RSpec.describe AgentStatusesController, type: :controller do
     agent1 = {"agent_id"=>3300170,
        "name"=>"joku vaan",
        "team"=>"Hakijapalvelut",
-       "status"=>"Sisäänkirjaus",
+       "status"=>"Vapaa",
        "created_at"=>anything }
 
     agent2 = {"agent_id"=>2200044,
@@ -22,20 +22,20 @@ RSpec.describe AgentStatusesController, type: :controller do
     agent3= {"agent_id"=>1100039,
         "name"=>"kolmas test",
         "team"=>"Opiskelijaneuvonta",
-        "status"=>"Sisäänkirjaus",
+        "status"=>"Vapaa",
         "created_at"=>anything }
 
     agent4= {"agent_id"=>2525208,
         "name"=>"kiinnioleva",
         "team"=>"Helpdesk",
-        "status"=>"Sisäänkirjaus",
+        "status"=>"Vapaa",
         "created_at"=>anything }
 
 
-    AgentStatus.create(agent_id: 3300170, name: "joku vaan", team: "Hakijapalvelut", status: "Sisäänkirjaus", open: true)
+    AgentStatus.create(agent_id: 3300170, name: "joku vaan", team: "Hakijapalvelut", status: "Vapaa", open: true)
     AgentStatus.create(agent_id: 2200044, name: "testaus ukko", team: "Opiskelijaneuvonta", status: "Jälkikirjaus", open: true)
-    AgentStatus.create(agent_id: 1100039, name: "kolmas test", team: "Opiskelijaneuvonta", status: "Sisäänkirjaus", open: true)
-    AgentStatus.create(agent_id: 2525208, name: "kiinnioleva", team: "Helpdesk", status: "Sisäänkirjaus", open: false)
+    AgentStatus.create(agent_id: 1100039, name: "kolmas test", team: "Opiskelijaneuvonta", status: "Vapaa", open: true)
+    AgentStatus.create(agent_id: 2525208, name: "kiinnioleva", team: "Helpdesk", status: "Vapaa", open: false)
 
     
     get :index, format: :json
