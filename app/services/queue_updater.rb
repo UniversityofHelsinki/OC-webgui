@@ -1,62 +1,56 @@
 class QueueUpdater
 
-	def update_queue(previous_queue, new_queue)
-		if (!previous_queue) 
-			previous_queue = []
-		end
-		if (!new_queue)
-			new_queue = []
-		end
-=begin
-		###########Map statuses into a hash where the key is the agent ID and the result is the AgentStatus object for that agent
---		@previous_queue = Hash[previous_queue.map { |agent| [agent.agent_id, agent]}]
---		@new_statuses = Hash[new_statuses.map { |agent| [agent.agent_id, agent]}]
+  def initialize(timestamp)
+  	@timestamp = timestamp
+  end
 
---		check_signed_out_agents
---		update_statuses_from_new_results		
-=end
+  def update_queue(new_queue)
+  	previous_queue = QueueItem.where(open: true)
+    previous_queue = [] unless previous_queue
+    new_queue = [] unless new_queue
+
+    @previous_queue = previous_queue
+    @new_queue = new_queue
+
+    assign_created_at(new_queue)
+    update_items_left_queue
+    update_new_queue_items
 
   end
-	private
-=begin
-	def close_last_open_status(agent)
-	    AgentStatus.where(agent_id: agent.agent_id, open: true)
-	               .update_all( { open: false, closed: Time.now } )
-	end
 
-	def save_new_status(agent)
-		AgentStatus.create(agent_id: agent.agent_id, name: agent.name, status: agent.status, team: agent.team, open: true)
-	end
+  private
 
-	def check_signed_out_agents
-		@previous_statuses.each do |previous_status| 
-			previous_status = previous_status[1] 
-			if !(@new_statuses[previous_status.agent_id])
-				close_last_open_status(previous_status)
-			end
-		end
-	end
+    def assign_created_at(items)
+    	items.each { |item| item.created_at = Time.at(@timestamp.to_i - item.time_in_queue) }
+    end
 
-	def update_statuses_from_new_results
-		@new_statuses.each do |agent| 
-			agent = agent[1]
+    def update_items_left_queue
+    	closed = []
+    	@previous_queue.each do |item|
+    		matches = @new_queue.select { |match| match.created_at <= item.created_at + 1.second &&
+    		                                     match.created_at >= item.created_at - 1.second && 
+    		                                     match.line == item.line &&
+    		                                     match.label == item.label }
+    		unless matches.any?
+    			item.open = false
+    			item.closed = Time.at(Time.zone.now.to_i)
+    			item.save
+    		end
+    	end
+    	
+    end
 
-			#Check if any agents are found who did not appear in the last results, and if so create a new open status for them
-			if (!@previous_statuses[agent.agent_id])
-				save_new_status(agent)
-			#Previous status found for the same agent
-			else
-				previous = @previous_statuses[agent.agent_id]
-				
-				#Check if previous agent is a different agent than the new one
-				if (previous.status != agent.status ||
-				    agent.time_in_status.to_i < previous.time_in_status.to_i)
-					close_last_open_status(previous)
-					save_new_status(agent)
-				end
+    def update_new_queue_items
 
-			end
-		end
-	end
-=end
+    	@new_queue.each do |item|
+    		matches = @previous_queue.select { |match| match.created_at <= item.created_at + 1.second &&
+    		                                     match.created_at >= item.created_at - 1.second && 
+    		                                     match.line == item.line &&
+    		                                     match.label == item.label }
+    		
+    		QueueItem.create(created_at: item.created_at, line: item.line, label: item.label, open: true) unless matches.any?
+    	end
+
+    end
+
 end

@@ -1,67 +1,154 @@
 RSpec.describe QueueUpdater, type: :service do
 
-	def init_data
+	def queue_a_1
 		[
-      QueueItem.new(:line=>"131", :label=>"Neuvonta Eng", :time_in_queue=>"372"),
-      QueueItem.new(:line=>"161", :label=>"Hakijapalvelut Fin", :time_in_queue=>"58")
+			QueueItem.new(line: "131", label: "Neuvonta Eng", time_in_queue: "10"),
+			QueueItem.new(line: "161", label: "Hakijapalvelut Fin", time_in_queue: "22")
 		]
 	end
 
-	it "works with nil inputs" do
-		QueueUpdater.new.update_queue(nil, [])
-		QueueUpdater.new.update_queue([], nil)
-		QueueUpdater.new.update_queue([], [])
-		QueueUpdater.new.update_queue(nil, nil)
-	end
-	it "creates new statuses if none exist before" do
-		new_data = init_data
-    puts "JuuuUu"
-    puts QueueItem.all
-		expect(QueueItem.all.length).to eq(0)
-		QueueUpdater.new.update_queue(nil, new_data)
-		expect(QueueItem.all.length).to eq(2)
-	end
-=begin
-	it "correctly sets new statuses as open" do
-		new_data = init_data
-		AgentStatusUpdater.new.update_statuses(nil, new_data) 
-		AgentStatus.all.each { |status| expect(status.open).to be(true)}
+	def queue_a_2
+		[
+			QueueItem.new(line: "131", label: "Neuvonta Eng", time_in_queue: "14"),
+			QueueItem.new(line: "161", label: "Hakijapalvelut Fin", time_in_queue: "26")
+		]	
 	end
 
-	context "if the new statuses have same status as the old ones and time in status has increased or stayed the same" do 
+	def queue_a_3
+		[
+			QueueItem.new(line: "131", label: "Neuvonta Eng", time_in_queue: "18")
+		]
+	end
 
-		before(:example) do 
-			old_data = init_data
-			new_data = data_increased_times
-			AgentStatusUpdater.new.update_statuses(nil, old_data)
-			AgentStatusUpdater.new.update_statuses(old_data, new_data)
+	def queue_b_1
+		[
+			QueueItem.new(line: "131", label: "Neuvonta Eng", time_in_queue: "12")
+		]
+	end
+
+	def queue_b_2
+		[
+			QueueItem.new(line: "161", label: "Hakijapalvelut Fin", time_in_queue: "12")
+		]
+	end
+
+	def queue_c_1
+		[
+			QueueItem.new(line: "131", label: "Nevuonta Eng", time_in_queue: "3")
+		]
+	end
+
+	def queue_d_1
+		[
+			QueueItem.new(line: "161", label: "Hakijapalvelut Fin", time_in_queue: "5"),
+			QueueItem.new(line: "161", label: "Hakijapalvelut Fin", time_in_queue: "5")
+		]
+	end
+
+	def queue_d_2
+		[
+			QueueItem.new(line: "161", label: "Hakijapalvelut Fin", time_in_queue: "5"),
+			QueueItem.new(line: "161", label: "Hakijapalvelut Fin", time_in_queue: "12")
+		]
+	end
+
+	it "works with nil inputs" do 
+		QueueUpdater.new(Time.zone.now).update_queue([])
+		QueueUpdater.new(Time.zone.now).update_queue(nil)
+    end
+
+	context "when two items enter an empty queue" do
+
+		before (:example) do 
+			QueueUpdater.new(Time.zone.now).update_queue(queue_a_1)
 		end
 
-		it "doesn't create new statuses in database" do
-			expect(AgentStatus.all.length).to eq(4)
+		it "creates new open QueueItem objects for each new queue item and stores them in the DB" do
+			expect(QueueItem.all.length).to eq(2)
+			expect(QueueItem.where(open: true).length).to eq(2)
 		end
 
-		it "keeps the existing database statuses as open" do 
-			AgentStatus.all.each { |status| expect(status.open).to be(true)}
+		it "correctly sets their creation time according to the time they've been in the queue" do
+			expect(QueueItem.first.created_at).to eq(Time.at(Time.zone.now.to_i - 10))
+			expect(QueueItem.second.created_at).to eq(Time.at(Time.zone.now.to_i - 22))
+		end
+
+	end
+
+	context "when the two same items appear in the queue on subsequent searches" do
+
+		before (:example) do			
+			QueueUpdater.new(Time.zone.now).update_queue(queue_a_1)
+			QueueUpdater.new(Time.zone.now + 4.seconds).update_queue(queue_a_2)
+		end
+
+		it "doesn't create new QueueItem objects" do 
+			expect(QueueItem.all.length).to eq(2)			
+		end
+
+		it "doesn't modify the existing QueueItem objects" do
+			expect(QueueItem.where(open: true).length).to eq(2)
+		end
+
+	end
+
+	context "when two items are in the queue, and one of them disappears" do
+
+		before (:example) do 
+			QueueUpdater.new(Time.zone.now).update_queue(queue_a_2)
+			QueueUpdater.new(Time.zone.now + 4.seconds).update_queue(queue_a_3)
+		end
+
+		it "doesn't generate any extra QueueItem objects" do
+			expect(QueueItem.all.length).to eq(2)
+		end
+
+		it "closes the item which disappeared" do
+			expect(QueueItem.second.open).to be(false)
+		end
+
+		it "sets the time the item closed correctly" do
+			expect(QueueItem.second.closed).to eq(Time.at(Time.zone.now.to_i))
 		end
 	end
 
-	context "if an agent was in the previous batch of statuses but not in the new one" do 
+	context "When an item in the queue disappears, and another with similar time turns up" do
+
+		before (:example) do 
+			QueueUpdater.new(Time.zone.now).update_queue(queue_b_1)
+			QueueUpdater.new(Time.zone.now + 12.seconds).update_queue(queue_b_1)
+		end
+
+		it "closes the first item" do
+			expect(QueueItem.first.open).to be(false)
+		end
+
+		it "opens a new QueueStatus object for the new item" do 
+			expect(QueueItem.all.length).to be(2)
+			expect(QueueItem.second.open).to be(true)
+		end
+	end
+
+	context "When the same result is returned several times over a short period of time" do
 
 		before (:example) do
-			old_data = init_data
-			new_data = data_missing_person
-			AgentStatusUpdater.new.update_statuses(nil, old_data)
-			AgentStatusUpdater.new.update_statuses(old_data, new_data)
+			QueueUpdater.new(Time.zone.now).update_queue(queue_c_1)
+			QueueUpdater.new(Time.zone.now + 1.second).update_queue(queue_c_1)
+			QueueUpdater.new(Time.zone.now + 2.seconds).update_queue(queue_c_1)
 		end
 
-		it "doesn't generate extra statuses in database" do
-			expect(AgentStatus.all.length).to eq(4) 
+		it "doesn't create a new QueueItem for the object" do
+			
 		end
 
-		it "closes the missing agent's status" do
-			expect(AgentStatus.where(agent_id: 1000061)[0].open).to be(false)
-		end
 	end
-=end
+
+
+
+
+
+  
+
+
+
 end
