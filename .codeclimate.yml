@@ -11,6 +11,11 @@ engines:
       languages:
       - ruby
       - javascript
+    exclude_paths:
+    - "spec/"
+    - "db/"
+    - "e2e-tests/"
+    - "**.spec.js"
   brakeman:
     enabled: true
   bundler-audit:
