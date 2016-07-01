@@ -3,6 +3,9 @@ engines:
     enabled: true
   scss-lint:
     enabled: true
+  eslint:
+    enabled: true
+    channel: "eslint-2"
   fixme:
     enabled: true
   duplication:
@@ -25,4 +28,5 @@ ratings:
    paths:
    - "**.rb"
    - "**.scss"
+   - "**.js"
    - Gemfile.lock
