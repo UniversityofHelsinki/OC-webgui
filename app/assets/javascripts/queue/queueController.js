@@ -41,13 +41,16 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         },
       }
     };
-    // huonojuttu: menee epä synkkaan jos on eri määrä arvoja pylväällä ja 
-    // viiva/pistediagrammilla
+    // 1/ huonojuttu: menee epä synkkaan jos on eri määrä arvoja pylväällä ja 
+    //    viiva/pistediagrammilla
+    // 2/ pitää reunustaa null-arvoilla (x = klo 7 ja 18) kun nvd3 näyttää 
+    //    vain puolikkaan pylvään reunimmaisista arvoista
     vm.data = [{
       'key': 'foo',
       'bar': true,
       'color': 'skyblue',
       'values': [
+        [7, null],
         [8, 22],
         [9, 11],
         [10, null],
@@ -57,12 +60,14 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         [14, 34],
         [15, 25],
         [16,  5],
-        [17, 14]
+        [17, 14],
+        [18, null],
       ]
     }, {
       'key': 'bar',
       'color': 'steelblue',
       'values': [
+        [7, null],
         [8, 31],
         [9, 22],
         [10, 44],
@@ -72,7 +77,8 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         [14, 13],
         [15, 4],
         [16, 75],
-        [17, 3]
+        [17, 3],
+        [18, null],
       ]
     }];
 
