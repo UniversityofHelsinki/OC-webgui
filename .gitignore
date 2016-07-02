@@ -39,3 +39,4 @@ npm-debug.log
 *.swp
 
 .byebug_history
+.editorconfig
