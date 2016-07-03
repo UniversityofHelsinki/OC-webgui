@@ -1,8 +1,8 @@
 require 'pstore'
 
+# Provides a service for logging job-related data that needs to persist through server restarts, but where a DB table would be overkill.
 class JobLog
   def initialize(jobname)
-    @jobname = jobname
     @log = PStore.new("app/jobs/logs/#{jobname}.log")
   end
 
@@ -18,15 +18,15 @@ class JobLog
     @log.transaction do
       @log[:failures] = {} unless @log[:failures]
       failures = @log[:failures][Time.zone.today.to_s] || []
-      failures.push(Time.zone.now.to_i)
+      failures.push(Time.zone.at(Time.zone.now.to_i))
       @log[:failures][Time.zone.today.to_s] = failures
     end
   end
 
-  def get_failures(date)
+  def failures
     @log.transaction do
       @log[:failures] = {} unless @log[:failures]
-      @log[:failures][date.to_s]
+      @log[:failures]
     end
   end
 end

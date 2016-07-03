@@ -6,22 +6,19 @@ class TrackQueueItemsJob
                     label: data[:label],
                     time_in_queue: data[:time_in_queue])
     end
-    QueueUpdater.new(Time.zone.now, JobLog.new('TrackQueueItemsJob').last_success).update_queue(current)
+    log = JobLog.new('TrackQueueItemsJob')
+    log.log_success if QueueUpdater.new(Time.zone.now, log.last_success).update_queue(current)
   end
 
   def max_run_time
-    2.seconds
+    1.second
   end
 
   def max_attempts
     1
   end
 
-  def success(job)
-    JobLog.new('TrackQueueItemsJob').log_success
-  end
-
-  def failure(job)
+  def failure(*)
     JobLog.new('TrackQueueItemsJob').log_failure
   end
 end

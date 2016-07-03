@@ -40,3 +40,6 @@ npm-debug.log
 
 .byebug_history
 .editorconfig
+
+app/jobs/logs/*
+app/jobs

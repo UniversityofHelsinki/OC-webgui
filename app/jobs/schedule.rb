@@ -4,6 +4,8 @@ $LOAD_PATH.unshift(app_path) unless $LOAD_PATH.include?(app_path)
 require 'config/environment'
 require 'config/boot'
 
-module Clockwork 
-	every(5.seconds, 'track_agent_statuses.job') { Delayed::Job.enqueue TrackAgentStatusesJob.new }
+# Determines the schedule for running any recurring background jobs
+module Clockwork
+  every(5.seconds, 'track_agent_statuses.job') { Delayed::Job.enqueue TrackAgentStatusesJob.new }
+  every(1.second, 'track_queue_items.job') { Delayed::Job.enqueue TrackQueueItemsJob.new }
 end

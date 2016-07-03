@@ -21,13 +21,11 @@ class TrackAgentStatusesJob
     1
   end
 
-  def success(job)
+  def success(*)
     JobLog.new('TrackAgentStatusesJob').log_success
   end
 
-    def failure(job)
+  def failure(*)
     JobLog.new('TrackAgentStatusesJob').log_failure
   end
-
-
 end
