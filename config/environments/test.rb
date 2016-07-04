@@ -41,4 +41,7 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.cache_store = :null_store
+
+  config.logger = ActiveSupport::Logger.new(
+                     config.paths['log'].first, 1, 5 * 1024 * 1024)
 end
