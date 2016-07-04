@@ -70,17 +70,37 @@ RSpec.describe ContactsService, type: :service do
       expect(contacts[1].handling_ended).to be(nil)
     end
 
-    it 'returns answered calls count' do
-      expect(ContactsService.new.answered_calls('Helpdesk', Time.zone.today.beginning_of_day, Time.zone.today.end_of_day)).to eq(22)
+    context 'no contacts' do
+      time = Time.zone.today - 2.days
+      start_time = time.beginning_of_day
+      end_time = time.end_of_day
+
+      it 'answered calls count is 0' do
+        expect(ContactsService.new.answered_calls('Helpdesk', start_time, end_time)).to eq(0)
+      end
+
+      it 'average calls duration is 0' do
+        expect(ContactsService.new.average_call_duration('Helpdesk', start_time, end_time)).to eq(0)
+      end
+
+      it 'average after calls duration is 0' do
+        expect(ContactsService.new.average_after_call_duration('Helpdesk', start_time, end_time)).to eq(0)
+      end
     end
 
-    # TODO: average works correctly?
-    # it 'returns average calls duration' do
-    #   expect(ContactsService.new.average_call_duration('Helpdesk', Time.zone.today.beginning_of_day, Time.zone.today.end_of_day)).to eq(1115.45454545454545454545)
-    # end
+    context 'contact today' do
+      it 'returns answered calls count' do
+        expect(ContactsService.new.answered_calls('Helpdesk', Time.zone.today.beginning_of_day, Time.zone.today.end_of_day)).to eq(22)
+      end
 
-    it 'returns average after calls duration' do
-      expect(ContactsService.new.average_after_call_duration('Helpdesk', Time.zone.today.beginning_of_day, Time.zone.today.end_of_day)).to eq(651)
+      # TODO: average works correctly?
+      # it 'returns average calls duration' do
+      #   expect(ContactsService.new.average_call_duration('Helpdesk', Time.zone.today.beginning_of_day, Time.zone.today.end_of_day)).to eq(1115.45454545454545454545)
+      # end
+
+      it 'returns average after calls duration' do
+        expect(ContactsService.new.average_after_call_duration('Helpdesk', Time.zone.today.beginning_of_day, Time.zone.today.end_of_day)).to eq(651)
+      end
     end
   end
 end

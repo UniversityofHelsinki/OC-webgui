@@ -43,7 +43,8 @@ class ContactsService
   end
 
   def average_status_duration(team_name, start_time, end_time, statuses)
-    AgentStatus.select('AVG(EXTRACT(EPOCH FROM closed - created_at)) AS average_duration')
-               .where(open: false, team: team_name, status: statuses, created_at: start_time..end_time)[0]['average_duration'].round
+    query = AgentStatus.select('ROUND(AVG(EXTRACT(EPOCH FROM closed - created_at))) AS average_duration')
+                       .where(open: false, team: team_name, status: statuses, created_at: start_time..end_time)
+    query[0]['average_duration'] || 0
   end
 end
