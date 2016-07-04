@@ -36,22 +36,25 @@ class AgentStatusUpdater
     end
   end
 
+  def check_if_status_has_changed(agent_id, agent)
+    previous = @previous_statuses[agent_id]
+
+    # The agent's status has changed if either the status name is different, or the time spent in it is less than before
+    if previous.status != agent.status ||
+       agent.time_in_status.to_i < previous.time_in_status.to_i
+
+      close_last_open_status(previous)
+      save_new_status(agent)
+    end
+  end
+
   def update_statuses_from_new_results
     @new_statuses.each do |agent_id, agent|
-      # Check if any agents are found who did not appear in the last results, and if so create a new open status for them
+      # If agent didn't appear in the previous query, it means they must have signed in, so create a new status for them
       if !@previous_statuses[agent_id]
         save_new_status(agent)
       else
-        previous = @previous_statuses[agent_id]
-
-        # Check if previous agent is a different agent than the new one
-        if previous.status != agent.status ||
-           agent.time_in_status.to_i < previous.time_in_status.to_i
-
-          close_last_open_status(previous)
-          save_new_status(agent)
-        end
-
+        check_if_status_has_changed(agent_id, agent)
       end
     end
   end

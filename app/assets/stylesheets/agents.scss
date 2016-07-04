@@ -20,10 +20,19 @@
   overflow: hidden;
 }
 
-.agent-card {
+.three-col {
+  width: calc(33% - #{$cards-gutter});
+  font-size: 120%;
+  line-height: 2.7em;
+}
+
+.four-col {
   width: calc(25% - #{$cards-gutter});
-  display: flex;
   line-height: 1;
+}
+
+.agent-card {
+  display: flex;
 
   .agent-status-color {
     margin-right: $card-padding;

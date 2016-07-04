@@ -12,4 +12,20 @@ class TrackAgentStatusesJob
     previous = AgentStatus.where(open: true)
     AgentStatusUpdater.new.update_statuses(previous, current)
   end
+
+  def max_run_time
+    5.seconds
+  end
+
+  def max_attempts
+    1
+  end
+
+  def success(*)
+    JobLog.new('TrackAgentStatusesJob').log_success
+  end
+
+  def failure(*)
+    JobLog.new('TrackAgentStatusesJob').log_failure
+  end
 end

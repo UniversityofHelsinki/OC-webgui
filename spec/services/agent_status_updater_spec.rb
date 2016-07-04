@@ -74,7 +74,7 @@ RSpec.describe AgentStatusUpdater, type: :service do
 		AgentStatus.all.each { |status| expect(status.open).to be(true)}
 	end
 
-	context "if the new statuses have same status as the old ones and time in status has increased or stayed the same" do 
+	context "if the agent's status is the same individual one as before" do 
 
 		before(:example) do 
 			old_data = init_data
@@ -92,7 +92,7 @@ RSpec.describe AgentStatusUpdater, type: :service do
 		end
 	end
 
-	context "if an agent was in the previous batch of statuses but not in the new one" do 
+	context "if an agent has logged out" do 
 
 		before (:example) do
 			old_data = init_data
@@ -110,7 +110,7 @@ RSpec.describe AgentStatusUpdater, type: :service do
 		end
 	end
 
-	context "if no agents appear in the new batch but there were some in the previous one" do 
+	context "if all agents have logged out" do 
 
 		before (:example) do 
 			old_data = init_data 
@@ -152,7 +152,7 @@ RSpec.describe AgentStatusUpdater, type: :service do
 
 
 
-	context "if an agent's status is the same but the time has decreased" do 
+	context "if an agent's status has the same name but the time has decreased" do 
 
 		before (:example) do 
 			old_data = init_data 
@@ -174,7 +174,7 @@ RSpec.describe AgentStatusUpdater, type: :service do
 		end
 	end
 
-	context "if a new agent appears who was not in the previous batch" do
+	context "if a new agent logs in" do
 
 		before (:example) do 
 			old_data = init_data 
