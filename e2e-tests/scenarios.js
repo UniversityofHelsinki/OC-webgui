@@ -139,12 +139,12 @@ describe('queue', function () {
             {
               line: 136,
               label: 'sssssssss',
-              time_in_queue: 265
+              created_at: Date.now() - (4 * 60 + 25) * 1000
             },
             {
               line: 133,
               label: 'zzzzz',
-              time_in_queue: 73
+              created_at: Date.now() - 73 * 1000
             }
           ]);
         });
