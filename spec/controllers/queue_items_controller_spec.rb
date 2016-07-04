@@ -29,8 +29,6 @@ RSpec.describe QueueItemsController, type: :controller do
   it 'queue json should work with empty queue' do
     expected = []
 
-    BackendService.any_instance.stub(:get_general_queue).and_return(expected)
-
     get :index, format: :json
     queueitems = JSON.parse(response.body)
 

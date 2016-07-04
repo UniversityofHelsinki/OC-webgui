@@ -10,7 +10,11 @@ class QueueUpdater
   # Current_time parameter should ALWAYS be current time (Time.zone.now), except for tests
   # Last_success should contain a timestamp for when the update job was previously run successfully
   def initialize(current_time, last_success)
-    @current_time = current_time
+    @current_time = if current_time != nil
+                      current_time
+                    else 
+                      Time.at(Time.zone.now.to_i)
+                    end
     @last_success = last_success
   end
 
