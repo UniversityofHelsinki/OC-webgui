@@ -68,14 +68,7 @@ RSpec.describe BackendService, type: :service do
     expect(response.length).to eq(2)
   end
 
-
-
-
-
-
-
-
-  it "Return first contact from GetAgentsContacts" do
+  it "Should return one contact from GetAgentsContacts" do
     fixture = File.read("spec/fixtures/backend_service/get_agent_contacts_1.xml")
 
     message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
@@ -103,21 +96,49 @@ RSpec.describe BackendService, type: :service do
 :contact_total_handling=>"nil", 
 :sub_group=>"-1"}
     ]
+
     savon.expects(:get_contacts).with(message: message).returns(fixture)
 
-puts "-----------"
     response = BackendService.new.get_agent_contacts(2000049, "2016-06-14", "2016-06-15", 137)
 
-puts "************"
-	puts response
-puts "************"
     expect(response).to eq(expected)
   end
 
 
 
 
+  it "Should return empty array if there is only non-contact weird numbers" do
+    fixture = File.read("spec/fixtures/backend_service/get_agent_contacts_2.xml")
 
+    message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
+    agentID: 2000049, startDate: "2016-06-14", endDate: "2016-06-15",
+    contactTypes: 'PBX', useServiceTime: true }
+
+    expected = []
+
+    savon.expects(:get_contacts).with(message: message).returns(fixture)
+
+    response = BackendService.new.get_agent_contacts(2000049, "2016-06-14", "2016-06-15", 137)
+
+    expect(response).to eq(expected)
+  end
+
+
+it "Should return empty array if there is empty response" do
+    fixture = File.read("spec/fixtures/backend_service/get_agent_contacts_3.xml")
+
+    message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
+    agentID: 2000049, startDate: "2016-06-14", endDate: "2016-06-15",
+    contactTypes: 'PBX', useServiceTime: true }
+
+    expected = []
+
+    savon.expects(:get_contacts).with(message: message).returns(fixture)
+
+    response = BackendService.new.get_agent_contacts(2000049, "2016-06-14", "2016-06-15", 137)
+
+    expect(response).to eq(expected)
+  end
 
 =begin
   it "get_teams should return array of 3 if there exists 3 teams" do

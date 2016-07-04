@@ -61,7 +61,10 @@ class BackendService
     end
 
     # First entry in array always seems to consist of weird numbers, not an actual contact
-    data.delete_at(0) if data[0][:contact_type] != 'PBX'
+    if data.length > 0
+      data.delete_at(0) if data[0][:contact_type] != 'PBX'
+    end
+
     data
   end
 
