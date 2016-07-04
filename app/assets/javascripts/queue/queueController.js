@@ -80,7 +80,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     }];
 
     function fetchStats() {
-      $http.get('contacts/stats').then(function (response) {
+      $http.get('contacts/stats.json').then(function (response) {
         vm.stats = response.data;
       });
     }
