@@ -14,74 +14,43 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     vm.options = {
       chart: {
         type: 'linePlusBarChart',
-        height: 400,
+        height: 360,
         margin: {
           top: 30,
           right: 40,
           bottom: 60,
           left: 40
         },
-        // tosi pöljätapa toi + 8, se on kun
-        // kellon ajat alkaa klo 8? kun asiakaspalvelijoita ei ole ennen kello
-        // kahdeksaa niin turha näyttää statistiikkojakaan
-        x: function (d, i) { return i + 8; },
-        y: function (d, i) { return d[1]; },
-        bars: {
-          forceY: [0,111]
-        },
-        lines: {
-          forceY: [0,77]
-        },
+        x: function (d) { return d.hour; },
+        y: function (d) { return d.calls; },
         xAxis: {
-          tickFormat: function(d) {
+          tickFormat: function (d) {
             return d3.format(',f')(d);
           },
-
-          axisLabel: "Kellonaika",
-          showMaxMin: true,
-          ticks: 10,
-          //tickValues: [5, 7, 10, 15, 20,24 ]
-        },
+          axisLabel: 'Kellonaika',
+          showMaxMin: true
+        }
       }
     };
-    // huonojuttu: menee epä synkkaan jos on eri määrä arvoja pylväällä ja 
-    // viiva/pistediagrammilla
     vm.data = [{
       'key': 'foo',
       'bar': true,
       'color': 'skyblue',
-      'values': [
-        [8, 22],
-        [9, 11],
-        [10, null],
-        [11, 26],
-        [12, 15],
-        [13, 65],
-        [14, 34],
-        [15, 25],
-        [16,  5],
-        [17, 14]
-      ]
+      'values': []
     }, {
       'key': 'bar',
       'color': 'steelblue',
-      'values': [
-        [8, 31],
-        [9, 22],
-        [10, 44],
-        [11, 22],
-        [12, 64],
-        [13, null],
-        [14, 13],
-        [15, 4],
-        [16, 75],
-        [17, 3]
-      ]
+      'values': []
     }];
 
     function fetchStats() {
       $http.get('contacts/stats.json').then(function (response) {
-        vm.stats = response.data;
+        var data = response.data;
+        var values = data.calls_by_hour
+          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
+          .filter(function (item) { return item.calls !== 0; });
+        vm.stats = data;
+        vm.data[0].values = values;
       });
     }
 
