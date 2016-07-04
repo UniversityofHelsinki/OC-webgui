@@ -21,6 +21,16 @@ class ContactsService
     average_status_duration(team_name, start_time, end_time, 'Jälkikirjaus')
   end
 
+  def calls_by_hour(team_name, start_time, end_time)
+    result = Array.new(24, 0)
+    query = AgentStatus.where(open: false, team: team_name, status: @contact_statuses, created_at: start_time..end_time)
+                       .select('EXTRACT(HOUR FROM created_at) AS hour, COUNT(*) AS count')
+                       .group('hour')
+    # FIXME: hardcoded timezone UTC+3
+    query.each { |as| result[(as['hour'] + 3) % 24] = as['count'] }
+    result
+  end
+
   private
 
   def convert_to_contacts(statuses)

@@ -86,20 +86,34 @@ RSpec.describe ContactsService, type: :service do
       it 'average after calls duration is 0' do
         expect(ContactsService.new.average_after_call_duration('Helpdesk', start_time, end_time)).to eq(0)
       end
+
+      it 'should be all zeros' do
+        expect(ContactsService.new.calls_by_hour('Helpdesk', start_time, end_time))
+          .to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+      end
     end
 
     context 'contact today' do
+      time = Time.zone.today
+      start_time = time.beginning_of_day
+      end_time = time.end_of_day
+
       it 'returns answered calls count' do
-        expect(ContactsService.new.answered_calls('Helpdesk', Time.zone.today.beginning_of_day, Time.zone.today.end_of_day)).to eq(22)
+        expect(ContactsService.new.answered_calls('Helpdesk', start_time, end_time)).to eq(22)
       end
 
       # TODO: average works correctly?
       # it 'returns average calls duration' do
-      #   expect(ContactsService.new.average_call_duration('Helpdesk', Time.zone.today.beginning_of_day, Time.zone.today.end_of_day)).to eq(1115.45454545454545454545)
+      #   expect(ContactsService.new.average_call_duration('Helpdesk', start_time, end_time)).to eq(1115.45454545454545454545)
       # end
 
       it 'returns average after calls duration' do
-        expect(ContactsService.new.average_after_call_duration('Helpdesk', Time.zone.today.beginning_of_day, Time.zone.today.end_of_day)).to eq(651)
+        expect(ContactsService.new.average_after_call_duration('Helpdesk', start_time, end_time)).to eq(651)
+      end
+
+      it 'returns calls by hour' do
+        expect(ContactsService.new.calls_by_hour('Helpdesk', start_time, end_time))
+          .to eq([0, 0, 0, 0, 0, 0, 0, 0, 2, 5, 2, 3, 3, 4, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0])
       end
     end
   end

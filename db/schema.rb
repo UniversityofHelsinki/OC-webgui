@@ -27,16 +27,6 @@ ActiveRecord::Schema.define(version: 20160702202217) do
     t.string   "name"
   end
 
-  create_table "agents", force: :cascade do |t|
-    t.integer  "agent_id"
-    t.string   "name"
-    t.string   "team"
-    t.string   "status"
-    t.integer  "time_in_status"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
   create_table "contacts", force: :cascade do |t|
     t.integer  "agent_id"
     t.integer  "ticket_id"
