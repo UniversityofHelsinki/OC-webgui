@@ -23,11 +23,11 @@ class ContactsService
 
   def calls_by_hour(team_name, start_time, end_time)
     result = Array.new(24, 0)
+    gmt_offset = Time.now.getlocal.gmt_offset
     query = AgentStatus.where(open: false, team: team_name, status: @contact_statuses, created_at: start_time..end_time)
-                       .select('EXTRACT(HOUR FROM created_at) AS hour, COUNT(*) AS count')
+                       .select("EXTRACT(HOUR FROM created_at + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count")
                        .group('hour')
-    # FIXME: hardcoded timezone UTC+3
-    query.each { |as| result[(as['hour'] + 3) % 24] = as['count'] }
+    query.each { |as| result[(as['hour'])] = as['count'] }
     result
   end
 
