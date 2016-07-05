@@ -1,8 +1,5 @@
 RSpec.describe AgentStatusUpdater, type: :service do
-
-  def now
-    Time.at(Time.zone.now.to_i)
-  end
+  include Now
 
   def build(*args)
     FactoryGirl.build(*args)
@@ -13,16 +10,14 @@ RSpec.describe AgentStatusUpdater, type: :service do
   end
 
   it "works with nil inputs" do
-    updater(now, nil).update_statuses(nil, [])
-    updater(now, nil).update_statuses([], nil)
-    updater(now, nil).update_statuses([], [])
-    updater(now, nil).update_statuses(nil, nil)
+    updater(now, nil).update_statuses(nil)
+    updater(now, nil).update_statuses([])
   end
   
   context "When an AgentStatus result appears for the first time" do 
     before (:example) do
-      new_data = [build(:status1a), build(:status2a)]
-      updater(now, nil).update_statuses(nil, new_data)
+      new_data = [build(:status_1a), build(:status_2a)]
+      updater(now, nil).update_statuses(new_data)
     end
 
     it "creates new statuses for each new agent" do
@@ -36,10 +31,10 @@ RSpec.describe AgentStatusUpdater, type: :service do
 
   context "with an agent's status staying the same over two updates" do 
     before(:example) do
-      old_data = [build(:status1a, time_in_status: "20")]
-      new_data = [build(:status1a, time_in_status: "25")]
-      updater(now, nil).update_statuses(nil, old_data)
-      updater(now + 5.seconds, now).update_statuses(old_data, new_data)
+      old_data = [build(:status_1a, time_in_status: "20")]
+      new_data = [build(:status_1a, time_in_status: "25")]
+      updater(now, nil).update_statuses(old_data)
+      updater(now + 5.seconds, now).update_statuses(new_data)
     end    
     
     it "recognizes the status as being the same" do
@@ -53,10 +48,10 @@ RSpec.describe AgentStatusUpdater, type: :service do
 
   context "if an agent has logged out" do 
     before (:example) do
-      old_data = [build(:status1a, time_in_status: "10"), build(:status2a)]
-      new_data = [build(:status1a, time_in_status: "20")]
-      updater(now, nil).update_statuses(nil, old_data)
-      updater(now + 10.seconds, now).update_statuses(old_data, new_data)
+      old_data = [build(:status_1a, time_in_status: "10"), build(:status_2a)]
+      new_data = [build(:status_1a, time_in_status: "20")]
+      updater(now, nil).update_statuses(old_data)
+      updater(now + 10.seconds, now).update_statuses(new_data)
     end
 
     it "doesn't generate extra statuses in database" do
@@ -70,11 +65,11 @@ RSpec.describe AgentStatusUpdater, type: :service do
 
   context "if all agents have logged out" do 
     before (:example) do 
-      old_data = [build(:status1a, time_in_status: "10"), build(:status2a, time_in_status: "15")]
-      new_data = [build(:status1a, time_in_status: "20"), build(:status2a, time_in_status: "25")]
-      updater(now, nil).update_statuses(nil, old_data)
-      updater(now + 10.seconds, now).update_statuses(old_data, new_data)
-      updater(now + 20.seconds, now + 10.seconds).update_statuses(new_data, [])     
+      old_data = [build(:status_1a, time_in_status: "10"), build(:status_2a, time_in_status: "15")]
+      new_data = [build(:status_1a, time_in_status: "20")]
+      updater(now, nil).update_statuses(old_data)
+      updater(now + 10.seconds, now).update_statuses(new_data)
+      updater(now + 20.seconds, now + 10.seconds).update_statuses(nil)     
     end
 
     it "tracks the number of status changes correctly" do
@@ -84,14 +79,33 @@ RSpec.describe AgentStatusUpdater, type: :service do
     it "closes all remaining agent statuses" do
       expect(AgentStatus.where(open: true).length).to eq(0)
     end
+
+    it "records the last reliable status for the closed statuses correctly" do
+      expect(AgentStatus.first.last_reliable_status).to eq(now + 10.seconds)
+      expect(AgentStatus.second.last_reliable_status).to eq(now)      
+    end
+  end
+
+  context "if an agent logs out while the last successful job run is unknown" do
+    before (:example) do 
+      data = [build(:status_1a)]
+      updater(now, nil).update_statuses(data)
+      updater(now + 15.seconds, nil).update_statuses(nil)
+    end
+
+    it "closes the agent's status but doesn't record a successful last state for it" do
+      expect(AgentStatus.all.length).to eq(1)
+      expect(AgentStatus.first.open).to be(false)
+      expect(AgentStatus.first.last_reliable_status).to be(nil)
+    end
   end
 
   context "if an agent's status has changed to a different one" do
     before (:example) do
-      old_data = [build(:status1a, time_in_status: "15"), build(:status2a, time_in_status: "5")]
-      new_data = [build(:status1b, time_in_status: "10"), build(:status2b, time_in_status: "7")]
-      updater(now, nil).update_statuses(nil, old_data)
-      updater(now + 10.seconds, now).update_statuses(old_data, new_data)
+      old_data = [build(:status_1a, time_in_status: "15"), build(:status_2a, time_in_status: "5")]
+      new_data = [build(:status_1b, time_in_status: "10"), build(:status_2b, time_in_status: "7")]
+      updater(now, nil).update_statuses(old_data)
+      updater(now + 10.seconds, now).update_statuses(new_data)
     end
 
     it "generates a new status object for each changed status" do 
@@ -105,10 +119,10 @@ RSpec.describe AgentStatusUpdater, type: :service do
 
   context "if an agent's status has the same name but the time has decreased" do 
     before (:example) do 
-      old_data = [build(:status1a, time_in_status: "22"), build(:status2a, time_in_status: "5")]
-      new_data = [build(:status2a, time_in_status: "20"), build(:status1a, time_in_status: "15")]
-      updater(now, nil).update_statuses(nil, old_data)
-      updater(now + 15.seconds, now).update_statuses(old_data, new_data)
+      old_data = [build(:status_1a, time_in_status: "22"), build(:status_2a, time_in_status: "5")]
+      new_data = [build(:status_1a, time_in_status: "15"), build(:status_2a, time_in_status: "20")]
+      updater(now, nil).update_statuses(old_data)
+      updater(now + 15.seconds, now).update_statuses(new_data)
     end
 
     it "generates a new open status for the statuses where the time in status decreased" do
@@ -123,10 +137,10 @@ RSpec.describe AgentStatusUpdater, type: :service do
 
   context "if a new agent logs in" do
     before (:example) do 
-      old_data = [build(:status1a, time_in_status: "10")]
-      new_data = [build(:status2a, time_in_status: "3"), build(:status1a, time_in_status: "15")]
-      updater(now, nil).update_statuses(nil, old_data)
-      updater(now + 5.seconds, now).update_statuses(old_data, new_data)
+      old_data = [build(:status_1a, time_in_status: "10")]
+      new_data = [build(:status_2a, time_in_status: "3"), build(:status_1a, time_in_status: "15")]
+      updater(now, nil).update_statuses(old_data)
+      updater(now + 5.seconds, now).update_statuses(new_data)
     end
 
     it "generates a new open status for the new person" do 
@@ -134,4 +148,5 @@ RSpec.describe AgentStatusUpdater, type: :service do
       expect(AgentStatus.where(open: true).length).to eq(2)
     end
   end
+
 end
