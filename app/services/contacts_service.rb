@@ -1,33 +1,31 @@
 # Provides service for calculating Contact objects out of AgentStatus data that corresponds to answered contacts
 class ContactsService
   def initialize
-    @contact_statuses = ['Puhelu', 'Puhelu (Ulos)', 'Puhelu (Sisään)', 'Ulossoitto', 'Chat']
   end
 
   def contacts_for_team(team_name, starttime, endtime)
-    statuses = AgentStatus.where(open: false, team: team_name, status: @contact_statuses, created_at: starttime..endtime)
-    convert_to_contacts(statuses)
+    convert_to_contacts(contact_statuses(team_name, starttime, endtime))
   end
 
   def answered_calls(team_name, start_time, end_time)
-    AgentStatus.where(open: false, team: team_name, status: @contact_statuses, created_at: start_time..end_time).count
+    contact_statuses(team_name, start_time, end_time).count
   end
 
   def average_call_duration(team_name, start_time, end_time)
-    average_status_duration(team_name, start_time, end_time, @contact_statuses)
+    average_duration(contact_statuses(team_name, start_time, end_time))
   end
 
   def average_after_call_duration(team_name, start_time, end_time)
-    average_status_duration(team_name, start_time, end_time, 'Jälkikirjaus')
+    average_duration(statuses(team_name, start_time, end_time, 'Jälkikirjaus'))
   end
 
   def calls_by_hour(team_name, start_time, end_time)
-    result = Array.new(24, 0)
     gmt_offset = Time.now.getlocal.gmt_offset
-    query = AgentStatus.where(open: false, team: team_name, status: @contact_statuses, created_at: start_time..end_time)
-                       .select("EXTRACT(HOUR FROM created_at + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count")
-                       .group('hour')
-    query.each { |as| result[(as['hour'])] = as['count'] }
+    select = "EXTRACT(HOUR FROM created_at + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count"
+    data = contact_statuses(team_name, start_time, end_time).select(select).group('hour')
+
+    result = Array.new(24, 0)
+    data.each { |d| result[(d['hour'])] = d['count'] }
     result
   end
 
@@ -52,9 +50,15 @@ class ContactsService
     nil
   end
 
-  def average_status_duration(team_name, start_time, end_time, statuses)
-    query = AgentStatus.select('ROUND(AVG(EXTRACT(EPOCH FROM closed - created_at))) AS average_duration')
-                       .where(open: false, team: team_name, status: statuses, created_at: start_time..end_time)
-    query[0]['average_duration'] || 0
+  def statuses(team_name, start_time, end_time, statuses)
+    AgentStatus.where(open: false, team: team_name, status: statuses, created_at: start_time..end_time)
+  end
+
+  def contact_statuses(team_name, start_time, end_time)
+    statuses(team_name, start_time, end_time, ['Puhelu', 'Puhelu (Ulos)', 'Puhelu (Sisään)', 'Ulossoitto', 'Chat'])
+  end
+
+  def average_duration(statuses)
+    statuses.select('ROUND(AVG(EXTRACT(EPOCH FROM closed - created_at))) AS average_duration')[0]['average_duration'] || 0
   end
 end
