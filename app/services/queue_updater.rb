@@ -7,10 +7,11 @@
 # cases such as when two similar contacts enter the queue (almost) simultaneously or if the time_in_status returned by OC SOAP service
 # is not reliable (for example due to lag). The class will attempt to account for these cases but does not guarantee 100% accuracy.
 class QueueUpdater
+  include Now
   # Current_time parameter should ALWAYS be current time (Time.zone.now), except for tests
   # Last_success should contain a timestamp for when the update job was previously run successfully
   def initialize(current_time, last_success)
-    @current_time = current_time
+    @current_time = current_time || now
     @last_success = last_success
   end
 
@@ -23,7 +24,6 @@ class QueueUpdater
     return false unless new_data_is_reliable
     check_if_items_left_queue
     save_updates
-
     true
   end
 
@@ -32,7 +32,7 @@ class QueueUpdater
   def save_updates
     items_to_close = @previous_queue.select { |item| item.id unless item.open }
     QueueItem.where(id: items_to_close)
-             .update_all(open: false, closed: Time.zone.at(Time.zone.now.to_i), last_reliable_status: @last_success)
+             .update_all(open: false, closed: @current_time, last_reliable_status: @last_success)
     QueueItem.create(@new_items)
   end
 
@@ -43,7 +43,7 @@ class QueueUpdater
   def plausibly_new_item?(item)
     return true unless @last_success
     time_since_last_update = @current_time - @last_success
-    item.time_in_queue < time_since_last_update
+    item.time_in_queue <= time_since_last_update + 1.second
   end
 
   def check_when_items_entered_queue

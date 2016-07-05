@@ -2,12 +2,13 @@ require 'pstore'
 
 # Provides a service for logging job-related data that needs to persist through server restarts, but where a DB table would be overkill.
 class JobLog
+  include Now
   def initialize(jobname)
     @log = PStore.new("app/jobs/logs/#{jobname}.log")
   end
 
   def log_success
-    @log.transaction { @log[:last_success] = Time.zone.at(Time.zone.now.to_i) }
+    @log.transaction { @log[:last_success] = now }
   end
 
   def last_success
@@ -18,7 +19,7 @@ class JobLog
     @log.transaction do
       @log[:failures] = {} unless @log[:failures]
       failures = @log[:failures][Time.zone.today.to_s] || []
-      failures.push(Time.zone.at(Time.zone.now.to_i))
+      failures.push(now)
       @log[:failures][Time.zone.today.to_s] = failures
     end
   end
