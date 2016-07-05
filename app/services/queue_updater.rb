@@ -11,11 +11,7 @@ class QueueUpdater
   # Current_time parameter should ALWAYS be current time (Time.zone.now), except for tests
   # Last_success should contain a timestamp for when the update job was previously run successfully
   def initialize(current_time, last_success)
-    @current_time = if !current_time.nil?
-                      current_time
-                    else
-                      now
-                    end
+    @current_time = current_time || now
     @last_success = last_success
   end
 
@@ -47,7 +43,7 @@ class QueueUpdater
   def plausibly_new_item?(item)
     return true unless @last_success
     time_since_last_update = @current_time - @last_success
-    item.time_in_queue <= time_since_last_update
+    item.time_in_queue <= time_since_last_update + 1.second
   end
 
   def check_when_items_entered_queue

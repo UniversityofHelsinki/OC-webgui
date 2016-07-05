@@ -11,7 +11,7 @@ class AgentStatusUpdater
   end
 
   def update_statuses(new_statuses)
-    new_statuses = [] unless new_statuses
+    new_statuses ||= []
 
     # Map statuses into a hash where the key is the agent ID and the result is the AgentStatus object for that agent
     @previous_statuses = Hash[AgentStatus.where(open: true).map { |status| [status.agent_id, status] }]
@@ -53,7 +53,7 @@ class AgentStatusUpdater
     previous = @previous_statuses[agent_id]
     # The agent's status has changed if either the status name is different, or the time spent in it is less than before
     if previous.status != status.status ||
-       status.created_at > previous.created_at + 1
+       status.created_at > previous.created_at + 1.second
       # Ensure that status data is reliable before saving any changes
       return false unless plausibly_new_status? status
 
@@ -79,11 +79,11 @@ class AgentStatusUpdater
                              created_at: @current_time - status.time_in_status.to_i)
   end
 
-  # It is possible for an agent status to appear new even if it's actually an old one. This can happen in case SOAP
-  # response is delayed due to lag. This check will check whether a status detected as a new one can in fact be new.
+  # It is possible for an agent status to appear new even if it's actually an old one. This can happen in case SOAP response is delayed 
+  # due to lag. This check will return false if the given status seems to be an old one, not a new one. 
   def plausibly_new_status?(status)
     return true unless @last_success
     time_since_last_update = @current_time - @last_success
-    status.time_in_status.to_i <= time_since_last_update
+    status.time_in_status.to_i <= time_since_last_update + 1.second
   end
 end
