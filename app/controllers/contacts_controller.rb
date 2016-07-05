@@ -4,8 +4,7 @@ class ContactsController < ApplicationController
 
   def init
     @contacts_service = ContactsService.new
-    time = Time.zone.local(2016, 6, 30)
-    # time = Time.zone.now
+    time = Time.zone.now
     @start_time = time.beginning_of_day
     @end_time = time.end_of_day
     @team_name = 'Helpdesk'
