@@ -79,8 +79,8 @@ class AgentStatusUpdater
                              created_at: @current_time - status.time_in_status.to_i)
   end
 
-  # It is possible for an agent status to appear new even if it's actually an old one. This can happen in case SOAP response is delayed 
-  # due to lag. This check will return false if the given status seems to be an old one, not a new one. 
+  # It is possible for an agent status to appear new even if it's actually an old one. This can happen in case SOAP response is delayed
+  # due to lag. This check will return false if the given status seems to be an old one, not a new one.
   def plausibly_new_status?(status)
     return true unless @last_success
     time_since_last_update = @current_time - @last_success
