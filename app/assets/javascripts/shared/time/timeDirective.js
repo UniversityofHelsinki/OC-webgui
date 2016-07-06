@@ -4,8 +4,7 @@ angular.module('ocWebGui.shared.time', [])
       restrict: 'E',
       scope: {
         seconds: '=',
-        dateobj: '=',
-        update: '='
+        dateobj: '='
       },
      link: function (scope, element) {
         var currentSeconds = scope.seconds;
@@ -32,16 +31,14 @@ angular.module('ocWebGui.shared.time', [])
           updateTime();
         });
 
-        if (scope.update) {
-          var timeoutId = $interval(function () {
-            currentSeconds++;
-            updateTime();
-          }, 1000);
+        var timeoutId = $interval(function () {
+          currentSeconds++;
+          updateTime();
+        }, 1000);
 
-          element.on('$destroy', function () {
-            $interval.cancel(timeoutId);
-          });
-        }
+        element.on('$destroy', function () {
+          $interval.cancel(timeoutId);
+        });
 
         updateTime();
       }
