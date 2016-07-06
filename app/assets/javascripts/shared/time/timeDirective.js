@@ -6,7 +6,7 @@ angular.module('ocWebGui.shared.time', [])
         seconds: '=',
         dateobj: '='
       },
-     link: function (scope, element) {
+      link: function (scope, element) {
         var currentSeconds = scope.seconds;
         var dateobj = scope.dateobj;
 
@@ -21,7 +21,6 @@ angular.module('ocWebGui.shared.time', [])
         }
 
         scope.$watchGroup(['seconds', 'dateobj'], function(values) {
-          console.log(values);
           if (values[1] != null) {
             var seconds = Math.round(new Date().getTime() / 1000) - Math.round(values[1].getTime() / 1000);
             currentSeconds = seconds;
