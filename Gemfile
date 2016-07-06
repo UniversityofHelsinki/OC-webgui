@@ -86,3 +86,6 @@ gem 'dotenv-rails', :groups => [:development, :test]
 # JSON for RSpec
 gem 'json_spec'
 gem 'scss_lint', require: false
+
+# Ruby test coverage
+gem "codeclimate-test-reporter", group: :test, require: nil
