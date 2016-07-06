@@ -4,7 +4,8 @@ angular.module('ocWebGui.shared.time', [])
       restrict: 'E',
       scope: {
         seconds: '=',
-        dateobj: '='
+        dateobj: '=',
+        update: '='
       },
       link: function (scope, element) {
         var currentSeconds = scope.seconds;
@@ -20,23 +21,27 @@ angular.module('ocWebGui.shared.time', [])
         }
 
         scope.$watchGroup(['seconds', 'dateobj'], function (values) {
-          if (values[1] != null) {
-            var seconds = Math.round(new Date().getTime() / 1000) - Math.round(values[1].getTime() / 1000);
-            currentSeconds = seconds;
-          } else if (values[0] != null) {
+          if (values[0] != null) {
+            // use seconds
             currentSeconds = values[0];
+          } else if (values[1] != null) {
+            // use dateobj
+            var seconds = Math.round((new Date().getTime() - values[1].getTime()) / 1000);
+            currentSeconds = seconds;
           }
           updateTime();
         });
 
-        var timeoutId = $interval(function () {
-          currentSeconds++;
-          updateTime();
-        }, 1000);
+        if (scope.update) {
+          var timeoutId = $interval(function () {
+            currentSeconds++;
+            updateTime();
+          }, 1000);
 
-        element.on('$destroy', function () {
-          $interval.cancel(timeoutId);
-        });
+          element.on('$destroy', function () {
+            $interval.cancel(timeoutId);
+          });
+        }
 
         updateTime();
       }
