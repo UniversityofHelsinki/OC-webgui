@@ -24,7 +24,7 @@ angular.module('ocWebGui.queue.service', ['ngResource'])
           var queue = angular.fromJson(data);
           return queue.map(function (queuer) {
             queuer.language = getLanguage(queuer.line);
-            queuer.time_in_queue = Math.round(new Date().getTime() / 1000) - Math.round(new Date(queuer.created_at).getTime() / 1000)
+            queuer.created_at = new Date(queuer.created_at);
             return queuer;
           });
         }
