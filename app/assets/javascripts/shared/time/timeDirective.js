@@ -4,10 +4,12 @@ angular.module('ocWebGui.shared.time', [])
       restrict: 'E',
       scope: {
         seconds: '=',
+        dateobj: '=',
         update: '='
       },
       link: function (scope, element) {
         var currentSeconds = scope.seconds;
+        var dateobj = scope.dateobj;
 
         function pad2(value) {
           return (value < 10 ? '0' : '') + value;
@@ -19,8 +21,15 @@ angular.module('ocWebGui.shared.time', [])
           element.text(pad2(minutes) + ':' + pad2(seconds));
         }
 
-        scope.$watch('seconds', function (value) {
-          currentSeconds = value;
+
+        scope.$watchGroup(['seconds', 'dateobj'], function(values) {
+          console.log(values);
+          if (values[0] == null) {
+            var seconds = Math.round(new Date().getTime() / 1000) - Math.round(values[1].getTime() / 1000);
+            currentSeconds = seconds;
+          } else if (values[1] == null) {
+            currentSeconds = values[0];
+          }
           updateTime();
         });
 
