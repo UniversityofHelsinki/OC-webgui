@@ -1,4 +1,4 @@
-# Retrieves quque status information and passes it to QueueUpdater to update as necessary
+# Retrieves queue status information and passes it to QueueUpdater to update as necessary
 class TrackQueueItemsJob
   include Now
 
