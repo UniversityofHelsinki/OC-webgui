@@ -8,7 +8,7 @@
                 </div>
                 <div ng-class="{'agent-status-container': true, 'agent-status-open': agent.status === 'Vapaa'}">
                     <div class="agent-status">{{ agent.status }}</div>
-                    <oc-time seconds="agent.time_in_status" class="status-timer"></oc-time>
+                    <oc-time seconds="agent.time_in_status" class="status-timer" update="true"></oc-time>
                 </div>
             </div>
         </div>
