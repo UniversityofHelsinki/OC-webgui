@@ -49,7 +49,8 @@ describe('login', function () {
 
   it('should redirect back /home', function () {
     browser.get('#/home');
-    element(by.linkText('Login')).click();
+    browser.actions().mouseMove(element(by.className('navbar'))).perform();
+    element(by.className('navbar')).element(by.linkText('Login')).click();
 
     element(by.model('login.username')).sendKeys('jooseppi');
     element(by.model('login.password')).sendKeys('oikee');
@@ -60,7 +61,8 @@ describe('login', function () {
 
   it('should redirect back to protected route', function () {
     browser.get('#/home');
-    element(by.linkText('Show statistics screen')).click();
+    browser.actions().mouseMove(element(by.className('navbar'))).perform();
+    element(by.className('navbar')).element(by.linkText('Show statistics screen')).click();
 
     expect(browser.getLocationAbsUrl()).toMatch('/login');
     element(by.model('login.username')).sendKeys('jooseppi');

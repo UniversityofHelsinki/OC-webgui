@@ -1,15 +1,19 @@
-<h1>{{ login.title }}</h1>
-<form ng-submit="login.login()">
-    <label>
-        Username:
-        <input ng-model="login.username">
-    </label>
-    <br>
-    <label>
-        Password:
-        <input type="password" ng-model="login.password">
-    </label>
-    <br>
-    <p class="error">{{ login.error }}</p>
-    <input type="submit" value="Login">
-<form>
+<div class="login-bg">
+    <div class="center-all card">
+        <h1>{{ login.title }}</h1>
+        <form ng-submit="login.login()">
+            <label>
+                Username:
+                <input ng-model="login.username">
+            </label>
+            <br>
+            <label>
+                Password:
+                <input type="password" ng-model="login.password">
+            </label>
+            <br>
+            <p class="error">{{ login.error }}</p>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</div>

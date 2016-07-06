@@ -7,6 +7,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body ng-app="ocWebGui">
+  <!-- Navbar for every page -->
+  <div class="navbar card">
+    <a ui-sref="screen" class="card">Show state screen</a>
+    <a ui-sref="queue" class="card">Show queue screen</a>
+    <a ui-sref="filterpanel" class="card">Show filter screen</a>
+    <a ui-sref="stats" class="card">Show statistics screen</a>
+    <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Login</a>
+<span ng-if="home.isAuthenticated()">
+    Current user: {{ home.username() }}
+    <a href="" ng-click="home.logout()" class="card">Logout</a>
+</span>
+  </div>
   <ui-view></ui-view>
 </body>
 </html>
