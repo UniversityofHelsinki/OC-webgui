@@ -29,7 +29,7 @@ class AgentStatusUpdater
   private
 
   def check_when_new_statuses_opened
-    @new_statuses.each { |_agent_id, status| status.created_at = @current_time - status.time_in_status.to_i }
+    @new_statuses.each { |_agent_id, status| status.created_at = Time.zone.at(@current_time.to_i - status.time_in_status.to_i) }
   end
 
   def check_signed_out_agents
@@ -47,13 +47,14 @@ class AgentStatusUpdater
         return false unless status_data_is_reliable(agent_id, status)
       end
     end
+    true
   end
 
   def status_data_is_reliable(agent_id, status)
     previous = @previous_statuses[agent_id]
     # The agent's status has changed if either the status name is different, or the time spent in it is less than before
     if previous.status != status.status ||
-       status.created_at > previous.created_at + 1.second
+       status.created_at > previous.created_at + 10.seconds
       # Ensure that status data is reliable before saving any changes
       return false unless plausibly_new_status? status
 
@@ -76,14 +77,15 @@ class AgentStatusUpdater
                              status: status.status,
                              team: status.team,
                              open: true,
-                             created_at: @current_time - status.time_in_status.to_i)
+                             created_at: status.created_at)
   end
 
   # It is possible for an agent status to appear new even if it's actually an old one. This can happen in case SOAP response is delayed
   # due to lag. This check will return false if the given status seems to be an old one, not a new one.
   def plausibly_new_status?(status)
     return true unless @last_success
-    time_since_last_update = @current_time - @last_success
-    status.time_in_status.to_i <= time_since_last_update + 1.second
+    status.created_at >= @last_success
+    #time_since_last_update = @current_time - @last_success
+    #status.time_in_status.to_i <= time_since_last_update + 1.second
   end
 end
