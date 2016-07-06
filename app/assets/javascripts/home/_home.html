@@ -1,10 +1,17 @@
-<h1>Home</h1>
-<a ui-sref="screen">Show state screen</a>
-<a ui-sref="queue">Show queue screen</a>
-<a ui-sref="filterpanel">Show filter screen</a>
-<a ui-sref="stats">Show statistics screen</a>
-<a ui-sref="login" ng-if="!home.isAuthenticated()">Login</a>
-<span ng-if="home.isAuthenticated()">
-    Current user: {{ home.username() }}
-    <a href="" ng-click="home.logout()">Logout</a>
-</span>
+<div class="home-bg">
+    <div class="home-menu card">
+        <h1>Home</h1>
+        <a ui-sref="screen" class="card">Agents</a>
+        <a ui-sref="queue" class="card">Queue</a>
+        <a ui-sref="filterpanel" class="card">Filters</a>
+        <a ui-sref="stats" class="card">Statistics</a>
+        <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Login</a>
+        <span ng-if="home.isAuthenticated()">
+            Current user: {{ home.username() }}
+            <a href="" ng-click="home.logout()" class="card">Logout</a>
+        </span>
+    </div>
+    <div class="home-right">
+        <p>moi</p>
+    </div>
+</div>
