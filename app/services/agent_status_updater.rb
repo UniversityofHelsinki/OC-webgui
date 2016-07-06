@@ -85,7 +85,5 @@ class AgentStatusUpdater
   def plausibly_new_status?(status)
     return true unless @last_success
     status.created_at >= @last_success
-    #time_since_last_update = @current_time - @last_success
-    #status.time_in_status.to_i <= time_since_last_update + 1.second
   end
 end
