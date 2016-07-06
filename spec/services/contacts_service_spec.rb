@@ -38,7 +38,7 @@ RSpec.describe ContactsService, type: :service do
       # 14-15
       AgentStatus.create(agent_id: 262, team: 'Helpdesk', status: 'Puhelu', open: false, created_at: time + (6.hours + 33.minutes), closed: time + (6.hours + 42.minutes))
       # 15-16
-      AgentStatus.create(agent_id: 124, team: 'Helpdesk', status: 'Puhelu', open: false, created_at: time + (7.hours + 10.minutes), closed: time + (1.hour + 35.minutes))
+      AgentStatus.create(agent_id: 124, team: 'Helpdesk', status: 'Puhelu', open: false, created_at: time + (7.hours + 10.minutes), closed: time + (7.hour + 35.minutes))
       AgentStatus.create(agent_id: 262, team: 'Helpdesk', status: 'Puhelu', open: false, created_at: time + (7.hours + 34.minutes), closed: time + (7.hours + 52.minutes))
     end
 
@@ -102,10 +102,9 @@ RSpec.describe ContactsService, type: :service do
         expect(ContactsService.new.answered_calls('Helpdesk', start_time, end_time)).to eq(22)
       end
 
-      # TODO: average works correctly?
-      # it 'returns average calls duration' do
-      #   expect(ContactsService.new.average_call_duration('Helpdesk', start_time, end_time)).to eq(1115.45454545454545454545)
-      # end
+      it 'returns average calls duration' do
+        expect(ContactsService.new.average_call_duration('Helpdesk', start_time, end_time)).to eq(1115)
+      end
 
       it 'returns average after calls duration' do
         expect(ContactsService.new.average_after_call_duration('Helpdesk', start_time, end_time)).to eq(651)
