@@ -17,6 +17,8 @@ h2 {
 
 .filter-card {
   font-size: 300%;
+  width: 50%;
+  height: 100%; //miksei tää ny suostu :D
 }
 
 .filter-bg {
@@ -31,5 +33,9 @@ h2 {
 }
 
 .filters {
+  display: flex;
   flex-direction: row;
+  align-items: center;
+
+  width: 60%;
 }

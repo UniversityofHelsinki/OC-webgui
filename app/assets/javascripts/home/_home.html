@@ -6,12 +6,12 @@
         <a ui-sref="filterpanel" class="card">Filters</a>
         <a ui-sref="stats" class="card">Statistics</a>
         <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Login</a>
-        <span ng-if="home.isAuthenticated()">
+        <div ng-if="home.isAuthenticated()" id="logout">
             Current user: {{ home.username() }}
             <a href="" ng-click="home.logout()" class="card">Logout</a>
-        </span>
+        </div>
     </div>
-    <div class="home-right">
-        <p>moi</p>
+    <div class="home-menu card">
+        <p>Fancy statistics for user if logged in?</p>
     </div>
 </div>
