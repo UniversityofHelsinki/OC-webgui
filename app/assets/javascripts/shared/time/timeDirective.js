@@ -1,14 +1,14 @@
-angular.module('ocWebGui.shared.time', [])
-  .directive('ocTime', function ($interval) {
+angular.module('ocWebGui.shared.time', ['ocWebGui.shared.time.service'])
+  .directive('ocTime', function ($interval, CustomDate) {
     return {
       restrict: 'E',
       scope: {
         seconds: '=',
-        dateobj: '=',
-        update: '='
+        dateobj: '='
       },
       link: function (scope, element) {
         var currentSeconds = scope.seconds;
+        var dateobj = scope.dateobj;
 
         function pad2(value) {
           return (value < 10 ? '0' : '') + value;
@@ -26,13 +26,14 @@ angular.module('ocWebGui.shared.time', [])
             currentSeconds = values[0];
           } else if (values[1] != null) {
             // use dateobj
-            var seconds = Math.round((new Date().getTime() - values[1].getTime()) / 1000);
+            var dateFromFactor = CustomDate.getDate();
+            var seconds = Math.round((dateFromFactor.getTime() - values[1].getTime()) / 1000);
             currentSeconds = seconds;
           }
           updateTime();
         });
 
-        if (scope.update) {
+        if (angular.isDefined(dateobj)) {
           var timeoutId = $interval(function () {
             currentSeconds++;
             updateTime();

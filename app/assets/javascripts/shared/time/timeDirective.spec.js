@@ -6,6 +6,17 @@ describe('ocTime', function () {
   beforeEach(function () {
     module('ocWebGui.shared.time');
 
+    // mokki    
+    module(function($provide) {
+      $provide.service('CustomDate', function() {
+         return {
+              getDate: function () {
+                return new Date(2016, 7, 7, 10, 2, 3);
+              }
+          };
+      });
+    });
+
     inject(function ($compile, $rootScope, $interval) {
       compile = $compile;
       scope = $rootScope.$new();
@@ -22,13 +33,24 @@ describe('ocTime', function () {
     return compiledElement;
   }
 
-  describe('with update', function () {
+  function getCompiledElementForDateObject() {
+    var element = angular.element(
+      '<oc-time dateobj="myDate" class="my-class"></oc-time>'
+    );
+    var compiledElement = compile(element)(scope);
+    scope.$digest();
+    return compiledElement;
+  }
+
+  describe('with date object', function () {
     var directiveElem;
 
     beforeEach(function () {
-      scope.mySeconds = 123;
+      // 10:00:00 7.7.2016
+      // aika milloin "aloitettu"
+      scope.myDate = new Date(2016, 7, 7, 10, 0, 0);
       scope.myUpdate = true;
-      directiveElem = getCompiledElement();
+      directiveElem = getCompiledElementForDateObject();
     });
 
     it('should have class', function () {
@@ -40,8 +62,8 @@ describe('ocTime', function () {
     });
 
     it('should update time', function () {
-      scope.mySeconds = 200;
-      scope.$digest();
+      // tähän joku millä saa kasvatettua nykyistä aikaa
+      // mikä mokataan ihan alussa
       expect(directiveElem.text()).toBe('03:20');
     });
 
@@ -53,7 +75,7 @@ describe('ocTime', function () {
     });
   });
 
-  describe('without update', function () {
+  describe('without update (use seconds)', function () {
     var directiveElem;
 
     beforeEach(function () {
