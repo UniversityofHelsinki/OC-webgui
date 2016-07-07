@@ -27,7 +27,7 @@ describe('ocTime', function () {
 
   function getCompiledElement() {
     var element = angular.element(
-      '<oc-time seconds="mySeconds" class="my-class" update="myUpdate"></oc-time>'
+      '<oc-time seconds="mySeconds" class="my-class"></oc-time>'
     );
     var compiledElement = compile(element)(scope);
     scope.$digest();
@@ -47,10 +47,7 @@ describe('ocTime', function () {
     var directiveElem;
 
     beforeEach(function () {
-      // 10:00:00 7.7.2016
-      // aika milloin "aloitettu"
       scope.myDate = new Date(2016, 7, 7, 10, 0, 0);
-      scope.myUpdate = true;
       directiveElem = getCompiledElementForDateObject();
     });
 
@@ -61,14 +58,6 @@ describe('ocTime', function () {
     it('should render initial time', function () {
       expect(directiveElem.text()).toBe('02:03');
     });
-
-/*
-    it('should update time', function () {
-      // tähän joku millä saa kasvatettua nykyistä aikaa
-      // mikä mokataan ihan alussa
-      expect(directiveElem.text()).toBe('03:20');
-    });
-*/
 
     it('should update time each seconds', function () {
       interval.flush(1000);

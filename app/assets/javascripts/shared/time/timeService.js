@@ -1,4 +1,4 @@
-angular.module('ocWebGui.shared.time.service', ['ngResource'])
+angular.module('ocWebGui.shared.time.service', [])
   .factory('CustomDate', function () {
     return {
       getDate: function () {
