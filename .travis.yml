@@ -12,14 +12,13 @@ services:
   - postgresql 
 
 env:
-  - TEST_SUITE=rspec
-  - TEST_SUITE=karma
-  - TEST_SUITE=protractor 
   global:
     - TRAVIS_NODE_VERSION="4"
     # SECRETPHP variable
     - secure: "d4SdmWJZLHQ/eXUWxr/S6GbNst15ajuQPBCfhGF5mJ/vZQxRBi8zRN+Fg+85hLpWZwQ0V5iWcTYlEAR2BzAFHKm7GCElSMcKQ7AxuZLV8hCFEqqoNP5Il5IVRrlMCKxLB4I4iNiOoSYnav2/qk06TL3kTyTB5Polxgp8hIBOmy455TSSdtU+YQ5QxcNAt6oX942q89EIQ5rcPfSYHoRYfVoIA8RCEXhHYH2zh+iuqO5HRy9cN3pguy5VacS7gjEp+fx4kJ8L6nLk7AAWFOXB6cv5fQb4dbU+0QP2AXs9OYpDaBlLDuQt+BH2QXFVa4HP+rtwzDeKz91h502OlGyU0eLX6mhm2dRnNmg7FefGoF4s7vEyEoADtAjtgZ2K0P+l3ZuEB2Ph8/VILFQymDCD0KFMFMrWqa61m0qAOfZwBJxVE9NdOplHXIlcZIVPuJrRcPrzIP/PwtC06ZLnJb5Edl3cT3c2yjX8Tfy1uGPq/N6Ag2BeLVQZpaI9oLq6boVxKTIR2w8PYOG+jQH39kxXT5TqhelMEKXtRDDzc0QFAcHQgGSWUYKK2WPoSCIC16gaqQ/AXHQLDgm4DjXWHJ0og3o9EIuqRoG59CppgIgWnzmDq85E3JGxovuY1IltQP8HI4bXh9wOPlaLqZE9FJykhApTqcxNzCWTZP06VjvizNA="
-
+    - TEST_SUITE=rspec
+    - TEST_SUITE=karma
+    - TEST_SUITE=protractor 
 
 install:
   - bundle install --jobs=3 --retry=3 --without=development --deployment
