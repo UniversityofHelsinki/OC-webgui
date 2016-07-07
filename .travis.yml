@@ -22,10 +22,10 @@ env:
     - TEST_SUITE=protractor 
 
 install:
-  - test $TEST_SUITE == "rspec" && bundle install --jobs=3 --retry=3 --without=development --deployment
-  - test $TEST_SUITE == "karma" || test $TEST_SUITE=="protractor" && -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
-  - test $TEST_SUITE == "karma" || test $TEST_SUITE=="protractor" npm install
-  - test $TEST_SUITE == "karma" || test $TEST_SUITE=="protractor" npm run update-webdriver
+  - test $TEST_SUITE == "rspec" && bundle install --jobs=3 --retry=3 --without=development --deployment || 
+  - test $TEST_SUITE == "karma" || test $TEST_SUITE=="protractor" && rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION || 
+  - test $TEST_SUITE == "karma" || test $TEST_SUITE=="protractor" npm install ||
+  - test $TEST_SUITE == "karma" || test $TEST_SUITE=="protractor" npm run update-webdriver || 
 
 before_script:
   - psql -c 'create database ocwebgui_test;' -U postgres
