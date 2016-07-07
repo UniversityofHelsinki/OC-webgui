@@ -28,7 +28,7 @@ install:
   - if [ "$TEST_SUITE" == "protractor" ]; then npm run update-webdriver; fi
 
 before_script:
-  - psql -c 'create database ocwebgui_test;' -U postgres; fi
+  - psql -c 'create database ocwebgui_test;' -U postgres
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - if [ "$TEST_SUITE" == "protractor" ]; then bundle exec rails server -p 3000 & fi
