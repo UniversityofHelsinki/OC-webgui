@@ -1,11 +1,11 @@
 rspec_install:
 	bundle install --jobs=3 --retry=3 --without=development --deployment
 karma_install:
-	rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 4
+	rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && . ~/.nvm/nvm.sh && nvm install 4
 	npm install
 protractor_install:
 	bundle install --jobs=3 --retry=3 --without=development --deployment
-	rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 4
+	rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && . ~/.nvm/nvm.sh && nvm install 4
 	npm install
 	npm run update-webdriver
 rspec_before_script:
