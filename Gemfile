@@ -56,7 +56,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0'
-  gem 'dotenv-rails'
+  gem 'dotenv-rails'  
 end
 
 # Bootstrap for easy CSS
@@ -68,11 +68,13 @@ gem 'angular-rails-templates'
 # Allow minifying AngularJS dependency injection function syntax
 gem 'ngannotate-rails'
 
-# Ruby style lint
-gem 'rubocop', require: false
 
 group :development do
   gem 'rails_layout'
+  gem 'scss_lint', require: false
+  # Ruby style lint
+  gem 'rubocop', require: false
+
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
@@ -83,7 +85,7 @@ end
 
 # JSON for RSpec
 gem 'json_spec'
-gem 'scss_lint', require: false
+
 
 # Ruby test coverage
 gem "codeclimate-test-reporter", group: :test, require: nil
