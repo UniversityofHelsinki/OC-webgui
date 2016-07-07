@@ -27,4 +27,18 @@ FactoryGirl.define do
     time_in_status "10"
   end
 
+    factory :status_3a, class: AgentStatus do
+    agent_id "789"
+    team "Helpdesk"
+    status "Puhelu"
+    time_in_status "10"
+  end
+
+  factory :status_3b, class: AgentStatus do
+    agent_id "789"
+    team "Helpdesk"
+    status "Jälkikirjaus"
+    time_in_status "10"
+  end
+
 end
