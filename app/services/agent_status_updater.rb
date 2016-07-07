@@ -54,7 +54,7 @@ class AgentStatusUpdater
     previous = @previous_statuses[agent_id]
     # The agent's status has changed if either the status name is different, or the time spent in it is less than before
     if previous.status != status.status ||
-       status.created_at > previous.created_at + 10.seconds
+       status.created_at > previous.created_at + 6.seconds
       # Ensure that status data is reliable before saving any changes
       return false unless plausibly_new_status? status
 
@@ -67,7 +67,7 @@ class AgentStatusUpdater
   def save_updates
     items_to_close = @previous_statuses.map { |_agent_id, status| status.id unless status.open }
     AgentStatus.where(id: items_to_close)
-               .update_all(open: false, closed: now, last_reliable_status: @last_success)
+               .update_all(open: false, closed: @current_time, last_reliable_status: @last_success)
     AgentStatus.create(@statuses_to_create)
   end
 
