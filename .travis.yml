@@ -2,6 +2,13 @@ language: ruby
 rvm:
   - 2.3.0
 
+cache: 
+  bundler: true
+  directories: 
+    - node_modules
+    - vendor/assets/bower_components
+
+
 services:
   - postgresql 
 

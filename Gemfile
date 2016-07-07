@@ -6,12 +6,12 @@ ruby '2.3.0'
 # Use rb-readline to make stuff work :D
 gem 'rb-readline'
 
+gem 'pg'
+
 gem 'daemons'
 gem 'clockwork', '~> 2.0'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
-
-gem 'pg'
 
 gem 'savon', '~> 2.0'
 
@@ -56,6 +56,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0'
+  gem 'dotenv-rails'
 end
 
 # Bootstrap for easy CSS
@@ -79,9 +80,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-
-# Use dotenv for storing environment variables
-gem 'dotenv-rails', :groups => [:development, :test]
 
 # JSON for RSpec
 gem 'json_spec'
