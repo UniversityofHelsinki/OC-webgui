@@ -22,10 +22,10 @@ env:
     - TEST_SUITE=protractor 
 
 install:
-  - if [ "$TEST_SUITE"=="rspec" ]; then bundle install --jobs=3 --retry=3 --without=development --deployment; fi
-  - if [ "$TEST_SUITE"=="protractor" ] || [ "$TEST_SUITE"=="karma" ]; then rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION; fi
-  - if [ "$TEST_SUITE"=="protractor" ] || [ "$TEST_SUITE"=="karma" ]; then npm install; fi
-  - if [ "$TEST_SUITE"=="protractor" ]; then npm run update-webdriver; fi
+  - if [ "$TEST_SUITE" == "rspec" ]; then bundle install --jobs=3 --retry=3 --without=development --deployment; fi
+  - if [ "$TEST_SUITE" == "protractor" ] || [ "$TEST_SUITE" == "karma" ]; then rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION; fi
+  - if [ "$TEST_SUITE" == "protractor" ] || [ "$TEST_SUITE" == "karma" ]; then npm install; fi
+  - if [ "$TEST_SUITE" == "protractor" ]; then npm run update-webdriver; fi
 
 before_script:
   - psql -c 'create database ocwebgui_test;' -U postgres
