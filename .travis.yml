@@ -22,7 +22,7 @@ env:
     - TEST_SUITE=protractor 
 
 install:
-  - make $TEST_SUITE"_install
+  - make $TEST_SUITE"_install"
 
 before_script:
   - make $TEST_SUITE"_before_script"
