@@ -1,7 +1,7 @@
 class QueueService
   def initialize
   end
-  
+
   def average_queueing_duration(team_name, start_time, end_time)
     average_duration(contact_queues(team_name, start_time, end_time))
   end
@@ -11,7 +11,7 @@ class QueueService
   end
 
   def queues(team_name, start_time, end_time)
-    QueueItem.where(open: false, label: "Puhelinvaihde", created_at: start_time..end_time)
+    QueueItem.where(open: false, label: team_name, created_at: start_time..end_time)
   end
 
   def contact_queues(team_name, start_time, end_time)
