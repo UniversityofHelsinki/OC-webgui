@@ -1,18 +1,16 @@
-<div class="screen_background">
-    <div class="cards">
-        <div ng-controller="FilterpanelController">
-            <div class="card filter-card">
-                <h2>Teams</h2>
-                <label ng-repeat="(team,enabled) in filterpanel.teams">
-                    <input type="checkbox" id="{{team}}" ng-model="filterpanel.teams[team]" /> {{team}} 
-                </label>
-            </div>
-            <div class="card filter-card">
-                <h2>States</h2>
-                <label ng-repeat="(state,enabled) in filterpanel.states">
-                    <input type="checkbox" id="{{state}}" ng-model="filterpanel.states[state]" /> {{state}} 
-                </label>
-            </div>
+<div class="filter-bg">
+    <div ng-controller="FilterpanelController" class="filters card">
+        <div class="card filter-card">
+            <h2>Teams</h2>
+            <label ng-repeat="(team,enabled) in filterpanel.teams">
+                <input type="checkbox" id="{{team}}" ng-model="filterpanel.teams[team]" /> {{team}}
+            </label>
+        </div>
+        <div class="card filter-card">
+            <h2>States</h2>
+            <label ng-repeat="(state,enabled) in filterpanel.states">
+                <input type="checkbox" id="{{state}}" ng-model="filterpanel.states[state]" /> {{state}}
+            </label>
         </div>
     </div>
     <div class="sidebar">
