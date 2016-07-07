@@ -6,14 +6,14 @@ describe('ocTime', function () {
   beforeEach(function () {
     module('ocWebGui.shared.time');
 
-    // mokki    
+    // mokki
     module(function($provide) {
-      $provide.service('CustomDate', function() {
-         return {
-              getDate: function () {
-                return new Date(2016, 7, 7, 10, 2, 3);
-              }
-          };
+      $provide.service('CustomDate', function () {
+        return {
+          getDate: function () {
+            return new Date(2016, 7, 7, 10, 2, 3);
+          }
+        };
       });
     });
 
