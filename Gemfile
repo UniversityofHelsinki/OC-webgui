@@ -8,11 +8,6 @@ gem 'rb-readline'
 
 gem 'pg'
 
-gem 'daemons'
-gem 'clockwork', '~> 2.0'
-gem 'delayed_job'
-gem 'delayed_job_active_record'
-
 gem 'savon', '~> 2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -48,6 +43,13 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+group :development, :production do 
+  gem 'daemons'
+  gem 'clockwork', '~> 2.0'
+  gem 'delayed_job'
+  gem 'delayed_job_active_record'
+end
+
 group :test do
   gem 'factory_girl_rails'
 end
@@ -67,7 +69,6 @@ gem 'angular-rails-templates'
 
 # Allow minifying AngularJS dependency injection function syntax
 gem 'ngannotate-rails'
-
 
 group :development do
   gem 'rails_layout'
