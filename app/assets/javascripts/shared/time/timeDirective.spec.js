@@ -2,9 +2,20 @@ describe('ocTime', function () {
   var compile;
   var scope;
   var interval;
+  var currentDate = new Date(2016, 7, 7, 10, 2, 3);
 
   beforeEach(function () {
     module('ocWebGui.shared.time');
+
+    module(function ($provide) {
+      $provide.service('CustomDate', function () {
+        return {
+          getDate: function () {
+            return currentDate;
+          }
+        };
+      });
+    });
 
     inject(function ($compile, $rootScope, $interval) {
       compile = $compile;
@@ -15,20 +26,28 @@ describe('ocTime', function () {
 
   function getCompiledElement() {
     var element = angular.element(
-      '<oc-time seconds="mySeconds" class="my-class" update="myUpdate"></oc-time>'
+      '<oc-time seconds="mySeconds" class="my-class"></oc-time>'
     );
     var compiledElement = compile(element)(scope);
     scope.$digest();
     return compiledElement;
   }
 
-  describe('with update', function () {
+  function getCompiledElementForDateObject() {
+    var element = angular.element(
+      '<oc-time dateobj="myDate" class="my-class"></oc-time>'
+    );
+    var compiledElement = compile(element)(scope);
+    scope.$digest();
+    return compiledElement;
+  }
+
+  describe('with date object', function () {
     var directiveElem;
 
     beforeEach(function () {
-      scope.mySeconds = 123;
-      scope.myUpdate = true;
-      directiveElem = getCompiledElement();
+      scope.myDate = new Date(2016, 7, 7, 10, 0, 0);
+      directiveElem = getCompiledElementForDateObject();
     });
 
     it('should have class', function () {
@@ -40,7 +59,7 @@ describe('ocTime', function () {
     });
 
     it('should update time', function () {
-      scope.mySeconds = 200;
+      scope.myDate = new Date(2016, 7, 7, 9, 58, 43);
       scope.$digest();
       expect(directiveElem.text()).toBe('03:20');
     });
@@ -53,7 +72,7 @@ describe('ocTime', function () {
     });
   });
 
-  describe('without update', function () {
+  describe('without update (use seconds)', function () {
     var directiveElem;
 
     beforeEach(function () {
