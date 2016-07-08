@@ -7,7 +7,6 @@ describe('ocTime', function () {
   beforeEach(function () {
     module('ocWebGui.shared.time');
 
-    // mokki
     module(function ($provide) {
       $provide.service('CustomDate', function () {
         return {
@@ -57,6 +56,12 @@ describe('ocTime', function () {
 
     it('should render initial time', function () {
       expect(directiveElem.text()).toBe('02:03');
+    });
+
+    it('should update time', function () {
+      scope.myDate = new Date(2016, 7, 7, 9, 58, 43);
+      scope.$digest();
+      expect(directiveElem.text()).toBe('03:20');
     });
 
     it('should update time each seconds', function () {
