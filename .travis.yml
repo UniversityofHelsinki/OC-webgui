@@ -22,13 +22,13 @@ env:
     - TEST_SUITE=protractor 
 
 install:
-  - . ci/$TEST_SUITE"_install.sh"
+  - . make $TEST_SUITE"_install"
 
 before_script:
-  - . ci/$TEST_SUITE"_before_script.sh"
+  - . make $TEST_SUITE"_before_script"
 
 script:
-  - . ci/$TEST_SUITE"_script.sh"
+  - . make $TEST_SUITE"_script"
 
 after_success:
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && curl -X POST -H "SECRETPHP:$SECRETPHP" "http://helptable.it.helsinki.fi/travishook.php"
