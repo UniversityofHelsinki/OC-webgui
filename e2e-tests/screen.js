@@ -1,6 +1,10 @@
 describe('screen', function () {
   var agentCards;
 
+  jasmine.clock().install();
+  var baseTime = new Date(2013, 9, 23);
+  jasmine.clock().mockDate(baseTime);
+
   beforeEach(function () {
     browser.addMockModule('httpBackendMock', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
@@ -117,4 +121,6 @@ describe('screen', function () {
     expect(agentCards.get(0).element(by.className('agent-name')).getText())
       .toBe('Aallotar K');
   });
+
+  jasmine.clock().uninstall();
 });

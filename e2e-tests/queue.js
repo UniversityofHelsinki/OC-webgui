@@ -1,5 +1,9 @@
 describe('queue', function () {
   describe('queue', function () {
+    jasmine.clock().install();
+    var baseTime = new Date(2013, 9, 23);
+    jasmine.clock().mockDate(baseTime);
+
     it('should show 2 queuers', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
@@ -26,7 +30,6 @@ describe('queue', function () {
 
       expect(queue.get(0).element(by.className('queuer-time')).getText()).toBe('04:25');
       expect(queue.get(0).isElementPresent(by.className('queuer-flag-Fin'))).toBe(true);
-
       expect(queue.get(1).element(by.className('queuer-time')).getText()).toBe('01:13');
       expect(queue.get(1).isElementPresent(by.className('queuer-flag-Swe'))).toBe(true);
 
@@ -119,5 +122,7 @@ describe('queue', function () {
       expect(rows.get(2).element(by.tagName('th')).getText()).toBe('Jälkikirjauksen ka:');
       expect(rows.get(2).element(by.tagName('td')).getText()).toBe('01:05');
     });
+
+    jasmine.clock().uninstall();
   });
 });
