@@ -28,10 +28,10 @@ before_script:
   - sh ci/$TEST_SUITE"_before_script.sh"
 
 script:
-  - make $TEST_SUITE"_script"
+  - sh ci/$TEST_SUITE"_script.sh"
 
 after_success:
-    - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && curl -X POST -H "SECRETPHP:$SECRETPHP" "http://helptable.it.helsinki.fi/travishook.php"
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && curl -X POST -H "SECRETPHP:$SECRETPHP" "http://helptable.it.helsinki.fi/travishook.php"
 
 notifications:
   email: false

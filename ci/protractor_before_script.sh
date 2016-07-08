@@ -1,3 +1,4 @@
+nvm use 4.0
 psql -c 'create database ocwebgui_test;' -U postgres
 export DISPLAY=:99.0
 sh -e /etc/init.d/xvfb start
