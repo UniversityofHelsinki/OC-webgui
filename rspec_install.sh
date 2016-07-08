@@ -1,1 +1,0 @@
-bundle install --jobs=3 --retry=3 --without=development --deployment
