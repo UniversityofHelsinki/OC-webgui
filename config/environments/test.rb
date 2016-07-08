@@ -45,3 +45,4 @@ Rails.application.configure do
   config.logger = ActiveSupport::Logger.new(
                      config.paths['log'].first, 1, 5 * 1024 * 1024)
 end
+
