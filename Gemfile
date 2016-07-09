@@ -6,11 +6,6 @@ ruby '2.3.0'
 # Use rb-readline to make stuff work :D
 gem 'rb-readline'
 
-gem 'daemons'
-gem 'clockwork', '~> 2.0'
-gem 'delayed_job'
-gem 'delayed_job_active_record'
-
 gem 'pg'
 
 gem 'savon', '~> 2.0'
@@ -48,6 +43,13 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+group :development, :production do 
+  gem 'daemons'
+  gem 'clockwork', '~> 2.0'
+  gem 'delayed_job'
+  gem 'delayed_job_active_record'
+end
+
 group :test do
   gem 'factory_girl_rails'
 end
@@ -56,6 +58,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0'
+  gem 'dotenv-rails'  
 end
 
 # Bootstrap for easy CSS
@@ -67,25 +70,20 @@ gem 'angular-rails-templates'
 # Allow minifying AngularJS dependency injection function syntax
 gem 'ngannotate-rails'
 
-# Ruby style lint
-gem 'rubocop', require: false
-
 group :development do
   gem 'rails_layout'
-
+  gem 'scss_lint', require: false
+  # Ruby style lint
+  gem 'rubocop', require: false
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
 
-# Use dotenv for storing environment variables
-gem 'dotenv-rails', :groups => [:development, :test]
-
 # JSON for RSpec
 gem 'json_spec'
-gem 'scss_lint', require: false
+
 
 # Ruby test coverage
 gem "codeclimate-test-reporter", group: :test, require: nil
