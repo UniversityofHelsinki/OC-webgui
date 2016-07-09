@@ -5,6 +5,7 @@ describe('screen', function () {
     browser.addMockModule('httpBackendMock', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
         .run(function ($httpBackend) {
+          var baseTime = new Date(2013, 9, 23, 12, 0).getTime();
           $httpBackend.whenGET('agent_statuses.json').respond([
             {
               id: 1,
@@ -12,7 +13,7 @@ describe('screen', function () {
               name: 'Kekkonen Benjamin',
               team: 'Helpdesk',
               status: 'Tauko',
-              created_at: Date.now() - (10 * 60 + 15) * 1000
+              created_at: new Date(baseTime - (10 * 60 + 15) * 1000)
             },
             {
               id: 2,
@@ -20,7 +21,7 @@ describe('screen', function () {
               name: 'Kanerva Aallotar',
               team: 'Helpdesk',
               status: 'Vapaa',
-              created_at: Date.now() - 45 * 1000
+              created_at: new Date(baseTime - 45 * 1000)
             },
             {
               id: 10,
@@ -28,7 +29,7 @@ describe('screen', function () {
               name: 'Ansala Tuomas',
               team: 'Helpdesk',
               status: 'Tauko',
-              created_at: Date.now() - 30 * 1000
+              created_at: new Date(baseTime - 30 * 1000)
             },
             {
               id: 6,
@@ -36,7 +37,7 @@ describe('screen', function () {
               name: 'Ahola Jenni',
               team: 'Helpdesk',
               status: 'Tauko',
-              created_at: Date.now() - (1 * 60 + 5) * 1000
+              created_at: new Date(baseTime - (1 * 60 + 5) * 1000)
             }
           ]);
           $httpBackend.whenGET('teams.json').respond([
@@ -53,6 +54,18 @@ describe('screen', function () {
           ]);
         });
     });
+
+    browser.addMockModule('ocWebGui.shared.time.service', function () {
+      angular.module('ocWebGui.shared.time.service', [])
+        .factory('CustomDate', function () {
+          return {
+            getDate: function () {
+              return new Date(2013, 9, 23, 12, 0);
+            }
+          };
+        });
+    });
+
     browser.get('#/screen');
     agentCards = element.all(by.className('agent-card'));
   });
