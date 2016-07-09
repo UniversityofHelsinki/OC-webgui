@@ -1,19 +1,38 @@
 # Provides service for calculating Contact objects out of AgentStatus data that corresponds to answered contacts
 class ContactsService
-
   def initialize
-    @contact_statuses = ['Puhelu', 'Puhelu (Ulos)', 'Puhelu (Sisään)', 'Ulossoitto', 'Chat']
   end
 
   def contacts_for_team(team_name, starttime, endtime)
-    statuses = AgentStatus.where(open: false, team: team_name, status: @contact_statuses, created_at: starttime..endtime)
-    convert_to_contacts(statuses)
+    convert_to_contacts(contact_statuses(team_name, starttime, endtime))
+  end
+
+  def answered_calls(team_name, start_time, end_time)
+    contact_statuses(team_name, start_time, end_time).count
+  end
+
+  def average_call_duration(team_name, start_time, end_time)
+    average_duration(contact_statuses(team_name, start_time, end_time))
+  end
+
+  def average_after_call_duration(team_name, start_time, end_time)
+    average_duration(statuses(team_name, start_time, end_time, 'Jälkikirjaus'))
+  end
+
+  def calls_by_hour(team_name, start_time, end_time)
+    gmt_offset = Time.now.getlocal.gmt_offset
+    select = "EXTRACT(HOUR FROM created_at + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count"
+    data = contact_statuses(team_name, start_time, end_time).select(select).group('hour')
+
+    result = Array.new(24, 0)
+    data.each { |d| result[(d['hour'])] = d['count'] }
+    result
   end
 
   private
 
   def convert_to_contacts(statuses)
-    contacts = statuses.map do |status|
+    statuses.map do |status|
       contact = Contact.new(agent_id: status.agent_id, answered: status.created_at, call_ended: status.closed)
       after_call = after_call_for(contact)
       contact.handling_ended = after_call.closed if after_call
@@ -29,5 +48,17 @@ class ContactsService
       return after_call
     end
     nil
+  end
+
+  def statuses(team_name, start_time, end_time, statuses)
+    AgentStatus.where(open: false, team: team_name, status: statuses, created_at: start_time..end_time)
+  end
+
+  def contact_statuses(team_name, start_time, end_time)
+    statuses(team_name, start_time, end_time, ['Puhelu', 'Puhelu (Ulos)', 'Puhelu (Sisään)', 'Ulossoitto', 'Chat'])
+  end
+
+  def average_duration(statuses)
+    statuses.select('ROUND(AVG(EXTRACT(EPOCH FROM closed - created_at))) AS average_duration')[0]['average_duration'] || 0
   end
 end

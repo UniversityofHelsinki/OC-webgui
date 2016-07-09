@@ -17,6 +17,7 @@
 /tmp
 
 /vendor/assets/bower_components
+/vendor/bundle
 
 *#
 *~
@@ -39,3 +40,7 @@ npm-debug.log
 *.swp
 
 .byebug_history
+.editorconfig
+
+app/jobs/logs/*
+app/jobs

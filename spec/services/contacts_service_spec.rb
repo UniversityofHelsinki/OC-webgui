@@ -38,18 +38,18 @@ RSpec.describe ContactsService, type: :service do
       # 14-15
       AgentStatus.create(agent_id: 262, team: 'Helpdesk', status: 'Puhelu', open: false, created_at: time + (6.hours + 33.minutes), closed: time + (6.hours + 42.minutes))
       # 15-16
-      AgentStatus.create(agent_id: 124, team: 'Helpdesk', status: 'Puhelu', open: false, created_at: time + (7.hours + 10.minutes), closed: time + (1.hour + 35.minutes))
-      AgentStatus.create(agent_id: 262, team: 'Helpdesk', status: 'Puhelu', open: false, created_at: time + (7.hours + 34.minutes), closed: time + (1.hour + 52.minutes))
+      AgentStatus.create(agent_id: 124, team: 'Helpdesk', status: 'Puhelu', open: false, created_at: time + (7.hours + 10.minutes), closed: time + (7.hour + 35.minutes))
+      AgentStatus.create(agent_id: 262, team: 'Helpdesk', status: 'Puhelu', open: false, created_at: time + (7.hours + 34.minutes), closed: time + (7.hours + 52.minutes))
     end
 
     it 'creates Contact objects of those objects and returns them correctly' do
-      contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.zone.today.beginning_of_day}", "#{Time.zone.today.end_of_day}")
+      contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.zone.today.beginning_of_day, Time.zone.today.end_of_day)
       expect(contacts.length).to eq(22)
       contacts.each { |c| expect(c.is_a?(Contact)).to be(true) }
     end
 
     it 'sets the call start and end times according to status creatiion and closing times' do
-      contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.parse("08:00:00").in_time_zone}", "#{Time.parse("09:00:00").in_time_zone}")
+      contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.parse("08:00:00").in_time_zone, Time.parse("09:00:00").in_time_zone)
       expect(contacts[0].answered).to eq("#{Time.zone.today} #{Time.parse("08:05:00").in_time_zone}")
       expect(contacts[0].call_ended).to eq("#{Time.zone.today} #{Time.parse("08:25:00").in_time_zone}")
       expect(contacts[0].agent_id).to eq(123)
@@ -60,14 +60,60 @@ RSpec.describe ContactsService, type: :service do
     end
 
     it 'correctly accounts for after call status occurring right after the contact' do
-      contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.parse("08:00:00").in_time_zone}", "#{Time.parse("08:06:00").in_time_zone}")
+      contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.parse("08:00:00").in_time_zone, Time.parse("08:06:00").in_time_zone)
       expect(contacts[0].handling_ended).to eq("#{Time.zone.today} #{Time.parse("08:44:00").in_time_zone}")
     end
 
     it 'ignores after call status which might be connected to a different contact' do
-      contacts = ContactsService.new.contacts_for_team('Helpdesk', "#{Time.parse("10:00:00").in_time_zone}", "#{Time.parse("11:06:00").in_time_zone}")
+      contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.parse("10:00:00").in_time_zone, Time.parse("11:06:00").in_time_zone)
       expect(contacts[0].handling_ended).to be(nil)
       expect(contacts[1].handling_ended).to be(nil)
+    end
+
+    context 'no contacts' do
+      time = Time.zone.today - 2.days
+      start_time = time.beginning_of_day
+      end_time = time.end_of_day
+
+      it 'answered calls count is 0' do
+        expect(ContactsService.new.answered_calls('Helpdesk', start_time, end_time)).to eq(0)
+      end
+
+      it 'average calls duration is 0' do
+        expect(ContactsService.new.average_call_duration('Helpdesk', start_time, end_time)).to eq(0)
+      end
+
+      it 'average after calls duration is 0' do
+        expect(ContactsService.new.average_after_call_duration('Helpdesk', start_time, end_time)).to eq(0)
+      end
+
+      it 'should be all zeros' do
+        expect(ContactsService.new.calls_by_hour('Helpdesk', start_time, end_time))
+          .to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+      end
+    end
+
+    context 'contact today' do
+      time = Time.zone.today
+      start_time = time.beginning_of_day
+      end_time = time.end_of_day
+
+      it 'returns answered calls count' do
+        expect(ContactsService.new.answered_calls('Helpdesk', start_time, end_time)).to eq(22)
+      end
+
+      it 'returns average calls duration' do
+        expect(ContactsService.new.average_call_duration('Helpdesk', start_time, end_time)).to eq(1115)
+      end
+
+      it 'returns average after calls duration' do
+        expect(ContactsService.new.average_after_call_duration('Helpdesk', start_time, end_time)).to eq(651)
+      end
+
+      it 'returns calls by hour' do
+        expect(ContactsService.new.calls_by_hour('Helpdesk', start_time, end_time))
+          .to eq([0, 0, 0, 0, 0, 0, 0, 0, 2, 5, 2, 3, 3, 4, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0])
+      end
     end
   end
 end

@@ -19,6 +19,7 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
     vm.green = 0;
     vm.yellow = 0;
     vm.red = 0;
+    vm.number_of_columns = 0;
 
     function fetchData() {
       Agents.query(function (agents) {
@@ -53,13 +54,14 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
               red++;
               break;
           }
-          agent.time_in_status = Math.round(new Date().getTime() / 1000) - Math.round(new Date(agent.created_at).getTime() / 1000)
           return agent;
         });
 
         vm.green = green;
         vm.yellow = yellow;
         vm.red = red;
+
+        vm.number_of_columns = (agents.length > 9) ? 'four-col' : 'three-col';
       });
     }
 

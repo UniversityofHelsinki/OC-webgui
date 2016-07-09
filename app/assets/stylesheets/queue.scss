@@ -97,8 +97,8 @@
 }
 
 .stats {
-  width: 50%;
-  font-size: 500%;
+  height: 70%;
+  font-size: 350%;
   text-align: center;
   line-height: 1.5;
   display: flex;
@@ -108,6 +108,7 @@
 
 .stats-table {
   border-spacing: 0 1em;
+  font-size: 130%;
 
   td {
     width: 50%;
@@ -122,4 +123,33 @@
     font-weight: normal;
     text-align: left;
   }
+}
+
+.outer {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.chart {
+  height: 30%;
+}
+
+.nv-point {
+  stroke-opacity: 1 !important;
+  stroke-width: 2px;
+  fill-opacity: 1 !important;
+}
+
+.nvd3 g.nv-groups path.nv-line {
+  stroke-width: 0;
+}
+
+// ettei näytä nollan kokosia pylväitä */
+//.nvd3 rect[height="1"] {
+//  display: none !important;
+//}
+
+.nv-context {
+  display: none !important;
 }

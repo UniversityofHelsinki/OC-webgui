@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time'])
+angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'nvd3'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('queue', {
@@ -8,9 +8,51 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         controllerAs: 'queue'
       });
   })
-  .controller('QueueController', function ($interval, $scope, Queue) {
+  .controller('QueueController', function ($interval, $scope, Queue, $http) {
     var vm = this;
-    var fetchDataInterval;
+
+    vm.options = {
+      chart: {
+        type: 'linePlusBarChart',
+        height: 360,
+        margin: {
+          top: 30,
+          right: 40,
+          bottom: 60,
+          left: 40
+        },
+        x: function (d) { return d.hour; },
+        y: function (d) { return d.calls; },
+        xAxis: {
+          tickFormat: function (d) {
+            return d3.format(',f')(d);
+          },
+          axisLabel: 'Kellonaika',
+          showMaxMin: true
+        }
+      }
+    };
+    vm.data = [{
+      'key': 'foo',
+      'bar': true,
+      'color': 'skyblue',
+      'values': []
+    }, {
+      'key': 'bar',
+      'color': 'steelblue',
+      'values': []
+    }];
+
+    function fetchStats() {
+      $http.get('contacts/stats.json').then(function (response) {
+        var data = response.data;
+        var values = data.calls_by_hour
+          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
+          .filter(function (item) { return item.calls !== 0; });
+        vm.stats = data;
+        vm.data[0].values = values;
+      });
+    }
 
     vm.message = 'Jono';
 
@@ -28,12 +70,16 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       vm.date = new Date();
     }
 
-    fetchDataInterval = $interval(fetchData, 5000);
+
+    var fetchDataInterval = $interval(fetchData, 5 * 1000);
+    var fetchStatsInterval = $interval(fetchStats, 5 * 60 * 1000);
     $scope.$on('$destroy', function () {
       $interval.cancel(fetchDataInterval);
+      $interval.cancel(fetchStatsInterval);
     });
 
     fetchData();
+    fetchStats();
 
     // mock data for testing css
     // vm.queue = [

@@ -1,3 +1,3 @@
 json.array!(@queue_items) do |item|
-  json.extract! item, :line, :label, :time_in_queue
+  json.extract! item, :line, :label, :created_at
 end

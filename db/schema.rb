@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628220512) do
+ActiveRecord::Schema.define(version: 20160704175528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,20 +21,11 @@ ActiveRecord::Schema.define(version: 20160628220512) do
     t.string   "team"
     t.string   "status"
     t.boolean  "open"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.datetime "closed"
     t.string   "name"
-  end
-
-  create_table "agents", force: :cascade do |t|
-    t.integer  "agent_id"
-    t.string   "name"
-    t.string   "team"
-    t.string   "status"
-    t.integer  "time_in_status"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "last_reliable_status"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -71,11 +62,12 @@ ActiveRecord::Schema.define(version: 20160628220512) do
     t.integer  "line"
     t.string   "label"
     t.integer  "time_in_queue"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "team"
     t.boolean  "open"
     t.datetime "closed"
+    t.datetime "last_reliable_status"
   end
 
   create_table "states", force: :cascade do |t|

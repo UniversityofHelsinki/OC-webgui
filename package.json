@@ -9,7 +9,7 @@
   "scripts": {
     "postinstall": "bower install",
     "prelint": "npm install",
-    "lint": "eslint app/assets/javascripts e2e-tests",
+    "lint": "eslint -c .eslintrc-angular.json app/assets/javascripts e2e-tests",
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js --single-run",

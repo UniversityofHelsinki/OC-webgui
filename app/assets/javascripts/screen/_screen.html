@@ -1,6 +1,6 @@
 <div class="screen_background">
     <div class="cards">
-        <div ng-repeat="agent in screen.agents track by agent.agent_id" ng-class="{'card': true, 'agent-card': true, 'after-call': agent.status === 'Jälkikirjaus'}">
+        <div ng-repeat="agent in screen.agents track by agent.agent_id" ng-class="{'card': true, 'agent-card': true, 'after-call': agent.status === 'Jälkikirjaus'}" class="{{ screen.number_of_columns }}">
             <div class="agent-status-color agent-status-color-{{agent.color}}"></div>
             <div class="agent-status-info">
                 <div class="agent-name">
@@ -8,7 +8,7 @@
                 </div>
                 <div ng-class="{'agent-status-container': true, 'agent-status-open': agent.status === 'Vapaa'}">
                     <div class="agent-status">{{ agent.status }}</div>
-                    <oc-time seconds="agent.time_in_status" class="status-timer"></oc-time>
+                    <oc-time dateobj="agent.created_at" class="status-timer"></oc-time>
                 </div>
             </div>
         </div>
@@ -26,6 +26,8 @@
             <div class="agent-status-color agent-status-color-red"></div>
             <div class="red-count"> {{screen.red}} </div>
         </div>
-        <div class="agent-status-count"><a ui-sref="filterpanel">rajaa</a></div>
+        <div class="agent-status-count">
+            <a ui-sref="filterpanel">rajaa</a>
+        </div>
     </div>
 </div>

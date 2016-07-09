@@ -10,11 +10,14 @@ Rails.application.routes.draw do
   post 'login', to: 'session#create'
   delete 'logout', to: 'session#destroy'
 
-  get 'agent_statuses' => 'agent_statuses#index'
-  get 'queue' => 'queue_items#index'
-  get 'teams' => 'teams#index'
-  get 'states' => 'states#index'
-  get 'contacts/today' => 'contacts#today'
+  scope :format => true, :constraints => { :format => 'json' } do
+    get 'agent_statuses' => 'agent_statuses#index'
+    get 'queue' => 'queue_items#index'
+    get 'teams' => 'teams#index'
+    get 'states' => 'states#index'
+    get 'contacts/today' => 'contacts#today'
+    get 'contacts/stats' => 'contacts#stats'
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
