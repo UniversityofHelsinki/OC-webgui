@@ -94,15 +94,19 @@ describe('queue', function () {
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ]
             });
+
+            $httpBackend.whenGET('queue/stats.json').respond({
+              average_waiting_time: 100
+            });
           });
       });
       browser.get('#/queue');
-      var statsTable = element.all(by.className('stats-table'));
-      rows = statsTable.all(by.tagName('tr'));
+      var statsTable = element.all(by.css('.stats-table'));
+      rows = statsTable.all(by.css('tr'));
     });
 
-    it('should contain 3 rows', function () {
-      expect(rows.count()).toBe(3);
+    it('should contain 4 rows', function () {
+      expect(rows.count()).toBe(4);
     });
 
     it('should contain answered calls', function () {
@@ -118,6 +122,11 @@ describe('queue', function () {
     it('should contain average call duration', function () {
       expect(rows.get(2).element(by.tagName('th')).getText()).toBe('Jälkikirjauksen ka:');
       expect(rows.get(2).element(by.tagName('td')).getText()).toBe('01:05');
+    });
+
+    it('should contain average queue waiting time duration', function () {
+      expect(rows.get(3).element(by.tagName('th')).getText()).toBe('Jonotuksen ka:');
+      expect(rows.get(3).element(by.tagName('td')).getText()).toBe('01:40');
     });
   });
 });
