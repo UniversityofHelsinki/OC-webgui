@@ -124,7 +124,7 @@ describe('queue', function () {
       expect(rows.get(2).element(by.tagName('td')).getText()).toBe('01:05');
     });
 
-    it('should contain average queue waiting time duration', function () {
+    it('should contain average queue waiting duration', function () {
       expect(rows.get(3).element(by.tagName('th')).getText()).toBe('Jonotuksen ka:');
       expect(rows.get(3).element(by.tagName('td')).getText()).toBe('01:40');
     });
