@@ -1,27 +1,36 @@
 describe('queue', function () {
   describe('queue', function () {
-    jasmine.clock().install();
-    var baseTime = new Date(2013, 9, 23);
-    jasmine.clock().mockDate(baseTime);
-
     it('should show 2 queuers', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
+            var baseTime = new Date(2013, 9, 23, 12, 0).getTime();
             $httpBackend.whenGET('queue.json').respond([
               {
                 line: 136,
                 label: 'sssssssss',
-                created_at: Date.now() - (4 * 60 + 25) * 1000
+                created_at: new Date(baseTime - (4 * 60 + 25) * 1000)
               },
               {
                 line: 133,
                 label: 'zzzzz',
-                created_at: Date.now() - 73 * 1000
+                created_at: new Date(baseTime - 73 * 1000)
               }
             ]);
           });
       });
+
+      browser.addMockModule('ocWebGui.shared.time.service', function () {
+        angular.module('ocWebGui.shared.time.service', [])
+          .factory('CustomDate', function () {
+            return {
+              getDate: function () {
+                return new Date(2013, 9, 23, 12, 0);
+              }
+            };
+          });
+      });
+
       browser.get('#/queue');
 
       var queue = element.all(by.className('queuer'));
@@ -122,7 +131,5 @@ describe('queue', function () {
       expect(rows.get(2).element(by.tagName('th')).getText()).toBe('Jälkikirjauksen ka:');
       expect(rows.get(2).element(by.tagName('td')).getText()).toBe('01:05');
     });
-
-    jasmine.clock().uninstall();
   });
 });

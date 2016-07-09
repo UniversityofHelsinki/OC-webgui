@@ -63,13 +63,6 @@ describe('ocTime', function () {
       scope.$digest();
       expect(directiveElem.text()).toBe('03:20');
     });
-
-    it('should update time each seconds', function () {
-      interval.flush(1000);
-      expect(directiveElem.text()).toBe('02:04');
-      interval.flush(1000);
-      expect(directiveElem.text()).toBe('02:05');
-    });
   });
 
   describe('without update (use seconds)', function () {

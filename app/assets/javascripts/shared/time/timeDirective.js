@@ -15,6 +15,9 @@ angular.module('ocWebGui.shared.time', ['ocWebGui.shared.time.service'])
         }
 
         function updateTime() {
+          if (angular.isDefined(dateobj)) {
+            currentSeconds = Math.round((CustomDate.getDate().getTime() - dateobj.getTime()) / 1000);
+          }
           var seconds = currentSeconds % 60;
           var minutes = Math.floor(currentSeconds / 60);
           element.text(pad2(minutes) + ':' + pad2(seconds));
@@ -26,19 +29,13 @@ angular.module('ocWebGui.shared.time', ['ocWebGui.shared.time.service'])
             currentSeconds = values[0];
           } else if (values[1] != null) {
             // use dateobj
-            var dateFromFactor = CustomDate.getDate();
-            var seconds = Math.round((dateFromFactor.getTime() - values[1].getTime()) / 1000);
-            currentSeconds = seconds;
+            dateobj = values[1];
           }
           updateTime();
         });
 
         if (angular.isDefined(dateobj)) {
-          var timeoutId = $interval(function () {
-            currentSeconds++;
-            updateTime();
-          }, 1000);
-
+          var timeoutId = $interval(updateTime, 1000);
           element.on('$destroy', function () {
             $interval.cancel(timeoutId);
           });
