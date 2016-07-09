@@ -101,8 +101,8 @@ describe('queue', function () {
       rows = statsTable.all(by.tagName('tr'));
     });
 
-    it('should contain 4 rows', function () {
-      expect(rows.count()).toBe(4);
+    it('should contain 3 rows', function () {
+      expect(rows.count()).toBe(3);
     });
 
     it('should contain answered calls', function () {
