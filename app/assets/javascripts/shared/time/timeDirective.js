@@ -16,7 +16,8 @@ angular.module('ocWebGui.shared.time', ['ocWebGui.shared.time.service'])
 
         function updateTime() {
           if (angular.isDefined(dateobj)) {
-            currentSeconds = Math.round((CustomDate.getDate().getTime() - dateobj.getTime()) / 1000);
+            var time = CustomDate.getDate().getTime() - dateobj.getTime();
+            currentSeconds = Math.round(time / 1000);
           }
           var seconds = currentSeconds % 60;
           var minutes = Math.floor(currentSeconds / 60);
