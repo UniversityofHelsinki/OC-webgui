@@ -96,6 +96,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     fetchData();
     fetchContactStats();
     fetchQueueStats();
+
     // mock data for testing css
     // vm.queue = [
     //   { line: 135, language: 'Fin', time_in_queue: 360 },
