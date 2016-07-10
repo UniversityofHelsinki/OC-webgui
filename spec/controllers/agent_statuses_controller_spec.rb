@@ -7,33 +7,55 @@ RSpec.describe AgentStatusesController, type: :controller do
   render_views
 
   it 'should return currently open agent statuses in JSON format and ignore non-open statuses' do
-    expected_agent1 = {"agent_id"=>3300170,
-       "name"=>"joku vaan",
-       "team"=>"Hakijapalvelut",
+    expected_agent1 = {
+       "id"=>3300170,
+       "first_name"=>"vaan",
+       "last_name"=>"joku",
        "status"=>"Vapaa",
-       "created_at"=>anything }
+       "created_at"=>anything,
+       "team"=>{
+         "id"=>1,
+         "name"=>"Hakijapalvelut"
+       }}
 
-    expected_agent2 = {"agent_id"=>2200044,
-        "name"=>"testaus ukko",
-        "team"=>"Opiskelijaneuvonta",
+    expected_agent2 = {
+        "id"=>2200044,
+        "first_name"=>"ukko",
+        "last_name"=>"testaus",
         "status"=>"Jälkikirjaus",
-        "created_at"=>anything }
+        "created_at"=>anything,
+        "team"=>{
+          "id"=>2,
+          "name"=>"Opiskelijaneuvonta"
+        }}
 
-    expected_agent3= {"agent_id"=>1100039,
-        "name"=>"kolmas test",
-        "team"=>"Opiskelijaneuvonta",
+
+    expected_agent3= {
+        "id"=>1100039,
+        "first_name"=>"test",
+        "last_name"=>"kolmas",
         "status"=>"Vapaa",
-        "created_at"=>anything }
+        "created_at"=>anything,
+        "team"=>{
+          "id"=>2,
+          "name"=>"Opiskelijaneuvonta"
+        }}
 
-    not_expected_agent= {"agent_id"=>2525208,
-        "name"=>"kiinni oleva",
-        "team"=>"Helpdesk",
+    not_expected_agent= {
+        "id"=>2525208,
+        "first_name"=>"oleva",
+        "last_name"=>"kiinni",
         "status"=>"Vapaa",
-        "created_at"=>anything }
+        "created_at"=>anything,
+        "team"=>{
+          "id"=>3,
+          "name"=>"Helpdesk"
+        }}
 
-    team1 = Team.create(name: 'Hakijapalvelut')
-    team2 = Team.create(name: 'Opiskelijaneuvonta')
-    team3 = Team.create(name: 'Helpdesk')
+    Team.delete_all
+    team1 = Team.create(id: 1, name: 'Hakijapalvelut')
+    team2 = Team.create(id: 2, name: 'Opiskelijaneuvonta')
+    team3 = Team.create(id: 3, name: 'Helpdesk')
 
     agent1 = Agent.create(id: 3300170, first_name: 'vaan', last_name: 'joku', team: team1)
     agent2 = Agent.create(id: 2200044, first_name: 'ukko', last_name: 'testaus', team: team2)

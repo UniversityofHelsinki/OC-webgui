@@ -69,11 +69,8 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
       MyFullscreen.goFullScreen();
     };
 
-    vm.trimName = function (fullName) {
-      var names = fullName.split(' ');
-      var firstName = names.pop();
-      var lastName = names.shift();
-      return firstName + ' ' + lastName.charAt(0);
+    vm.trimName = function (agent) {
+      return agent.first_name + ' ' + agent.last_name.charAt(0);
     };
 
     fetchDataInterval = $interval(fetchData, 5000);

@@ -1,7 +1,7 @@
 # API for OC Agent status data
 class AgentStatusesController < ApplicationController
   def index
-    @agent_statuses = AgentStatus.where(open: true)
+    @agent_statuses = AgentStatus.where(open: true).joins(:agent => :team)
     @agent_statuses.each { |a| a.status = normalize_status(a.status) }
   end
 
