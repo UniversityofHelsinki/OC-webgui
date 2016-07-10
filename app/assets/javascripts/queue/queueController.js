@@ -24,10 +24,10 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         x: function (d) { return d.hour; },
         y: function (d) { return d.calls; },
         bars: {
-          forceY: [0,50]
+          forceY: [0, 50]
         },
         lines: {
-          forceY: [0,50]
+          forceY: [0, 50]
         },
         xAxis: {
           tickFormat: function (d) {
@@ -37,7 +37,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           showMaxMin: true
         },
         y1Axis: {
-          tickValues: [0, 10, 20, 30, 40, 50],
+          tickValues: [0, 10, 20, 30, 40, 50]
         },
         y2Axis: {
           ticks: 5
