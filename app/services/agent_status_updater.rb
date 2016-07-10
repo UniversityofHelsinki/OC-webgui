@@ -73,9 +73,7 @@ class AgentStatusUpdater
 
   def save_new_status(status)
     @statuses_to_create.push(agent_id: status.agent_id,
-                             name: status.name,
                              status: status.status,
-                             team: status.team,
                              open: true,
                              created_at: status.created_at)
   end
