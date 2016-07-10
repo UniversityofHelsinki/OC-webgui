@@ -15,10 +15,11 @@ class BackendService
     )
   end
 
-  def get_agent_contacts(agent_id, start_date, end_date)
+# Method for getting agent contacts
+  def get_agent_contacts(agent_id, start_date, end_date, serviceID)
     message = {
       serviceGroupID: 4,
-      serviceID: 137,
+      serviceID: serviceID,
       teamID: 'Helpdesk',
       agentID: agent_id,
       startDate: start_date,
@@ -59,7 +60,10 @@ class BackendService
     end
 
     # First entry in array always seems to consist of weird numbers, not an actual contact
-    data.delete_at(0) if data[0][:contact_type] != 'PBX'
+    if data.length > 0
+      data.delete_at(0) if data[0][:contact_type] != 'PBX'
+    end
+
     data
   end
 
