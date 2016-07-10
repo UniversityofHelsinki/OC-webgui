@@ -11,7 +11,16 @@ class QueueService
   end
 
   def queues(team_name, start_time, end_time)
-    QueueItem.where(open: false, label: team_name, created_at: start_time..end_time)
+    QueueItem.where(open: false, label: team_name, created_at: start_time..end_time, closed: start_time..end_time)
+  end
+
+  def queues_by_hour(team_name, start_time, end_time)
+    gmt_offset = Time.now.getlocal.gmt_offset
+    select = "EXTRACT(HOUR FROM created_at + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count"
+    data = contact_queues(team_name, start_time, end_time).select(select).group('hour')
+    result = Array.new(24, 0)
+    data.each { |d| result[(d['hour'])] = d['count'] }
+    result
   end
 
   def contact_queues(team_name, start_time, end_time)
