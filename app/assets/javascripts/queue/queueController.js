@@ -72,7 +72,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
 
     vm.goFullscreen = function () {
       MyFullscreen.goFullScreen();
-    }
+    };
 
     var fetchDataInterval = $interval(fetchData, 5 * 1000);
     var fetchStatsInterval = $interval(fetchStats, 5 * 60 * 1000);

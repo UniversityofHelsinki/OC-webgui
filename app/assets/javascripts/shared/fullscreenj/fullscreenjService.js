@@ -4,8 +4,7 @@ angular.module('ocWebGui.shared.fullscreen', ['FBAngular'])
       goFullScreen: function () {
         if (Fullscreen.isEnabled()) {
           Fullscreen.cancel();
-        }
-        else {
+        } else {
           Fullscreen.all();
         }
       }
