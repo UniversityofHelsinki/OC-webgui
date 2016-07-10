@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'nvd3'])
+angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.fullscreen', 'nvd3'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('queue', {
@@ -8,7 +8,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         controllerAs: 'queue'
       });
   })
-  .controller('QueueController', function ($interval, $scope, Queue, $http) {
+  .controller('QueueController', function ($interval, $scope, Queue, MyFullscreen, $http) {
     var vm = this;
 
     vm.options = {
@@ -70,6 +70,9 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       vm.date = new Date();
     }
 
+    vm.goFullscreen = function () {
+      MyFullscreen.goFullScreen();
+    }
 
     var fetchDataInterval = $interval(fetchData, 5 * 1000);
     var fetchStatsInterval = $interval(fetchStats, 5 * 60 * 1000);
