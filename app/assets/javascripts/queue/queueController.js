@@ -50,7 +50,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       'color': '#000000',
       'values': []
     }, {
-      'key': 'bar',
+      'key': 'joku',
       'color': '#ff0000',
       'values': []
     }];
