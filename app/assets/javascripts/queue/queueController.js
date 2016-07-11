@@ -45,12 +45,12 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       }
     };
     vm.data = [{
-      'key': 'Puheluita tunnissa',
+      'key': 'Calls per hour',
       'bar': true,
       'color': '#000000',
       'values': []
     }, {
-      'key': 'joku',
+      'key': 'Diagram',
       'color': '#ff0000',
       'values': []
     }];
