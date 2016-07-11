@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <GetAgentsResponse xmlns="http://elisa.ccreport.fi/">
+      <GetAgentsResult>
+        <ArrayOfString>
+          <string>123</string>
+          <string>Kinnunen</string>
+          <string>Uolevi</string>
+          <string>Helpdesk</string>
+        </ArrayOfString>
+        <ArrayOfString>
+          <string>345</string>
+          <string>Ilves</string>
+          <string>Anton</string>
+          <string>Helpdesk</string>
+        </ArrayOfString>
+        <ArrayOfString>
+          <string>567</string>
+          <string>Kukkonen</string>
+          <string>Urpu</string>
+          <string>Helpdesk</string>
+        </ArrayOfString>
+      </GetAgentsResult>
+    </GetAgentsResponse>
+  </soap:Body>
+</soap:Envelope>
