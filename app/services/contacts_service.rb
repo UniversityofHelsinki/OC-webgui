@@ -51,7 +51,7 @@ class ContactsService
   end
 
   def statuses(team_name, start_time, end_time, statuses)
-    AgentStatus.joins(:agent => :team).where(open: false, teams: { name: team_name }, status: statuses, created_at: start_time..end_time)
+    AgentStatus.joins(agent: :team).where(open: false, teams: { name: team_name }, status: statuses, created_at: start_time..end_time)
   end
 
   def contact_statuses(team_name, start_time, end_time)
@@ -59,6 +59,6 @@ class ContactsService
   end
 
   def average_duration(statuses)
-    statuses.select('ROUND(AVG(EXTRACT(EPOCH FROM agent_statuses.closed - agent_statuses.created_at))) AS average_duration')[0]['average_duration'] || 0
+    statuses.select('ROUND(AVG(EXTRACT(EPOCH FROM agent_statuses.closed - agent_statuses.created_at))) AS avg')[0]['avg'] || 0
   end
 end
