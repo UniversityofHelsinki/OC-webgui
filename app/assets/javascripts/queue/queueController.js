@@ -23,23 +23,35 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         },
         x: function (d) { return d.hour; },
         y: function (d) { return d.calls; },
+        bars: {
+          forceY: [0, 50]
+        },
+        lines: {
+          forceY: [0, 50]
+        },
         xAxis: {
           tickFormat: function (d) {
             return d3.format(',f')(d);
           },
           axisLabel: 'Kellonaika',
           showMaxMin: true
+        },
+        y1Axis: {
+          tickValues: [0, 10, 20, 30, 40, 50]
+        },
+        y2Axis: {
+          ticks: 5
         }
       }
     };
     vm.data = [{
-      'key': 'foo',
+      'key': 'Calls per hour',
       'bar': true,
-      'color': 'skyblue',
+      'color': '#000000',
       'values': []
     }, {
-      'key': 'bar',
-      'color': 'steelblue',
+      'key': 'Diagram',
+      'color': '#ff0000',
       'values': []
     }];
 
@@ -48,7 +60,9 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         var data = response.data;
         var values = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.calls !== 0; });
+          // .filter(function (item) { return item.calls !== 0; });
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; })
+          ;
         vm.stats = data;
         vm.data[0].values = values;
       });
