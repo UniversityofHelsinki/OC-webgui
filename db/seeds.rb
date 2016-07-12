@@ -20,8 +20,7 @@ State.create(name: 'Ruokatunti', filter: true)
 backend_service = BackendService.new
 
 backend_service.get_teams.each do |team|
-  Team.create(name: team,
-              filter: team == 'Helpdesk')
+  Team.create(name: team, filter: team == 'Helpdesk')
 end
 
 backend_service.get_agents.each do |data|
@@ -29,7 +28,7 @@ backend_service.get_agents.each do |data|
     agent.id = data[:agent_id]
     agent.first_name = data[:first_name]
     agent.last_name = data[:last_name]
-    agent.team = Team.find_by!(name: data[:team_name])
+    agent.team = Team.find_or_create_by(name: data[:team_name])
     agent.save
   end
 end

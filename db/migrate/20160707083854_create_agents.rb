@@ -8,15 +8,9 @@ class CreateAgents < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    agents = {}
     AgentStatus.all.each do |agent_status|
-      agent = Agent.new(first_name: 'Data',
-                        last_name: 'Migrate',
-                        team: Team.find_by!(name: 'Helpdesk'))
-      agent.id = agent_status.agent_id
-      agents[agent_status.agent_id] = agent
+      Agent.find_or_create(agent_status.agent_id, agent_status.name, agent_status.team)
     end
-    agents.values.each { |agent| agent.save }
 
     remove_column :agent_statuses, :team
     remove_column :agent_statuses, :name
