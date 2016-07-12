@@ -1,5 +1,7 @@
 class CreateAgents < ActiveRecord::Migration
   def up
+    drop_table :agents if ActiveRecord::Base.connection.table_exists? :agents
+
     create_table :agents do |t|
       t.string :first_name
       t.string :last_name
