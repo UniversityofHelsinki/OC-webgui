@@ -4,9 +4,7 @@ class TrackAgentStatusesJob
 
   def perform
     current = BackendService.new.get_agent_online_state.map do |data|
-      AgentStatus.new(agent_id: data[:agent_id],
-                      team: data[:team],
-                      name: data[:name],
+      AgentStatus.new(agent: Agent.find_or_create(data[:agent_id], data[:name], data[:team]),
                       status: data[:status],
                       time_in_status: data[:time_in_status])
     end

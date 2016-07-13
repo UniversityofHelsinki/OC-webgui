@@ -20,30 +20,33 @@
         <!--Show first five in queue-->
         <div  ng-repeat="queuer in queue.queue | limitTo: 5" class="queuer card">
             <span class="queuer-index"> {{ $index +1 }}. </span>
-            <oc-time seconds="queuer.time_in_queue" class="queuer-time" update="true"></oc-time>
+            <oc-time dateobj="queuer.created_at" class="queuer-time"></oc-time>
             <span class="queuer-flag queuer-flag-{{queuer.language}}"><div>purkka</div></span>
         </div>
         <div ng-if="queue.queue.length >= 5" class="plus-5">&#9660</div>
     </div>
     <div class="outer">
-        <div class="stats card">
-            <table class="stats-table">
+        <div class="queue-stats card">
+            <table class="queue-stats-table">
                 <tr>
                     <th>Puhelut:</th>
                     <td>{{ queue.stats.answered_calls }}</td>
                 </tr>
                 <tr>
                     <th>Puhelun ka:</th>
-                    <td><oc-time seconds="queue.stats.average_call_duration" update="false"></oc-time></td>
+                    <td><oc-time seconds="queue.stats.average_call_duration"></oc-time></td>
                 </tr>
                 <tr>
                     <th>Jälkikirjauksen ka:</th>
-                    <td><oc-time seconds="queue.stats.average_after_call_duration" update="false"></oc-time></td>
+                    <td><oc-time seconds="queue.stats.average_after_call_duration"></oc-time></td>
                 </tr>
             </table>
         </div>
         <div class="chart card">
             <nvd3 options="queue.options" data="queue.data"></nvd3>
+        </div>
+        <div class="fullscreen">
+            <a href ng-click="queue.goFullscreen()">kokonäyttö</a>
         </div>
     </div>
 </div>

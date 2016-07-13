@@ -21,7 +21,7 @@ class ContactsService
 
   def calls_by_hour(team_name, start_time, end_time)
     gmt_offset = Time.now.getlocal.gmt_offset
-    select = "EXTRACT(HOUR FROM created_at + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count"
+    select = "EXTRACT(HOUR FROM agent_statuses.created_at + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count"
     data = contact_statuses(team_name, start_time, end_time).select(select).group('hour')
 
     result = Array.new(24, 0)
@@ -51,7 +51,7 @@ class ContactsService
   end
 
   def statuses(team_name, start_time, end_time, statuses)
-    AgentStatus.where(open: false, team: team_name, status: statuses, created_at: start_time..end_time)
+    AgentStatus.joins(agent: :team).where(open: false, teams: { name: team_name }, status: statuses, created_at: start_time..end_time)
   end
 
   def contact_statuses(team_name, start_time, end_time)
@@ -59,6 +59,6 @@ class ContactsService
   end
 
   def average_duration(statuses)
-    statuses.select('ROUND(AVG(EXTRACT(EPOCH FROM closed - created_at))) AS average_duration')[0]['average_duration'] || 0
+    statuses.select('ROUND(AVG(EXTRACT(EPOCH FROM agent_statuses.closed - agent_statuses.created_at))) AS avg')[0]['avg'] || 0
   end
 end

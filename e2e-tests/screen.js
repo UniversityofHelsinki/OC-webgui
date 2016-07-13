@@ -5,38 +5,51 @@ describe('screen', function () {
     browser.addMockModule('httpBackendMock', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
         .run(function ($httpBackend) {
+          var baseTime = new Date(2013, 9, 23, 12, 0).getTime();
           $httpBackend.whenGET('agent_statuses.json').respond([
             {
-              id: 1,
-              agent_id: 1234,
-              name: 'Kekkonen Benjamin',
-              team: 'Helpdesk',
+              id: 1234,
+              first_name: 'Benjamin',
+              last_name: 'Kekkonen',
               status: 'Tauko',
-              created_at: Date.now() - (10 * 60 + 15) * 1000
+              created_at: new Date(baseTime - (10 * 60 + 15) * 1000),
+              team: {
+                id: 1,
+                name: 'Helpdesk'
+              }
             },
             {
-              id: 2,
-              agent_id: 4321,
-              name: 'Kanerva Aallotar',
-              team: 'Helpdesk',
+              id: 4321,
+              first_name: 'Aallotar',
+              last_name: 'Kanerva',
               status: 'Vapaa',
-              created_at: Date.now() - 45 * 1000
+              created_at: new Date(baseTime - 45 * 1000),
+              team: {
+                id: 1,
+                name: 'Helpdesk'
+              }
             },
             {
-              id: 10,
-              agent_id: 8754,
-              name: 'Ansala Tuomas',
-              team: 'Helpdesk',
+              id: 8754,
+              first_name: 'Tuomas',
+              last_name: 'Ansala',
               status: 'Tauko',
-              created_at: Date.now() - 30 * 1000
+              created_at: new Date(baseTime - 30 * 1000),
+              team: {
+                id: 1,
+                name: 'Helpdesk'
+              }
             },
             {
-              id: 6,
-              agent_id: 666,
-              name: 'Ahola Jenni',
-              team: 'Helpdesk',
+              id: 666,
+              first_name: 'Jenni',
+              last_name: 'Ahola',
               status: 'Tauko',
-              created_at: Date.now() - (1 * 60 + 5) * 1000
+              created_at: new Date(baseTime - (1 * 60 + 5) * 1000),
+              team: {
+                id: 1,
+                name: 'Helpdesk'
+              }
             }
           ]);
           $httpBackend.whenGET('teams.json').respond([
@@ -53,6 +66,18 @@ describe('screen', function () {
           ]);
         });
     });
+
+    browser.addMockModule('ocWebGui.shared.time.service', function () {
+      angular.module('ocWebGui.shared.time.service', [])
+        .factory('CustomDate', function () {
+          return {
+            getDate: function () {
+              return new Date(2013, 9, 23, 12, 0);
+            }
+          };
+        });
+    });
+
     browser.get('#/screen');
     agentCards = element.all(by.className('agent-card'));
   });
@@ -109,9 +134,11 @@ describe('screen', function () {
   });
 
   it('should filter correctly', function () {
-    element(by.linkText('rajaa')).click();
+    browser.actions().mouseMove(element(by.className('navbar'))).perform();
+    element(by.className('navbar')).element(by.linkText('Show filter screen')).click();
     element(by.id('Tauko')).click();
-    element(by.linkText('Show state screen')).click();
+    browser.actions().mouseMove(element(by.className('navbar'))).perform();
+    element(by.className('navbar')).element(by.linkText('Show state screen')).click();
     agentCards = element.all(by.className('agent-card'));
     expect(agentCards.count()).toBe(1);
     expect(agentCards.get(0).element(by.className('agent-name')).getText())

@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'nvd3'])
+angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.fullscreen', 'nvd3'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('queue', {
@@ -8,7 +8,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         controllerAs: 'queue'
       });
   })
-  .controller('QueueController', function ($interval, $scope, Queue, $http) {
+  .controller('QueueController', function ($interval, $scope, Queue, MyFullscreen, $http) {
     var vm = this;
 
     vm.options = {
@@ -23,23 +23,35 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         },
         x: function (d) { return d.hour; },
         y: function (d) { return d.calls; },
+        bars: {
+          forceY: [0, 50]
+        },
+        lines: {
+          forceY: [0, 50]
+        },
         xAxis: {
           tickFormat: function (d) {
             return d3.format(',f')(d);
           },
           axisLabel: 'Kellonaika',
           showMaxMin: true
+        },
+        y1Axis: {
+          tickValues: [0, 10, 20, 30, 40, 50]
+        },
+        y2Axis: {
+          ticks: 5
         }
       }
     };
     vm.data = [{
-      'key': 'foo',
+      'key': 'Calls per hour',
       'bar': true,
-      'color': 'skyblue',
+      'color': '#000000',
       'values': []
     }, {
-      'key': 'bar',
-      'color': 'steelblue',
+      'key': 'Diagram',
+      'color': '#ff0000',
       'values': []
     }];
 
@@ -48,7 +60,9 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         var data = response.data;
         var values = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.calls !== 0; });
+          // .filter(function (item) { return item.calls !== 0; });
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; })
+          ;
         vm.stats = data;
         vm.data[0].values = values;
       });
@@ -70,6 +84,9 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       vm.date = new Date();
     }
 
+    vm.goFullscreen = function () {
+      MyFullscreen.goFullScreen();
+    };
 
     var fetchDataInterval = $interval(fetchData, 5 * 1000);
     var fetchStatsInterval = $interval(fetchStats, 5 * 60 * 1000);

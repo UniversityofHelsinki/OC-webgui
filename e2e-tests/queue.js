@@ -4,20 +4,33 @@ describe('queue', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
+            var baseTime = new Date(2013, 9, 23, 12, 0).getTime();
             $httpBackend.whenGET('queue.json').respond([
               {
                 line: 136,
                 label: 'sssssssss',
-                created_at: Date.now() - (4 * 60 + 25) * 1000
+                created_at: new Date(baseTime - (4 * 60 + 25) * 1000)
               },
               {
                 line: 133,
                 label: 'zzzzz',
-                created_at: Date.now() - 73 * 1000
+                created_at: new Date(baseTime - 73 * 1000)
               }
             ]);
           });
       });
+
+      browser.addMockModule('ocWebGui.shared.time.service', function () {
+        angular.module('ocWebGui.shared.time.service', [])
+          .factory('CustomDate', function () {
+            return {
+              getDate: function () {
+                return new Date(2013, 9, 23, 12, 0);
+              }
+            };
+          });
+      });
+
       browser.get('#/queue');
 
       var queue = element.all(by.className('queuer'));
@@ -26,7 +39,6 @@ describe('queue', function () {
 
       expect(queue.get(0).element(by.className('queuer-time')).getText()).toBe('04:25');
       expect(queue.get(0).isElementPresent(by.className('queuer-flag-Fin'))).toBe(true);
-
       expect(queue.get(1).element(by.className('queuer-time')).getText()).toBe('01:13');
       expect(queue.get(1).isElementPresent(by.className('queuer-flag-Swe'))).toBe(true);
 
@@ -97,7 +109,7 @@ describe('queue', function () {
           });
       });
       browser.get('#/queue');
-      var statsTable = element.all(by.className('stats-table'));
+      var statsTable = element.all(by.className('queue-stats-table'));
       rows = statsTable.all(by.tagName('tr'));
     });
 

@@ -14,6 +14,7 @@
     "rules": {
         "func-names": "off",
         "quote-props": ["error", "consistent"],
-        "no-param-reassign": ["error", { "props": false }]
+        "no-param-reassign": ["error", { "props": false }],
+        "vars-on-top": "off"
     }
 }
