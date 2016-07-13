@@ -77,7 +77,10 @@ class BackendService
 
     data.map do |attrs|
       {
-        agent_id: attrs[:string][0]
+        agent_id: Integer(attrs[:string][0], 10),
+        last_name: attrs[:string][1],
+        first_name: attrs[:string][2],
+        team_name: attrs[:string][3]
       }
     end
   end
@@ -130,7 +133,6 @@ class BackendService
     data = reply.body.dig(:get_teams_response,
                           :get_teams_result,
                           :string)
-    return [] unless data
     check_if_data_exists(data)
   rescue Savon::HTTPError => error
     logger.debug error.http.code

@@ -21,13 +21,17 @@ body {
   align-items: center;
   justify-content: center;
 
+  text-align: center;
+
   a {
     border: 1px solid rgba(0, 0, 0, 0.2);
-    height: 50%;
     align-items: center;
     justify-content: center;
 
-    font-size: 2em;
+    font-size: 3em;
+    line-height: 1.1;
+
+    padding: 1em;
   }
 }
 
@@ -50,4 +54,10 @@ body {
   border: 2px solid rgba(0, 0, 0, 0.2);
   text-decoration: none;
   line-height: 1;
+}
+
+.fullscreen {
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }

@@ -26,8 +26,8 @@
         <div ng-if="queue.queue.length >= 5" class="plus-5">&#9660</div>
     </div>
     <div class="outer">
-        <div class="stats card">
-            <table class="stats-table">
+        <div class="queue-stats card">
+            <table class="queue-stats-table">
                 <tr>
                     <th>Puhelut:</th>
                     <td>{{ queue.stats.answered_calls }}</td>
@@ -44,6 +44,9 @@
         </div>
         <div class="chart card">
             <nvd3 options="queue.options" data="queue.data"></nvd3>
+        </div>
+        <div class="fullscreen">
+            <a href ng-click="queue.goFullscreen()">kokonäyttö</a>
         </div>
     </div>
 </div>

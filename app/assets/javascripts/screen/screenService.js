@@ -13,7 +13,7 @@ angular.module('ocWebGui.screen.service', ['ngResource', 'ocWebGui.filterpanel']
             return agent;
           });
           return agents.filter(function (agent) {
-            return teams[agent.team] && (states[agent.status] || (states.Muut && !(agent.status in states)));
+            return teams[agent.team.name] && (states[agent.status] || (states.Muut && !(agent.status in states)));
           });
         }
       }

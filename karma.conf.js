@@ -11,7 +11,7 @@ module.exports = function(config) {
             '../../../vendor/assets/bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js',
             '../../../vendor/assets/bower_components/d3/d3.js',
             '../../../vendor/assets/bower_components/nvd3/build/nv.d3.js',
-            '../../../vendor/assets/bower_components/chartjs/dist/Chart.js',
+            '../../../vendor/assets/bower_components/angular-fullscreen/src/angular-fullscreen.js',
             '**/*.js',
             '*.html',
         ],

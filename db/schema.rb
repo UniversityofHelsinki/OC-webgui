@@ -11,22 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160704175528) do
+ActiveRecord::Schema.define(version: 20160707083854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "agent_statuses", force: :cascade do |t|
     t.integer  "agent_id"
-    t.string   "team"
     t.string   "status"
     t.boolean  "open"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.datetime "closed"
-    t.string   "name"
     t.datetime "last_reliable_status"
   end
+
+  create_table "agents", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "agents", ["team_id"], name: "index_agents_on_team_id", using: :btree
 
   create_table "contacts", force: :cascade do |t|
     t.integer  "agent_id"
@@ -91,4 +99,7 @@ ActiveRecord::Schema.define(version: 20160704175528) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "agent_statuses", "agents"
+  add_foreign_key "agents", "teams"
+  add_foreign_key "contacts", "agents"
 end

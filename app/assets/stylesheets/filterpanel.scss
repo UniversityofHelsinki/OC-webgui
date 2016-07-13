@@ -17,4 +17,25 @@ h2 {
 
 .filter-card {
   font-size: 300%;
+  width: 50%;
+  height: 100%; //miksei tää ny suostu :D
+}
+
+.filter-bg {
+  background-color: #87aade;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  width: 60%;
 }

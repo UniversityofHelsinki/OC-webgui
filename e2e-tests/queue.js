@@ -109,7 +109,7 @@ describe('queue', function () {
           });
       });
       browser.get('#/queue');
-      var statsTable = element.all(by.className('stats-table'));
+      var statsTable = element.all(by.className('queue-stats-table'));
       rows = statsTable.all(by.tagName('tr'));
     });
 
