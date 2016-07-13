@@ -25,6 +25,6 @@ class TrackQueueItemsJob
   end
 
   def queue_name
-    'immediate'
+    'statuses'
   end
 end
