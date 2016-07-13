@@ -68,7 +68,6 @@ RSpec.describe BackendService, type: :service do
     expect(response.length).to eq(2)
   end
 
-=begin
   it "get_teams should return array of 3 if there exists 3 teams" do
     fixture = File.read("spec/fixtures/backend_service/get_teams_length_3.xml")
     expected = ["Väinämöinen", "Joukahainen", "Aino"]
@@ -91,5 +90,32 @@ RSpec.describe BackendService, type: :service do
     response = BackendService.new.get_teams
     expect(response).to be_empty
   end
-=end
+
+  it "get_agents should return 3 agents" do
+    fixture = File.read("spec/fixtures/backend_service/get_agents_many.xml")
+    savon.expects(:get_agents).returns(fixture)
+    response = BackendService.new.get_agents
+    expect(response).to eq([
+      { agent_id: 123, first_name: 'Uolevi', last_name: 'Kinnunen', team_name: 'Helpdesk' },
+      { agent_id: 345, first_name: 'Anton', last_name: 'Ilves', team_name: 'Helpdesk' },
+      { agent_id: 567, first_name: 'Urpu', last_name: 'Kukkonen', team_name: 'Helpdesk' }
+    ])
+  end
+
+  it "get_agents should return 1 agents" do
+    fixture = File.read("spec/fixtures/backend_service/get_agents_one.xml")
+    savon.expects(:get_agents).returns(fixture)
+    response = BackendService.new.get_agents
+    expect(response).to eq([
+      { agent_id: 123, first_name: 'Marja-Terttu', last_name: 'Isometsä', team_name: 'Helpdesk' },
+    ])
+  end
+
+  it "get_agents should return 1 agents" do
+    fixture = File.read("spec/fixtures/backend_service/get_agents_none.xml")
+    savon.expects(:get_agents).returns(fixture)
+    response = BackendService.new.get_agents
+    expect(response).to be_empty
+  end
+
 end
