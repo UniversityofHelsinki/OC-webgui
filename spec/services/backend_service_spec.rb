@@ -76,8 +76,7 @@ RSpec.describe BackendService, type: :service do
     contactTypes: 'PBX', useServiceTime: true }
 
     expected = [
-      {:agent_id=>2000049,
-:ticket_id=>"20160614091049336435", 
+      {:ticket_id=>"20160614091049336435", 
 :call_arrived_to_queue=>"14.6.2016 9:11:43", 
 :queued_seconds=>"1", 
 :call_forwarded_to_agent=>"14.6.2016 9:11:44", 
@@ -99,7 +98,15 @@ RSpec.describe BackendService, type: :service do
 
     savon.expects(:get_contacts).with(message: message).returns(fixture)
 
-    response = BackendService.new.get_agent_contacts(2000049, "2016-06-14", "2016-06-15", 137)
+    params = { agent_id: 2000049,
+               start_date: '2016-06-14', 
+               end_date: '2016-06-15',
+               contact_type: 'PBX',
+               team_name: 'Helpdesk',
+               service_group_id: 4,
+               service_id: 137
+             }
+    response = BackendService.new.get_agent_contacts(params)
 
     expect(response).to eq(expected)
   end
@@ -115,7 +122,16 @@ RSpec.describe BackendService, type: :service do
 
     savon.expects(:get_contacts).with(message: message).returns(fixture)
 
-    response = BackendService.new.get_agent_contacts(2000049, "2016-06-14", "2016-06-15", 137)
+    params = { agent_id: 2000049,
+               start_date: '2016-06-14', 
+               end_date: '2016-06-15',
+               contact_type: 'PBX',
+               team_name: 'Helpdesk',
+               service_group_id: 4,
+               service_id: 137
+             }
+
+    response = BackendService.new.get_agent_contacts(params)
 
     expect(response).to eq(expected)
   end
@@ -130,9 +146,18 @@ it "Should return empty array if there is empty response" do
 
     expected = []
 
+    params = { agent_id: 2000049,
+               start_date: '2016-06-14', 
+               end_date: '2016-06-15',
+               contact_type: 'PBX',
+               team_name: 'Helpdesk',
+               service_group_id: 4,
+               service_id: 137
+             }
+
     savon.expects(:get_contacts).with(message: message).returns(fixture)
 
-    response = BackendService.new.get_agent_contacts(2000049, "2016-06-14", "2016-06-15", 137)
+    response = BackendService.new.get_agent_contacts(params)
 
     expect(response).to eq(expected)
   end
