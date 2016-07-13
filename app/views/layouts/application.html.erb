@@ -8,16 +8,20 @@
 </head>
 <body ng-app="ocWebGui">
   <!-- Navbar for every page -->
-  <div class="navbar card">
+  <div class="navbar card" ng-controller="NavbarController as navbar">
     <a ui-sref="screen" class="card">Show state screen</a>
     <a ui-sref="queue" class="card">Show queue screen</a>
     <a ui-sref="filterpanel" class="card">Show filter screen</a>
     <a ui-sref="stats" class="card">Show statistics screen</a>
-    <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Login</a>
-<span ng-if="home.isAuthenticated()">
-    Current user: {{ home.username() }}
-    <a href="" ng-click="home.logout()" class="card">Logout</a>
-</span>
+    <a href ng-click="navbar.goFullscreen()" class="card">
+        <span ng-show="navbar.isFullscreen">Thinscreen</span>
+        <span ng-hide="navbar.isFullscreen">Fullscreen</span>
+    </a>
+    <a ui-sref="login" ng-if="!navbar.isAuthenticated()" class="card">Login</a>
+    <span ng-if="navbar.isAuthenticated()">
+        Current user: {{ navbar.username() }}
+        <a href="" ng-click="navbar.logout()" class="card">Logout</a>
+    </span>
   </div>
   <ui-view></ui-view>
 </body>
