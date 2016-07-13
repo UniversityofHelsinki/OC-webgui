@@ -63,7 +63,10 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           // .filter(function (item) { return item.calls !== 0; });
           .filter(function (item) { return item.hour >= 8 && item.hour <= 18; })
           ;
-        vm.stats = data;
+        if (!angular.isDefined(vm.stats)) {
+          vm.stats = {};
+        }
+        angular.extend(vm.stats, vm.stats, data);
         vm.data[0].values = values;
       });
     }
@@ -71,10 +74,14 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     function fetchQueueStats() {
       $http.get('queue/stats.json').then(function (response) {
         var data = response.data;
+        var values = data.queue_items_by_hour
+          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
         if (!angular.isDefined(vm.stats)) {
           vm.stats = {};
         }
         angular.extend(vm.stats, vm.stats, data);
+        vm.data[1].values = values;
       });
     }
 
