@@ -41,16 +41,20 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         },
         y2Axis: {
           ticks: 5
-        }
+        },
+        legend: {
+          maxKeyLength: 100
+        },
+        duration: 500
       }
     };
     vm.data = [{
-      'key': 'Calls per hour',
+      'key': 'Puheluja tunnissa',
       'bar': true,
       'color': '#000000',
       'values': []
     }, {
-      'key': 'Diagram',
+      'key': 'Keskim. jonotusaika',
       'color': '#ff0000',
       'values': []
     }];
