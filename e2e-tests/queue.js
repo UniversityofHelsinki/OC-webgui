@@ -113,8 +113,8 @@ describe('queue', function () {
           });
       });
       browser.get('#/queue');
-      var statsTable = element.all(by.css('.stats-table'));
-      rows = statsTable.all(by.css('tr'));
+      var statsTable = element.all(by.className('queue-stats-table'));
+      rows = statsTable.all(by.tagName('tr'));
     });
 
     it('should contain 4 rows', function () {
