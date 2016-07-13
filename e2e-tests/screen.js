@@ -109,9 +109,11 @@ describe('screen', function () {
   });
 
   it('should filter correctly', function () {
-    element(by.linkText('rajaa')).click();
+    browser.actions().mouseMove(element(by.className('navbar'))).perform();
+    element(by.className('navbar')).element(by.linkText('Show filter screen')).click();
     element(by.id('Tauko')).click();
-    element(by.linkText('Show state screen')).click();
+    browser.actions().mouseMove(element(by.className('navbar'))).perform();
+    element(by.className('navbar')).element(by.linkText('Show state screen')).click();
     agentCards = element.all(by.className('agent-card'));
     expect(agentCards.count()).toBe(1);
     expect(agentCards.get(0).element(by.className('agent-name')).getText())
