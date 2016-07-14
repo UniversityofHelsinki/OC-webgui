@@ -24,6 +24,7 @@
     th {
       text-align: left;
     }
+
     td {
       text-align: right;
     }
@@ -34,34 +35,35 @@
   text-align: center;
   padding: 1em 0;
   border-bottom: 2px solid #ccc;
-}
 
-.queue-length {
-    text-align: center;
-    font-size: 3em;
-    line-height: 1;
-    margin-bottom: 0.25em;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid #ccc;
-}
-
-.personal-data .agent-status-color {
+  .agent-status-color {
     display: inline-block;
     height: 3em;
     width: 3em;
+  }
+}
+
+.queue-length {
+  text-align: center;
+  font-size: 3em;
+  line-height: 1;
+  margin-bottom: 0.25em;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #ccc;
 }
 
 .color-square {
-    display: inline-block;
-    height: 1em;
-    width: 1em;
-    border-radius: 50%;
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
 }
 
 .agent-list {
-    padding: 0;
+  padding: 0;
+
+  li {
+    list-style-type: none;
+  }
 }
 
-.agent-list li {
-    list-style-type: none;
-}
