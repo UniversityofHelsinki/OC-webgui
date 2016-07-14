@@ -77,7 +77,7 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
 
     vm.hasLunched = function (agent) {
       var name = agent.last_name + " " + agent.first_name;
-      return vm.lunched.indexOf(name) == -1;
+      return vm.lunched.indexOf(name) != -1;
     };
 
     vm.trimName = function (agent) {
