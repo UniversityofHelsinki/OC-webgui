@@ -3,38 +3,32 @@
   width: 100%;
   height: 100vh;
   display: flex;
-
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
 
-  .card {
-    padding: 1em;
-  }
+.personal-card {
+  padding: 1em;
+  text-align: center;
+  line-height: 1;
 }
 
 .personal-statistics {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-top: 1em;
+  padding: 1em 0;
+  border-bottom: 2px solid #ccc;
 
-  table {
-    th {
-      text-align: left;
-    }
+  th {
+    text-align: left;
+  }
 
-    td {
-      text-align: right;
-    }
+  td {
+    text-align: right;
   }
 }
 
-.personal-data {
-  text-align: center;
-  padding: 1em 0;
-  border-bottom: 2px solid #ccc;
+.agent-statuses {
+  padding-top: 1em;
 
   .agent-status-color {
     display: inline-block;
@@ -44,10 +38,7 @@
 }
 
 .queue-length {
-  text-align: center;
   font-size: 3em;
-  line-height: 1;
-  margin-bottom: 0.25em;
   padding-bottom: 1rem;
   border-bottom: 2px solid #ccc;
 }
@@ -60,10 +51,11 @@
 }
 
 .agent-list {
-  padding: 0;
+  margin: 0.25em auto 0;
+  text-align: left;
+  border-spacing: 0.25em 0.5em;
 
-  li {
-    list-style-type: none;
+  td {
+    line-height: 1;
   }
 }
-
