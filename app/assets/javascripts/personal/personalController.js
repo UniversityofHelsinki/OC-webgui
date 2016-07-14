@@ -1,5 +1,5 @@
 angular.module('ocWebGui.personal', ['ui.router'])
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider) {
     $stateProvider
       .state('personal', {
         url: '/personal',
