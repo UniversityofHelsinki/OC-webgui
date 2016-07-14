@@ -1,0 +1,61 @@
+.personal-bg {
+  background-color: #87aade;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.personal-card {
+  padding: 1em;
+  text-align: center;
+  line-height: 1;
+}
+
+.personal-statistics {
+  padding: 1em 0;
+  border-bottom: 2px solid #ccc;
+
+  th {
+    text-align: left;
+  }
+
+  td {
+    text-align: right;
+  }
+}
+
+.agent-statuses {
+  padding-top: 1em;
+
+  .agent-status-color {
+    display: inline-block;
+    height: 3em;
+    width: 3em;
+  }
+}
+
+.queue-length {
+  font-size: 3em;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #ccc;
+}
+
+.color-square {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
+}
+
+.agent-list {
+  margin: 0.25em auto 0;
+  text-align: left;
+  border-spacing: 0.25em 0.5em;
+
+  td {
+    line-height: 1;
+  }
+}
