@@ -41,21 +41,25 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         },
         y2Axis: {
           ticks: 5
-        }
+        },
+        legend: {
+          maxKeyLength: 100
+        },
+        duration: 500
       }
     };
     vm.data = [{
-      'key': 'Calls per hour',
+      'key': 'Puheluja tunnissa',
       'bar': true,
       'color': '#000000',
       'values': []
     }, {
-      'key': 'Diagram',
+      'key': 'Keskim. jonotusaika',
       'color': '#ff0000',
       'values': []
     }];
 
-    function fetchStats() {
+    function fetchContactStats() {
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
         var values = data.calls_by_hour
@@ -63,8 +67,25 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           // .filter(function (item) { return item.calls !== 0; });
           .filter(function (item) { return item.hour >= 8 && item.hour <= 18; })
           ;
-        vm.stats = data;
+        if (!angular.isDefined(vm.stats)) {
+          vm.stats = {};
+        }
+        angular.extend(vm.stats, vm.stats, data);
         vm.data[0].values = values;
+      });
+    }
+
+    function fetchQueueStats() {
+      $http.get('queue/stats.json').then(function (response) {
+        var data = response.data;
+        var values = data.queue_items_by_hour
+          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+        if (!angular.isDefined(vm.stats)) {
+          vm.stats = {};
+        }
+        angular.extend(vm.stats, vm.stats, data);
+        vm.data[1].values = values;
       });
     }
 
@@ -89,14 +110,17 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     };
 
     var fetchDataInterval = $interval(fetchData, 5 * 1000);
-    var fetchStatsInterval = $interval(fetchStats, 5 * 60 * 1000);
+    var fetchContactStatsInterval = $interval(fetchContactStats, 5 * 60 * 1000);
+    var fetchQueueStatsInterval = $interval(fetchQueueStats, 5 * 60 * 1000);
     $scope.$on('$destroy', function () {
       $interval.cancel(fetchDataInterval);
-      $interval.cancel(fetchStatsInterval);
+      $interval.cancel(fetchContactStatsInterval);
+      $interval.cancel(fetchQueueStatsInterval);
     });
 
     fetchData();
-    fetchStats();
+    fetchContactStats();
+    fetchQueueStats();
 
     // mock data for testing css
     // vm.queue = [

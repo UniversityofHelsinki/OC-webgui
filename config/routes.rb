@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get 'states' => 'states#index'
     get 'contacts/today' => 'contacts#today'
     get 'contacts/stats' => 'contacts#stats'
+    get 'queue/stats' => 'queue_items#stats'
   end
 
   # Example of regular route:
