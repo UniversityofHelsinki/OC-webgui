@@ -19,7 +19,8 @@ class ContactsController < ApplicationController
       answered_calls: @contacts_service.answered_calls(@team_name, @start_time, @end_time),
       average_call_duration: @contacts_service.average_call_duration(@team_name, @start_time, @end_time),
       average_after_call_duration: @contacts_service.average_after_call_duration(@team_name, @start_time, @end_time),
-      calls_by_hour: @contacts_service.calls_by_hour(@team_name, @start_time, @end_time)
+      calls_by_hour: @contacts_service.calls_by_hour(@team_name, @start_time, @end_time),
+      lunched: @contacts_service.lunched
     }
   end
 end

@@ -1,3 +1,4 @@
+require 'pp'
 # API for Queue status data
 class QueueItemsController < ApplicationController
   def index
