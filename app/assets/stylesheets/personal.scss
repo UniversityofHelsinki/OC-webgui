@@ -19,11 +19,32 @@
   height: 50vh;
 }
 
+.personal-data {
+  height: 50vh;
+  text-align: center;
+}
+
+.queue-length {
+    font-size: 3em;
+    line-height: 1;
+    margin-bottom: 0.25em;
+}
+
+.personal-data .agent-status-color {
+    display: inline-block;
+    height: 3em;
+    width: 3em;
+}
+
 .color-square {
     display: inline-block;
     height: 1em;
     width: 1em;
     border-radius: 50%;
+}
+
+.agent-list {
+    padding: 0;
 }
 
 .agent-list li {
