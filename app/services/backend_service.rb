@@ -15,15 +15,16 @@ class BackendService
     )
   end
 
-  def get_agent_contacts(agent_id, start_date, end_date)
+  # Method for getting agent contacts
+  def get_agent_contacts(params)
     message = {
-      serviceGroupID: 4,
-      serviceID: 137,
-      teamID: 'Helpdesk',
-      agentID: agent_id,
-      startDate: start_date,
-      endDate: end_date,
-      contactTypes: 'PBX',
+      serviceGroupID: params[:service_group_id],
+      serviceID: params[:service_id],
+      teamID: params[:team_name],
+      agentID: params[:agent_id],
+      startDate: params[:start_date],
+      endDate: params[:end_date],
+      contactTypes: params[:contact_type],
       useServiceTime: true
     }
 
@@ -36,7 +37,6 @@ class BackendService
 
     data = data.map do |attrs|
       {
-        agent_id: agent_id,
         ticket_id: attrs[:string][0],
         call_arrived_to_queue: attrs[:string][1],
         queued_seconds: attrs[:string][2],
@@ -59,7 +59,10 @@ class BackendService
     end
 
     # First entry in array always seems to consist of weird numbers, not an actual contact
-    data.delete_at(0) if data[0][:contact_type] != 'PBX'
+    unless data.empty?
+      data.delete_at(0) if data[0][:ticket_id] == '21100'
+    end
+
     data
   end
 
@@ -77,6 +80,22 @@ class BackendService
         last_name: attrs[:string][1],
         first_name: attrs[:string][2],
         team_name: attrs[:string][3]
+      }
+    end
+  end
+
+  def get_services
+    reply = @client.call(:get_services)
+
+    data = reply.body.dig(:get_services_response,
+                          :get_services_result,
+                          :array_of_string)
+    data = check_if_data_exists(data)
+
+    data.map do |attrs|
+      {
+        id: Integer(attrs[:string][0], 10),
+        name: attrs[:string][1]
       }
     end
   end
