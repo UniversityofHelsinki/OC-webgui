@@ -43,4 +43,3 @@ npm-debug.log
 .editorconfig
 
 app/jobs/logs/*
-app/jobs
