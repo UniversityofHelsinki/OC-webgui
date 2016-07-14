@@ -62,7 +62,7 @@ describe('login', function () {
   it('should redirect back to protected route', function () {
     browser.get('#/home');
     browser.actions().mouseMove(element(by.className('navbar'))).perform();
-    element(by.className('navbar')).element(by.linkText('Show statistics screen')).click();
+    element(by.className('navbar')).element(by.linkText('Statistics')).click();
 
     expect(browser.getLocationAbsUrl()).toMatch('/login');
     element(by.model('login.username')).sendKeys('jooseppi');
