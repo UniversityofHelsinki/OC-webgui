@@ -1,18 +1,23 @@
-angular.module('ocWebGui.navbar', ['ui.router', 'ocWebGui.login', 'ocWebGui.shared.fullscreen', 'FBAngular'])
-  .controller('NavbarController', function ($scope, $http, User, MyFullscreen, Fullscreen) {
+angular.module('ocWebGui.navbar', ['ui.router', 'ocWebGui.login', 'FBAngular'])
+  .controller('NavbarController', function ($scope, $http, User, Fullscreen, $interval) {
     var vm = this;
     
     vm.isAuthenticated = User.isAuthenticated;
     vm.username = User.getUsername;
     vm.logout = User.logout;
 
-    vm.isFullscreen = Fullscreen.isEnabled();
+    $scope.isFullscreen = Fullscreen.isEnabled();
+
     vm.goFullscreen = function () {
-      MyFullscreen.goFullScreen();
+      if (Fullscreen.isEnabled()) {
+        Fullscreen.cancel();
+      } else {
+        Fullscreen.all();
+      }
     };
 
     Fullscreen.$on('FBFullscreen.change', function(event, isEnabled){
-      vm.isFullscreen = isEnabled;
+      $scope.isFullscreen = isEnabled;
+      $scope.$apply(); 
     });
-
   });

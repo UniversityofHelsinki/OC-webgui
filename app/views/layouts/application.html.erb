@@ -14,8 +14,7 @@
     <a ui-sref="filterpanel" class="card">Show filter screen</a>
     <a ui-sref="stats" class="card">Show statistics screen</a>
     <a href ng-click="navbar.goFullscreen()" class="card">
-        <span ng-show="navbar.isFullscreen">Thinscreen</span>
-        <span ng-hide="navbar.isFullscreen">Fullscreen</span>
+        {{ isFullscreen == true ? 'Exit fullscreen' : 'Fullscreen' }}
     </a>
     <a ui-sref="login" ng-if="!navbar.isAuthenticated()" class="card">Login</a>
     <span ng-if="navbar.isAuthenticated()">
