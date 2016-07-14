@@ -5,6 +5,7 @@ describe('homepage', function () {
   });
   it('should contain header', function () {
     browser.driver.manage().window().maximize();
+    browser.driver.manage().window().setSize(1920, 1080);
     browser.get('#/home');
     expect(element(by.tagName('h1')).getText()).toBe('Home');
 
