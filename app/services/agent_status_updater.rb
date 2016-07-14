@@ -18,12 +18,10 @@ class AgentStatusUpdater
     @new_statuses = Hash[new_statuses.map { |status| [status.agent_id, status] }]
     @statuses_to_create = []
 
-    check_when_new_statuses_opened
+    check_when_new_statuses_opened    
     check_signed_out_agents
-    # If AgentStatus data is unreliable, discard all changes and wait for the next, hopefully reliable, data
-    return false unless update_new_and_changed_statuses
+    update_new_and_changed_statuses
     save_updates
-    true
   end
 
   private
@@ -44,24 +42,21 @@ class AgentStatusUpdater
       if !@previous_statuses[agent_id]
         save_new_status(status)
       else
-        return false unless status_data_is_reliable(agent_id, status)
+        check_if_status_has_changed(agent_id, status)
       end
     end
-    true
   end
 
-  def status_data_is_reliable(agent_id, status)
+  def check_if_status_has_changed(agent_id, status)
     previous = @previous_statuses[agent_id]
     # The agent's status has changed if either the status name is different, or the time spent in it is less than before
+    # 10 second buffer is included to account for random delays when fetching SOAP responses
     if previous.status != status.status ||
-       status.created_at > previous.created_at + 6.seconds
-      # Ensure that status data is reliable before saving any changes
-      return false unless plausibly_new_status? status
-
+       status.created_at > previous.created_at + 10.seconds
+      
       previous.open = false
       save_new_status(status)
     end
-    true
   end
 
   def save_updates
@@ -76,12 +71,5 @@ class AgentStatusUpdater
                              status: status.status,
                              open: true,
                              created_at: status.created_at)
-  end
-
-  # It is possible for an agent status to appear new even if it's actually an old one. This can happen in case SOAP response is delayed
-  # due to lag. This check will return false if the given status seems to be an old one, not a new one.
-  def plausibly_new_status?(status)
-    return true unless @last_success
-    status.created_at >= @last_success
   end
 end

@@ -117,7 +117,7 @@ RSpec.describe AgentStatusUpdater, type: :service do
     end
   end
 
-  context "if an agent's status has the same name but the time has decreased" do 
+  context "if an agent's status has the same name but the time has decreased" do
     before (:example) do 
       old_data = [build(:status_1a, time_in_status: "22"), build(:status_2a, time_in_status: "5")]
       new_data = [build(:status_1a, time_in_status: "15"), build(:status_2a, time_in_status: "20")]
@@ -126,10 +126,7 @@ RSpec.describe AgentStatusUpdater, type: :service do
     end
 
     it "generates a new open status for the statuses where the time in status decreased" do
-      expect(AgentStatus.all.length).to eq(3)
-    end
-
-    it "closes the old statuses correctly" do 
+      expect(AgentStatus.all.length).to eq(3)      
       expect(AgentStatus.first.open).to be(false)
       expect(AgentStatus.second.open).to be(true)
     end
@@ -150,111 +147,88 @@ RSpec.describe AgentStatusUpdater, type: :service do
   end
 
   context "When SOAP data does not arrive in the expected time" do
-  	before (:example) do
-  		@data1=[build(:status_1a, time_in_status: "300"), build(:status_2a, time_in_status: "3")]
-  		@data2=[build(:status_1a, time_in_status: "305"), build(:status_2a, time_in_status: "8"), build(:status_3a, time_in_status: "3")]
-  	end
+    before (:example) do
+      @data1=[build(:status_1a, time_in_status: "300"), build(:status_2a, time_in_status: "3")]
+      @data1copy=[build(:status_1a, time_in_status: "300"), build(:status_2a, time_in_status: "3")]
+      @data2=[build(:status_1a, time_in_status: "305"), build(:status_2a, time_in_status: "8"), build(:status_3a, time_in_status: "3")]
+    end
 
-  	it "handles a situation where SOAP data comes slightly later than expected"  do
-  		time = now
-  		test = updater(time, time - 5.seconds).update_statuses(@data1)
- 		test2  = updater(time + 9.seconds, time).update_statuses(@data2)
-  		expect(AgentStatus.all.length).to eq(3)
-  		expect(AgentStatus.where(open: true).length).to eq(3)
-  		expect(test).to be(true)
-  		expect(test2).to be(true)
+    it "handles a situation where SOAP data comes slightly later than expected"  do
+      time = now
+      updater(time, time - 5.seconds).update_statuses(@data1)
+      updater(time + 9.seconds, time).update_statuses(@data2)
+      expect(AgentStatus.all.length).to eq(3)
+      expect(AgentStatus.where(open: true).length).to eq(3)
     end
 
     it "handles a situation where SOAP data comes slightly earlier than expected" do 
-    	time = now 
-    	test = updater(time, time - 5.seconds).update_statuses(@data1)
- 		test2  = updater(time + 1.second, time).update_statuses(@data2)
-  		expect(AgentStatus.all.length).to eq(3)
-  		expect(AgentStatus.where(open: true).length).to eq(3)
-  		expect(test).to be(true)
-  		expect(test2).to be(true)
+      time = now 
+      updater(time, time - 5.seconds).update_statuses(@data1)
+      updater(time + 1.second, time).update_statuses(@data2)
+      expect(AgentStatus.all.length).to eq(3)
+      expect(AgentStatus.where(open: true).length).to eq(3)
     end
 
     it "handles a situation where the same SOAP response is delivered shortly after the first one" do
-    	time = now
-    	test = updater(time, time - 5.seconds).update_statuses(@data1)
-    	test2 = updater(time + 2.seconds, time).update_statuses(@data1)
-    	expect(AgentStatus.all.length).to eq(2) 
-        expect(AgentStatus.where(open: true).length).to eq(2)
-        expect(test).to be(true)
-  		expect(test2).to be(true)
+      time = now
+      updater(time, time - 5.seconds).update_statuses(@data1)
+      updater(time + 2.seconds, time).update_statuses(@data1)
+      expect(AgentStatus.all.length).to eq(2) 
+      expect(AgentStatus.where(open: true).length).to eq(2)
     end
 
     it "handles a situation where the same SOAP response is delivered fairly late after the first time" do
-    	time = now
-    	test = updater(time, time - 5.seconds).update_statuses(@data1)
-    	test2 = updater(time + 9.seconds, time).update_statuses(@data1)
-    	expect(AgentStatus.all.length).to eq(2) 
-        expect(AgentStatus.where(open: true).length).to eq(2)
-        expect(test).to be(true)
-  		expect(test2).to be(false)
+      time = now
+      updater(time, time - 5.seconds).update_statuses(@data1)
+      updater(time + 9.seconds, time).update_statuses(@data1copy)
+      expect(AgentStatus.all.length).to eq(2)
     end
 
     it "handles a situation where the same SOAP response is delivered shortly after first one, then a new response appears" do
-    	time = now
-    	test = updater(time, time - 5.seconds).update_statuses(@data1)
-    	test2 = updater(time + 2.seconds, time).update_statuses(@data1)
-    	test3 = updater(time + 7.seconds, time + 2.seconds).update_statuses(@data2)
-    	expect(AgentStatus.all.length).to eq(3) 
-        expect(AgentStatus.where(open: true).length).to eq(3)
-        expect(test).to be(true)
-  		expect(test2).to be(true)
-  		expect(test3).to be(true)
+      time = now
+      updater(time, time - 5.seconds).update_statuses(@data1)
+      updater(time + 2.seconds, time).update_statuses(@data1copy)
+      updater(time + 7.seconds, time + 2.seconds).update_statuses(@data2)
+      expect(AgentStatus.all.length).to eq(3) 
+      expect(AgentStatus.where(open: true).length).to eq(3)
     end
 
     it "handles a situation where the same SOAP response is delivered fairly late, then a new response appears" do 
-    	time = now
-    	test = updater(time, time - 5.seconds).update_statuses(@data1)
-    	test2 = updater(time + 9.seconds, time).update_statuses(@data1)
-    	test3 = updater(time + 10.seconds, time).update_statuses(@data2)
-    	expect(AgentStatus.all.length).to eq(3) 
-        expect(AgentStatus.where(open: true).length).to eq(3)
-        expect(test).to be(true)
-  		expect(test2).to be(false)
-  		expect(test3).to be(true)
+      time = now
+      updater(time, time - 5.seconds).update_statuses(@data1)
+      updater(time + 9.seconds, time).update_statuses(@data1copy)
+      updater(time + 10.seconds, time).update_statuses(@data2)
+      expect(AgentStatus.all.length).to eq(3) 
+      expect(AgentStatus.where(open: true).length).to eq(3)
     end
 
     it "handles a situation where the same response is delivered several times over a few seconds, then a new one appears" do
-    	time = now
-    	test = updater(time, time - 5.seconds).update_statuses(@data1)
-    	test2 = updater(time + 1.second, time).update_statuses(@data1)
-    	test3 = updater(time + 2.seconds, time + 1.second).update_statuses(@data1)
-    	test4 = updater(time + 3.seconds, time + 2.seconds).update_statuses(@data2)
-    	test5 = updater(time + 4.seconds, time + 3.seconds).update_statuses(@data2)
-    	test6 = updater(time + 5.seconds, time + 4.seconds).update_statuses(@data2)
+      time = now
+      updater(time, time - 5.seconds).update_statuses(@data1)
+      updater(time + 1.second, time).update_statuses(@data1)
+      updater(time + 2.seconds, time + 1.second).update_statuses(@data1)
+      updater(time + 3.seconds, time + 2.seconds).update_statuses(@data2)
+      updater(time + 4.seconds, time + 3.seconds).update_statuses(@data2)
+      updater(time + 5.seconds, time + 4.seconds).update_statuses(@data2)
 
-    	expect(AgentStatus.all.length).to eq(3) 
-        expect(AgentStatus.where(open: true).length).to eq(3)
-        expect(test).to be(true)
-  		expect(test2).to be(true)
-  		expect(test3).to be(true)
-  		expect(test4).to be(true)
-  		expect(test5).to be(true)
-  		expect(test6).to be(true)
+      expect(AgentStatus.all.length).to eq(3) 
+      expect(AgentStatus.where(open: true).length).to eq(3)      
     end
   end
 
   context "when the SOAP delay gets to be very long" do 
     before(:example) do 
       data1=[build(:status_1a, time_in_status: "300"), build(:status_2a, time_in_status: "3")]
-  	  data2=[build(:status_1a, time_in_status: "305"), build(:status_2a, time_in_status: "8"), build(:status_3a, time_in_status: "3")]
+      data2=[build(:status_1a, time_in_status: "305"), build(:status_2a, time_in_status: "8"), build(:status_3a, time_in_status: "3")]
       data3=[build(:status_1a, time_in_status: "50"), build(:status_2a, time_in_status: "100")]
-      @test1 = updater(now, now - 5.seconds).update_statuses(data1)
-      @test2 = updater(now + 9.seconds, now).update_statuses(data2)
-  	  @test3 = updater(now + 92.seconds, now + 9.seconds).update_statuses(data3)
+      updater(now, now - 5.seconds).update_statuses(data1)
+      updater(now + 9.seconds, now).update_statuses(data2)
+      updater(now + 92.seconds, now + 9.seconds).update_statuses(data3)
     end
 
     it "doesn't confuse old and new data" do
-  	  expect(AgentStatus.all.length).to eq(4)
-  	  expect(AgentStatus.where(open: true).length).to eq(2)
-  	  expect(@test1).to be(true)
-  	  expect(@test2).to be(true)
-  	  expect(@test3).to be(true)
-  	end
-  end
+      expect(AgentStatus.all.length).to eq(4)
+      expect(AgentStatus.where(open: true).length).to eq(2)      
+    end
+  end  
 end
