@@ -18,7 +18,7 @@ class AgentStatusUpdater
     @new_statuses = Hash[new_statuses.map { |status| [status.agent_id, status] }]
     @statuses_to_create = []
 
-    check_when_new_statuses_opened    
+    check_when_new_statuses_opened
     check_signed_out_agents
     update_new_and_changed_statuses
     save_updates
@@ -53,7 +53,7 @@ class AgentStatusUpdater
     # 10 second buffer is included to account for random delays when fetching SOAP responses
     if previous.status != status.status ||
        status.created_at > previous.created_at + 10.seconds
-      
+
       previous.open = false
       save_new_status(status)
     end

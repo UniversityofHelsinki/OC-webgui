@@ -7,6 +7,7 @@ AllCops:
     - 'spec/**/*'
     - 'app/controllers/application_controller.rb'
     - 'Gemfile'
+    - 'vendor/**/*'
 Rails:
   Enabled: true
 Metrics/ClassLength:

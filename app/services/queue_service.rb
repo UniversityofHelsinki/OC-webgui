@@ -1,3 +1,4 @@
+# Provides functionality for statistical data about the Queue
 class QueueService
   def initialize
   end

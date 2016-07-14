@@ -19,7 +19,7 @@ class TrackAgentStatusesJob
   def max_attempts
     1
   end
-  
+
   def failure(*)
     JobLog.new('TrackAgentStatusesJob').log_failure
   end
