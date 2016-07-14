@@ -29,6 +29,7 @@
 //= require_tree ./filterpanel
 //= require_tree ./stats
 //= require_tree ./login
+//= require_tree ./personal
 //= require ./app.js
 //= require angular-i18n/angular-locale_fi.js
 //= require d3

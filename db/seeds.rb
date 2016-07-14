@@ -19,8 +19,16 @@ State.create(name: 'Ruokatunti', filter: true)
 
 backend_service = BackendService.new
 
+# Hardcoded because information not reliably available via SOAP
+service_group_ids_by_team = { 'Hakijapalvelut' => 7,
+                              'Helpdesk' => 4,
+                              'Opiskelijaneuvonta' => 6,
+                              'Puhelinvaihde' => 3,
+                              'OrangeContact 1' => 2,
+                              'Uaf' => 9 }
+
 backend_service.get_teams.each do |team|
-  Team.create(name: team, filter: team == 'Helpdesk')
+  Team.create(name: team, filter: team == 'Helpdesk', service_group_id: service_group_ids_by_team[team])
 end
 
 backend_service.get_agents.each do |data|
@@ -30,5 +38,30 @@ backend_service.get_agents.each do |data|
     agent.last_name = data[:last_name]
     agent.team = Team.find_or_create_by(name: data[:team_name])
     agent.save
+  end
+end
+
+# Hardcoded because this information is not available via SOAP
+teams_by_service = { 122 => 'Puhelinvaihde',
+                     151 => 'Puhelinvaihde',
+                     124 => 'Opiskelijaneuvonta',
+                     161 => 'Hakijapalvelut',
+                     180 => 'Hakijapalvelut',
+                     181 => 'Hakijapalvelut',
+                     182 => 'Hakijapalvelut',
+                     120 => 'Helpdesk',
+                     121 => 'Helpdesk',
+                     131 => 'Helpdesk',
+                     133 => 'Helpdesk',
+                     135 => 'Helpdesk',
+                     137 => 'Helpdesk',
+                     192 => 'Uaf' }
+
+backend_service.get_services.each do |data|
+  Service.find_or_initialize_by(id: data[:id]).tap do |service|
+    service.id = data[:id]
+    service.name = data[:name]
+    service.team = Team.find_by(name: teams_by_service[data[:id]])
+    service.save
   end
 end

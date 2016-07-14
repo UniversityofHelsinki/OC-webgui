@@ -27,4 +27,8 @@ class TrackAgentStatusesJob
   def failure(*)
     JobLog.new('TrackAgentStatusesJob').log_failure
   end
+
+  def queue_name
+    'statuses'
+  end
 end

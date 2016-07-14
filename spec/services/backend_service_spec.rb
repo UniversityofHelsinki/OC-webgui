@@ -68,6 +68,100 @@ RSpec.describe BackendService, type: :service do
     expect(response.length).to eq(2)
   end
 
+  it "Should return one contact from GetAgentsContacts" do
+    fixture = File.read("spec/fixtures/backend_service/get_agent_contacts_1.xml")
+
+    message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
+    agentID: 2000049, startDate: "2016-06-14", endDate: "2016-06-15",
+    contactTypes: 'PBX', useServiceTime: true }
+
+    expected = [
+      {:ticket_id=>"20160614091049336435", 
+:call_arrived_to_queue=>"14.6.2016 9:11:43", 
+:queued_seconds=>"1", 
+:call_forwarded_to_agent=>"14.6.2016 9:11:44", 
+:call_answered_by_agent=>"14.6.2016 9:11:57", 
+:call_ended=>"14.6.2016 9:13:59", 
+:call_handling_ended=>"14.6.2016 9:21:41", 
+:call_length=>"598", 
+:call_handling_total=>"597",
+:service_type=>"Neuvonta Fin", 
+:contact_direction=>"I", 
+:contact_type=>"PBX",
+:contact_phone_num=>"0405882759", 
+:contact_handler=>"Seppänen Pekka", 
+:contact_number=>"-1",
+:contact_state=>"Onnistunut kontakti", 
+:contact_total_handling=>"nil", 
+:sub_group=>"-1"}
+    ]
+
+    savon.expects(:get_contacts).with(message: message).returns(fixture)
+
+    params = { agent_id: 2000049,
+               start_date: '2016-06-14', 
+               end_date: '2016-06-15',
+               contact_type: 'PBX',
+               team_name: 'Helpdesk',
+               service_group_id: 4,
+               service_id: 137
+             }
+    response = BackendService.new.get_agent_contacts(params)
+
+    expect(response).to eq(expected)
+  end
+
+  it "Should return empty array if there is only non-contact weird numbers" do
+    fixture = File.read("spec/fixtures/backend_service/get_agent_contacts_2.xml")
+
+    message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
+    agentID: 2000049, startDate: "2016-06-14", endDate: "2016-06-15",
+    contactTypes: 'PBX', useServiceTime: true }
+
+    expected = []
+
+    savon.expects(:get_contacts).with(message: message).returns(fixture)
+
+    params = { agent_id: 2000049,
+               start_date: '2016-06-14', 
+               end_date: '2016-06-15',
+               contact_type: 'PBX',
+               team_name: 'Helpdesk',
+               service_group_id: 4,
+               service_id: 137
+             }
+
+    response = BackendService.new.get_agent_contacts(params)
+
+    expect(response).to eq(expected)
+  end
+
+
+it "Should return empty array if there is empty response" do
+    fixture = File.read("spec/fixtures/backend_service/get_agent_contacts_3.xml")
+
+    message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
+    agentID: 2000049, startDate: "2016-06-14", endDate: "2016-06-15",
+    contactTypes: 'PBX', useServiceTime: true }
+
+    expected = []
+
+    params = { agent_id: 2000049,
+               start_date: '2016-06-14', 
+               end_date: '2016-06-15',
+               contact_type: 'PBX',
+               team_name: 'Helpdesk',
+               service_group_id: 4,
+               service_id: 137
+             }
+
+    savon.expects(:get_contacts).with(message: message).returns(fixture)
+
+    response = BackendService.new.get_agent_contacts(params)
+
+    expect(response).to eq(expected)
+  end
+
   it "get_teams should return array of 3 if there exists 3 teams" do
     fixture = File.read("spec/fixtures/backend_service/get_teams_length_3.xml")
     expected = ["Väinämöinen", "Joukahainen", "Aino"]
