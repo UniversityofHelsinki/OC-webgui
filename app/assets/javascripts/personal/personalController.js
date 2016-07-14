@@ -9,9 +9,7 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service'])
       });
   })
   .controller('PersonalController', function (Agents, $interval, $scope) {
-      console.log("moi");
-
-      var vm = this;
+    var vm = this;
 
     function fetchData() {
       Agents.query(function (agents) {
@@ -25,4 +23,5 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service'])
     });
 
     fetchData();
+
   });
