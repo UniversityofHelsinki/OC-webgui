@@ -1,4 +1,3 @@
-require 'pp'
 # Retrieves agent statuses and calls AgentStatusUpdater to update them where necessary
 class TrackAgentStatusesJob
   include Now
