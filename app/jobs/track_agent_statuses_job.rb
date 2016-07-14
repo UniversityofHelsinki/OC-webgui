@@ -9,7 +9,7 @@ class TrackAgentStatusesJob
                       time_in_status: data[:time_in_status])
     end
     log = JobLog.new('TrackAgentStatusesJob')
-    log.log_success if AgentStatusUpdater.new(now, log.last_success).update_statuses(current)
+    AgentStatusUpdater.new(now, log.last_success).update_statuses(current)
   end
 
   def max_run_time
@@ -18,6 +18,10 @@ class TrackAgentStatusesJob
 
   def max_attempts
     1
+  end
+
+  def success(*)
+    JobLog.new('TrackAgentStatusesJob').log_success 
   end
 
   def failure(*)
