@@ -27,8 +27,12 @@ service_group_ids_by_team = { 'Hakijapalvelut' => 7,
                               'OrangeContact 1' => 2,
                               'Uaf' => 9 }
 
-backend_service.get_teams.each do |team|
-  Team.create(name: team, filter: team == 'Helpdesk', service_group_id: service_group_ids_by_team[team])
+backend_service.get_teams.each do |team_name|
+  Team.find_or_initialize_by(name: team_name).tap do |team| 
+    team.filter = team_name == 'Helpdesk'
+    team.service_group_id = service_group_ids_by_team[team_name]
+    team.save
+  end
 end
 
 backend_service.get_agents.each do |data|

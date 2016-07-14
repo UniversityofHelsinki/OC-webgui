@@ -1,4 +1,4 @@
-angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.fullscreen'])
+angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWebGui.shared.time'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('screen', {
@@ -8,7 +8,7 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         controllerAs: 'screen'
       });
   })
-  .controller('ScreenController', function ($interval, $scope, shared, Agents, MyFullscreen) {
+  .controller('ScreenController', function ($interval, $scope, shared, Agents) {
     var vm = this;
     var fetchDataInterval;
 
@@ -64,10 +64,6 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         vm.number_of_columns = (agents.length > 9) ? 'four-col' : 'three-col';
       });
     }
-
-    vm.goFullscreen = function () {
-      MyFullscreen.goFullScreen();
-    };
 
     vm.trimName = function (agent) {
       return agent.first_name + ' ' + agent.last_name.charAt(0);
