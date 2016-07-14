@@ -40,13 +40,14 @@
                     <th>Jälkikirjauksen ka:</th>
                     <td><oc-time seconds="queue.stats.average_after_call_duration"></oc-time></td>
                 </tr>
+                <tr>
+                    <th>Jonotuksen ka:</th>
+                    <td><oc-time seconds="queue.stats.average_waiting_time"></oc-time></td>
+                </tr>
             </table>
         </div>
         <div class="chart card">
             <nvd3 options="queue.options" data="queue.data"></nvd3>
-        </div>
-        <div class="fullscreen">
-            <a href ng-click="queue.goFullscreen()">kokonäyttö</a>
         </div>
     </div>
 </div>
