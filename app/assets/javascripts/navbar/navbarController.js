@@ -6,7 +6,7 @@ angular.module('ocWebGui.navbar', ['ui.router', 'ocWebGui.login', 'FBAngular'])
     vm.username = User.getUsername;
     vm.logout = User.logout;
 
-    $scope.isFullscreen = Fullscreen.isEnabled();
+    vm.isFullscreen = Fullscreen.isEnabled();
 
     vm.goFullscreen = function () {
       if (Fullscreen.isEnabled()) {
@@ -17,7 +17,7 @@ angular.module('ocWebGui.navbar', ['ui.router', 'ocWebGui.login', 'FBAngular'])
     };
 
     Fullscreen.$on('FBFullscreen.change', function(event, isEnabled){
-      $scope.isFullscreen = isEnabled;
+      vm.isFullscreen = isEnabled;
       $scope.$apply(); 
     });
   });
