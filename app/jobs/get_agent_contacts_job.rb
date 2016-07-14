@@ -27,7 +27,7 @@ class GetAgentContactsJob
     120.seconds
   end
 
-  def max_attempts 
+  def max_attempts
     4
   end
 end
