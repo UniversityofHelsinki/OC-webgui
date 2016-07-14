@@ -4,6 +4,7 @@ describe('homepage', function () {
     expect(browser.getLocationAbsUrl()).toMatch('/home');
   });
   it('should contain header', function () {
+    browser.driver.manage().window().maximize();
     browser.get('#/home');
     expect(element(by.tagName('h1')).getText()).toBe('Home');
 
