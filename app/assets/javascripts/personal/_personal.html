@@ -5,36 +5,48 @@
             <tr>
                 <th>Puheluni:</th>
                 <td>3</td>
+                <!--<td>{{ myCalls }}</td>-->
             </tr>
             <tr>
                 <th>Puheluiden ka:</th>
                 <td>05:28</td>
+                <!--<td>{{ myCalls.totalTime / myCalls.length }}</td>-->
             </tr>
             <tr>
                 <th>Jälkikirjauksen ka:</th>
                 <td>04:47</td>
+                <!--<td> myPostcalls.totalTime / myCalls.length </td>-->
             </tr>
         </table>
         <div class="agent-statuses">
             <div class="agent-status-color agent-status-color-green"></div>
+            <!--<div>-->
+                <!--<table class="agent-list">-->
+                    <!--<tr>-->
+                        <!--<td class="color-square agent-status-color-green"></td>-->
+                        <!--<td>Matti A</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td class="color-square agent-status-color-red"></td>-->
+                        <!--<td>Jenni B</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td class="color-square agent-status-color-green"></td>-->
+                        <!--<td>Risto C</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td class="color-square agent-status-color-yellow"></td>-->
+                        <!--<td>Pekka D</td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            <!--</div>-->
             <table class="agent-list">
-                <tr>
-                    <td class="color-square agent-status-color-green"></td>
-                    <td>Matti A</td>
+                <tr ng-repeat="agent in personal.agents track by agent.id">
+                    <td class="color-square agent-status-color-{{agent.color}}"></td>
+                    <td>{{ agent.first_name }}</td>
                 </tr>
-                <tr>
-                    <td class="color-square agent-status-color-red"></td>
-                    <td>Jenni B</td>
-                </tr>
-                <tr>
-                    <td class="color-square agent-status-color-green"></td>
-                    <td>Risto C</td>
-                </tr>
-                <tr>
-                    <td class="color-square agent-status-color-yellow"></td>
-                    <td>Pekka D</td>
-                </tr>
-            </ul>
+            </table>
+
         </div>
     </div>
 </div>
