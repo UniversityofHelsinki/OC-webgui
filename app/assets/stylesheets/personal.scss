@@ -51,11 +51,11 @@
 }
 
 .agent-list {
-  padding: 0;
-  margin: 0;
-  margin-top: 1em;
+  margin: 0.25em auto 0;
+  text-align: left;
+  border-spacing: 0.25em 0.5em;
 
-  li {
-    list-style-type: none;
+  td {
+    line-height: 1;
   }
 }
