@@ -1,9 +1,8 @@
 <div class="screen_background">
     <div class="cards">
-        <div ng-repeat="agent in screen.agents track by agent.id" ng-class="{'card': true, 'agent-card': true, 'after-call': agent.status === 'Jälkikirjaus'}" class="{{ screen.number_of_columns }}">
+        <div ng-repeat="agent in screen.agents track by agent.id" ng-class="{'card': true, 'agent-card': true, 'after-call': agent.status === 'Jälkikirjaus', 'lunch': screen.hasLunched(agent), 'screen.number_of_columns'}">
             <div class="agent-status-color agent-status-color-{{agent.color}}"></div>
             <div class="agent-status-info">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/School_lunch.jpg" height="100" width="200" ng-if="screen.hasLunched(agent)">
                 <div class="agent-name">
                     {{ screen.trimName(agent) }}
                 </div>
