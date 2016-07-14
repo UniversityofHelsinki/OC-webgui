@@ -21,18 +21,11 @@
 
 .color-square {
     display: inline-block;
-    height: 0.5em;
-    width: 0.5em;
+    height: 1em;
+    width: 1em;
     border-radius: 50%;
-    background: red;
 }
 
-/*
-.agent-list li::before {
-    content: "";
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    
-    
-} */
+.agent-list li {
+    list-style-type: none;
+}
