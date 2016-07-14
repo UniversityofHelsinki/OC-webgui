@@ -15,7 +15,8 @@
 }
 
 .personal-statistics {
-  padding-top: 1em;
+  padding: 1em 0;
+  border-bottom: 2px solid #ccc;
 
   th {
     text-align: left;
@@ -26,9 +27,8 @@
   }
 }
 
-.personal-data {
-  padding: 1em 0;
-  border-bottom: 2px solid #ccc;
+.agent-statuses {
+  padding-top: 1em;
 
   .agent-status-color {
     display: inline-block;
@@ -39,7 +39,6 @@
 
 .queue-length {
   font-size: 3em;
-  margin-bottom: 0.25em;
   padding-bottom: 1rem;
   border-bottom: 2px solid #ccc;
 }
@@ -53,6 +52,8 @@
 
 .agent-list {
   padding: 0;
+  margin: 0;
+  margin-top: 1em;
 
   li {
     list-style-type: none;
