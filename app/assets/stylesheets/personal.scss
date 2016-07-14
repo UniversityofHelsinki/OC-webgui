@@ -1,0 +1,38 @@
+.personal-bg {
+  background-color: #87aade;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.personal-statistics {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 33vw;
+  height: 50vh;
+}
+
+.color-square {
+    display: inline-block;
+    height: 0.5em;
+    width: 0.5em;
+    border-radius: 50%;
+    background: red;
+}
+
+/*
+.agent-list li::before {
+    content: "";
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    
+    
+} */
