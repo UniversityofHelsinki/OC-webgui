@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713201654) do
+ActiveRecord::Schema.define(version: 20160714112027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20160713201654) do
     t.integer  "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
 
   add_index "agents", ["team_id"], name: "index_agents_on_team_id", using: :btree
@@ -107,10 +108,13 @@ ActiveRecord::Schema.define(version: 20160713201654) do
     t.string   "password_digest"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "agent_id"
   end
 
   add_foreign_key "agent_statuses", "agents"
   add_foreign_key "agents", "teams"
+  add_foreign_key "agents", "users"
   add_foreign_key "contacts", "agents"
   add_foreign_key "services", "teams"
+  add_foreign_key "users", "agents"
 end
