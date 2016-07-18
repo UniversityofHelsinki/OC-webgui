@@ -1,7 +1,7 @@
 # API for Queue status data
 class QueueItemsController < ApplicationController
   def index
-    @queue_items = QueueItem.where(open: true)
+    @queue_items = QueueItem.includes(:team).where(open: true)
   end
 
   before_action :init

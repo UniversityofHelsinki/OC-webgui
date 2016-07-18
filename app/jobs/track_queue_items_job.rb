@@ -4,7 +4,7 @@ class TrackQueueItemsJob
 
   def perform
     current = BackendService.new.get_general_queue.map do |data|
-      QueueItem.new(line: data[:line],
+      QueueItem.new(service_id: data[:service_id],
                     label: data[:label],
                     time_in_queue: data[:time_in_queue])
     end
