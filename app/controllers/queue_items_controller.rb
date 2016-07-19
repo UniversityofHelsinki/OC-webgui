@@ -21,4 +21,3 @@ class QueueItemsController < ApplicationController
     }
   end
 end
-

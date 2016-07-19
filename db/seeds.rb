@@ -67,15 +67,15 @@ backend_service.get_services.each do |data|
     service.name = data[:name]
     service.team = Team.find_by(name: teams_by_service[data[:id]])
 
-    if service.name.include? "Eng"
-      service.language = "English"
-    elsif service.name.include? "Fin"
-      service.language = "Finnish"
-    elsif service.name.include?("Sve") || service.name.include?("Swe")
-      service.language = "Swedish"
-    else
-      service.language = "Unknown"
-    end
+    service.language = if service.name.include? 'Eng'
+                         'English'
+                       elsif service.name.include? 'Fin'
+                         'Finnish'
+                       elsif service.name.include?('Sve') || service.name.include?('Swe')
+                         'Swedish'
+                       else
+                         'Unknown'
+                       end
     service.save
   end
 end
