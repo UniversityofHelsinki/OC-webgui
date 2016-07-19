@@ -5,15 +5,21 @@ describe('queue', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
             var baseTime = new Date(2013, 9, 23, 12, 0).getTime();
+            $httpBackend.whenGET('teams.json').respond([
+              {
+                name: "Helpdesk",
+                filter: true
+              }
+            ]);
             $httpBackend.whenGET('queue.json').respond([
               {
-                service_id: 136,
-                label: 'sssssssss',
+                team: 'Helpdesk',
+                language: 'Finnish',
                 created_at: new Date(baseTime - (4 * 60 + 25) * 1000)
               },
               {
-                service_id: 133,
-                label: 'zzzzz',
+                team: 'Helpdesk',
+                language: 'Swedish',
                 created_at: new Date(baseTime - 73 * 1000)
               }
             ]);
@@ -38,9 +44,9 @@ describe('queue', function () {
       expect(queue.count()).toBe(2);
 
       expect(queue.get(0).element(by.className('queuer-time')).getText()).toBe('04:25');
-      expect(queue.get(0).isElementPresent(by.className('queuer-flag-Fin'))).toBe(true);
+      expect(queue.get(0).isElementPresent(by.className('queuer-flag-Finnish'))).toBe(true);
       expect(queue.get(1).element(by.className('queuer-time')).getText()).toBe('01:13');
-      expect(queue.get(1).isElementPresent(by.className('queuer-flag-Swe'))).toBe(true);
+      expect(queue.get(1).isElementPresent(by.className('queuer-flag-Swedish'))).toBe(true);
 
       expect(browser.isElementPresent(by.className('plus-5'))).toBe(false);
     });
@@ -49,35 +55,41 @@ describe('queue', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
+            $httpBackend.whenGET('teams.json').respond([
+              {
+                name: "Helpdesk",
+                filter: true
+              }
+            ]);
             $httpBackend.whenGET('queue.json').respond([
               {
-                service_id: 136,
-                label: 'sssssssss',
+                team: 'Helpdesk',
+                language: 'Finnish',
                 time_in_queue: 265
               },
               {
-                service_id: 133,
-                label: 'zzzzz',
+                team: 'Helpdesk',
+                language: 'Swedish',
                 time_in_queue: 73
               },
               {
-                service_id: 133,
-                label: 'zzzzz',
+                team: 'Helpdesk',
+                language: 'English',
                 time_in_queue: 73
               },
               {
-                service_id: 133,
-                label: 'zzzzz',
+                team: 'Helpdesk',
+                language: 'Finnish',
                 time_in_queue: 73
               },
               {
-                service_id: 133,
-                label: 'zzzzz',
+                team: 'Helpdesk',
+                language: 'Finnish',
                 time_in_queue: 73
               },
               {
-                service_id: 133,
-                label: 'zzzzz',
+                team: 'Helpdesk',
+                language: 'Finnish',
                 time_in_queue: 73
               }
             ]);

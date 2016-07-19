@@ -8,22 +8,23 @@ RSpec.describe QueueItemsController, type: :controller do
   render_views
 
   it 'queue json should work' do
-    item1 = { "service_id"=>136,
-              "created_at"=>anything,
-              "team"=>"Team A"
+    item1 = { "created_at"=>anything,
+              "team"=>"Team A",
+              "language"=>"English"
             }
 
-    item2 = { "service_id"=>133,
-              "created_at"=>anything,
-              "team"=>"Team A"
+    item2 = { "created_at"=>anything,
+              "team"=>"Team B",
+              "language"=>"Finnish"
             }
 
     Team.create(id: 1, name: "Team A")
-    Service.create(id: 136, name: "A", team_id: 1)
-    Service.create(id: 133, name: "B", team_id: 1)
+    Team.create(id: 2, name: "Team B")
+    Service.create(id: 136, name: "A", team_id: 1, language: "English")
+    Service.create(id: 133, name: "B", team_id: 2, language: "Finnish")
 
-    QueueItem.create(service_id: 136, label: "abc", created_at: now - 20.seconds, open: true)
-    QueueItem.create(service_id: 133, label: "qwe", created_at: now - 11.seconds, open: true)
+    QueueItem.create(service_id: 136, created_at: now - 20.seconds, open: true)
+    QueueItem.create(service_id: 133, created_at: now - 11.seconds, open: true)
     get :index, format: :json
     queueitems = JSON.parse(response.body)
 
