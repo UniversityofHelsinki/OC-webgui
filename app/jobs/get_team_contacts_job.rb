@@ -7,25 +7,19 @@ class GetTeamContactsJob
   end
 
   def perform
-    team = Team.includes(:agents, :services).find_by(name: @team)
-    params = {}
-    params[:team_name] = @team
-    params[:start_date] = @start_date
-    params[:end_date] = @end_date
-    params[:service_group_id] = team.service_group_id
-    contact_types = %w(PBX MANUAL SMS)
-
-    team.agents.each do |agent|
-      params[:agent_id] = agent.id
-
-      team.services.each do |service|
-        params[:service_id] = service.id
-
-        contact_types.each do |type|
-          params[:contact_type] = type
-          Delayed::Job.enqueue GetAgentContactsJob.new(params)
-        end
-      end
+    agents = Agent.all
+    BackendService.new.get_team_contacts(@team, @start_date, @end_date).each do |data|
+      agent_name = data[:agent_name].split
+      agent_id = agents.select { |agent| agent.first_name == agent_name[1] && agent.last_name == agent_name[0] }[0].id
+      Contact.create(agent_id: agent_id,
+                     ticket_id: data[:ticket_id],
+                     arrived_in_queue: data[:arrived],
+                     forwarded_to_agent: data[:call_forwarded_to_agent],
+                     answered: data[:answered],
+                     call_ended: data[:call_ended],
+                     handling_ended: data[:after_call_ended],
+                     direction: data[:direction],
+                     phone_number: data[:contact_information])
     end
   end
 
@@ -34,10 +28,10 @@ class GetTeamContactsJob
   end
 
   def max_run_time
-    120.seconds
+    240.seconds
   end
 
   def max_attempts
-    1
+    5
   end
 end
