@@ -12,7 +12,7 @@ class QueueService
   end
 
   def queue_items(team_name, start_time, end_time)
-    Team.find_by(name: team_name).queue_items.where(open: false, created_at: start_time..end_time)
+    QueueItem.joins(service: :team).where(open: false, teams: { name: team_name }, created_at_: start_time..end_time)
   end
 
   def queue_items_by_hour(team_name, start_time, end_time)

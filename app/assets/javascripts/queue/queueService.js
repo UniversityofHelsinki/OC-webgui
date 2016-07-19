@@ -1,7 +1,7 @@
 angular.module('ocWebGui.queue.service', ['ngResource'])
   .factory('Queue', function ($resource) {
-    function getLanguage(line) {
-      switch (line) {
+    function getLanguage(service_id) {
+      switch (service_id) {
         case 135:
         case 137:
         case 136:
@@ -23,7 +23,7 @@ angular.module('ocWebGui.queue.service', ['ngResource'])
         transformResponse: function (data) {
           var queue = angular.fromJson(data);
           return queue.map(function (queuer) {
-            queuer.language = getLanguage(queuer.line);
+            queuer.language = getLanguage(queuer.service_id);
             queuer.created_at = new Date(queuer.created_at);
             return queuer;
           });

@@ -7,12 +7,12 @@ describe('queue', function () {
             var baseTime = new Date(2013, 9, 23, 12, 0).getTime();
             $httpBackend.whenGET('queue.json').respond([
               {
-                line: 136,
+                service_id: 136,
                 label: 'sssssssss',
                 created_at: new Date(baseTime - (4 * 60 + 25) * 1000)
               },
               {
-                line: 133,
+                service_id: 133,
                 label: 'zzzzz',
                 created_at: new Date(baseTime - 73 * 1000)
               }
@@ -51,32 +51,32 @@ describe('queue', function () {
           .run(function ($httpBackend) {
             $httpBackend.whenGET('queue.json').respond([
               {
-                line: 136,
+                service_id: 136,
                 label: 'sssssssss',
                 time_in_queue: 265
               },
               {
-                line: 133,
+                service_id: 133,
                 label: 'zzzzz',
                 time_in_queue: 73
               },
               {
-                line: 133,
+                service_id: 133,
                 label: 'zzzzz',
                 time_in_queue: 73
               },
               {
-                line: 133,
+                service_id: 133,
                 label: 'zzzzz',
                 time_in_queue: 73
               },
               {
-                line: 133,
+                service_id: 133,
                 label: 'zzzzz',
                 time_in_queue: 73
               },
               {
-                line: 133,
+                service_id: 133,
                 label: 'zzzzz',
                 time_in_queue: 73
               }
