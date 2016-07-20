@@ -10,7 +10,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
   })
   .controller('QueueController', function ($interval, $scope, Queue, $http) {
     var vm = this;
-
     vm.options = {
       chart: {
         type: 'linePlusBarChart',
@@ -24,10 +23,12 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         x: function (d) { return d.hour; },
         y: function (d) { return d.calls; },
         bars: {
-          forceY: [0, 50]
+          forceY: [0, 50],
+          yDomain: [0, 10]
         },
         lines: {
-          forceY: [0, 50]
+          forceY: [0, 50],
+          yDomain: [0, 10]
         },
         xAxis: {
           tickFormat: function (d) {
@@ -37,10 +38,10 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           showMaxMin: true
         },
         y1Axis: {
-          tickValues: [0, 10, 20, 30, 40, 50]
+          tickValues: [0, 2]
         },
         y2Axis: {
-          ticks: 5
+          tickValues: [0, 2]
         },
         legend: {
           maxKeyLength: 100
@@ -72,6 +73,22 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         }
         angular.extend(vm.stats, vm.stats, data);
         vm.data[0].values = values;
+        
+        var contacts_nearest_ten = get_nearest_ten(0);
+        if (contacts_nearest_ten == 0) return;
+
+        vm.options.chart.bars.yDomain[1] = contacts_nearest_ten;
+        
+        var y1Ticks = vm.options.chart.y1Axis.tickValues;
+        while (y1Ticks.length > 0) {
+          y1Ticks.pop();
+        }
+
+        y1NewTicks = get_ticks(contacts_nearest_ten);
+
+        y1NewTicks.forEach(function (n) {
+          y1Ticks.push(n);
+        });
       });
     }
 
@@ -86,8 +103,40 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         }
         angular.extend(vm.stats, vm.stats, data);
         vm.data[1].values = values;
+
+        var queue_nearest_ten = get_nearest_ten(1);
+        if (queue_nearest_ten == 0) return;
+
+        vm.options.chart.lines.yDomain[1] = queue_nearest_ten;
+        
+        var y2Ticks = vm.options.chart.y2Axis.tickValues;
+        while (y2Ticks.length > 0) {
+          y2Ticks.pop();
+        }
+
+        y2NewTicks = get_ticks(queue_nearest_ten);
+
+        y2NewTicks.forEach(function (n) {
+          y2Ticks.push(n);
+        });
       });
     }
+
+    function get_nearest_ten(i) {
+      var max_val = d3.max(vm.data[i].values, function(x) { return x.calls; });
+      if (max_val == null) {
+        return 0;
+      }
+      return Math.ceil(max_val / 10) * 10;
+    }
+
+    function get_ticks(nearest_ten) {
+      if (nearest_ten == 10) {
+        return Array.from({length: 10}, (v, k) => k);
+      }
+      return Array.from({length: nearest_ten / 10}, (v, k) => k * 10);
+    }
+
 
     vm.message = 'Jono';
 
@@ -104,7 +153,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       // Also update date/time
       vm.date = new Date();
     }
-
     var fetchDataInterval = $interval(fetchData, 5 * 1000);
     var fetchContactStatsInterval = $interval(fetchContactStats, 5 * 60 * 1000);
     var fetchQueueStatsInterval = $interval(fetchQueueStats, 5 * 60 * 1000);
