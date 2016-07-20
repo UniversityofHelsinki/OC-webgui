@@ -21,14 +21,11 @@
 }
 
 .three-col {
-  width: calc(33% - #{$cards-gutter});
-  font-size: 120%;
-  line-height: 2.7em;
+  width: calc(100% / 3 - #{$cards-gutter});
 }
 
 .four-col {
   width: calc(25% - #{$cards-gutter});
-  line-height: 1;
 }
 
 .agent-card {
@@ -36,6 +33,7 @@
 
   .agent-status-color {
     margin-right: $card-padding;
+    flex-shrink: 0;
   }
 }
 
@@ -59,17 +57,29 @@
 .agent-status-info {
   box-sizing: border-box;
   flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .agent-name {
-  font-size: 3em;
+  font-size: 4em;
+  line-height: 1;
+
+  .three-col & {
+    font-size: 6em;
+  }
 }
 
 .agent-status-container {
   display: flex;
   color: gray;
   margin-top: 0.2em;
-  font-size: 2em;
+  font-size: 2.5em;
+  line-height: 1;
+
+  .three-col & {
+    font-size: 4em;
+  }
 }
 
 .agent-status-open {
@@ -78,6 +88,12 @@
 
 .agent-status {
   flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .sidebar {
@@ -85,7 +101,7 @@
   background-color: $card-bg;
   width: 6%;
   text-align: center;
-  font-size: 300%;
+  font-size: 400%;
   align-items: center;
   flex-direction: column;
   justify-content: center;
@@ -108,7 +124,7 @@
 }
 
 .agent-status-color {
-  width: 3em;
+  width: 4em;
   border-radius: 4px;
 }
 
