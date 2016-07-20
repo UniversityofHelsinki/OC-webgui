@@ -74,21 +74,12 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         angular.extend(vm.stats, vm.stats, data);
         vm.data[0].values = values;
         
-        var contacts_nearest_ten = get_nearest_ten(0);
-        if (contacts_nearest_ten == 0) return;
+        var nearest_ten = get_nearest_ten(0);
+        if (nearest_ten == 0) return;
 
-        vm.options.chart.bars.yDomain[1] = contacts_nearest_ten;
-        
-        var y1Ticks = vm.options.chart.y1Axis.tickValues;
-        while (y1Ticks.length > 0) {
-          y1Ticks.pop();
-        }
-
-        y1NewTicks = get_ticks(contacts_nearest_ten);
-
-        y1NewTicks.forEach(function (n) {
-          y1Ticks.push(n);
-        });
+        vm.options.chart.bars.yDomain[1] = nearest_ten;
+  
+        setTicks("y1", nearest_ten);
       });
     }
 
@@ -104,21 +95,32 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         angular.extend(vm.stats, vm.stats, data);
         vm.data[1].values = values;
 
-        var queue_nearest_ten = get_nearest_ten(1);
-        if (queue_nearest_ten == 0) return;
+        var nearest_ten = get_nearest_ten(1);
+        if (nearest_ten == 0) return;
 
-        vm.options.chart.lines.yDomain[1] = queue_nearest_ten;
+        vm.options.chart.lines.yDomain[1] = nearest_ten;
         
-        var y2Ticks = vm.options.chart.y2Axis.tickValues;
-        while (y2Ticks.length > 0) {
-          y2Ticks.pop();
-        }
+        setTicks("y2", nearest_ten);
+      });
+    }
 
-        y2NewTicks = get_ticks(queue_nearest_ten);
+    function setTicks(axis, nearest_ten) {
+      if (axis == "y1")
+        var ticks = vm.options.chart.y1Axis.tickValues;
 
-        y2NewTicks.forEach(function (n) {
-          y2Ticks.push(n);
-        });
+      if (axis == "y2")
+        var ticks = vm.options.chart.y2xis.tickValues;
+ 
+      newTicks = get_ticks(nearest_ten);
+
+      if (angular.equals(ticks, newTicks)) return;
+      
+      while (ticks.length > 0) {
+        ticks.pop();
+      }
+
+      newTicks.forEach(function (tick) {
+        ticks.push(tick);
       });
     }
 
@@ -154,7 +156,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       vm.date = new Date();
     }
     var fetchDataInterval = $interval(fetchData, 5 * 1000);
-    var fetchContactStatsInterval = $interval(fetchContactStats, 5 * 60 * 1000);
+    var fetchContactStatsInterval = $interval(fetchContactStats, 1000);
     var fetchQueueStatsInterval = $interval(fetchQueueStats, 5 * 60 * 1000);
     $scope.$on('$destroy', function () {
       $interval.cancel(fetchDataInterval);
