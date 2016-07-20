@@ -130,17 +130,17 @@ describe('queue', function () {
     });
 
     it('should contain average call duration', function () {
-      expect(rows.get(1).element(by.tagName('th')).getText()).toBe('Puhelun ka:');
+      expect(rows.get(1).element(by.tagName('th')).getText()).toBe('Puheluiden ka:');
       expect(rows.get(1).element(by.tagName('td')).getText()).toBe('02:15');
     });
 
     it('should contain average call duration', function () {
-      expect(rows.get(2).element(by.tagName('th')).getText()).toBe('Jälkikirjauksen ka:');
+      expect(rows.get(2).element(by.tagName('th')).getText()).toBe('Jälkikirjausten ka:');
       expect(rows.get(2).element(by.tagName('td')).getText()).toBe('01:05');
     });
 
     it('should contain average queue waiting duration', function () {
-      expect(rows.get(3).element(by.tagName('th')).getText()).toBe('Jonotuksen ka:');
+      expect(rows.get(3).element(by.tagName('th')).getText()).toBe('Jonotusten ka:');
       expect(rows.get(3).element(by.tagName('td')).getText()).toBe('01:40');
     });
   });
