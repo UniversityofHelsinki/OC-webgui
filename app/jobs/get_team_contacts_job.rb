@@ -8,19 +8,25 @@ class GetTeamContactsJob
 
   def perform
     agents = Agent.all
+    services = Service.all
+    contacts = []
     BackendService.new.get_team_contacts(@team, @start_date, @end_date).each do |data|
       agent_name = data[:agent_name].split
-      agent_id = agents.select { |agent| agent.first_name == agent_name[1] && agent.last_name == agent_name[0] }[0].id
-      Contact.create(agent_id: agent_id,
-                     ticket_id: data[:ticket_id],
-                     arrived_in_queue: data[:arrived],
-                     forwarded_to_agent: data[:call_forwarded_to_agent],
-                     answered: data[:answered],
-                     call_ended: data[:call_ended],
-                     handling_ended: data[:after_call_ended],
-                     direction: data[:direction],
-                     phone_number: data[:contact_information])
+      agent = agents.find { |agt| agt.first_name == agent_name[1] && agt.last_name == agent_name[0] }
+      next unless agent
+      service = services.find { |svc| svc.name == data[:service_name] } || Service.new
+      contacts.push(agent_id: agent.id,
+                    service_id: service.id,
+                    contact_type: data[:contact_type],
+                    ticket_id: data[:ticket_id],
+                    arrived_in_queue: data[:arrived],
+                    forwarded_to_agent: data[:call_forwarded_to_agent],
+                    answered: data[:answered],
+                    call_ended: data[:call_ended],
+                    handling_ended: data[:after_call_ended],
+                    direction: data[:direction])
     end
+    Contact.create(contacts)
   end
 
   def queue_name
@@ -28,7 +34,7 @@ class GetTeamContactsJob
   end
 
   def max_run_time
-    240.seconds
+    3600.seconds
   end
 
   def max_attempts
