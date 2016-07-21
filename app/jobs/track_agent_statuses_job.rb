@@ -21,7 +21,7 @@ class TrackAgentStatusesJob
   end
 
   def success(*)
-    JobLog.new('TrackAgentStatusesJob').log_success 
+    JobLog.new('TrackAgentStatusesJob').log_success
   end
 
   def failure(*)
