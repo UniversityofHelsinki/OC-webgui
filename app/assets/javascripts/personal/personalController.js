@@ -13,10 +13,10 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
 
     function fetchData() {
       Agents.query(function (agents) {
-          vm.agents = agents;
+        vm.agents = agents;
       });
       Queue.query(function (queue) {
-         vm.queue = queue;
+        vm.queue = queue;
       });
     }
 
@@ -26,5 +26,4 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
     });
 
     fetchData();
-
   });
