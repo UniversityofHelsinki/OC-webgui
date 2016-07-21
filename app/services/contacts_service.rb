@@ -20,7 +20,7 @@ class ContactsService
   end
 
   def calls_by_hour(team_name, start_time, end_time)
-    gmt_offset = Time.now.getlocal.gmt_offset
+    gmt_offset = start_time.gmt_offset
     select = "EXTRACT(HOUR FROM agent_statuses.created_at + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count"
     data = contact_statuses(team_name, start_time, end_time).select(select).group('hour')
 
