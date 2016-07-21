@@ -1,16 +1,17 @@
 # Gets all contacts for every agent in a team for the specified timeframe
 class GetTeamContactsJob
-  def initialize(team, start_date, end_date)
+  def initialize(team, start_date, end_date, backend_service)
     @team = team
     @start_date = start_date
     @end_date = end_date
+    @backend = backend_service
   end
 
   def perform
     agents = Agent.all
     services = Service.all
     contacts = []
-    BackendService.new.get_team_contacts(@team, @start_date, @end_date).each do |data|
+    @backend.get_team_contacts(@team, @start_date, @end_date).each do |data|
       agent_name = data[:agent_name].split
       agent = agents.find { |agt| agt.first_name == agent_name[1] && agt.last_name == agent_name[0] }
       next unless agent
@@ -20,7 +21,7 @@ class GetTeamContactsJob
                     contact_type: data[:contact_type],
                     ticket_id: data[:ticket_id],
                     arrived_in_queue: data[:arrived],
-                    forwarded_to_agent: data[:call_forwarded_to_agent],
+                    forwarded_to_agent: data[:forwarded_to_agent],
                     answered: data[:answered],
                     call_ended: data[:call_ended],
                     handling_ended: data[:after_call_ended],
