@@ -13,6 +13,7 @@ describe('screen', function () {
               last_name: 'Kekkonen',
               status: 'Tauko',
               created_at: new Date(baseTime - (10 * 60 + 15) * 1000),
+              lunch: false,
               team: {
                 id: 1,
                 name: 'Helpdesk'
@@ -24,6 +25,7 @@ describe('screen', function () {
               last_name: 'Kanerva',
               status: 'Vapaa',
               created_at: new Date(baseTime - 45 * 1000),
+              lunch: true,
               team: {
                 id: 1,
                 name: 'Helpdesk'
@@ -35,6 +37,7 @@ describe('screen', function () {
               last_name: 'Ansala',
               status: 'Tauko',
               created_at: new Date(baseTime - 30 * 1000),
+              lunch: false,
               team: {
                 id: 1,
                 name: 'Helpdesk'
@@ -46,6 +49,7 @@ describe('screen', function () {
               last_name: 'Ahola',
               status: 'Tauko',
               created_at: new Date(baseTime - (1 * 60 + 5) * 1000),
+              lunch: false,
               team: {
                 id: 1,
                 name: 'Helpdesk'
@@ -143,5 +147,10 @@ describe('screen', function () {
     expect(agentCards.count()).toBe(1);
     expect(agentCards.get(0).element(by.className('agent-name')).getText())
       .toBe('Aallotar K');
+  });
+
+  it('should show who has had lunch', function() {
+     lunches = element.all(by.className('lunch'))
+     expect(lunches.count()).toBe(1);
   });
 });
