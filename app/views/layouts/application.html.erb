@@ -8,15 +8,15 @@
 </head>
 <body ng-app="ocWebGui">
   <!-- Navbar for every page -->
-  <div class="navbar card" ng-controller="NavbarController as navbar">
-    <a ui-sref="screen" class="card">Status Screen</a>
-    <a ui-sref="queue" class="card">Queue Screen</a>
-    <a ui-sref="filterpanel" class="card">Filters</a>
-    <a ui-sref="stats" class="card">Statistics</a>
-    <a ui-sref="personal" class="card" ng-if="navbar.isAuthenticated()">{{ navbar.username() }}</a>
-    <a ui-sref="login" ng-if="!navbar.isAuthenticated()" class="card">Login</a>
-    <a ng-if="navbar.isAuthenticated()" ng-click="navbar.logout()" class="card">Logout</a>
-    <a href ng-click="navbar.goFullscreen()" class="card">
+  <div class="navbar" ng-controller="NavbarController as navbar">
+    <a ui-sref="screen">Status Screen</a>
+    <a ui-sref="queue">Queue Screen</a>
+    <a ui-sref="filterpanel">Filters</a>
+    <a ui-sref="stats">Statistics</a>
+    <a ui-sref="personal" ng-if="navbar.isAuthenticated()">{{ navbar.username() }}</a>
+    <a ui-sref="login" ng-if="!navbar.isAuthenticated()">Login</a>
+    <a ng-if="navbar.isAuthenticated()" ng-click="navbar.logout()">Logout</a>
+    <a href ng-click="navbar.goFullscreen()">
         {{ navbar.isFullscreen == true ? 'Exit fullscreen' : 'Fullscreen' }}
     </a>
   </div>
