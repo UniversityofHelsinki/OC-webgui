@@ -1,14 +1,12 @@
 RSpec.describe ContactsService, type: :service do
   context 'when database contains some agent statuses that correspond to a contact' do
     before(:example) do
-     # time = Time.parse("#{Time.zone.today} 08:00:00")
       time = Time.parse('2016-07-18T08:00:00.000Z')
 
       Agent.delete_all
       Team.delete_all
 
       team1 = Team.create(name: 'Helpdesk')
-
       agent1 = Agent.create(id: 123, team: team1)
       agent2 = Agent.create(id: 225, team: team1)
       agent3 = Agent.create(id: 124, team: team1)
@@ -52,7 +50,6 @@ RSpec.describe ContactsService, type: :service do
       AgentStatus.create(agent: agent3, status: 'Puhelu', open: false, created_at: time + (7.hours + 10.minutes), closed: time + (7.hour + 35.minutes))
       AgentStatus.create(agent: agent3, status: 'Puhelu', open: false, created_at: time + (7.hours + 34.minutes), closed: time + (7.hours + 52.minutes))
     end
-
     it 'creates Contact objects of those objects and returns them correctly' do
       contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.parse('2016-07-18T08:00:00.000Z'), Time.parse('2016-07-18T18:00:00.000Z'))
       expect(contacts.length).to eq(22)
@@ -104,9 +101,6 @@ RSpec.describe ContactsService, type: :service do
     end
 
     context 'contact today' do
-    #  time = Time.zone.today
-    #  start_time = time.beginning_of_day
-    #  end_time = time.end_of_day
       start_time = Time.parse('2016-07-18T00:00:00.000Z')
       end_time = Time.parse('2016-07-18T23:59:59.000Z')
 
