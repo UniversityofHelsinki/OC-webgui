@@ -6,7 +6,7 @@ class TrackAgentStatusesJob
   def perform
     current = BackendService.new.get_agent_online_state.map do |data|
       pp data
-      if data[:status] === 'Sisäänkirjaus'
+      if data[:status] === 'Ruokatunti'
         puts data[:name].to_i
         luncheds = Rails.cache.fetch('lunched', force: true)
         agent_id = data[:agent_id].to_i
