@@ -1,5 +1,9 @@
 @import "common";
 
+.screen-background {
+  display: flex;
+}
+
 .cards {
   display: flex;
   flex-wrap: wrap;
