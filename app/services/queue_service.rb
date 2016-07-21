@@ -1,3 +1,4 @@
+# Provides functionality for statistical data about the Queue
 class QueueService
   def initialize
   end
@@ -11,7 +12,7 @@ class QueueService
   end
 
   def queue_items(team_name, start_time, end_time)
-    QueueItem.where(open: false, label: team_name, created_at: start_time..end_time, closed: start_time..end_time)
+    QueueItem.joins(service: :team).where(open: false, teams: { name: team_name }, created_at_: start_time..end_time)
   end
 
   def queue_items_by_hour(team_name, start_time, end_time)

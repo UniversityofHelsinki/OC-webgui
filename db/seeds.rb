@@ -28,7 +28,7 @@ service_group_ids_by_team = { 'Hakijapalvelut' => 7,
                               'Uaf' => 9 }
 
 backend_service.get_teams.each do |team_name|
-  Team.find_or_initialize_by(name: team_name).tap do |team| 
+  Team.find_or_initialize_by(name: team_name).tap do |team|
     team.filter = team_name == 'Helpdesk'
     team.service_group_id = service_group_ids_by_team[team_name]
     team.save
@@ -66,6 +66,16 @@ backend_service.get_services.each do |data|
     service.id = data[:id]
     service.name = data[:name]
     service.team = Team.find_by(name: teams_by_service[data[:id]])
+
+    service.language = if service.name.include? 'Eng'
+                         'English'
+                       elsif service.name.include? 'Fin'
+                         'Finnish'
+                       elsif service.name.include?('Sve') || service.name.include?('Swe')
+                         'Swedish'
+                       else
+                         'Unknown'
+                       end
     service.save
   end
 end
