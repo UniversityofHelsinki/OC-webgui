@@ -14,6 +14,7 @@ RSpec.describe AgentStatusesController, type: :controller do
         'last_name' => 'joku',
         'status' => 'Vapaa',
         'created_at' => '2016-07-11T10:00:16.000Z',
+        'lunch' => false,
         'team' => {
           'id' => 1,
           'name' => 'Hakijapalvelut'
@@ -25,6 +26,7 @@ RSpec.describe AgentStatusesController, type: :controller do
         'last_name' => 'testaus',
         'status' => 'Jälkikirjaus',
         'created_at' => '2016-07-11T10:32:44.000Z',
+        'lunch' => false,
         'team' => {
           'id' => 2,
           'name' => 'Opiskelijaneuvonta'
@@ -36,6 +38,7 @@ RSpec.describe AgentStatusesController, type: :controller do
         'last_name' => 'kolmas',
         'status' => 'Vapaa',
         'created_at' => '2016-07-11T11:10:05.000Z',
+        'lunch' => false,
         'team' => {
           'id' => 2,
           'name' => 'Opiskelijaneuvonta'
