@@ -8,7 +8,7 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         controllerAs: 'screen'
       });
   })
-  .controller('ScreenController', function ($interval, $scope, shared, Agents, $http) {
+  .controller('ScreenController', function ($interval, $scope, shared, Agents) {
     var vm = this;
     var fetchDataInterval;
 
@@ -20,16 +20,6 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
     vm.yellow = 0;
     vm.red = 0;
     vm.number_of_columns = 0;
-    vm.lunched = [];
-
-    function fetchContactStats() {
-      $http.get('contacts/stats.json').then(function (response) {
-        var data = response.data;
-        vm.lunched = data.lunched;
-      });
-    }
-
-    fetchContactStats();
 
     function fetchData() {
       Agents.query(function (agents) {
@@ -74,11 +64,6 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         vm.number_of_columns = (agents.length > 9) ? 'four-col' : 'three-col';
       });
     }
-
-    vm.hasLunched = function (agent) {
-      var name = agent.last_name + " " + agent.first_name;
-      return vm.lunched.indexOf(name) !== -1;
-    };
 
     vm.trimName = function (agent) {
       return agent.first_name + ' ' + agent.last_name.charAt(0);

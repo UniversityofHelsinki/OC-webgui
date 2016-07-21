@@ -29,12 +29,6 @@ class ContactsService
     result
   end
 
-  def lunched
-    lunched = Rails.cache.fetch('lunched', force: true)
-    return [] if lunched.nil?
-    lunched
-  end
-
   private
 
   def convert_to_contacts(statuses)

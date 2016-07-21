@@ -1,16 +1,19 @@
+require 'pp'
 # Retrieves agent statuses and calls AgentStatusUpdater to update them where necessary
 class TrackAgentStatusesJob
   include Now
 
   def perform
     current = BackendService.new.get_agent_online_state.map do |data|
-      if data[:status] === 'Ruokatunti'
+      pp data
+      if data[:status] === 'Sisäänkirjaus'
+        puts data[:name].to_i
         luncheds = Rails.cache.fetch('lunched', force: true)
-        agentname = data[:name].to_s
+        agent_id = data[:agent_id].to_i
         if luncheds.nil?
           luncheds = []
         end
-        luncheds.push(agentname)
+        luncheds.push(agent_id)
         luncheds = luncheds.uniq
         Rails.cache.fetch('lunched', force: true) { luncheds }
       end
