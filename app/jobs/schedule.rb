@@ -11,6 +11,7 @@ module Clockwork
   every(1.day, 'get_daily_helpdesk_contacts.job', at: '02:30') do
     Delayed::Job.enqueue GetTeamContactsJob.new('Helpdesk',
                                                 (DateTime.now.utc - 48.hours).strftime,
-                                                DateTime.now.utc.strftime)
+                                                DateTime.now.utc.strftime,
+                                                BackendService.new)
   end
 end

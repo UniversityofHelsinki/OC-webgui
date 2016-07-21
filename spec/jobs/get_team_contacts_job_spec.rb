@@ -7,9 +7,8 @@ RSpec.describe GetTeamContactsJob, type: :job do
     Service.create(id: 1, name: "Neuvonta Fin", team_id: 1)
     Service.create(id: 2, name: "Neuvonta Eng", team_id: 1)
     data = FactoryGirl.build(:get_team_contacts_1)
-    backend = instance_double("BackendService")
-    allow(backend).to receive(:get_team_contacts).and_return(data)
-    GetTeamContactsJob.new('Helpdesk', '2016-06-01', '2016-06-10', backend).perform
+    allow_any_instance_of(BackendService).to receive(:get_team_contacts).and_return(data)
+    GetTeamContactsJob.new('Helpdesk', '2016-06-01', '2016-06-10').perform
 
     contacts = Contact.all
     expect(contacts.size).to eq(2)
@@ -56,9 +55,8 @@ RSpec.describe GetTeamContactsJob, type: :job do
     Agent.create(id: 1, first_name: "Matti", last_name: "Neuvolainen", team_id: 1)
     Service.create(id: 2, name: "Neuvonta Eng", team_id: 1)
     data = FactoryGirl.build(:get_team_contacts_1)
-    backend = instance_double("BackendService")
-    allow(backend).to receive(:get_team_contacts).and_return(data)
-    GetTeamContactsJob.new('Helpdesk', '2016-06-01', '2016-06-10', backend).perform
+    allow_any_instance_of(BackendService).to receive(:get_team_contacts).and_return(data)
+    GetTeamContactsJob.new('Helpdesk', '2016-06-01', '2016-06-10').perform
 
     expect(Contact.all.size).to eq(1)
   end
