@@ -9,6 +9,11 @@ RSpec.describe QueueUpdater, type: :service do
     FactoryGirl.build(*args)
   end
 
+  before (:all) do 
+    Service.find_or_create_by(id: 161, name: "A")
+    Service.find_or_create_by(id: 131, name: "B")
+  end
+
   it 'works with nil inputs' do
     updater(time, time).update_queue([])
     updater(time, time).update_queue(nil)
