@@ -12,5 +12,6 @@ module Clockwork
     Delayed::Job.enqueue GetTeamContactsJob.new(team: 'Helpdesk',
                                                 start_date: (DateTime.now.utc - 48.hours).strftime,
                                                 end_date: DateTime.now.utc.strftime)
+  every(1.day, 'clear_rails_cache.job', at: '14:43', tz: 'UTC') { Delayed::Jobs.enqueue ClearRailsCache.new }   
   end
 end
