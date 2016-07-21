@@ -69,15 +69,12 @@ ActiveRecord::Schema.define(version: 20160720173555) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "queue_items", force: :cascade do |t|
-    t.integer  "line"
-    t.string   "label"
-    t.integer  "time_in_queue"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-    t.string   "team"
     t.boolean  "open"
     t.datetime "closed"
     t.datetime "last_reliable_status"
+    t.integer  "service_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -85,6 +82,7 @@ ActiveRecord::Schema.define(version: 20160720173555) do
     t.integer  "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "language"
   end
 
   add_index "services", ["team_id"], name: "index_services_on_team_id", using: :btree
@@ -116,6 +114,7 @@ ActiveRecord::Schema.define(version: 20160720173555) do
   add_foreign_key "agents", "teams"
   add_foreign_key "agents", "users"
   add_foreign_key "contacts", "agents"
+  add_foreign_key "queue_items", "services"
   add_foreign_key "services", "teams"
   add_foreign_key "users", "agents"
 end

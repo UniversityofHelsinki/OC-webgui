@@ -113,11 +113,11 @@ class BackendService
                           :get_general_queue_result,
                           :array_of_string)
     data = check_if_data_exists(data)
-    # TODO: change variable names
+
     data.map do |attrs|
       {
-        line: attrs[:string][0],
-        label: attrs[:string][1],
+        service_id: attrs[:string][0],
+        service_name: attrs[:string][1],
         time_in_queue: attrs[:string][7]
       }
     end

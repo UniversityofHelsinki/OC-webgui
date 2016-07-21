@@ -43,11 +43,11 @@ class QueueUpdater
   def plausibly_new_item?(item)
     return true unless @last_success
     time_since_last_update = @current_time - @last_success
-    item.time_in_queue <= time_since_last_update + 1.second
+    item.time_in_queue.to_i <= time_since_last_update + 1.second
   end
 
   def check_when_items_entered_queue
-    @new_queue.each { |item| item.created_at = Time.zone.at(@current_time.to_i - item.time_in_queue) }
+    @new_queue.each { |item| item.created_at = Time.zone.at(@current_time.to_i - item.time_in_queue.to_i) }
   end
 
   def check_if_items_left_queue
@@ -67,7 +67,7 @@ class QueueUpdater
       matches = @previous_queue.select { |match| same_item(item, match) }
       unless matches.any?
         return false unless plausibly_new_item? item
-        @new_items.push(created_at: item.created_at, line: item.line, label: item.label, open: true)
+        @new_items.push(created_at: item.created_at, service_id: item.service_id, open: true)
       end
     end
     true
@@ -76,7 +76,6 @@ class QueueUpdater
   def same_item(item, match)
     match.created_at <= item.created_at + 1.second &&
       match.created_at >= item.created_at - 1.second &&
-      match.line == item.line &&
-      match.label == item.label
+      match.service_id == item.service_id
   end
 end
