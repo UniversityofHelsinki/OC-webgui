@@ -3,13 +3,13 @@ class AgentStatusesController < ApplicationController
   def index
     @agent_statuses = AgentStatus.where(open: true).joins(agent: :team)
     lunched = Rails.cache.fetch('lunched', force: true)
-    @agent_statuses.each { |a|
+    @agent_statuses.each do |a|
       a.status = normalize_status(a.status)
       a.lunch = false
-      if !lunched.nil?
+      unless lunched.nil?
         a.lunch = true if lunched.include? a.agent_id
       end
-    }
+    end
     @agent_statuses
   end
 

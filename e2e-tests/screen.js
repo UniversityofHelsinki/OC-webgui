@@ -150,9 +150,9 @@ describe('screen', function () {
   });
 
   it('should show who has had lunch', function() {
-     lunches = element.all(by.className('lunch'));
-     expect(lunches.count()).toBe(1);
-     expect(lunches.get(0).element(by.className('agent-name')).getText())
-       .toBe('Aallotar K');
+    agentCards = element.all(by.className('lunch'));
+    expect(agentCards.count()).toBe(1);
+    expect(agentCards.get(0).element(by.className('agent-name')).getText())
+      .toBe('Aallotar K');
   });
 });

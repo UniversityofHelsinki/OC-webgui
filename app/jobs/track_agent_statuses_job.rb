@@ -4,12 +4,10 @@ class TrackAgentStatusesJob
 
   def perform
     current = BackendService.new.get_agent_online_state.map do |data|
-      if data[:status] === 'Ruokatunti'
-        luncheds = Rails.cache.fetch('lunched', force: true)
+      if data[:status] == 'Ruokatunti'
         agent_id = data[:agent_id].to_i
-        if luncheds.nil?
-          luncheds = []
-        end
+        luncheds = Rails.cache.fetch('lunched', force: true)
+        luncheds = [] if luncheds.nil?
         luncheds.push(agent_id)
         luncheds = luncheds.uniq
         Rails.cache.fetch('lunched', force: true) { luncheds }
