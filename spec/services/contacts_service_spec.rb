@@ -1,7 +1,8 @@
 RSpec.describe ContactsService, type: :service do
   context 'when database contains some agent statuses that correspond to a contact' do
     before(:example) do
-      time = Time.parse("#{Time.zone.today} 08:00:00")
+     # time = Time.parse("#{Time.zone.today} 08:00:00")
+      time = Time.parse('2016-07-18T08:00:00.000Z')
 
       Agent.delete_all
       Team.delete_all
@@ -53,37 +54,36 @@ RSpec.describe ContactsService, type: :service do
     end
 
     it 'creates Contact objects of those objects and returns them correctly' do
-      contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.zone.today.beginning_of_day, Time.zone.today.end_of_day)
+      contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.parse('2016-07-18T08:00:00.000Z'), Time.parse('2016-07-18T18:00:00.000Z'))
       expect(contacts.length).to eq(22)
       contacts.each { |c| expect(c.is_a?(Contact)).to be(true) }
     end
 
-    it 'sets the call start and end times according to status creatiion and closing times' do
-      contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.parse("08:00:00").in_time_zone, Time.parse("09:00:00").in_time_zone)
-      expect(contacts[0].answered).to eq("#{Time.zone.today} #{Time.parse("08:05:00").in_time_zone}")
-      expect(contacts[0].call_ended).to eq("#{Time.zone.today} #{Time.parse("08:25:00").in_time_zone}")
+    it 'sets the call start and end times according to status creation and closing times' do
+      contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.parse('2016-07-18T08:00:00.000Z'), Time.parse('2016-07-18T09:00:00.000Z'))
+      expect(contacts[0].answered).to eq('2016-07-18T08:05:00.000Z')
+      expect(contacts[0].call_ended).to eq('2016-07-18T08:25:00.000Z')
       expect(contacts[0].agent_id).to eq(123)
 
-      expect(contacts[1].answered).to eq("#{Time.zone.today} #{Time.parse("08:25:00").in_time_zone}")
-      expect(contacts[1].call_ended).to eq("#{Time.zone.today} #{Time.parse("08:35:00").in_time_zone}")
+      expect(contacts[1].answered).to eq(Time.parse('2016-07-18T08:25:00.000Z'))
+      expect(contacts[1].call_ended).to eq(Time.parse('2016-07-18T08:35:00.000Z'))
       expect(contacts[1].agent_id).to eq(225)
     end
 
     it 'correctly accounts for after call status occurring right after the contact' do
-      contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.parse("08:00:00").in_time_zone, Time.parse("08:06:00").in_time_zone)
-      expect(contacts[0].handling_ended).to eq("#{Time.zone.today} #{Time.parse("08:44:00").in_time_zone}")
+      contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.parse('2016-07-18T08:00:00.000Z'), Time.parse('2016-07-18T08:06:00.000Z'))
+      expect(contacts[0].handling_ended).to eq(Time.parse('2016-07-18T08:44:00.000Z'))
     end
 
     it 'ignores after call status which might be connected to a different contact' do
-      contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.parse("10:00:00").in_time_zone, Time.parse("11:06:00").in_time_zone)
+      contacts = ContactsService.new.contacts_for_team('Helpdesk', Time.parse("'2016-07-18T10:00:00.000Z'"), Time.parse("'2016-07-18T11:06:00.000Z'"))
       expect(contacts[0].handling_ended).to be(nil)
       expect(contacts[1].handling_ended).to be(nil)
     end
 
     context 'no contacts' do
-      time = Time.zone.today - 2.days
-      start_time = time.beginning_of_day
-      end_time = time.end_of_day
+      start_time = Time.parse('2016-07-18T00:00:00.000Z') - 2.days
+      end_time = Time.parse('2016-07-18T23:59:59.000Z') - 2.days
 
       it 'answered calls count is 0' do
         expect(ContactsService.new.answered_calls('Helpdesk', start_time, end_time)).to eq(0)
@@ -104,9 +104,11 @@ RSpec.describe ContactsService, type: :service do
     end
 
     context 'contact today' do
-      time = Time.zone.today
-      start_time = time.beginning_of_day
-      end_time = time.end_of_day
+    #  time = Time.zone.today
+    #  start_time = time.beginning_of_day
+    #  end_time = time.end_of_day
+      start_time = Time.parse('2016-07-18T00:00:00.000Z')
+      end_time = Time.parse('2016-07-18T23:59:59.000Z')
 
       it 'returns answered calls count' do
         expect(ContactsService.new.answered_calls('Helpdesk', start_time, end_time)).to eq(22)
