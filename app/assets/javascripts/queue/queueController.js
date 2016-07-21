@@ -97,9 +97,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
 
     function fetchData() {
       Queue.query(function (queue) {
-        vm.queue = queue.filter(function (queuer) {
-          return queuer.language !== 'Unknown';
-        });
+        vm.queue = queue;
       });
       // Also update date/time
       vm.date = new Date();

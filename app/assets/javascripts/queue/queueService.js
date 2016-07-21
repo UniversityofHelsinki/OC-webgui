@@ -22,11 +22,19 @@ angular.module('ocWebGui.queue.service', ['ngResource'])
         isArray: true,
         transformResponse: function (data) {
           var queue = angular.fromJson(data);
-          return queue.map(function (queuer) {
-            queuer.language = getLanguage(queuer.line);
-            queuer.created_at = new Date(queuer.created_at);
-            return queuer;
-          });
+          return queue
+              // Map calling lines by language
+              .map(function (queuer) {
+                queuer.language = getLanguage(queuer.line);
+                queuer.created_at = new Date(queuer.created_at);
+                return queuer;
+              })
+              // Filter out queuers mapped as Unknown
+              // (Unknown = line belongs to another team, not Helpdesk.
+              //  Filtering/getLanguage needs be based on team later, not hard coded.)
+              .filter(function (queuer) {
+                return queuer.language !== 'Unknown';
+              });
         }
       }
     });
