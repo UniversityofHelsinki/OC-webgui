@@ -6,7 +6,9 @@ class AgentStatusesController < ApplicationController
     @agent_statuses.each { |a|
       a.status = normalize_status(a.status)
       a.lunch = false
-      a.lunch = true if lunched.include? a.agent_id
+      if !lunched.nil?
+        a.lunch = true if lunched.include? a.agent_id
+      end
     }
     @agent_statuses
   end
