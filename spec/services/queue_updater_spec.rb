@@ -1,5 +1,5 @@
 RSpec.describe QueueUpdater, type: :service do
-  include Now
+  time = Time.parse('2016-07-18T11:37:55.000Z')
 
   def updater(*args)
     QueueUpdater.new(*args)
@@ -15,15 +15,15 @@ RSpec.describe QueueUpdater, type: :service do
   end
 
   it 'works with nil inputs' do
-    updater(now, now).update_queue([])
-    updater(now, now).update_queue(nil)
+    updater(time, time).update_queue([])
+    updater(time, time).update_queue(nil)
     expect(QueueItem.all.length).to eq(0)
   end
 
   context 'when two items enter an empty queue' do
     before (:example) do
       data = [build(:item_1), build(:item_2)]
-      updater(now, now - 1.minute).update_queue(data)
+      updater(time, time - 1.minute).update_queue(data)
     end
 
     it 'creates new open QueueItem objects for each new queue item and stores them in the DB' do
@@ -32,25 +32,25 @@ RSpec.describe QueueUpdater, type: :service do
     end
 
     it "correctly sets their creation time according to the time they've been in the queue" do
-      expect(QueueItem.first.created_at).to eq(now - 10.seconds)
-      expect(QueueItem.second.created_at).to eq(now - 22.seconds)
+      expect(QueueItem.first.created_at).to eq('2016-07-18T11:37:45.000Z')
+      expect(QueueItem.second.created_at).to eq('2016-07-18T11:37:33.000Z')
     end
   end
 
   context 'when two items are in the queue and then disappear' do
     before(:example) do
       data = [build(:item_1), build(:item_2)]
-      updater(now, now - 1.minute).update_queue(data)
-      updater(now + 15.seconds, now).update_queue([])
+      updater(time, time - 1.minute).update_queue(data)
+      updater(time + 15.seconds, time).update_queue([])
     end
 
     it 'creates and then closes a new QueueItem object for each of them' do
       expect(QueueItem.all.length).to eq(2)
       expect(QueueItem.where(open: false).length).to eq(2)
-      expect(QueueItem.first.closed).to eq(now + 15.seconds)
-      expect(QueueItem.first.created_at).to eq(now - 10.seconds)
-      expect(QueueItem.second.closed).to eq(now + 15.seconds)
-      expect(QueueItem.second.created_at).to eq(now - 22.seconds)
+      expect(QueueItem.first.closed).to eq(time + 15.seconds)
+      expect(QueueItem.first.created_at).to eq(time - 10.seconds)
+      expect(QueueItem.second.closed).to eq(time + 15.seconds)
+      expect(QueueItem.second.created_at).to eq(time - 22.seconds)
     end
 
   end
@@ -60,8 +60,8 @@ RSpec.describe QueueUpdater, type: :service do
     before (:example) do
       data1 = [build(:item_1), build(:item_2)]
       data2 = [build(:item_1, time_in_queue: "14"), build(:item_2, time_in_queue: "26")]
-      updater(now, now - 1.minute).update_queue(data1)
-      updater(now + 4.seconds, now).update_queue(data2)
+      updater(time, time - 1.minute).update_queue(data1)
+      updater(time + 4.seconds, time).update_queue(data2)
     end
 
     it "doesn't create new QueueItem objects" do
@@ -78,8 +78,8 @@ RSpec.describe QueueUpdater, type: :service do
     before (:example) do
       data1 = [build(:item_1), build(:item_2)]
       data2 = [build(:item_1, time_in_queue: "14")]
-      updater(now, now - 1.minute).update_queue(data1)
-      updater(now + 4.seconds, now).update_queue(data2)
+      updater(time, time - 1.minute).update_queue(data1)
+      updater(time + 4.seconds, time).update_queue(data2)
     end
 
     it "doesn't generate any extra QueueItem objects" do
@@ -91,15 +91,15 @@ RSpec.describe QueueUpdater, type: :service do
     end
 
     it 'sets the time the item closed correctly' do
-      expect(QueueItem.second.closed).to eq(now + 4.seconds)
+      expect(QueueItem.second.closed).to eq(time + 4.seconds)
     end
   end
 
   context 'When an item in the queue disappears, and another with similar time turns up' do
     before (:example) do
       data = [build(:item_1)]
-      updater(now, now - 1.hour).update_queue(data)
-      updater(now + 20.seconds, now).update_queue(data)
+      updater(time, time - 1.hour).update_queue(data)
+      updater(time + 20.seconds, time).update_queue(data)
     end
 
     it 'closes the first item' do
@@ -115,8 +115,8 @@ RSpec.describe QueueUpdater, type: :service do
   context 'When it appears that the queue result is not reliable due to lag from SOAP service' do
     before (:example) do
       data = [build(:item_2, time_in_queue: "25")]
-      updater(now, now - 1.hour).update_queue(data)
-      updater(now + 10.seconds, now).update_queue(data)
+      updater(time, time - 1.hour).update_queue(data)
+      updater(time + 10.seconds, time).update_queue(data)
     end
 
     it "doesn't make any changes and awaits the next reliable result" do
@@ -130,8 +130,8 @@ RSpec.describe QueueUpdater, type: :service do
     before (:example) do
       data1 = [build(:item_1, time_in_queue: "3"), build(:item_1, time_in_queue: "2"), build(:item_1, time_in_queue: "3")]
       data2 = [build(:item_1, time_in_queue: "7"), build(:item_1, time_in_queue: "6")]
-      updater(now, now - 1.hour).update_queue(data1)
-      updater(now + 4.seconds, now).update_queue(data2)
+      updater(time, time - 1.hour).update_queue(data1)
+      updater(time + 4.seconds, time).update_queue(data2)
     end
 
     it "doesn't generate any new QueueItem objects" do
@@ -143,13 +143,13 @@ RSpec.describe QueueUpdater, type: :service do
     end
 
     it 'sets the last reliable status time for the closed item correctly' do
-      expect(QueueItem.where(open: false)[0].last_reliable_status).to eq(now)
+      expect(QueueItem.where(open: false)[0].last_reliable_status).to eq(time)
     end
 
     context 'and then another item disappears from the queue' do
       before (:example) do
         data = [build(:item_1, time_in_queue: "11")]
-        updater(now + 8.seconds, now + 4.seconds).update_queue(data)
+        updater(time + 8.seconds, time + 4.seconds).update_queue(data)
       end
 
       it 'closes another one when yet another item disappears' do
@@ -158,7 +158,7 @@ RSpec.describe QueueUpdater, type: :service do
       end
 
       it 'sets the last reliable status time for the newly closed item correctly' do
-        expect(QueueItem.where(open:false)[1].last_reliable_status).to eq(now + 4.seconds)
+        expect(QueueItem.where(open:false)[1].last_reliable_status).to eq(time + 4.seconds)
       end
     end
   end
@@ -167,8 +167,8 @@ RSpec.describe QueueUpdater, type: :service do
 
     before(:example) do
       data = [build(:item_1)]
-      updater(now, nil).update_queue(data)
-      updater(now + 4.seconds, nil).update_queue(nil)
+      updater(time, nil).update_queue(data)
+      updater(time + 4.seconds, nil).update_queue(nil)
     end
 
     it 'creates a new open QueueItem as normal' do
