@@ -16,12 +16,14 @@ $card-padding: 0.5em;
 body {
   margin: 0;
   padding: 0;
+
+  &.hide-mouse {
+    cursor: none;
+  }
 }
 
 .navbar {
-  opacity: 0; // Visible only on hover
-  position: fixed; // Always on top
-
+  position: fixed;
   top: 0;
   right: 0;
   left: 0;
@@ -37,6 +39,11 @@ body {
   text-align: center;
 
   background: linear-gradient(to bottom, rgba(0, 0, 0, 1), transparent);
+
+  body.hide-mouse & {
+    opacity: 0;
+    visibility: hidden;
+  }
 
   a {
     color: #333;
@@ -65,9 +72,9 @@ body {
   }
 }
 
-.navbar:hover {
-  opacity: 100;
-}
+// .navbar:hover {
+//   opacity: 100;
+// }
 
 .background {
   background-color: #87aade;
