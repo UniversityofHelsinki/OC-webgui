@@ -29,6 +29,10 @@ class ContactsService
     result
   end
 
+  def statuses(team_name, start_time, end_time, statuses)
+    AgentStatus.joins(agent: :team).where(open: false, teams: { name: team_name }, status: statuses, created_at: start_time..end_time)
+  end
+
   private
 
   def convert_to_contacts(statuses)
@@ -48,10 +52,6 @@ class ContactsService
       return after_call
     end
     nil
-  end
-
-  def statuses(team_name, start_time, end_time, statuses)
-    AgentStatus.joins(agent: :team).where(open: false, teams: { name: team_name }, status: statuses, created_at: start_time..end_time)
   end
 
   def contact_statuses(team_name, start_time, end_time)

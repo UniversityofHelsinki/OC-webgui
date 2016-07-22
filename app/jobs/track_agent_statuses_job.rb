@@ -15,7 +15,21 @@ class TrackAgentStatusesJob
 
   def lunch(states)
     luncheds = Rails.cache.read 'lunched'
-    luncheds ||= Set.new
+
+    @contacts_service = ContactsService.new
+    time = Time.zone.now
+    start_time = time.beginning_of_day
+    end_time = time.end_of_day
+    team_name = 'Helpdesk'
+
+    if luncheds.nil?
+      luncheds = Set.new
+      eaters = @contacts_service.statuses(team_name, start_time, end_time, 'Ruokatunti')
+      eaters.each do a|eater|
+        luncheds.add eater.id
+      end
+    end
+
     states.each do |data|
       agent_id = data[:agent_id].to_i
       luncheds.add agent_id if data[:status] == 'Ruokatunti'
