@@ -8,8 +8,31 @@ class TrackAgentStatusesJob
                       status: data[:status],
                       time_in_status: data[:time_in_status])
     end
+    lunch current
     log = JobLog.new('TrackAgentStatusesJob')
     AgentStatusUpdater.new(now, log.last_success).update_statuses(current)
+  end
+
+  def lunch(states)
+    luncheds = Rails.cache.read 'lunched'
+
+    @contacts_service = ContactsService.new
+    time = Time.zone.now
+    start_time = time.beginning_of_day
+    end_time = time.end_of_day
+    team_name = 'Helpdesk'
+
+    if luncheds.nil?
+      eaters = @contacts_service.statuses(team_name, start_time, end_time, 'Ruokatunti')
+      luncheds = Set.new eaters.pluck(:agent_id)
+    end
+
+    states.each do |data|
+      agent_id = data[:agent_id].to_i   
+      luncheds.add agent_id if data[:status] == 'Ruokatunti'    
+    end
+
+    Rails.cache.write 'lunched', luncheds
   end
 
   def max_run_time

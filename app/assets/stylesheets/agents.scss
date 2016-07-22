@@ -146,3 +146,10 @@
 .agent-status-color-red {
   background-color: #f33;
 }
+
+.lunch {
+  background-image: image-url("lunch.svg");
+  background-repeat: no-repeat;
+  background-size: 60px 60px;
+  background-position: right 5px top 5px;
+}

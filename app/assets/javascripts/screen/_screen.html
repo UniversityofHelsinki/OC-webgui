@@ -1,6 +1,6 @@
 <div class="background screen-background">
     <div class="card-container">
-        <div ng-repeat="agent in screen.agents track by agent.id" ng-class="{'card': true, 'agent-card': true, 'after-call': agent.status === 'Jälkikirjaus'}" class="{{ screen.number_of_columns }}">
+        <div ng-repeat="agent in screen.agents track by agent.id" ng-class="{'card': true, 'agent-card': true, 'after-call': agent.status === 'Jälkikirjaus', 'lunch': agent.lunch == true}" class="{{ screen.number_of_columns }}">
             <div class="agent-status-color agent-status-color-{{agent.color}}"></div>
             <div class="agent-status-info">
                 <div class="agent-name">

@@ -2,7 +2,13 @@
 class AgentStatusesController < ApplicationController
   def index
     @agent_statuses = AgentStatus.where(open: true).joins(agent: :team)
-    @agent_statuses.each { |a| a.status = normalize_status(a.status) }
+    lunched = Rails.cache.read 'lunched'
+    lunched ||= Set.new
+    @agent_statuses.each do |a|
+      a.status = normalize_status(a.status)
+      a.lunch = lunched.include? a.agent_id
+    end
+    @agent_statuses
   end
 
   # Some statuses are merged into one or renamed according to client specifications
