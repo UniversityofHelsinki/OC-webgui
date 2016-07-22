@@ -22,17 +22,15 @@ class TrackAgentStatusesJob
     team_name = 'Helpdesk'
 
     if luncheds.nil?
-      luncheds = Set.new
       eaters = @contacts_service.statuses(team_name, start_time, time, 'Ruokatunti')
-      eaters.each do |eater|
-        luncheds.add eater.id
-      end
+      luncheds = Set.new eaters.pluck(:agent_id)
     end
 
     states.each do |data|
       agent_id = data[:agent_id].to_i
       luncheds.add agent_id if data[:status] == 'Ruokatunti'
     end
+
     Rails.cache.write 'lunched', luncheds
   end
 

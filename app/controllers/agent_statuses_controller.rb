@@ -6,8 +6,7 @@ class AgentStatusesController < ApplicationController
     lunched ||= Set.new
     @agent_statuses.each do |a|
       a.status = normalize_status(a.status)
-      a.lunch = false
-      a.lunch = true if lunched.include? a.agent_id
+      a.lunch = lunched.include? a.agent_id
     end
     @agent_statuses
   end
