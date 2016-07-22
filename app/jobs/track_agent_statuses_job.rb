@@ -19,12 +19,11 @@ class TrackAgentStatusesJob
     @contacts_service = ContactsService.new
     time = Time.zone.now
     start_time = time.beginning_of_day
-    end_time = time.end_of_day
     team_name = 'Helpdesk'
 
     if luncheds.nil?
       luncheds = Set.new
-      eaters = @contacts_service.statuses(team_name, start_time, end_time, 'Ruokatunti')
+      eaters = @contacts_service.statuses(team_name, start_time, time, 'Ruokatunti')
       eaters.each do |eater|
         luncheds.add eater.id
       end
