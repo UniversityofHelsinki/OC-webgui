@@ -25,7 +25,7 @@ class TrackAgentStatusesJob
     if luncheds.nil?
       luncheds = Set.new
       eaters = @contacts_service.statuses(team_name, start_time, end_time, 'Ruokatunti')
-      eaters.each do a|eater|
+      eaters.each do |eater|
         luncheds.add eater.id
       end
     end
