@@ -1,4 +1,3 @@
-require 'pp'
 RSpec.describe TrackAgentStatusesJob, type: :job do
   it "makes sure Rails cache is empty first and is then populated with agents who have had lunch" do 
     data = FactoryGirl.build(:get_agent_online_state_1)
