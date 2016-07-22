@@ -17,7 +17,7 @@
     <a ui-sref-active="active" ui-sref="login" ng-if="!navbar.isAuthenticated()">Login</a>
     <a ng-if="navbar.isAuthenticated()" ng-click="navbar.logout()">Logout</a>
     <a href ng-click="navbar.goFullscreen()">
-        {{ navbar.isFullscreen == true ? 'Exit fullscreen' : 'Fullscreen' }}
+        {{ navbar.isFullscreen ? 'Exit fullscreen' : 'Fullscreen' }}
     </a>
   </div>
   <ui-view></ui-view>
