@@ -8,7 +8,7 @@ require 'config/boot'
 module Clockwork
   every(5.seconds, 'track_agent_statuses.job') { Delayed::Job.enqueue TrackAgentStatusesJob.new }
   every(1.second, 'track_queue_items.job') { Delayed::Job.enqueue TrackQueueItemsJob.new }
-  every(1.day, 'clear_rails_cache.job', at: '00:00', tz: 'UTC') { Rails.cache.clear }
+  every(1.day, 'clear_rails_cache.job', at: '00:00', tz: 'UTC') { Rails.cache.delete('lunched') }
   every(1.day, 'get_daily_helpdesk_contacts.job', at: '02:00', tz: 'UTC') do
     Delayed::Job.enqueue GetTeamContactsJob.new(team: 'Helpdesk',
                                                 start_date: (DateTime.now.utc - 48.hours).strftime,

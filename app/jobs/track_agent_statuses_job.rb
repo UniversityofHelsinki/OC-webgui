@@ -14,13 +14,13 @@ class TrackAgentStatusesJob
   end
 
   def lunch(states)
-    luncheds = Rails.cache.fetch('lunched', force: true)
+    luncheds = Rails.cache.read 'lunched'
     luncheds ||= Set.new
     states.each do |data|
       agent_id = data[:agent_id].to_i
       luncheds.add agent_id if data[:status] == "Ruokatunti"
     end
-    Rails.cache.fetch('lunched', force: true) { luncheds }
+    Rails.cache.write 'lunched', luncheds
   end
 
   def max_run_time
