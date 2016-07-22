@@ -80,7 +80,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
 
         vm.options.chart.bars.yDomain[1] = nearest_ten_for_max_value;
         setTicks("y1", nearest_ten_for_max_value);
-        vm.api.refresh();
       });
     }
 
@@ -102,7 +101,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         vm.options.chart.lines.yDomain[1] = nearest_ten_for_max_value;
         
         setTicks("y2", nearest_ten_for_max_value);
-        vm.api.refresh();
       });
     }
 
