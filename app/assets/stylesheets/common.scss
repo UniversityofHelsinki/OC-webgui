@@ -4,13 +4,13 @@ $card-shadow-color: rgba(0, 0, 0, 0.2);
 $card-shadow: 1px 2px 4px $card-shadow-color;
 $card-padding: 0.5em;
 
-@mixin card-width($width) {
-  width: calc(#{$width} - #{$cards-gutter});
-}
-
-@mixin card-container {
+.card-container {
   display: flex;
   padding: $cards-gutter / 2;
+}
+
+@mixin card-width($width) {
+  width: calc(#{$width} - #{$cards-gutter});
 }
 
 body {

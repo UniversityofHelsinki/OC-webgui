@@ -1,7 +1,6 @@
 @import "common";
 
 .queue-background {
-  @include card-container;
   box-sizing: border-box;
 }
 
@@ -77,15 +76,10 @@
 
   .queuer-flag {
     width: 20%;
+    height: 100%;
     background-size: contain;
     background-position: right;
     background-repeat: no-repeat;
-    font-size: 5em;
-
-    div {
-      // purkka :D
-      opacity: 0;
-    }
   }
 }
 
@@ -103,7 +97,6 @@
 
 .queue-stats {
   height: 70%;
-  // font-size: 350%;
   text-align: center;
   line-height: 1.5;
   display: flex;

@@ -2,16 +2,15 @@
 
 .screen-background {
   display: flex;
-}
 
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  flex-grow: 1;
-  align-content: flex-start;
-  align-items: stretch;
-  padding: $cards-gutter / 2;
-  align-self: flex-start;
+  .card-container {
+    align-self: flex-start;
+
+    flex-wrap: wrap;
+    flex-grow: 1;
+    align-content: flex-start;
+    align-items: stretch;
+  }
 }
 
 .card {
@@ -25,11 +24,11 @@
 }
 
 .three-col {
-  width: calc(100% / 3 - #{$cards-gutter});
+  @include card-width(100% / 3);
 }
 
 .four-col {
-  width: calc(25% - #{$cards-gutter});
+  @include card-width(25%);
 }
 
 .agent-card {
