@@ -1,6 +1,4 @@
-<!--<div> To 02.06.2016 vk ??</div>-->
-<!--<div class="queue-background">-->
-<div class="screen_background">
+<div class="background queue-background card-container">
     <div class="queue-div">
         <div class="queue_length card">
             <!--
@@ -8,20 +6,20 @@
                LENGTH |  DATE
                       |  WEEK
             -->
-                <div class="q-length">
-                    <span>{{ queue.queue.length }}</span>
-                </div>
-                <div class="time-date-week">
-                    <div> {{ queue.date | date:'HH.mm' }}</div>
-                    <div> {{ queue.date | date:'EEE d.M.' }}</div>
-                    <div> {{ queue.date | date:'viikko w' }}</div>
-                </div>
+            <div class="q-length">
+                <span>{{ queue.queue.length }}</span>
+            </div>
+            <div class="time-date-week">
+                <div> {{ queue.date | date:'HH.mm' }}</div>
+                <div> {{ queue.date | date:'EEE d.M.' }}</div>
+                <div> {{ queue.date | date:'viikko w' }}</div>
+            </div>
         </div>
-        <!--Show first five in queue-->
-        <div  ng-repeat="queuer in queue.queue | limitTo: 5" class="queuer card">
-            <span class="queuer-index"> {{ $index +1 }}. </span>
+        <!-- Show first five in queue -->
+        <div ng-repeat="queuer in queue.queue | limitTo: 5" class="queuer card">
+            <span class="queuer-index">{{ $index + 1 }}.</span>
             <oc-time dateobj="queuer.created_at" class="queuer-time"></oc-time>
-            <span class="queuer-flag queuer-flag-{{queuer.language}}"><div>purkka</div></span>
+            <span class="queuer-flag queuer-flag-{{ queuer.language }}"></span>
         </div>
         <div ng-if="queue.queue.length >= 5" class="plus-5">&#9660</div>
     </div>
