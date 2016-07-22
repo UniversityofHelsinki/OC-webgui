@@ -27,7 +27,7 @@ class TrackAgentStatusesJob
       luncheds = Set.new eaters.pluck(:agent_id)
     end
 
-    luncheds.add states.select { |s| s['status'] == 'Tauko' }.map { |a| a[:agent_id] }
+    luncheds.add states.map { |s| s[:agent_id] if s[:status] == 'Ruokatunti' }.compact
 
     Rails.cache.write 'lunched', luncheds
   end
