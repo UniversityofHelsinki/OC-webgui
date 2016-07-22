@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719124913) do
+ActiveRecord::Schema.define(version: 20160720173555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,9 +46,10 @@ ActiveRecord::Schema.define(version: 20160719124913) do
     t.datetime "call_ended"
     t.datetime "handling_ended"
     t.string   "direction"
-    t.string   "phone_number"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.integer  "service_id"
+    t.string   "contact_type"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
