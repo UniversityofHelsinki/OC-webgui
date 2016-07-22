@@ -12,10 +12,10 @@
     <a ui-sref-active="active" ui-sref="screen">Status Screen</a>
     <a ui-sref-active="active" ui-sref="queue">Queue Screen</a>
     <a ui-sref-active="active" ui-sref="filterpanel">Filters</a>
-    <a ui-sref-active="active" ui-sref="stats">Statistics</a>
+    <a ui-sref-active="active" ui-sref="stats" ng-if="navbar.isAuthenticated()">Statistics</a>
     <a ui-sref-active="active" ui-sref="personal" ng-if="navbar.isAuthenticated()">{{ navbar.username() }}</a>
     <a ui-sref-active="active" ui-sref="login" ng-if="!navbar.isAuthenticated()">Login</a>
-    <a ng-if="navbar.isAuthenticated()" ng-click="navbar.logout()">Logout</a>
+    <a ng-if="navbar.isAuthenticated()" href="" ng-click="navbar.logout()">Logout</a>
     <a href ng-click="navbar.goFullscreen()">
         {{ navbar.isFullscreen ? 'Exit fullscreen' : 'Fullscreen' }}
     </a>
