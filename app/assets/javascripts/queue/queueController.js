@@ -10,6 +10,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
   })
   .controller('QueueController', function ($interval, $scope, Queue, $http) {
     var vm = this;
+    vm.api = {};
     vm.options = {
       chart: {
         type: 'linePlusBarChart',
@@ -38,10 +39,10 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           showMaxMin: true
         },
         y1Axis: {
-          tickValues: [0, 2]
+          tickValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         },
         y2Axis: {
-          tickValues: [0, 2]
+          tickValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         },
         legend: {
           maxKeyLength: 100
@@ -78,8 +79,8 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         if (nearest_ten_for_max_value == 0) return;
 
         vm.options.chart.bars.yDomain[1] = nearest_ten_for_max_value;
-  
         setTicks("y1", nearest_ten_for_max_value);
+        vm.api.refresh();
       });
     }
 
@@ -101,31 +102,31 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         vm.options.chart.lines.yDomain[1] = nearest_ten_for_max_value;
         
         setTicks("y2", nearest_ten_for_max_value);
+        vm.api.refresh();
       });
     }
 
     function setTicks(axis, nearest_ten_for_max_value) {
-      if (axis == "y1")
+      if (axis == "y1") {
         var ticks = vm.options.chart.y1Axis.tickValues;
-
-      if (axis == "y2")
-        var ticks = vm.options.chart.y2xis.tickValues;
- 
-      newTicks = get_ticks(nearest_ten_for_max_value);
-
-      if (angular.equals(ticks, newTicks)) return;
-      
-      while (ticks.length > 0) {
-        ticks.pop();
+      } else if (axis == "y2") {
+        var ticks = vm.options.chart.y2Axis.tickValues;
       }
 
-      newTicks.forEach(function (tick) {
-        ticks.push(tick);
-      });
+      newTicks = get_ticks(nearest_ten_for_max_value);
+      if (angular.equals(ticks, newTicks)) return;
+      
+      if (axis == "y1") {
+        vm.options.chart.y1Axis.tickValues = newTicks.slice(0);
+      } else if(axis == "y2") {
+        vm.options.chart.y2Axis.tickValues = newTicks.slice(0);
+      }
+
+      vm.api.refresh();
     }
 
     function get_nearest_ten_for_max_value(i) {
-      var max_val = d3.max(vm.data[i].values, function(x) { return x.calls; });
+      var max_val = d3.max(vm.data[i].values, function (x) { return x.calls; });
       if (max_val == null) {
         return 0;
       }
@@ -138,7 +139,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       }
       return Array.from({length: nearest_ten_for_max_value / 10}, (v, k) => k * 10);
     }
-
 
     vm.message = 'Jono';
 
