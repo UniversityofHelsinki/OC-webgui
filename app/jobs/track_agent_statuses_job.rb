@@ -18,7 +18,7 @@ class TrackAgentStatusesJob
     luncheds ||= Set.new
     states.each do |data|
       agent_id = data[:agent_id].to_i
-      luncheds.add agent_id if data[:status] == "Ruokatunti"
+      luncheds.add agent_id if data[:status] == 'Ruokatunti'
     end
     Rails.cache.write 'lunched', luncheds
   end
