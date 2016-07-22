@@ -57,6 +57,11 @@ body {
       background-color: silver;
       color: #333;
     }
+
+    &.active {
+      background-color: steelblue;
+      color: white;
+    }
   }
 }
 
