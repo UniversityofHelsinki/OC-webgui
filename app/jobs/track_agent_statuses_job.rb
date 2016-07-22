@@ -1,3 +1,4 @@
+require 'pp'
 # Retrieves agent statuses and calls AgentStatusUpdater to update them where necessary
 class TrackAgentStatusesJob
   include Now
@@ -27,10 +28,7 @@ class TrackAgentStatusesJob
       luncheds = Set.new eaters.pluck(:agent_id)
     end
 
-    states.each do |data|
-      agent_id = data[:agent_id].to_i
-      luncheds.add agent_id if data[:status] == 'Ruokatunti'
-    end
+    luncheds.add states.select { |s| s['status'] == 'Tauko' }.map { |a| a[:agent_id] }
 
     Rails.cache.write 'lunched', luncheds
   end
