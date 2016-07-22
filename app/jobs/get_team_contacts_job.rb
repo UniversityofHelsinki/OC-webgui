@@ -7,26 +7,16 @@ class GetTeamContactsJob
   end
 
   def perform
-    team = Team.includes(:agents, :services).find_by(name: @team)
-    params = {}
-    params[:team_name] = @team
-    params[:start_date] = @start_date
-    params[:end_date] = @end_date
-    params[:service_group_id] = team.service_group_id
-    contact_types = %w(PBX MANUAL SMS)
-
-    team.agents.each do |agent|
-      params[:agent_id] = agent.id
-
-      team.services.each do |service|
-        params[:service_id] = service.id
-
-        contact_types.each do |type|
-          params[:contact_type] = type
-          Delayed::Job.enqueue GetAgentContactsJob.new(params)
-        end
-      end
+    agents = Agent.all
+    services = Service.all
+    contacts = []
+    BackendService.new.get_team_contacts(@team, @start_date, @end_date).each do |data|
+      data[:agent] = find_agent(agents, data[:agent_name])
+      next unless data[:agent]
+      data[:service] = find_service(services, data[:service_name])
+      add_contact(contacts, data)
     end
+    Contact.create(contacts)
   end
 
   def queue_name
@@ -34,10 +24,34 @@ class GetTeamContactsJob
   end
 
   def max_run_time
-    120.seconds
+    600.seconds
   end
 
   def max_attempts
-    1
+    5
+  end
+
+  private
+
+  def add_contact(contacts, data)
+    contacts.push(agent_id: data[:agent].id,
+                  service_id: data[:service].id,
+                  contact_type: data[:contact_type],
+                  ticket_id: data[:ticket_id],
+                  arrived_in_queue: data[:arrived],
+                  forwarded_to_agent: data[:forwarded_to_agent],
+                  answered: data[:answered],
+                  call_ended: data[:call_ended],
+                  handling_ended: data[:after_call_ended],
+                  direction: data[:direction])
+  end
+
+  def find_agent(agents, agent_name)
+    agent_name = agent_name.split
+    agents.find { |agt| agt.first_name == agent_name[1] && agt.last_name == agent_name[0] }
+  end
+
+  def find_service(services, service_name)
+    services.find { |svc| svc.name == service_name } || Service.new
   end
 end
