@@ -1,5 +1,5 @@
 RSpec.describe QueueService, type: :service do
-  time = Time.zone.parse('2016-07-18T08:00:00 +0300')
+  time = Time.parse('2016-07-18T08:00:00 +0300')
 
   def build(*args)
     FactoryGirl.build(*args)
