@@ -1,18 +1,7 @@
 # Provides functionality for statistical data about the Queue
 class QueueService
-  def initialize
-  end
-
   def average_queueing_duration(team_name, start_time, end_time)
     average_duration(contact_queue_items(team_name, start_time, end_time))
-  end
-
-  def average_duration(queue_items)
-    queue_items.select('ROUND(AVG(EXTRACT(EPOCH FROM closed - queue_items.created_at))) AS average_duration')[0]['average_duration'] || 0
-  end
-
-  def queue_items(team_name, start_time, end_time)
-    QueueItem.joins(service: :team).where(open: false, teams: { name: team_name }, created_at: start_time..end_time)
   end
 
   def queue_items_by_hour(team_name, start_time, end_time)
@@ -24,7 +13,17 @@ class QueueService
     result
   end
 
+  private
+
   def contact_queue_items(team_name, start_time, end_time)
     queue_items(team_name, start_time, end_time)
+  end
+
+  def average_duration(queue_items)
+    queue_items.select('ROUND(AVG(EXTRACT(EPOCH FROM closed - queue_items.created_at))) AS average_duration')[0]['average_duration'] || 0
+  end
+
+  def queue_items(team_name, start_time, end_time)
+    QueueItem.joins(service: :team).where(open: false, teams: { name: team_name }, created_at: start_time..end_time)
   end
 end
