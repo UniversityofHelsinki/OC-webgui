@@ -25,6 +25,16 @@ class BackendService
                        contact_type: 'PBX EMAIL SMS FAX SCAN CHAT COBRO MANUAL FACE TASK VIDEO')
   end
 
+  def get_service_contacts(service_id, start_date, end_date)
+    get_agent_contacts(service_group_id: -1,
+                       service_id: service_id,
+                       team_name: '',
+                       agent_id: -1,
+                       start_date: start_date,
+                       end_date: end_date,
+                       contact_type: 'PBX EMAIL SMS FAX SCAN CHAT COBRO MANUAL FACE TASK VIDEO')
+  end
+
   # Method for getting agent contacts
   def get_agent_contacts(params)
     message = {
@@ -35,7 +45,7 @@ class BackendService
       startDate: params[:start_date],
       endDate: params[:end_date],
       contactTypes: params[:contact_type],
-      useServiceTime: true
+      useServiceTime: false
     }
 
     reply = @client.call(:get_contacts, message: message)
