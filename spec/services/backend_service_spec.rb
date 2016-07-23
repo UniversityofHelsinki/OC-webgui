@@ -73,7 +73,7 @@ RSpec.describe BackendService, type: :service do
 
     message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
     agentID: 2000049, startDate: "2016-06-14", endDate: "2016-06-15",
-    contactTypes: 'PBX', useServiceTime: true }
+    contactTypes: 'PBX', useServiceTime: false }
 
     expected = [
       {:ticket_id=>"20160614091049336435", 
@@ -122,12 +122,12 @@ RSpec.describe BackendService, type: :service do
     expect(response).to eq(expected)
   end
 
-  it "Should return empty array if there is only non-contact weird numbers" do
+  it "Should return empty array if there is only header data" do
     fixture = File.read("spec/fixtures/backend_service/get_agent_contacts_2.xml")
 
     message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
     agentID: 2000049, startDate: "2016-06-14", endDate: "2016-06-15",
-    contactTypes: 'PBX', useServiceTime: true }
+    contactTypes: 'PBX', useServiceTime: false }
 
     expected = []
 
@@ -153,7 +153,7 @@ it "Should return empty array if there is empty response" do
 
     message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
     agentID: 2000049, startDate: "2016-06-14", endDate: "2016-06-15",
-    contactTypes: 'PBX', useServiceTime: true }
+    contactTypes: 'PBX', useServiceTime: false }
 
     expected = []
 
