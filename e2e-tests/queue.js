@@ -12,16 +12,8 @@ describe('queue', function () {
               }
             ]);
             $httpBackend.whenGET('queue.json').respond([
-              {
-                team: 'Helpdesk',
-                language: 'Finnish',
-                created_at: new Date(baseTime - (4 * 60 + 25) * 1000)
-              },
-              {
-                team: 'Helpdesk',
-                language: 'Swedish',
-                created_at: new Date(baseTime - 73 * 1000)
-              }
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date(baseTime - (4 * 60 + 25) * 1000) },
+              { team: 'Helpdesk', language: 'Swedish', created_at: new Date(baseTime - 73 * 1000) }
             ]);
           });
       });
@@ -51,6 +43,32 @@ describe('queue', function () {
       expect(browser.isElementPresent(by.className('plus-5'))).toBe(false);
     });
 
+    it('should not show indicator with 5 queuers', function () {
+      browser.addMockModule('httpBackendMock', function () {
+        angular.module('httpBackendMock', ['ngMockE2E'])
+          .run(function ($httpBackend) {
+            $httpBackend.whenGET('teams.json').respond([
+              {
+                name: "Helpdesk",
+                filter: true
+              }
+            ]);
+            $httpBackend.whenGET('queue.json').respond([
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { team: 'Helpdesk', language: 'Swedish', created_at: new Date() },
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() }
+            ]);
+          });
+      });
+      browser.get('#/queue');
+
+      var queue = element.all(by.className('queuer'));
+      expect(queue.count()).toBe(5);
+      expect(browser.isElementPresent(by.className('plus-5'))).toBe(false);
+    });
+
     it('should show only 5 queuers and indicator of more', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
@@ -62,36 +80,12 @@ describe('queue', function () {
               }
             ]);
             $httpBackend.whenGET('queue.json').respond([
-              {
-                team: 'Helpdesk',
-                language: 'Finnish',
-                time_in_queue: 265
-              },
-              {
-                team: 'Helpdesk',
-                language: 'Swedish',
-                time_in_queue: 73
-              },
-              {
-                team: 'Helpdesk',
-                language: 'English',
-                time_in_queue: 73
-              },
-              {
-                team: 'Helpdesk',
-                language: 'Finnish',
-                time_in_queue: 73
-              },
-              {
-                team: 'Helpdesk',
-                language: 'Finnish',
-                time_in_queue: 73
-              },
-              {
-                team: 'Helpdesk',
-                language: 'Finnish',
-                time_in_queue: 73
-              }
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { team: 'Helpdesk', language: 'Swedish', created_at: new Date() },
+              { team: 'Helpdesk', language: 'English', created_at: new Date() },
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() }
             ]);
           });
       });

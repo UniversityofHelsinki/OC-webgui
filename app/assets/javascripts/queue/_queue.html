@@ -21,7 +21,7 @@
             <oc-time dateobj="queuer.created_at" class="queuer-time"></oc-time>
             <span class="queuer-flag queuer-flag-{{ queuer.language }}"></span>
         </div>
-        <div ng-if="queue.queue.length >= 5" class="plus-5">&#9660</div>
+        <div ng-if="queue.queue.length > 5" class="plus-5">&#9660</div>
     </div>
     <div class="outer">
         <div class="queue-stats card">
