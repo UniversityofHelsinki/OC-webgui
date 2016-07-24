@@ -75,11 +75,11 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         angular.extend(vm.stats, vm.stats, data);
         vm.data[0].values = values;
         
-        var nearest_ten_for_max_value = get_nearest_ten_for_max_value(0);
-        if (nearest_ten_for_max_value == 0) return;
+        var nearest_ten = get_nearest_ten_for_max_value(0);
+        if (nearest_ten == 0) return;
 
-        vm.options.chart.bars.yDomain[1] = nearest_ten_for_max_value;
-        setTicks("y1", nearest_ten_for_max_value);
+        vm.options.chart.bars.yDomain[1] = nearest_ten;
+        setTicks("y1", nearest_ten);
       });
     }
 
@@ -95,23 +95,23 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         angular.extend(vm.stats, vm.stats, data);
         vm.data[1].values = values;
 
-        var nearest_ten_for_max_value = get_nearest_ten_for_max_value(1);
-        if (nearest_ten_for_max_value == 0) return;
+        var nearest_ten = get_nearest_ten_for_max_value(1);
+        if (nearest_ten == 0) return;
 
-        vm.options.chart.lines.yDomain[1] = nearest_ten_for_max_value;
+        vm.options.chart.lines.yDomain[1] = nearest_ten;
         
-        setTicks("y2", nearest_ten_for_max_value);
+        setTicks("y2", nearest_ten);
       });
     }
 
-    function setTicks(axis, nearest_ten_for_max_value) {
+    function setTicks(axis, nearest_ten) {
       if (axis == "y1") {
         var ticks = vm.options.chart.y1Axis.tickValues;
       } else if (axis == "y2") {
         var ticks = vm.options.chart.y2Axis.tickValues;
       }
 
-      newTicks = get_ticks(nearest_ten_for_max_value);
+      newTicks = get_new_ticks(nearest_ten);
       if (angular.equals(ticks, newTicks)) return;
       
       if (axis == "y1") {
@@ -123,7 +123,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       vm.api.refresh();
     }
 
-    function get_nearest_ten_for_max_value(i) {
+    function get_nearest_ten(i) {
       var max_val = d3.max(vm.data[i].values, function (x) { return x.calls; });
       if (max_val == null) {
         return 0;
@@ -131,11 +131,11 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       return Math.ceil(max_val / 10) * 10;
     }
 
-    function get_ticks(nearest_ten_for_max_value) {
-      if (nearest_ten_for_max_value == 10) {
-        return Array.from({length: 10}, (v, k) => k);
+    function get_new_ticks(nearest_ten) {
+      if (nearest_ten == 10) {
+        return Array.from({length: 10}, (v, k) => k * 1);
       }
-      return Array.from({length: nearest_ten_for_max_value / 10}, (v, k) => k * 10);
+      return Array.from({length: nearest_ten / 10}, (v, k) => k * 10);
     }
 
     vm.message = 'Jono';
