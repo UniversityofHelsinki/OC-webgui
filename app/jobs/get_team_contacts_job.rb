@@ -1,27 +1,19 @@
 # Gets all contacts for every agent in a team for the specified timeframe
 class GetTeamContactsJob
-  def initialize(team, start_date, end_date)
-    @team = team
-    @start_date = start_date
-    @end_date = end_date
-  end
-
-  def perform
-    services = Team.find_by(name: @team).services
+  
+  def self.perform(team, start_date, end_date)
+    services = Team.find_by(name: team).services
     services.each do |service|
-      Delayed::Job.enqueue GetServiceContactsJob.new(service.id, @start_date, @end_date)
+      Backburner.enqueue GetServiceContactsJob, service.id, start_date, end_date
     end
   end
 
-  def queue_name
-    'contacts'
+  def self.queue_priority
+    10
   end
 
-  def max_run_time
-    120.seconds
+  def self.queue_respond_timeout
+    120
   end
 
-  def max_attempts
-    1
-  end
 end

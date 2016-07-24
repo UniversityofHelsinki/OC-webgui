@@ -62,7 +62,7 @@ class AgentStatusUpdater
   def save_updates
     items_to_close = @previous_statuses.map { |_agent_id, status| status.id unless status.open }
     AgentStatus.where(id: items_to_close)
-               .update_all(open: false, closed: @current_time, last_reliable_status: @last_success)
+               .update_all(open: false, closed: @current_time, last_reliable_status: @last_success) unless items_to_close.empty?
     AgentStatus.create(@statuses_to_create)
   end
 

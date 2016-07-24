@@ -8,6 +8,8 @@ gem 'rb-readline'
 
 gem 'pg'
 
+gem 'backburner'
+
 gem 'savon', '~> 2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -42,11 +44,6 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-gem 'daemons'
-gem 'clockwork', '~> 2.0'
-gem 'delayed_job'
-gem 'delayed_job_active_record'
 
 group :test do
   gem 'factory_girl_rails'
