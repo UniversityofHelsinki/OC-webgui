@@ -43,7 +43,7 @@ describe('queue', function () {
       expect(browser.isElementPresent(by.className('plus-5'))).toBe(false);
     });
 
-    it('should not whow indicator with 5 queuers', function () {
+    it('should not show indicator with 5 queuers', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
