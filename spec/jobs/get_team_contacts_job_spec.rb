@@ -3,12 +3,9 @@ RSpec.describe GetTeamContactsJob, type: :job do
     Team.create(id: 1, name: 'Helpdesk')
     Service.create(id: 1, name: "Neuvonta Fin", team_id: 1)
     Service.create(id: 2, name: "Neuvonta Eng", team_id: 1)
-    GetTeamContactsJob.new('Helpdesk', '2016-06-01', '2016-06-10').perform
-    jobs = Delayed::Job.all
-    expect(jobs.size).to eq(2)
-    expect(jobs.first.handler).to include("GetServiceContactsJob")
-    expect(jobs.first.handler).to include("service_id: 1")
-    expect(jobs.second.handler).to include("GetServiceContactsJob")
-    expect(jobs.second.handler).to include("service_id: 2")
+    backburner = class_double("Backburner").as_stubbed_const
+    expect(backburner).to receive(:enqueue).with(GetServiceContactsJob, 1, '2016-06-01', '2016-06-10')
+    expect(backburner).to receive(:enqueue).with(GetServiceContactsJob, 2, '2016-06-01', '2016-06-10')
+    GetTeamContactsJob.perform('Helpdesk', '2016-06-01', '2016-06-10')
   end
 end

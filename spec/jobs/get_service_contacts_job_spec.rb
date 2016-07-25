@@ -6,7 +6,7 @@ RSpec.describe GetServiceContactsJob, type: :job do
     Service.create(id: 1, name: "Neuvonta Fin", team_id: 1)
     data = FactoryGirl.build(:get_service_contacts_1)    
     allow_any_instance_of(BackendService).to receive(:get_service_contacts).and_return(data)
-    GetServiceContactsJob.new(1, '2016-06-01', '2016-06-10').perform
+    GetServiceContactsJob.perform(1, '2016-06-01', '2016-06-10')
 
     contacts = Contact.all
     expect(contacts.size).to eq(1)
@@ -33,7 +33,7 @@ RSpec.describe GetServiceContactsJob, type: :job do
     Service.create(id: 2, name: "Neuvonta Eng", team_id: 1)
     data = FactoryGirl.build(:get_service_contacts_2)
     allow_any_instance_of(BackendService).to receive(:get_service_contacts).and_return(data)
-    GetServiceContactsJob.new(2, '2016-06-01', '2016-06-10').perform
+    GetServiceContactsJob.perform(2, '2016-06-01', '2016-06-10')
 
     contacts = Contact.all
     expect(contacts.size).to eq(2)
@@ -62,7 +62,7 @@ RSpec.describe GetServiceContactsJob, type: :job do
     Service.create(id: 1, name: 'Neuvonta Fin', team_id: 1)
     data = FactoryGirl.build(:get_service_contacts_1)
     allow_any_instance_of(BackendService).to receive(:get_service_contacts).and_return(data)
-    GetServiceContactsJob.new(1, '2016-06-01', '2016-06-10').perform
+    GetServiceContactsJob.perform(1, '2016-06-01', '2016-06-10')
     expect(Contact.all.size).to eq(0)
   end
 
@@ -71,7 +71,7 @@ RSpec.describe GetServiceContactsJob, type: :job do
     Service.create(id: 1, name: 'Neuvonta Eng', team_id: 1)
     data = FactoryGirl.build(:get_service_contacts_3)
     allow_any_instance_of(BackendService).to receive(:get_service_contacts).and_return(data)
-    GetServiceContactsJob.new(1, '2016-06-01', '2016-06-10').perform
+    GetServiceContactsJob.perform(1, '2016-06-01', '2016-06-10')
 
     contacts = Contact.all
     expect(contacts.size).to eq(1)

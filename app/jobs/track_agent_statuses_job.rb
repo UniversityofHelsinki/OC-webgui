@@ -1,19 +1,20 @@
 # Retrieves agent statuses and calls AgentStatusUpdater to update them where necessary
 class TrackAgentStatusesJob
-  include Now
+  extend Now
 
-  def perform
+  def self.perform
     current = BackendService.new.get_agent_online_state.map do |data|
       AgentStatus.new(agent: Agent.find_or_create(data[:agent_id], data[:name], data[:team]),
                       status: data[:status],
                       time_in_status: data[:time_in_status])
     end
     lunch current
-    log = JobLog.new('TrackAgentStatusesJob')
-    AgentStatusUpdater.new(now, log.last_success).update_statuses(current)
+    last_success = Rails.cache.read('track_agent_statuses_job_last_success')
+    AgentStatusUpdater.new(now, last_success).update_statuses(current)
+    Rails.cache.write('track_agent_statuses_job_last_success', now)
   end
 
-  def lunch(states)
+  def self.lunch(states)
     luncheds = Rails.cache.read 'lunched'
 
     if luncheds.nil?
@@ -29,23 +30,11 @@ class TrackAgentStatusesJob
     Rails.cache.write 'lunched', luncheds
   end
 
-  def max_run_time
-    5.seconds
-  end
-
-  def max_attempts
+  def self.queue_priority
     1
   end
 
-  def success(*)
-    JobLog.new('TrackAgentStatusesJob').log_success
-  end
-
-  def failure(*)
-    JobLog.new('TrackAgentStatusesJob').log_failure
-  end
-
-  def queue_name
-    'statuses'
+  def self.queue_respond_timeout
+    5
   end
 end
