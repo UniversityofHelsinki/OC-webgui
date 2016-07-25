@@ -1,10 +1,10 @@
-app_path = File.expand_path(File.join(File.dirname(__FILE__), '../..'))
+app_path = File.expand_path(File.join(File.dirname(__FILE__), ''))
 $LOAD_PATH.unshift(app_path) unless $LOAD_PATH.include?(app_path)
 
 require 'backburner'
 require 'app/modules/now.rb'
 require 'config/initializers/backburner.rb'
-Dir[File.dirname(__FILE__) + '/*.rb'].each { |file| require file }
+Dir[File.dirname(__FILE__) + '/app/jobs/*.rb'].each { |file| require file }
 
 def xsd_time(time)
   time.strftime '%Y-%m-%dT%H:%M:%S%:z'
