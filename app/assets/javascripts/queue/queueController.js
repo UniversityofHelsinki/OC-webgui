@@ -133,9 +133,9 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
 
     function get_new_ticks(nearest_ten) {
       if (nearest_ten == 10) {
-        return Array.from({length: 10}, (v, k) => k * 1);
+        return Array.from({length: 10}, function (v, k) { return k; });
       }
-      return Array.from({length: nearest_ten / 10}, (v, k) => k * 10);
+      return Array.from({length: nearest_ten / 10}, function (v, k) { return k * 10; });
     }
 
     vm.message = 'Jono';
