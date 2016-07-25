@@ -25,8 +25,6 @@ class GetServiceContactsJob
     120
   end
 
-  private
-
   def self.add_contact(contacts, data)
     contacts.push(agent_id: data[:agent_id],
                   service_id: data[:service_id],
