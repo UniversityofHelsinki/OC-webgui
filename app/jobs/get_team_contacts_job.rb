@@ -1,6 +1,5 @@
 # Gets all contacts for every agent in a team for the specified timeframe
-class GetTeamContactsJob
-  
+class GetTeamContactsJob  
   def self.perform(team, start_date, end_date)
     services = Team.find_by(name: team).services
     services.each do |service|
@@ -15,5 +14,4 @@ class GetTeamContactsJob
   def self.queue_respond_timeout
     120
   end
-
 end

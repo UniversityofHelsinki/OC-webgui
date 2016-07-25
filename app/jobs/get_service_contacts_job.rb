@@ -11,6 +11,7 @@ class GetServiceContactsJob
       else
         data[:agent_id] = nil
       end
+      data[:service_id] = service_id
       add_contact(contacts, data)
     end
     Contact.create(contacts)
@@ -28,7 +29,7 @@ class GetServiceContactsJob
 
   def self.add_contact(contacts, data)
     contacts.push(agent_id: data[:agent_id],
-                  service_id: @service_id,
+                  service_id: data[:service_id],
                   contact_type: data[:contact_type],
                   ticket_id: data[:ticket_id],
                   arrived_in_queue: data[:arrived],
