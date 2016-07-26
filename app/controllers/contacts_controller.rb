@@ -16,10 +16,13 @@ class ContactsController < ApplicationController
 
   def stats
     render json: {
-      answered_calls: @contacts_service.answered_calls(@team_name, @start_time, @end_time),
+      answered_calls: @contacts_service.num_answered_calls(@team_name, @start_time, @end_time),
       average_call_duration: @contacts_service.average_call_duration(@team_name, @start_time, @end_time),
       average_after_call_duration: @contacts_service.average_after_call_duration(@team_name, @start_time, @end_time),
-      calls_by_hour: @contacts_service.calls_by_hour(@team_name, @start_time, @end_time)
+      calls_by_hour: @contacts_service.calls_by_hour(@team_name, @start_time, @end_time),
+      missed_calls: @contacts_service.num_missed_calls(@team_name, @start_time, @end_time),
+      average_missed_call_duration: @contacts_service.average_missed_call_duration(@team_name, @start_time, @end_time),
+      answered_percentage: @contacts_service.answered_percentage(@team_name, @start_time, @end_time)
     }
   end
 end
