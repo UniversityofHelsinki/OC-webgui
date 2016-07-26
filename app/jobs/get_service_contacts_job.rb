@@ -5,16 +5,15 @@ class GetServiceContactsJob
     agents = Agent.all
     contacts = []
     BackendService.new.get_service_contacts(service_id, start_date, end_date).each do |data|
-      if data[:agent_name] && data[:agent_name] != ''
-        data[:agent_id] = find_agent_id(agents, data[:agent_name])
-        next if data[:agent_id].nil?
-      else
-        data[:agent_id] = nil
-      end
+      data[:agent_id] = find_agent_id(agents, data[:agent_name])
+      next if data[:agent_id] == false
       data[:service_id] = service_id
       add_contact(contacts, data)
     end
-    Contact.create(contacts)
+    contacts.each do |c|
+      contact = Contact.find_or_initialize_by(ticket_id: c[:ticket_id])
+      contact.update_attributes(c)
+    end
   end
 
   def self.queue_priority
@@ -39,9 +38,10 @@ class GetServiceContactsJob
   end
 
   def self.find_agent_id(agents, agent_name)
+    return nil unless agent_name && agent_name != ''
     agent_name = agent_name.split
     agent = agents.find { |agt| agt.first_name == agent_name[1] && agt.last_name == agent_name[0] }
-    return agent.id if agent
-    nil
+    return false unless agent
+    agent.id
   end
 end

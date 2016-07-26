@@ -1,5 +1,4 @@
-# Calculates various statistics data based on Contact objects. Correct usage of this class is to instantiate it once and make any queries
-# on the instantiated object, instead of instantiating it separately each time. 
+# Calculates various statistics data based on Contact objects.
 class ContactsService
   def initialize(team_name, start_time, end_time)
     @contacts = Contact.joins(service: :team).where(teams: { name: team_name }, arrived_in_queue: start_time..end_time)
@@ -51,11 +50,11 @@ class ContactsService
   private
 
   def answered_contacts
-    @contacts.where(contact_type: 'PBX').where.not(call_ended: nil, answered: nil, service_id: 120 )
+    @contacts.where(contact_type: 'PBX').where.not(call_ended: nil, answered: nil, service_id: 120)
   end
 
   def missed_contacts
-    @contacts.where(contact_type: 'PBX', answered: nil, handling_ended: nil, direction: "I").where.not(call_ended: nil, service_id: 120)    
+    @contacts.where(contact_type: 'PBX', answered: nil, handling_ended: nil, direction: 'I').where.not(call_ended: nil, service_id: 120)
   end
 
   def average_duration(contacts, period_start_field, period_end_field)
