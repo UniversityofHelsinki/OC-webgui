@@ -44,11 +44,9 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         },
         y2Axis: {
           tickValues: [0, 2, 4, 6, 8, 10],
-          tickFormat: function (currentSeconds) {
-            var seconds = currentSeconds % 60;
-            var minutes = Math.floor(currentSeconds / 60);
-            function pad2(value) { return (value < 10 ? '0' : '') + value; }
-            return pad2(minutes) + ':' + pad2(seconds);
+          tickFormat: function (seconds) {
+            var formatTime = d3.time.format("%H:%M");
+            return formatTime(new Date(1864, 7, 7, 0, seconds));
           }
         },
         legend: {
@@ -118,7 +116,8 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         var ticks = vm.options.chart.y2Axis.tickValues;
       }
 
-      newTicks = get_new_ticks(nearest_ten);
+      newTicks = Array.from({length: 5}, function (v, k) { return k * (nearest_ten / 5); });
+
       if (angular.equals(ticks, newTicks)) return;
       
       if (axis == "y1") {
@@ -136,13 +135,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         return 0;
       }
       return Math.ceil(max_val / 10) * 10;
-    }
-
-    function get_new_ticks(nearest_ten) {
-      if (nearest_ten == 10) {
-        return Array.from({length: 5}, function (v, k) { return k * 2; });
-      }
-      return Array.from({length: 5}, function (v, k) { return k * (nearest_ten / 5); });
     }
 
     vm.message = 'Jono';
