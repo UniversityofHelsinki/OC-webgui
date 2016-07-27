@@ -11,13 +11,14 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
   .controller('QueueController', function ($interval, $scope, Queue, $http) {
     var vm = this;
     vm.api = {};
+
     vm.options = {
       chart: {
         type: 'linePlusBarChart',
         height: 550,
         margin: {
           top: 30,
-          right: 40,
+          right: 90,
           bottom: 60,
           left: 40
         },
@@ -39,10 +40,16 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           showMaxMin: true
         },
         y1Axis: {
-          tickValues: [0, 2, 4, 6, 8, 10]
+          tickValues: [0, 2, 4, 6, 8, 10],
         },
         y2Axis: {
-          tickValues: [0, 2, 4, 6, 8, 10]
+          tickValues: [0, 2, 4, 6, 8, 10],
+          tickFormat: function (currentSeconds) {
+            var seconds = currentSeconds % 60;
+            var minutes = Math.floor(currentSeconds / 60);
+            function pad2(value) { return (value < 10 ? '0' : '') + value; }
+            return pad2(minutes) + ':' + pad2(seconds);
+          }
         },
         legend: {
           maxKeyLength: 100
