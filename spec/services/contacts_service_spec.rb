@@ -8,11 +8,11 @@ RSpec.describe ContactsService, type: :service do
   def params(service_id, ticket_id, arrived_in_queue, forwarded_to_agent, answered, call_ended, handling_ended)
     { service_id: service_id,
       ticket_id: ticket_id,
-      arrived_in_queue: arrived_in_queue,
+      arrived: arrived_in_queue,
       forwarded_to_agent: forwarded_to_agent,
       answered: answered,
       call_ended: call_ended,
-      handling_ended: handling_ended
+      after_call_ended: handling_ended
     }
   end
 

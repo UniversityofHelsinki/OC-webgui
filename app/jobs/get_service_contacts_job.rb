@@ -3,16 +3,13 @@ class GetServiceContactsJob
   def self.perform(service_id, start_date, end_date)
     sleep 0.2
     agents = Agent.all
-    contacts = []
     BackendService.new.get_service_contacts(service_id, start_date, end_date).each do |data|
-      data[:agent_id] = find_agent_id(agents, data[:agent_name])
-      next if data[:agent_id] == false
-      data[:service_id] = service_id
-      add_contact(contacts, data)
-    end
-    contacts.each do |c|
-      contact = Contact.find_or_initialize_by(ticket_id: c[:ticket_id])
-      contact.update_attributes(c)
+      result = find_agent_id(agents, data[:agent_name])
+      next if result[:store] == false
+      contact = Contact.find_or_initialize_by(ticket_id: data[:ticket_id])
+      contact.agent_id = result[:agent_id]
+      contact.service_id = service_id
+      contact.update_attributes(contact_params(data))
     end
   end
 
@@ -24,24 +21,21 @@ class GetServiceContactsJob
     120
   end
 
-  def self.add_contact(contacts, data)
-    contacts.push(agent_id: data[:agent_id],
-                  service_id: data[:service_id],
-                  contact_type: data[:contact_type],
-                  ticket_id: data[:ticket_id],
-                  arrived_in_queue: data[:arrived],
-                  forwarded_to_agent: data[:forwarded_to_agent],
-                  answered: data[:answered],
-                  call_ended: data[:call_ended],
-                  handling_ended: data[:after_call_ended],
-                  direction: data[:direction])
+  def self.contact_params(data)
+    data.slice(:contact_type, :ticket_id, :arrived, :forwarded_to_agent, :answered, :call_ended, :after_call_ended, :direction)
   end
 
+  # Returns a hash which contains result for whether the contact should be stored, and an agent ID where possible
+  # First parameter should contain an array of all agents whose contacts we wish to track(typically all active agents)
+  # Second parameter should contain the name of the agent in the current contact as "Lastname Firstname"
   def self.find_agent_id(agents, agent_name)
-    return nil unless agent_name && agent_name != ''
-    agent_name = agent_name.split
-    agent = agents.find { |agt| agt.first_name == agent_name[1] && agt.last_name == agent_name[0] }
-    return false unless agent
-    agent.id
+    # If agent name is nil or emtpy, it means the contact is a missed or queued contact, and should be added
+    return { store: true, agent_id: nil } if agent_name.nil? || agent_name.empty?
+    # If an agent name exists, but it doesn't match the name of any agents whose contacts we wish to track, discard the contact
+    # Generally this applies to any agents who are not stored in OC SOAP DB, which can happen in case of very old contacts
+    last_name, first_name = agent_name.split
+    agent = agents.find { |agt| agt.first_name = first_name && agt.last_name == last_name }
+    return { store: false, agent_id: nil } if agent.nil?
+    { store: true, agent_id: agent.id }
   end
 end

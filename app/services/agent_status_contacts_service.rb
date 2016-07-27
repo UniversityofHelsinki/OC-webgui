@@ -36,7 +36,7 @@ class AgentStatusContactsService
     statuses.map do |status|
       contact = Contact.new(agent_id: status.agent_id, answered: status.created_at, call_ended: status.closed)
       after_call = after_call_for(contact)
-      contact.handling_ended = after_call.closed if after_call
+      contact.after_call_ended = after_call.closed if after_call
       contact
     end
   end

@@ -69,13 +69,13 @@ RSpec.describe AgentStatusContactsService, type: :service do
 
     it 'correctly accounts for after call status occurring right after the contact' do
       contacts = AgentStatusContactsService.new.contacts_for_team('Helpdesk', Time.parse('2016-07-18T08:00:00.000Z'), Time.parse('2016-07-18T08:06:00.000Z'))
-      expect(contacts[0].handling_ended).to eq(Time.parse('2016-07-18T08:44:00.000Z'))
+      expect(contacts[0].after_call_ended).to eq(Time.parse('2016-07-18T08:44:00.000Z'))
     end
 
     it 'ignores after call status which might be connected to a different contact' do
       contacts = AgentStatusContactsService.new.contacts_for_team('Helpdesk', Time.parse("'2016-07-18T10:00:00.000Z'"), Time.parse("'2016-07-18T11:06:00.000Z'"))
-      expect(contacts[0].handling_ended).to be(nil)
-      expect(contacts[1].handling_ended).to be(nil)
+      expect(contacts[0].after_call_ended).to be(nil)
+      expect(contacts[1].after_call_ended).to be(nil)
     end
 
     context 'no contacts' do
