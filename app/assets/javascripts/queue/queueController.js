@@ -40,10 +40,10 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           showMaxMin: true
         },
         y1Axis: {
-          tickValues: [0, 2, 4, 6, 8, 10],
+          ticks: 5
         },
         y2Axis: {
-          tickValues: [0, 2, 4, 6, 8, 10],
+          ticks: 5,
           tickFormat: function (seconds) {
             var formatTime = d3.time.format("%H:%M");
             return formatTime(new Date(1864, 7, 7, 0, seconds));
@@ -84,7 +84,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         if (nearest_ten == 0) return;
 
         vm.options.chart.bars.yDomain[1] = nearest_ten;
-        setTicks("y1", nearest_ten);
       });
     }
 
@@ -104,29 +103,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         if (nearest_ten == 0) return;
 
         vm.options.chart.lines.yDomain[1] = nearest_ten;
-        
-        setTicks("y2", nearest_ten);
       });
-    }
-
-    function setTicks(axis, nearest_ten) {
-      if (axis == "y1") {
-        var ticks = vm.options.chart.y1Axis.tickValues;
-      } else if (axis == "y2") {
-        var ticks = vm.options.chart.y2Axis.tickValues;
-      }
-
-      newTicks = Array.from({length: 5}, function (v, k) { return k * (nearest_ten / 5); });
-
-      if (angular.equals(ticks, newTicks)) return;
-      
-      if (axis == "y1") {
-        vm.options.chart.y1Axis.tickValues = newTicks.slice(0);
-      } else if(axis == "y2") {
-        vm.options.chart.y2Axis.tickValues = newTicks.slice(0);
-      }
-
-      vm.api.refresh();
     }
 
     function get_nearest_ten(i) {
