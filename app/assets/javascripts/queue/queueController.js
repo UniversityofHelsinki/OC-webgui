@@ -142,7 +142,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       if (nearest_ten == 10) {
         return Array.from({length: 5}, function (v, k) { return k * 2; });
       }
-      return Array.from({length: nearest_ten / 10}, function (v, k) { return k * 20; });
+      return Array.from({length: 5}, function (v, k) { return k * (nearest_ten / 5); });
     }
 
     vm.message = 'Jono';
