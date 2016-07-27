@@ -62,7 +62,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     }];
 
     function fetchContactStats() {
-      $http.get('j.json').then(function (response) {
+      $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
         var values = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
