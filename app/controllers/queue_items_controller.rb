@@ -17,7 +17,8 @@ class QueueItemsController < ApplicationController
   def stats
     render json: {
       average_waiting_time: @queue_service.average_queueing_duration(@team_name, @start_time, @end_time),
-      queue_items_by_hour: @queue_service.queue_items_by_hour(@team_name, @start_time, @end_time)
+      queue_items_by_hour: @queue_service.queue_items_by_hour(@team_name, @start_time, @end_time),
+      average_waiting_time_by_hour: @queue_service.average_queueing_duration_by_hour(@team_name, @start_time, @end_time)
     }
   end
 end

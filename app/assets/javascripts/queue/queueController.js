@@ -93,7 +93,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     function fetchQueueStats() {
       $http.get('queue/stats.json').then(function (response) {
         var data = response.data;
-        var values = data.queue_items_by_hour
+        var values = data.average_waiting_time_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
           .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
         if (!angular.isDefined(vm.stats)) {
@@ -142,7 +142,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       if (nearest_ten == 10) {
         return Array.from({length: 5}, function (v, k) { return k * 2; });
       }
-      return Array.from({length: nearest_ten / 10}, function (v, k) { return k * 10; });
+      return Array.from({length: nearest_ten / 10}, function (v, k) { return k * 20; });
     }
 
     vm.message = 'Jono';

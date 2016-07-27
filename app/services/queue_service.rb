@@ -13,6 +13,10 @@ class QueueService
     result
   end
 
+  def average_queueing_duration_by_hour(team_name, start_time, end_time)
+    (0..23).map { |i| average_queueing_duration(team_name, start_time + i.hour, start_time + (i + 1).hour) }
+  end
+
   private
 
   def contact_queue_items(team_name, start_time, end_time)
