@@ -139,7 +139,7 @@ describe('screen', function () {
 
   it('should filter correctly', function () {
     browser.actions().mouseMove(element(by.className('navbar'))).perform();
-    element(by.className('navbar')).element(by.linkText('Filters')).click();
+    element(by.className('navbar')).element(by.linkText('Filtteröi')).click();
     element(by.id('Tauko')).click();
     browser.actions().mouseMove(element(by.className('navbar'))).perform();
     element(by.className('navbar')).element(by.linkText('Status Screen')).click();
