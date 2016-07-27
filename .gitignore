@@ -43,3 +43,5 @@ npm-debug.log
 .editorconfig
 
 app/jobs/logs/*
+
+god.rb

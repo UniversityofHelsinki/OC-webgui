@@ -1,11 +1,18 @@
-angular.module('ocWebGui.login', ['ui.router'])
-  .config(function ($stateProvider) {
-    $stateProvider
-      .state('login', {
-        url: '/login',
-        templateUrl: 'login/_login.html',
-        controller: 'LoginController',
-        controllerAs: 'login'
+angular.module('ocWebGui.personal.service', ['ngResource', 'ocWebGui.filterpanel', 'ocWebGui.login'])
+  .factory('Personal', function ($resource, $http, User) {
+    var userData = User.getUserData();
+    return {
+      getPersonalData: function () {
+        $http.post('personal.json', { agent_id: userData.agent_id })
+          .then(function (response) {
+            return response;
+          });
+      }
+    };
+  });
+
+
+/*
       });
   })
   .factory('User', function ($http) {
@@ -29,9 +36,6 @@ angular.module('ocWebGui.login', ['ui.router'])
       getUsername: function () {
         return userData.username;
       },
-      getUserData: function () {
-        return userData;
-      },
       logout: function () {
         $http.delete('logout')
           .then(function () {
@@ -40,15 +44,4 @@ angular.module('ocWebGui.login', ['ui.router'])
           });
       }
     };
-  })
-  .controller('LoginController', function (User, $rootScope, $state) {
-    var vm = this;
-    vm.title = 'Login';
-    vm.login = function () {
-      User.login(vm.username, vm.password, function () {
-        $state.go($rootScope.returnToState, $rootScope.returnToParams);
-      }, function (errorMessage) {
-        vm.error = errorMessage;
-      });
-    };
-  });
+*/

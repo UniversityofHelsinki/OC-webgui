@@ -1,4 +1,4 @@
-angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'ocWebGui.queue.service'])
+angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'ocWebGui.queue.service', 'ocWebGui.personal.service'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('personal', {
@@ -8,7 +8,7 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
         controllerAs: 'personal'
       });
   })
-  .controller('PersonalController', function (Agents, Queue, $interval, $scope) {
+  .controller('PersonalController', function (Agents, Queue, Personal, $interval, $scope) {
     var vm = this;
 
     function fetchData() {
@@ -17,6 +17,9 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
       });
       Queue.query(function (queue) {
         vm.queue = queue;
+      });
+      Personal.getPersonalData(function (data) {
+        vm.personalData = data;
       });
     }
 

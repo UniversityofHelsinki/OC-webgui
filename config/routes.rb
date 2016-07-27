@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     get 'contacts/today' => 'contacts#today'
     get 'contacts/stats' => 'contacts#stats'
     get 'queue/stats' => 'queue_items#stats'
+    post 'personal' => 'personal_status#index'
   end
 
   # Example of regular route:
