@@ -39,10 +39,10 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           showMaxMin: true
         },
         y1Axis: {
-          tickValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          tickValues: [0, 2, 4, 6, 8, 10]
         },
         y2Axis: {
-          tickValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          tickValues: [0, 2, 4, 6, 8, 10]
         },
         legend: {
           maxKeyLength: 100
@@ -62,7 +62,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     }];
 
     function fetchContactStats() {
-      $http.get('contacts/stats.json').then(function (response) {
+      $http.get('j.json').then(function (response) {
         var data = response.data;
         var values = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
@@ -133,7 +133,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
 
     function get_new_ticks(nearest_ten) {
       if (nearest_ten == 10) {
-        return Array.from({length: 10}, function (v, k) { return k; });
+        return Array.from({length: 5}, function (v, k) { return k * 2; });
       }
       return Array.from({length: nearest_ten / 10}, function (v, k) { return k * 10; });
     }
