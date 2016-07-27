@@ -14,7 +14,10 @@ class QueueService
   end
 
   def average_queueing_duration_by_hour(team_name, start_time, end_time)
-    (0..23).map { |i| average_queueing_duration(team_name, start_time + i.hour, start_time + (i + 1).hour) }
+    (0..23).map do |i|
+      h = start_time.beginning_of_day + i.hour
+      average_queueing_duration(team_name, h, h + 59.minutes + 59.seconds)
+    end
   end
 
   private
