@@ -14,8 +14,9 @@ class QueueService
   end
 
   def average_queueing_duration_by_hour(team_name, start_time, end_time)
+    gmt_offset = Time.now.getlocal.gmt_offset
     (0..23).map do |i|
-      h = start_time.beginning_of_day + i.hour
+      h = start_time.beginning_of_day + i.hour - gmt_offset
       average_queueing_duration(team_name, h, h + 59.minutes + 59.seconds)
     end
   end
