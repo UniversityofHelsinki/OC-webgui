@@ -75,7 +75,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         angular.extend(vm.stats, vm.stats, data);
         vm.data[0].values = values;
         
-        var nearest_ten = get_nearest_ten_for_max_value(0);
+        var nearest_ten = get_nearest_ten(0);
         if (nearest_ten == 0) return;
 
         vm.options.chart.bars.yDomain[1] = nearest_ten;
@@ -95,7 +95,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         angular.extend(vm.stats, vm.stats, data);
         vm.data[1].values = values;
 
-        var nearest_ten = get_nearest_ten_for_max_value(1);
+        var nearest_ten = get_nearest_ten(1);
         if (nearest_ten == 0) return;
 
         vm.options.chart.lines.yDomain[1] = nearest_ten;
