@@ -41,10 +41,13 @@
                 <tr>
                     <th>Jonotusten ka:</th>
                     <td><oc-time seconds="queue.stats.average_waiting_time"></oc-time></td>
+                    
                 </tr>
                 <tr>
                     <th>Vastattujen osuus:</th>
-                    <td><oc-time seconds="queue.stats.average_waiting_time"></oc-time></td>
+                    <td>{{queue.stats.answered_percentage}}%
+                        [{{queue.stats.answered_calls}} / 
+                        {{queue.stats.answered_calls + queue.stats.missed_calls}}]</td>
                 </tr>
             </table>
         </div>
