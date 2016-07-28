@@ -43,3 +43,6 @@ npm-debug.log
 .editorconfig
 
 app/jobs/logs/*
+!app/jobs/logs/.keep
+
+god.rb
