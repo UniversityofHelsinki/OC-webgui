@@ -24,16 +24,6 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
 
     function fetchData() {
       Agents.query(function (agents) {
-        // Mock data
-        // agents = [
-        //   { agent_id: 1, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
-        //   { agent_id: 2, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
-        //   { agent_id: 3, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Puhelu', created_at: '2016-06-29T12:50:25.671Z' },
-        //   { agent_id: 4, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Jälkikirjaus', created_at: '2016-06-29T12:50:25.671Z' },
-        //   { agent_id: 5, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
-        //   { agent_id: 6, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
-        // ];
-
         var green = 0;
         var yellow = 0;
         var red = 0;
@@ -49,6 +39,9 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
             case 'Puhelu':
               agent.color = 'yellow';
               yellow++;
+              break;
+            case String(agent.status.match(/^Varattu \(.*\)/)):
+              agent.status = agent.status.match(/\((.*?)\)/ )[1];
               break;
             default:
               agent.color = 'red';
