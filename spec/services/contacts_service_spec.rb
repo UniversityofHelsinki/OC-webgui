@@ -36,7 +36,7 @@ RSpec.describe ContactsService, type: :service do
     build(:contact, params(1, '8', time + (3.hours + 10.minutes), nil, nil, time + (3.hours + 18.minutes), nil)) # Missed contact
     build(:contact, params(1, '9', time + 4.hours, nil, nil, nil, nil)) # In Queue at the moment, shouldn't affect any calculations
     build(:contact, params(2, '10', time + 4.hours, time + (4.hours + 2.minutes), nil, nil, nil )) # Forwarded from Queue to agent but not answered yet, should show up in queue statistics
-    @contacts_service = ContactsService.new('Helpdesk', '2016-07-18T00:00:00', '2016-07-18T23:59:59')
+    @contacts_service = ContactsService.new(Team.find_by_name('Helpdesk'), '2016-07-18T00:00:00', '2016-07-18T23:59:59')
   end
 
   it "Returns correct amount of answered and missed calls" do
