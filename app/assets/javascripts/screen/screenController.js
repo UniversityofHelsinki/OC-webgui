@@ -40,8 +40,8 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
               agent.color = 'yellow';
               yellow++;
               break;
-            case agent.status.match(/^Varattu \(.*\)/):
-              agent.status = agent.status.match(/\((.*?)\)/ )[1];
+            case String(agent.status.match(/^Varattu \(.*\)/)):
+              agent.status = agent.status.match(/^Varattu \((.*)\)/)[1];
               break;
             default:
               agent.color = 'red';
