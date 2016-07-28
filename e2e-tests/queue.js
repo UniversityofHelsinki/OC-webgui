@@ -122,8 +122,6 @@ describe('queue', function () {
           });
       });
       browser.get('#/queue');
-      var prot = protractor.getInstance();
-      prot.sleep(5000);
       var statsTable = element.all(by.className('queue-stats-table'));
       rows = statsTable.all(by.tagName('tr'));
     });
@@ -133,6 +131,8 @@ describe('queue', function () {
     });
 
     it('should contain answered calls', function () {
+      var prot = protractor.getInstance();
+      prot.sleep(5000);
       expect(rows.get(0).element(by.tagName('th')).getText()).toBe('Puhelut:');
       expect(rows.get(0).element(by.tagName('td')).getText()).toBe('11');
     });
