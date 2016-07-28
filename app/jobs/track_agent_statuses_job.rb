@@ -18,7 +18,7 @@ class TrackAgentStatusesJob
     luncheds = Rails.cache.read 'lunched'
 
     if luncheds.nil?
-      eaters = ContactsService.new.statuses('Helpdesk', now.beginning_of_day, now.end_of_day, 'Ruokatunti')
+      eaters = AgentStatusContactsService.new.statuses('Helpdesk', now.beginning_of_day, now.end_of_day, 'Ruokatunti')
       luncheds = Set.new eaters.pluck(:agent_id)
     end
 
