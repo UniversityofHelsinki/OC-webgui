@@ -56,7 +56,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         duration: 500
       }
     };
-
     vm.data = [{
       'key': 'Puheluja tunnissa',
       'bar': true,
@@ -67,6 +66,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       'color': '#ff0000',
       'values': []
     }];
+
 
     function fetchContactStats() {
       $http.get('contacts/stats.json').then(function (response) {
@@ -83,20 +83,17 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           vm.stats = {};
         }
         angular.extend(vm.stats, vm.stats, data);
-
         vm.data[0].values = calls_values;
         vm.data[1].values = queue_values;
 
         var nearest_ten = get_nearest_ten(0);
         if (nearest_ten != 0) {
           vm.options.chart.bars.yDomain[1] = nearest_ten;
-          setTicks("y1", nearest_ten);
         }
 
         var nearest_ten2 = get_nearest_ten(1);
         if (nearest_ten2 != 0) {
           vm.options.chart.lines.yDomain[1] = nearest_ten2;
-          setTicks("y2", nearest_ten2);
         }
       });
     }
@@ -109,25 +106,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         }
         angular.extend(vm.stats, vm.stats, data);
       });
-    }
-
-    function setTicks(axis, nearest_ten) {
-      if (axis == "y1") {
-        var ticks = vm.options.chart.y1Axis.tickValues;
-      } else if (axis == "y2") {
-        var ticks = vm.options.chart.y2Axis.tickValues;
-      }
-
-      newTicks = get_new_ticks(nearest_ten);
-      if (angular.equals(ticks, newTicks)) return;
-
-      if (axis == "y1") {
-        vm.options.chart.y1Axis.tickValues = newTicks.slice(0);
-      } else if(axis == "y2") {
-        vm.options.chart.y2Axis.tickValues = newTicks.slice(0);
-      }
-
-      vm.api.refresh();
     }
 
     function get_nearest_ten(i) {
