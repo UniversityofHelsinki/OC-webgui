@@ -108,7 +108,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           vm.stats = {};
         }
         angular.extend(vm.stats, vm.stats, data);
-<<<<<<< HEAD
       });
     }
 
@@ -131,17 +130,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       vm.api.refresh();
     }
 
-=======
-        vm.data[1].values = values;
-
-        var nearest_ten = get_nearest_ten(1);
-        if (nearest_ten == 0) return;
-
-        vm.options.chart.lines.yDomain[1] = nearest_ten;
-      });
-    }
-
->>>>>>> master
     function get_nearest_ten(i) {
       var max_val = d3.max(vm.data[i].values, function (x) { return x.calls; });
       if (max_val == null) {
