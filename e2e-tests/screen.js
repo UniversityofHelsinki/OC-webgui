@@ -47,7 +47,7 @@ describe('screen', function () {
               id: 666,
               first_name: 'Jenni',
               last_name: 'Ahola',
-              status: 'Tauko',
+              status: 'Varattu (Chat)',
               created_at: new Date(baseTime - (1 * 60 + 5) * 1000),
               lunch: false,
               team: {
@@ -100,7 +100,7 @@ describe('screen', function () {
   it('should have agent statuses', function () {
     expect(agentCards.get(0).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
     expect(agentCards.get(1).element(by.className('agent-status')).getInnerHtml()).toBe('Vapaa');
-    expect(agentCards.get(2).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+    expect(agentCards.get(2).element(by.className('agent-status')).getInnerHtml()).toBe('Chat');
     expect(agentCards.get(3).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
   });
 
