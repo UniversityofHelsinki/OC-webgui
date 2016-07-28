@@ -1,0 +1,32 @@
+<div class="filter-bg">  
+  <div class="card-container">
+    <div class="card">
+      <h2>Luo uusi käyttäjä</h2>
+      <form ng-submit="userAdmin.createUser()">
+        <label>
+          Käyttäjänimi
+          <br>
+          <input ng-model="userAdmin.newUserName">
+        </label>
+        <label>
+          Salasana
+          <br>
+          <input type="password" ng-model="userAdmin.password">
+        </label>
+        <label>
+          Vahvista salasana
+          <br>
+          <input type="password" ng-model="userAdmin.password_confirmation">
+          <p class="error">{{ userAdmin.createUserError }}</p>
+          <input type="submit" value="Luo käyttäjä">
+        </label>
+      </form>
+    </div>
+    <div class="card">
+      <div ng-repeat="user in userAdmin.users">
+       {{ user.username }}
+      </div>
+    </div>
+  </div>
+  <div>
+</div>

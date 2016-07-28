@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root 'application#angular'
 
   post 'login', to: 'session#create'
+  post 'users', to: 'users#create'
   delete 'logout', to: 'session#destroy'
 
   scope :format => true, :constraints => { :format => 'json' } do
@@ -18,6 +19,8 @@ Rails.application.routes.draw do
     get 'contacts/today' => 'contacts#today'
     get 'contacts/stats' => 'contacts#stats'
     get 'queue/stats' => 'queue_items#stats'
+    get 'agents' => 'agents#index'
+    get 'users' => 'users#index'
   end
 
   # Example of regular route:

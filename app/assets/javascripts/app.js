@@ -1,6 +1,6 @@
 angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen',
   'ocWebGui.queue', 'ocWebGui.filterpanel', 'ocWebGui.stats', 'ocWebGui.login',
-  'ocWebGui.navbar', 'ocWebGui.personal'])
+  'ocWebGui.navbar', 'ocWebGui.personal', 'ocWebGui.userAdmin'])
   .run(function ($rootScope, $state, User) {
     $rootScope.returnToState = 'home';
     $rootScope.returnToParams = {};

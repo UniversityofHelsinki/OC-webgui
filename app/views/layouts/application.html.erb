@@ -16,6 +16,7 @@
     <a ui-sref="personal" class="card" ng-if="navbar.isAuthenticated()">{{ navbar.username() }}</a>
     <a ui-sref="login" ng-if="!navbar.isAuthenticated()" class="card">Kirjaudu sisään</a>
     <a ng-if="navbar.isAuthenticated()" ng-click="navbar.logout()" class="card">Kirjaudu ulos</a>
+    <div ng-if="navbar.isAuthenticated()"><a ui-sref="userAdmin" class="card">Käyttäjähallinta</a></div>
     <a href ng-click="navbar.goFullscreen()" class="card">
         {{ navbar.isFullscreen == true ? 'Pois kokoruudusta' : 'Kokoruutu' }}
     </a>
