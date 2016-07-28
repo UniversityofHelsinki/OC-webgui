@@ -122,22 +122,6 @@ describe('queue', function () {
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ]
             });
-
-            $httpBackend.whenGET('queue.json').respond([
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { team: 'Helpdesk', language: 'Swedish', created_at: new Date() },
-              { team: 'Helpdesk', language: 'English', created_at: new Date() },
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() }
-            ]);
-
-            $httpBackend.whenGET('teams.json').respond([
-              {
-                name: "Helpdesk",
-                filter: true
-              }
-            ]);
           });
       });
       browser.get('#/queue');
