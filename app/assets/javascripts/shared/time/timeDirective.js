@@ -23,7 +23,7 @@ angular.module('ocWebGui.shared.time', ['ocWebGui.shared.time.service'])
           var minutes = Math.floor(currentSeconds / 60);
 
           if (minutes > 60) {
-            var minutes = Math.floor(currentSeconds / 60 % 60);
+            minutes = Math.floor(currentSeconds / 60 % 60);
             var hours = Math.floor(currentSeconds / 60 / 60);
             element.text(pad2(hours) + ':' + pad2(minutes) + ':' + pad2(seconds));
           } else {
