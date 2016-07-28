@@ -122,6 +122,8 @@ describe('queue', function () {
           });
       });
       browser.get('#/queue');
+      var prot = protractor.getInstance();
+      prot.sleep(5000);
       var statsTable = element.all(by.className('queue-stats-table'));
       rows = statsTable.all(by.tagName('tr'));
     });
