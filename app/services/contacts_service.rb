@@ -1,8 +1,13 @@
 # Calculates various statistics data based on Contact objects.
 class ContactsService
-  def initialize(team_name, start_time, end_time)
-    @contacts = Contact.joins(service: :team).where(teams: { name: team_name }, arrived: start_time..end_time)
+  def initialize(filter_by_model, start_time, end_time)
+    if filter_by_model.is_a? Team
+      @contacts = Contact.joins(:service).where(services:{team_id: filter_by_model.id}, arrived: start_time..end_time)
+    elsif filter_by_model.is_a? Agent
+      @contacts = Contact.where(agent: filter_by_model, arrived: start_time..end_time)
+    end
   end
+
 
   def num_answered_calls
     answered_contacts.count

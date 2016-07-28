@@ -6,17 +6,15 @@
         <table class="personal-statistics">
             <tr>
                 <th>Puheluni:</th>
-                <td>{{ personal.myCalls.size() }}</td>
+                <td>{{ personal.myCalls_count }}</td>
             </tr>
             <tr>
                 <th>Puheluiden ka:</th>
-                <td>05:28</td>
-                <!--<td>{{ myCalls.totalTime / myCalls.length }}</td>-->
+                <td>{{ personal.myCalls_avg }}</td>
             </tr>
             <tr>
                 <th>Jälkikirjauksen ka:</th>
-                <td>04:47</td>
-                <!--<td> myPostcalls.totalTime / myCalls.length </td>-->
+                <td>{{ personal.myAftercalls_avg }}</td>
             </tr>
         </table>
         <div class="agent-statuses">

@@ -27,6 +27,14 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
       Queue.query(function (queue) {
         vm.queue = queue;
       });
+
+      Personal.getPersonalData().then(function (response) {
+          var data = response.data;
+          // console.log(data);
+          vm.myCalls_count = data.answered_calls;
+          vm.myCalls_avg = data.average_call_duration;
+          vm.myAftercalls_avg = data.average_after_call_duration;
+      })
     }
 
     var fetchDataInterval = $interval(fetchData, 5000);
