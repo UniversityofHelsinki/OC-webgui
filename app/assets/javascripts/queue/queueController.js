@@ -51,6 +51,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         duration: 500
       }
     };
+
     vm.data = [{
       'key': 'Puheluja tunnissa',
       'bar': true,
@@ -65,43 +66,42 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     function fetchContactStats() {
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
-        var values = data.calls_by_hour
+        var calls_values = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          // .filter(function (item) { return item.calls !== 0; });
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; })
-          ;
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+
+        var queue_values = data.average_queue_duration_by_hour
+          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+
         if (!angular.isDefined(vm.stats)) {
           vm.stats = {};
         }
         angular.extend(vm.stats, vm.stats, data);
-        vm.data[0].values = values;
-        
-        var nearest_ten = get_nearest_ten_for_max_value(0);
-        if (nearest_ten == 0) return;
+        vm.data[0].values = calls_values;
+        vm.data[1].values = queue_values;
 
-        vm.options.chart.bars.yDomain[1] = nearest_ten;
-        setTicks("y1", nearest_ten);
+        var nearest_ten = get_nearest_ten(0);
+        if (nearest_ten != 0) {
+          vm.options.chart.bars.yDomain[1] = nearest_ten;
+          setTicks("y1", nearest_ten);
+        }
+
+        var nearest_ten2 = get_nearest_ten(1);
+        if (nearest_ten2 != 0) {
+          vm.options.chart.lines.yDomain[1] = nearest_ten2;
+          setTicks("y2", nearest_ten2);
+        }
       });
     }
 
     function fetchQueueStats() {
       $http.get('queue/stats.json').then(function (response) {
         var data = response.data;
-        var values = data.queue_items_by_hour
-          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
         if (!angular.isDefined(vm.stats)) {
           vm.stats = {};
         }
         angular.extend(vm.stats, vm.stats, data);
-        vm.data[1].values = values;
-
-        var nearest_ten = get_nearest_ten_for_max_value(1);
-        if (nearest_ten == 0) return;
-
-        vm.options.chart.lines.yDomain[1] = nearest_ten;
-        
-        setTicks("y2", nearest_ten);
       });
     }
 
@@ -114,7 +114,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
 
       newTicks = get_new_ticks(nearest_ten);
       if (angular.equals(ticks, newTicks)) return;
-      
+
       if (axis == "y1") {
         vm.options.chart.y1Axis.tickValues = newTicks.slice(0);
       } else if(axis == "y2") {
