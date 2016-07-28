@@ -2,6 +2,7 @@
 class ContactsService
   def initialize(team_name, start_time, end_time)
     @contacts = Contact.joins(service: :team).where(teams: { name: team_name }, arrived: start_time..end_time)
+    @start_time = start_time
   end
 
   def num_answered_calls
@@ -35,6 +36,20 @@ class ContactsService
   def average_queue_duration
     contacts = @contacts.where(contact_type: 'PBX').where.not(forwarded_to_agent: nil, service_id: 120)
     average_duration(contacts, 'arrived', 'forwarded_to_agent')
+  end
+
+  def average_queue_duration_by_hour
+    gmt_offset = Time.now.getlocal.gmt_offset
+    contacts = @contacts.where(contact_type: 'PBX').where.not(forwarded_to_agent: nil, service_id: 120)
+
+    # if contacts nil jutut
+    beginning_of_day_of_first_contact = contacts[0].arrived.beginning_of_day
+    (0..23).map do |i|
+      start_time = beginning_of_day_of_first_contact + i.hour - gmt_offset    
+      end_time = start_time + 59.minutes + 59.seconds
+      contacts_by_hour = contacts.where(arrived: start_time..end_time, forwarded_to_agent: start_time..end_time)
+      average_duration(contacts_by_hour, 'arrived', 'forwarded_to_agent')
+    end
   end
 
   def calls_by_hour
