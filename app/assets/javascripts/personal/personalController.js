@@ -15,13 +15,17 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
       Agents.query(function (agents) {
         vm.agents = agents;
 
-        vm.myStatus = agents.filter(function (agent) {
-          return User.getUserData().agent_id == agent.id;
-        })[0].status;
-
-        vm.myColor = agents.filter(function (agent) {
+        var myAgent = agents.filter(function (agent) {
             return User.getUserData().agent_id == agent.id;
-        })[0].color;
+        });
+
+        if (myAgent[0] == undefined) {
+            vm.myStatus = "Please login to webgui and OC";
+            vm.myColor = "red";
+        } else {
+            vm.myStatus = myAgent[0].status;
+            vm.myColor = myAgent[0].color;
+        }
       });
 
       Queue.query(function (queue) {
@@ -30,7 +34,6 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
 
       Personal.getPersonalData().then(function (response) {
           var data = response.data;
-          // console.log(data);
           vm.myCalls_count = data.answered_calls;
           vm.myCalls_avg = data.average_call_duration;
           vm.myAftercalls_avg = data.average_after_call_duration;
