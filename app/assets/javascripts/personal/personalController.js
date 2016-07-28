@@ -14,21 +14,19 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
     function fetchData() {
       Agents.query(function (agents) {
         vm.agents = agents;
+
         vm.myStatus = agents.filter(function (agent) {
           return User.getUserData().agent_id == agent.id;
         })[0].status;
+
+        vm.myColor = agents.filter(function (agent) {
+            return User.getUserData().agent_id == agent.id;
+        })[0].color;
       });
+
       Queue.query(function (queue) {
         vm.queue = queue;
       });
-      // Personal.getPersonalData().then(function (data) {
-      //     console.log(data);
-      //   vm.personalData = data;
-      //   vm.personalData.myStatus = agents.filter(function () {
-      //       return agent_id == data.agent_id;
-      //   })[0].status;
-      //     console.log(vm.personalData);
-      // });
     }
 
     var fetchDataInterval = $interval(fetchData, 5000);

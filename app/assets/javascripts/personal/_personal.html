@@ -6,7 +6,7 @@
         <table class="personal-statistics">
             <tr>
                 <th>Puheluni:</th>
-                <td>{{ personal.personalData }}</td>
+                <td>{{ personal.myCalls.size() }}</td>
             </tr>
             <tr>
                 <th>Puheluiden ka:</th>
@@ -20,8 +20,10 @@
             </tr>
         </table>
         <div class="agent-statuses">
-            <div class="agent-status-color agent-status-color-green"></div>
-            <div>{{ personal.myStatus }}</div>
+            <div class="my-status">
+                <div class="agent-status-color agent-status-color-{{personal.myColor}}"></div>
+                <div>{{ personal.myStatus }}</div>
+            </div>
             <table class="agent-list">
                 <tr ng-repeat="agent in personal.agents track by agent.id">
                     <td class="color-square agent-status-color-{{agent.color}}"></td>
