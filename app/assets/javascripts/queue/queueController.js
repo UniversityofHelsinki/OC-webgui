@@ -5,7 +5,8 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         url: '/queue',
         templateUrl: 'queue/_queue.html',
         controller: 'QueueController',
-        controllerAs: 'queue'
+        controllerAs: 'queue',
+        navbarOverlay: true
       });
   })
   .controller('QueueController', function ($interval, $scope, Queue, $http) {

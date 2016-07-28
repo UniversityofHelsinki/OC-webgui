@@ -4,7 +4,7 @@
         <a ui-sref="screen" class="card">Agents</a>
         <a ui-sref="queue" class="card">Queue</a>
         <a ui-sref="filterpanel" class="card">Filters</a>
-        <a ui-sref="stats" class="card">Statistics</a>
+        <a ui-sref="stats" class="card" ng-if="home.isAuthenticated()">Statistics</a>
         <a ui-sref="personal" class="card" ng-if="home.isAuthenticated()">{{ home.username() }}</a>
         <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Login</a>
         <div ng-if="home.isAuthenticated()" class="home-logout">
