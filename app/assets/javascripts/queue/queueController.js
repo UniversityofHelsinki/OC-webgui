@@ -12,13 +12,14 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
   .controller('QueueController', function ($interval, $scope, Queue, $http) {
     var vm = this;
     vm.api = {};
+
     vm.options = {
       chart: {
         type: 'linePlusBarChart',
-        height: 360,
+        height: 550,
         margin: {
           top: 30,
-          right: 40,
+          right: 90,
           bottom: 60,
           left: 40
         },
@@ -40,10 +41,14 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           showMaxMin: true
         },
         y1Axis: {
-          tickValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          ticks: 5
         },
         y2Axis: {
-          tickValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          ticks: 5,
+          tickFormat: function (seconds) {
+            var formatTime = d3.time.format("%H:%M");
+            return formatTime(new Date(1864, 7, 7, 0, seconds));
+          }
         },
         legend: {
           maxKeyLength: 100
@@ -76,11 +81,10 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         angular.extend(vm.stats, vm.stats, data);
         vm.data[0].values = values;
         
-        var nearest_ten = get_nearest_ten_for_max_value(0);
+        var nearest_ten = get_nearest_ten(0);
         if (nearest_ten == 0) return;
 
         vm.options.chart.bars.yDomain[1] = nearest_ten;
-        setTicks("y1", nearest_ten);
       });
     }
 
@@ -96,32 +100,11 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         angular.extend(vm.stats, vm.stats, data);
         vm.data[1].values = values;
 
-        var nearest_ten = get_nearest_ten_for_max_value(1);
+        var nearest_ten = get_nearest_ten(1);
         if (nearest_ten == 0) return;
 
         vm.options.chart.lines.yDomain[1] = nearest_ten;
-        
-        setTicks("y2", nearest_ten);
       });
-    }
-
-    function setTicks(axis, nearest_ten) {
-      if (axis == "y1") {
-        var ticks = vm.options.chart.y1Axis.tickValues;
-      } else if (axis == "y2") {
-        var ticks = vm.options.chart.y2Axis.tickValues;
-      }
-
-      newTicks = get_new_ticks(nearest_ten);
-      if (angular.equals(ticks, newTicks)) return;
-      
-      if (axis == "y1") {
-        vm.options.chart.y1Axis.tickValues = newTicks.slice(0);
-      } else if(axis == "y2") {
-        vm.options.chart.y2Axis.tickValues = newTicks.slice(0);
-      }
-
-      vm.api.refresh();
     }
 
     function get_nearest_ten(i) {
@@ -130,13 +113,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         return 0;
       }
       return Math.ceil(max_val / 10) * 10;
-    }
-
-    function get_new_ticks(nearest_ten) {
-      if (nearest_ten == 10) {
-        return Array.from({length: 10}, function (v, k) { return k; });
-      }
-      return Array.from({length: nearest_ten / 10}, function (v, k) { return k * 10; });
     }
 
     vm.message = 'Jono';

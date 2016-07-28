@@ -96,7 +96,7 @@
 }
 
 .queue-stats {
-  height: 70%;
+  height: 50%;
   text-align: center;
   line-height: 1.5;
   display: flex;
@@ -129,7 +129,7 @@
 }
 
 .chart {
-  height: 30%;
+  height: 50%;
 }
 
 .nv-point {
@@ -153,4 +153,12 @@
 
 .nvd3 text {
   font-size: 2.0em !important;
+}
+
+.nvd3 .nv-axis line {
+  stroke: #bebebe !important;
+}
+
+.nvd3 .nv-x.nv-axis line {
+  stroke-width: 0;
 }
