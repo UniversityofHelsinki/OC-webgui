@@ -82,19 +82,12 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         if (!angular.isDefined(vm.stats)) {
           vm.stats = {};
         }
+
         angular.extend(vm.stats, vm.stats, data);
         vm.data[0].values = calls_values;
         vm.data[1].values = queue_values;
-
-        var nearest_ten = get_nearest_ten(0);
-        if (nearest_ten != 0) {
-          vm.options.chart.bars.yDomain[1] = nearest_ten;
-        }
-
-        var nearest_ten2 = get_nearest_ten(1);
-        if (nearest_ten2 != 0) {
-          vm.options.chart.lines.yDomain[1] = nearest_ten2;
-        }
+        vm.options.chart.bars.yDomain[1] = get_nearest_ten(0);
+        vm.options.chart.lines.yDomain[1] = get_nearest_ten(1);
       });
     }
 
