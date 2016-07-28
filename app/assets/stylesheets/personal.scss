@@ -8,8 +8,11 @@
 
 .personal-card {
   padding: 1em;
-  text-align: center;
   line-height: 1;
+
+  > * {
+    width: 100%;
+  }
 }
 
 .personal-statistics {
@@ -27,18 +30,13 @@
 
 .agent-statuses {
   padding-top: 1em;
-
-  .agent-status-color {
-    display: inline-block;
-    height: 3em;
-    width: 3em;
-  }
 }
 
 .queue-length {
   font-size: 3em;
   padding-bottom: 1rem;
   border-bottom: 2px solid #ccc;
+  text-align: center;
 }
 
 .color-square {
@@ -48,12 +46,32 @@
   border-radius: 50%;
 }
 
-.agent-list {
-  margin: 0.25em auto 0;
-  text-align: left;
-  border-spacing: 0.25em 0.5em;
+.own-status {
+  display: flex;
+  align-items: center;
+  font-size: 2em;
 
-  td {
+  .agent-status-color {
+    float: left;
+    height: 1em;
+    width: 1em;
+    margin-right: 0.25rem;
+  }
+}
+
+.agent-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 0.5em;
+
+  li {
+    display: flex;
     line-height: 1;
+    margin-top: 0.25em;
+  }
+
+  .color-square {
+    margin-right: 0.25em;
   }
 }
