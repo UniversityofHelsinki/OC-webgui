@@ -154,3 +154,11 @@
 .nvd3 text {
   font-size: 2.0em !important;
 }
+
+.nvd3 .nv-axis line {
+  stroke: #bebebe !important;
+}
+
+.nvd3 .nv-x.nv-axis line {
+  stroke-width: 0;
+}
