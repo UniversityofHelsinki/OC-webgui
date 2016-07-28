@@ -45,7 +45,7 @@ class ContactsService
     # if contacts nil jutut
     beginning_of_day_of_first_contact = contacts[0].arrived.beginning_of_day
     (0..23).map do |i|
-      start_time = beginning_of_day_of_first_contact + i.hour - gmt_offset    
+      start_time = beginning_of_day_of_first_contact + i.hour - gmt_offset
       end_time = start_time + 59.minutes + 59.seconds
       contacts_by_hour = contacts.where(arrived: start_time..end_time, forwarded_to_agent: start_time..end_time)
       average_duration(contacts_by_hour, 'arrived', 'forwarded_to_agent')
