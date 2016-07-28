@@ -9,6 +9,11 @@ RSpec.describe BackendService, type: :service do
   before(:all) { savon.mock!   }
   after(:all)  { savon.unmock! }
 
+  def with_utc_offset(timestamp)
+    return nil unless timestamp
+    timestamp + Time.now.strftime("%z")
+  end
+
   it "get_agent_online_state should work if 4 people are online" do
     fixture = File.read("spec/fixtures/backend_service/get_agent_online_state_length_4.xml")
     expected = [
@@ -77,12 +82,12 @@ RSpec.describe BackendService, type: :service do
 
     expected = [
       {:ticket_id=>"20160614091049336435", 
-:arrived=>"14.6.2016 9:11:43", 
+:arrived=>with_utc_offset("14.6.2016 9:11:43"), 
 :time_in_queue=>"1", 
-:forwarded_to_agent=>"14.6.2016 9:11:44", 
-:answered=>"14.6.2016 9:11:57", 
-:call_ended=>"14.6.2016 9:13:59", 
-:after_call_ended=>"14.6.2016 9:21:41", 
+:forwarded_to_agent=>with_utc_offset("14.6.2016 9:11:44"), 
+:answered=>with_utc_offset("14.6.2016 9:11:57"), 
+:call_ended=>with_utc_offset("14.6.2016 9:13:59"), 
+:after_call_ended=>with_utc_offset("14.6.2016 9:21:41"), 
 :total_response_time=>"598", 
 :total_handle_time=>"597",
 :service_name=>"Neuvonta Fin", 

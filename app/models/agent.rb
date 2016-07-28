@@ -2,7 +2,7 @@ class Agent < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
 
-  has_many :agent_statuses
+  has_many :agent_statuses, dependent: :destroy
   has_many :contacts
 
   def self.find_or_create(id, full_name, team_name)
