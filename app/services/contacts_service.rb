@@ -40,16 +40,15 @@ class ContactsService
 
   def average_queue_duration_by_hour
     gmt_offset = Time.now.getlocal.gmt_offset
-    contacts = @contacts.where(contact_type: 'PBX').where.not(forwarded_to_agent: nil, service_id: 120)
+    select = [
+      "EXTRACT(HOUR FROM contacts.arrived + '#{gmt_offset} seconds') AS hour",
+      'AVG(EXTRACT(EPOCH FROM contacts.forwarded_to_agent - contacts.arrived)) AS avg_duration'
+    ].join(',')
+    data = answered_contacts.select(select).group('hour')
 
-    # if contacts nil jutut
-    beginning_of_day_of_first_contact = contacts[0].arrived.beginning_of_day
-    (0..23).map do |i|
-      start_time = beginning_of_day_of_first_contact + i.hour - gmt_offset
-      end_time = start_time + 59.minutes + 59.seconds
-      contacts_by_hour = contacts.where(arrived: start_time..end_time, forwarded_to_agent: start_time..end_time)
-      average_duration(contacts_by_hour, 'arrived', 'forwarded_to_agent')
-    end
+    result = Array.new(24, 0)
+    data.each { |d| result[(d['hour'])] = d['avg_duration'] }
+    result
   end
 
   def calls_by_hour
