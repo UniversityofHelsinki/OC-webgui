@@ -144,7 +144,7 @@ describe('screen', function () {
     browser.actions().mouseMove(element(by.className('navbar'))).perform();
     element(by.className('navbar')).element(by.linkText('Status-näkymä')).click();
     agentCards = element.all(by.className('agent-card'));
-    expect(agentCards.count()).toBe(1);
+    expect(agentCards.count()).toBe(2);
     expect(agentCards.get(0).element(by.className('agent-name')).getText())
       .toBe('Aallotar K');
   });
