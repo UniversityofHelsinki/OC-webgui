@@ -6,7 +6,7 @@ RSpec.describe TrackAgentStatusesJob, type: :job do
     cache1 = Rails.cache.read 'lunched'
     expect(cache1).to be(nil)
 
-    TrackAgentStatusesJob.new.perform
+    TrackAgentStatusesJob.perform
 
     cache2 = Rails.cache.read 'lunched'
     expected2 = Set.new [31]
@@ -21,7 +21,7 @@ RSpec.describe TrackAgentStatusesJob, type: :job do
     expected3 = Set.new [31]
     expect(cache3).to eq(expected3)
 
-    TrackAgentStatusesJob.new.perform
+    TrackAgentStatusesJob.perform
 
     cache4 = Rails.cache.read 'lunched'
     expected4 = Set.new [31, 44]

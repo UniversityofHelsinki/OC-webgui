@@ -11,4 +11,9 @@ FactoryGirl.define do
     time_in_queue '22'
   end
 
+  factory :qitem, class: QueueItem do
+    service_id '1'
+    open false
+  end
+
 end

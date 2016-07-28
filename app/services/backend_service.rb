@@ -25,6 +25,16 @@ class BackendService
                        contact_type: 'PBX EMAIL SMS FAX SCAN CHAT COBRO MANUAL FACE TASK VIDEO')
   end
 
+  def get_service_contacts(service_id, start_date, end_date)
+    get_agent_contacts(service_group_id: -1,
+                       service_id: service_id,
+                       team_name: '',
+                       agent_id: -1,
+                       start_date: start_date,
+                       end_date: end_date,
+                       contact_type: 'PBX EMAIL SMS FAX SCAN CHAT COBRO MANUAL FACE TASK VIDEO')
+  end
+
   # Method for getting agent contacts
   def get_agent_contacts(params)
     message = {
@@ -35,7 +45,7 @@ class BackendService
       startDate: params[:start_date],
       endDate: params[:end_date],
       contactTypes: params[:contact_type],
-      useServiceTime: true
+      useServiceTime: false
     }
 
     reply = @client.call(:get_contacts, message: message)
@@ -153,12 +163,12 @@ class BackendService
     data.map do |attrs|
       {
         ticket_id: attrs[:string][0],
-        arrived: attrs[:string][1],
+        arrived: with_utc_offset(attrs[:string][1]),
         time_in_queue: attrs[:string][2],
-        forwarded_to_agent: attrs[:string][3],
-        answered: attrs[:string][4],
-        call_ended: attrs[:string][5],
-        after_call_ended: attrs[:string][6],
+        forwarded_to_agent: with_utc_offset(attrs[:string][3]),
+        answered: with_utc_offset(attrs[:string][4]),
+        call_ended: with_utc_offset(attrs[:string][5]),
+        after_call_ended: with_utc_offset(attrs[:string][6]),
         total_response_time: attrs[:string][7],
         total_handle_time: attrs[:string][8],
         service_name: attrs[:string][9],
@@ -172,7 +182,7 @@ class BackendService
         ivr_feedback: attrs[:string][17],
         category_of_recording: attrs[:string][18],
         recorded: attrs[:string][19],
-        inserted_to_db: attrs[:string][20],
+        inserted_to_db: with_utc_offset(attrs[:string][20]),
         task_count: attrs[:string][21],
         task_time: attrs[:string][22],
         processing_total_sum: attrs[:string][23],
@@ -183,6 +193,11 @@ class BackendService
         destination: attrs[:string][28]
       }
     end
+  end
+
+  def with_utc_offset(timestamp)
+    return nil unless timestamp
+    timestamp + Time.now.getlocal.strftime('%z')
   end
 
   def delete_contact_headers(data)

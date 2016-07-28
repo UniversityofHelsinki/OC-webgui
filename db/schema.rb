@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720173555) do
+ActiveRecord::Schema.define(version: 20160728072937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,11 +40,11 @@ ActiveRecord::Schema.define(version: 20160720173555) do
   create_table "contacts", force: :cascade do |t|
     t.integer  "agent_id"
     t.string   "ticket_id"
-    t.datetime "arrived_in_queue"
+    t.datetime "arrived"
     t.datetime "forwarded_to_agent"
     t.datetime "answered"
     t.datetime "call_ended"
-    t.datetime "handling_ended"
+    t.datetime "after_call_ended"
     t.string   "direction"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 20160720173555) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "agent_id"
+    t.boolean  "is_admin"
   end
 
   add_foreign_key "agent_statuses", "agents"

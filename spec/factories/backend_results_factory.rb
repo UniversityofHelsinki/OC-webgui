@@ -1,5 +1,5 @@
 FactoryGirl.define do 
-  factory :get_team_contacts_1, class: Array do
+  factory :get_service_contacts_1, class: Array do
 
     contact_1 {{ ticket_id: "1",
                  arrived: "2016-06-20 10:00:00",
@@ -31,7 +31,11 @@ FactoryGirl.define do
                  additional_info: nil,
                  destination: nil }}
 
-    contact_2 {{ ticket_id: "2",
+      initialize_with { [contact_1] } 
+  end
+
+  factory :get_service_contacts_2, class: Array do 
+    contact_1 {{ ticket_id: "2",
                  arrived: "2016-06-20 10:00:00",
                  time_in_queue: 120,
                  forwarded_to_agent: "2016-06-20 10:02:00",
@@ -61,8 +65,43 @@ FactoryGirl.define do
                  additional_info: nil,
                  destination: nil }}
 
-      initialize_with { [contact_1, contact_2] } 
+      initialize_with { [contact_1] }
   end
+
+    factory :get_service_contacts_3, class: Array do 
+    contact_1 {{ ticket_id: "1",
+                 arrived: "2016-06-20 10:00:00",
+                 time_in_queue: 30,
+                 forwarded_to_agent: nil,
+                 answered: nil,
+                 call_ended: "2016-06-20 10:00:30",
+                 after_call_ended: nil,
+                 total_response_time: 30,
+                 total_handle_time: 30,
+                 service_name: "Neuvonta Eng",
+                 direction: "I",
+                 contact_type: "PBX",
+                 contact_information: nil,
+                 agent_name: "",
+                 customer_id: "-1",
+                 contact_reason: nil,
+                 information: nil,
+                 ivr_feedback: nil,
+                 category_of_recording: nil,
+                 recorded: nil,
+                 inserted_to_db: "2016-06-20 10:00:00",
+                 task_count: 0,
+                 task_time: 0,
+                 processing_total_sum: 30,
+                 subject: nil,
+                 outbound_campaign_name: nil,
+                 outbound_campaign_id: nil,
+                 additional_info: nil,
+                 destination: nil }}
+
+      initialize_with { [contact_1] }
+  end
+
 
   factory :get_agent_online_state_1, class: Array do
     contact_1 {{

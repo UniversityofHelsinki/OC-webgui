@@ -50,7 +50,7 @@ describe('login', function () {
   it('should redirect back /home', function () {
     browser.get('#/home');
     browser.actions().mouseMove(element(by.className('navbar'))).perform();
-    element(by.className('navbar')).element(by.linkText('Login')).click();
+    element(by.className('navbar')).element(by.linkText('Kirjaudu sisään')).click();
 
     element(by.model('login.username')).sendKeys('jooseppi');
     element(by.model('login.password')).sendKeys('oikee');
