@@ -23,9 +23,5 @@ RSpec.describe QueueService, type: :service do
 
   it "Calculates number of people who entered queue by hour correctly" do
     expect(QueueService.new.queue_items_by_hour('Helpdesk', '2016-07-17', '2016-07-19')).to eq([0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  end
-
-  it "Calculates hourly average of queueing time correctly" do
-    expect(QueueService.new.average_queueing_duration_by_hour('Helpdesk', time, time)).to eq([0, 0, 0, 0, 0, 0, 0, 0, 10.0, 10.0, 120.0, 0, 160.0, 90.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  end
+  end  
 end
