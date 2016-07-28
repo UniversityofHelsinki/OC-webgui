@@ -119,6 +119,15 @@ describe('queue', function () {
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ]
             });
+
+            $httpBackend.whenGET('queue.json').respond([
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { team: 'Helpdesk', language: 'Swedish', created_at: new Date() },
+              { team: 'Helpdesk', language: 'English', created_at: new Date() },
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() }
+            ]);
           });
       });
       browser.get('#/queue');
@@ -131,9 +140,6 @@ describe('queue', function () {
     });
 
     it('should contain answered calls', function () {
-      var protractor = require('protractor');
-      var prot = protractor.getInstance();
-      prot.sleep(5000);
       expect(rows.get(0).element(by.tagName('th')).getText()).toBe('Puhelut:');
       expect(rows.get(0).element(by.tagName('td')).getText()).toBe('11');
     });
