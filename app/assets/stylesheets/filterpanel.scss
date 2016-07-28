@@ -22,9 +22,6 @@ h2 {
 }
 
 .filter-bg {
-  background-color: #87aade;
-  height: 100vh;
-  width: 100%;
   display: flex;
 
   align-items: center;
@@ -36,6 +33,7 @@ h2 {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin: 2em;
 
   width: 60%;
 }

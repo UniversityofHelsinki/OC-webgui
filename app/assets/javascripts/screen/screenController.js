@@ -5,7 +5,8 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         url: '/screen',
         templateUrl: 'screen/_screen.html',
         controller: 'ScreenController',
-        controllerAs: 'screen'
+        controllerAs: 'screen',
+        navbarOverlay: true
       });
   })
   .controller('ScreenController', function ($interval, $scope, shared, Agents) {
