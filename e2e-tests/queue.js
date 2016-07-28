@@ -110,6 +110,9 @@ describe('queue', function () {
               average_after_call_duration: 60 + 5,
               calls_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+              ],
+              average_queue_duration_by_hour: [
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ]
             });
 
@@ -127,6 +130,13 @@ describe('queue', function () {
               { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
               { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
               { team: 'Helpdesk', language: 'Finnish', created_at: new Date() }
+            ]);
+
+            $httpBackend.whenGET('teams.json').respond([
+              {
+                name: "Helpdesk",
+                filter: true
+              }
             ]);
           });
       });
