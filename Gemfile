@@ -57,7 +57,7 @@ group :development, :test do
 end
 
 # Bootstrap for easy CSS
-gem 'bootstrap-sass'
+gem 'bootstrap'
 
 # Pack AngularJS templates
 gem 'angular-rails-templates'

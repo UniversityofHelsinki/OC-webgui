@@ -9,15 +9,39 @@ angular.module('ocWebGui.userAdmin.service', ['ngResource'])
       return data;
     });
   })
-  .factory('UserAdmin', function () {
+  .factory('UserAdmin', function ($resource, $http) {
     return {
-      createUser: function (username, password, passwordConfirmation) {
-        if (password !== passwordConfirmation) return false;
-        return true;
-      }
-    };
+      createUser: function(username, password, onSuccess, onError) {
+        $http.post('users', { user: { username:username, password: password }})
+          .then(function (response) {
+            onSuccess();
+           }, function(response) {
+             onError(response.data);
+           });
+        }
+      /*
+      createUser: function (username, password) {
+        var data = { user: { username: username, password: password }}
+        $resource('users', {}, {
+          create: {method: 'POST', params: data }
+        }).create();*/
+
+      }    
   });
 
+/*
+        login: function (username, password, onSuccess, onError) {
+        $http.post('login', { username: username, password: password })
+          .then(function (response) {
+            isAuthenticated = true;
+            userData = response.data;
+            onSuccess();
+          }, function (response) {
+            isAuthenticated = false;
+            onError(response.data.error);
+          });
+      },
+*/
 /*
 
 

@@ -1,32 +1,30 @@
-<div class="filter-bg">  
-  <div class="card-container">
-    <div class="card">
+
+<p class="alert alert-{{userAdmin.notifyClass}}">{{userAdmin.notification}}</p>
+  <div class="col-md-2">
       <h2>Luo uusi käyttäjä</h2>
       <form ng-submit="userAdmin.createUser()">
         <label>
           Käyttäjänimi
           <br>
-          <input ng-model="userAdmin.newUserName">
+          <input class="form-control" ng-model="userAdmin.newUserUsername">
         </label>
         <label>
           Salasana
           <br>
-          <input type="password" ng-model="userAdmin.password">
+          <input class="form-control" type="password" ng-model="userAdmin.newUserPassword">
         </label>
         <label>
           Vahvista salasana
           <br>
-          <input type="password" ng-model="userAdmin.password_confirmation">
-          <p class="error">{{ userAdmin.createUserError }}</p>
-          <input type="submit" value="Luo käyttäjä">
+          <input class="form-control" class="input" type="password" ng-model="userAdmin.newUserPasswordConfirmation">
+          <br>
+          <p><input type="submit" value="Luo käyttäjä" class="btn btn-success"></p>
         </label>
       </form>
     </div>
-    <div class="card">
-      <div ng-repeat="user in userAdmin.users">
-       {{ user.username }}
+ </div>
+ <div class="col-md-8">
+       <div ng-repeat="user in userAdmin.users">
+       <p>{{user.username}}</p>
       </div>
-    </div>
-  </div>
-  <div>
 </div>

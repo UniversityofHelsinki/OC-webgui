@@ -20,6 +20,14 @@ class ApplicationController < ActionController::Base
     User.find(session[:user_id])
   end
 
+  def ensure_user_is_logged_in
+    render json: { error: 'Please log in to access this resource' }, status: 403 unless current_user
+  end
+
+  def ensure_user_is_admin
+    render json: { error: 'This resource is only available for administrators' }, status: 403 unless current_user.is_admin
+  end
+
   protected
 
   def verified_request?
