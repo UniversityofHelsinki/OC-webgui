@@ -40,11 +40,11 @@ ActiveRecord::Schema.define(version: 20160728072937) do
   create_table "contacts", force: :cascade do |t|
     t.integer  "agent_id"
     t.string   "ticket_id"
-    t.datetime "arrived_in_queue"
+    t.datetime "arrived"
     t.datetime "forwarded_to_agent"
     t.datetime "answered"
     t.datetime "call_ended"
-    t.datetime "handling_ended"
+    t.datetime "after_call_ended"
     t.string   "direction"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
