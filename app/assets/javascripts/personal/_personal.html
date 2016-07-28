@@ -18,16 +18,16 @@
             </tr>
         </table>
         <div class="agent-statuses">
-            <div class="my-status">
+            <div class="own-status">
                 <div class="agent-status-color agent-status-color-{{personal.myColor}}"></div>
                 <div>{{ personal.myStatus }}</div>
             </div>
-            <table class="agent-list">
-                <tr ng-repeat="agent in personal.agents track by agent.id">
-                    <td class="color-square agent-status-color-{{agent.color}}"></td>
-                    <td>{{ agent.first_name }}</td>
-                </tr>
-            </table>
+            <ul class="agent-list">
+                <li ng-repeat="agent in personal.agents track by agent.id">
+                    <span class="color-square agent-status-color-{{agent.color}}"></span>
+                    <span>{{ agent.first_name }}</span>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
