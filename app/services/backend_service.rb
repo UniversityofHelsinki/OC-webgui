@@ -15,6 +15,26 @@ class BackendService
     )
   end
 
+  def get_team_contacts(team_name, start_date, end_date)
+    get_agent_contacts(service_group_id: -1,
+                       service_id: -1,
+                       team_name: team_name,
+                       agent_id: -1,
+                       start_date: start_date,
+                       end_date: end_date,
+                       contact_type: 'PBX EMAIL SMS FAX SCAN CHAT COBRO MANUAL FACE TASK VIDEO')
+  end
+
+  def get_service_contacts(service_id, start_date, end_date)
+    get_agent_contacts(service_group_id: -1,
+                       service_id: service_id,
+                       team_name: '',
+                       agent_id: -1,
+                       start_date: start_date,
+                       end_date: end_date,
+                       contact_type: 'PBX EMAIL SMS FAX SCAN CHAT COBRO MANUAL FACE TASK VIDEO')
+  end
+
   # Method for getting agent contacts
   def get_agent_contacts(params)
     message = {
@@ -25,7 +45,7 @@ class BackendService
       startDate: params[:start_date],
       endDate: params[:end_date],
       contactTypes: params[:contact_type],
-      useServiceTime: true
+      useServiceTime: false
     }
 
     reply = @client.call(:get_contacts, message: message)
@@ -34,35 +54,8 @@ class BackendService
                           :array_of_string)
 
     data = check_if_data_exists(data)
-
-    data = data.map do |attrs|
-      {
-        ticket_id: attrs[:string][0],
-        call_arrived_to_queue: attrs[:string][1],
-        queued_seconds: attrs[:string][2],
-        call_forwarded_to_agent: attrs[:string][3],
-        call_answered_by_agent: attrs[:string][4],
-        call_ended: attrs[:string][5],
-        call_handling_ended: attrs[:string][6],
-        call_length: attrs[:string][7],
-        call_handling_total: attrs[:string][8],
-        service_type: attrs[:string][9],
-        contact_direction: attrs[:string][10],
-        contact_type: attrs[:string][11],
-        contact_phone_num: attrs[:string][12],
-        contact_handler: attrs[:string][13],
-        contact_number: attrs[:string][14],
-        contact_state: attrs[:string][15],
-        contact_total_handling: attrs[:string][16],
-        sub_group: attrs[:string][17]
-      }
-    end
-
-    # First entry in array always seems to consist of weird numbers, not an actual contact
-    unless data.empty?
-      data.delete_at(0) if data[0][:ticket_id] == '21100'
-    end
-
+    data = map_contacts_data(data)
+    delete_contact_headers(data)
     data
   end
 
@@ -130,11 +123,11 @@ class BackendService
                           :get_general_queue_result,
                           :array_of_string)
     data = check_if_data_exists(data)
-    # TODO: change variable names
+
     data.map do |attrs|
       {
-        line: attrs[:string][0],
-        label: attrs[:string][1],
+        service_id: attrs[:string][0],
+        service_name: attrs[:string][1],
         time_in_queue: attrs[:string][7]
       }
     end
@@ -164,5 +157,51 @@ class BackendService
     return [] unless data
     data = [data] unless data.is_a? Array
     data
+  end
+
+  def map_contacts_data(data)
+    data.map do |attrs|
+      {
+        ticket_id: attrs[:string][0],
+        arrived: with_utc_offset(attrs[:string][1]),
+        time_in_queue: attrs[:string][2],
+        forwarded_to_agent: with_utc_offset(attrs[:string][3]),
+        answered: with_utc_offset(attrs[:string][4]),
+        call_ended: with_utc_offset(attrs[:string][5]),
+        after_call_ended: with_utc_offset(attrs[:string][6]),
+        total_response_time: attrs[:string][7],
+        total_handle_time: attrs[:string][8],
+        service_name: attrs[:string][9],
+        direction: attrs[:string][10],
+        contact_type: attrs[:string][11],
+        contact_information: attrs[:string][12],
+        agent_name: attrs[:string][13],
+        customer_id: attrs[:string][14],
+        contact_reason: attrs[:string][15],
+        information: attrs[:string][16],
+        ivr_feedback: attrs[:string][17],
+        category_of_recording: attrs[:string][18],
+        recorded: attrs[:string][19],
+        inserted_to_db: with_utc_offset(attrs[:string][20]),
+        task_count: attrs[:string][21],
+        task_time: attrs[:string][22],
+        processing_total_sum: attrs[:string][23],
+        subject: attrs[:string][24],
+        outbound_campaign_name: attrs[:string][25],
+        outbound_campaign_id: attrs[:string][26],
+        additional_info: attrs[:string][27],
+        destination: attrs[:string][28]
+      }
+    end
+  end
+
+  def with_utc_offset(timestamp)
+    return nil unless timestamp
+    timestamp + Time.now.getlocal.strftime('%z')
+  end
+
+  def delete_contact_headers(data)
+    return if data.empty?
+    data.delete_at(0) if data[0][:ticket_id] == '21100'
   end
 end

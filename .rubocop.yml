@@ -8,8 +8,12 @@ AllCops:
     - 'app/controllers/application_controller.rb'
     - 'Gemfile'
     - 'vendor/**/*'
+    - 'god.rb'
 Rails:
   Enabled: true
+Rails/TimeZone:
+  Exclude:
+    - 'job_schedule.rb'
 Metrics/ClassLength:
   Exclude:
     - 'app/services/backend_service.rb'

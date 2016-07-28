@@ -1,30 +1,22 @@
 # Retrieves queue status information and passes it to QueueUpdater to update as necessary
 class TrackQueueItemsJob
-  include Now
+  extend Now
 
-  def perform
+  def self.perform
     current = BackendService.new.get_general_queue.map do |data|
-      QueueItem.new(line: data[:line],
-                    label: data[:label],
+      QueueItem.new(service_id: data[:service_id],
+                    service_name: data[:service_name],
                     time_in_queue: data[:time_in_queue])
     end
-    log = JobLog.new('TrackQueueItemsJob')
-    log.log_success if QueueUpdater.new(now, log.last_success).update_queue(current)
+    last_success = Rails.cache.read('track_queue_items_job_last_success')
+    Rails.cache.write('track_queue_items_job_last_success', now) if QueueUpdater.new(now, last_success).update_queue(current)
   end
 
-  def max_run_time
-    1.second
+  def self.queue_priority
+    0
   end
 
-  def max_attempts
-    1
-  end
-
-  def failure(*)
-    JobLog.new('TrackQueueItemsJob').log_failure
-  end
-
-  def queue_name
-    'statuses'
+  def self.queue_respond_timeout
+    2
   end
 end

@@ -5,12 +5,13 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         url: '/queue',
         templateUrl: 'queue/_queue.html',
         controller: 'QueueController',
-        controllerAs: 'queue'
+        controllerAs: 'queue',
+        navbarOverlay: true
       });
   })
   .controller('QueueController', function ($interval, $scope, Queue, $http) {
     var vm = this;
-
+    vm.api = {};
     vm.options = {
       chart: {
         type: 'linePlusBarChart',
@@ -24,10 +25,12 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         x: function (d) { return d.hour; },
         y: function (d) { return d.calls; },
         bars: {
-          forceY: [0, 50]
+          forceY: [0, 50],
+          yDomain: [0, 10]
         },
         lines: {
-          forceY: [0, 50]
+          forceY: [0, 50],
+          yDomain: [0, 10]
         },
         xAxis: {
           tickFormat: function (d) {
@@ -37,10 +40,10 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           showMaxMin: true
         },
         y1Axis: {
-          tickValues: [0, 10, 20, 30, 40, 50]
+          tickValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         },
         y2Axis: {
-          ticks: 5
+          tickValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         },
         legend: {
           maxKeyLength: 100
@@ -72,6 +75,12 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         }
         angular.extend(vm.stats, vm.stats, data);
         vm.data[0].values = values;
+        
+        var nearest_ten = get_nearest_ten_for_max_value(0);
+        if (nearest_ten == 0) return;
+
+        vm.options.chart.bars.yDomain[1] = nearest_ten;
+        setTicks("y1", nearest_ten);
       });
     }
 
@@ -86,7 +95,48 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         }
         angular.extend(vm.stats, vm.stats, data);
         vm.data[1].values = values;
+
+        var nearest_ten = get_nearest_ten_for_max_value(1);
+        if (nearest_ten == 0) return;
+
+        vm.options.chart.lines.yDomain[1] = nearest_ten;
+        
+        setTicks("y2", nearest_ten);
       });
+    }
+
+    function setTicks(axis, nearest_ten) {
+      if (axis == "y1") {
+        var ticks = vm.options.chart.y1Axis.tickValues;
+      } else if (axis == "y2") {
+        var ticks = vm.options.chart.y2Axis.tickValues;
+      }
+
+      newTicks = get_new_ticks(nearest_ten);
+      if (angular.equals(ticks, newTicks)) return;
+      
+      if (axis == "y1") {
+        vm.options.chart.y1Axis.tickValues = newTicks.slice(0);
+      } else if(axis == "y2") {
+        vm.options.chart.y2Axis.tickValues = newTicks.slice(0);
+      }
+
+      vm.api.refresh();
+    }
+
+    function get_nearest_ten(i) {
+      var max_val = d3.max(vm.data[i].values, function (x) { return x.calls; });
+      if (max_val == null) {
+        return 0;
+      }
+      return Math.ceil(max_val / 10) * 10;
+    }
+
+    function get_new_ticks(nearest_ten) {
+      if (nearest_ten == 10) {
+        return Array.from({length: 10}, function (v, k) { return k; });
+      }
+      return Array.from({length: nearest_ten / 10}, function (v, k) { return k * 10; });
     }
 
     vm.message = 'Jono';
@@ -102,7 +152,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       // Also update date/time
       vm.date = new Date();
     }
-
     var fetchDataInterval = $interval(fetchData, 5 * 1000);
     var fetchContactStatsInterval = $interval(fetchContactStats, 5 * 60 * 1000);
     var fetchQueueStatsInterval = $interval(fetchQueueStats, 5 * 60 * 1000);
@@ -116,14 +165,4 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     fetchContactStats();
     fetchQueueStats();
 
-    // mock data for testing css
-    // vm.queue = [
-    //   { line: 135, language: 'Fin', time_in_queue: 360 },
-    //   { line: 137, language: 'Fin', time_in_queue: 123 },
-    //   { line: 125, language: 'Eng', time_in_queue: 123 },
-    //   { line: 137, language: 'Fin', time_in_queue: 123 },
-    //   { line: 133, language: 'Swe', time_in_queue: 53  },
-    //   { line: 131, language: 'Eng', time_in_queue: 123 },
-    //   { line: 121, language: 'Eng', time_in_queue: 214 }
-    // ];
   });

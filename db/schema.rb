@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714112027) do
+ActiveRecord::Schema.define(version: 20160728072937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,15 +40,16 @@ ActiveRecord::Schema.define(version: 20160714112027) do
   create_table "contacts", force: :cascade do |t|
     t.integer  "agent_id"
     t.string   "ticket_id"
-    t.datetime "arrived_in_queue"
+    t.datetime "arrived"
     t.datetime "forwarded_to_agent"
     t.datetime "answered"
     t.datetime "call_ended"
-    t.datetime "handling_ended"
+    t.datetime "after_call_ended"
     t.string   "direction"
-    t.string   "phone_number"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.integer  "service_id"
+    t.string   "contact_type"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -68,15 +69,12 @@ ActiveRecord::Schema.define(version: 20160714112027) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "queue_items", force: :cascade do |t|
-    t.integer  "line"
-    t.string   "label"
-    t.integer  "time_in_queue"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-    t.string   "team"
     t.boolean  "open"
     t.datetime "closed"
     t.datetime "last_reliable_status"
+    t.integer  "service_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -84,6 +82,7 @@ ActiveRecord::Schema.define(version: 20160714112027) do
     t.integer  "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "language"
   end
 
   add_index "services", ["team_id"], name: "index_services_on_team_id", using: :btree
@@ -109,12 +108,14 @@ ActiveRecord::Schema.define(version: 20160714112027) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "agent_id"
+    t.boolean  "is_admin"
   end
 
   add_foreign_key "agent_statuses", "agents"
   add_foreign_key "agents", "teams"
   add_foreign_key "agents", "users"
   add_foreign_key "contacts", "agents"
+  add_foreign_key "queue_items", "services"
   add_foreign_key "services", "teams"
   add_foreign_key "users", "agents"
 end

@@ -1,13 +1,16 @@
 @import "common";
 
-.cards {
+.screen-background {
   display: flex;
-  flex-wrap: wrap;
-  flex-grow: 1;
-  align-content: flex-start;
-  align-items: stretch;
-  padding: $cards-gutter / 2;
-  align-self: flex-start;
+
+  .card-container {
+    align-self: flex-start;
+
+    flex-wrap: wrap;
+    flex-grow: 1;
+    align-content: flex-start;
+    align-items: stretch;
+  }
 }
 
 .card {
@@ -21,14 +24,11 @@
 }
 
 .three-col {
-  width: calc(33% - #{$cards-gutter});
-  font-size: 120%;
-  line-height: 2.7em;
+  @include card-width(100% / 3);
 }
 
 .four-col {
-  width: calc(25% - #{$cards-gutter});
-  line-height: 1;
+  @include card-width(25%);
 }
 
 .agent-card {
@@ -36,6 +36,7 @@
 
   .agent-status-color {
     margin-right: $card-padding;
+    flex-shrink: 0;
   }
 }
 
@@ -45,7 +46,8 @@
   }
 
   50%, 80% {
-    background-color: mix($card-bg, yellow, 85%);
+    background-color: #ffcf00;
+    //background-color: mix($card-bg, yellow, 85%);
   }
 }
 
@@ -58,17 +60,29 @@
 .agent-status-info {
   box-sizing: border-box;
   flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .agent-name {
-  font-size: 3em;
+  font-size: 4em;
+  line-height: 1;
+
+  .three-col & {
+    font-size: 6em;
+  }
 }
 
 .agent-status-container {
   display: flex;
   color: gray;
   margin-top: 0.2em;
-  font-size: 2em;
+  font-size: 2.5em;
+  line-height: 1;
+
+  .three-col & {
+    font-size: 4em;
+  }
 }
 
 .agent-status-open {
@@ -77,6 +91,12 @@
 
 .agent-status {
   flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .sidebar {
@@ -84,7 +104,7 @@
   background-color: $card-bg;
   width: 6%;
   text-align: center;
-  font-size: 300%;
+  font-size: 400%;
   align-items: center;
   flex-direction: column;
   justify-content: center;
@@ -107,7 +127,7 @@
 }
 
 .agent-status-color {
-  width: 3em;
+  width: 4em;
   border-radius: 4px;
 }
 
@@ -125,4 +145,11 @@
 
 .agent-status-color-red {
   background-color: #f33;
+}
+
+.lunch {
+  background-image: image-url("lunch.svg");
+  background-repeat: no-repeat;
+  background-size: 60px 60px;
+  background-position: right 5px top 5px;
 }

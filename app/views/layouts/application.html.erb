@@ -7,17 +7,16 @@
   <%= csrf_meta_tags %>
 </head>
 <body ng-app="ocWebGui">
-  <!-- Navbar for every page -->
-  <div class="navbar card" ng-controller="NavbarController as navbar">
-    <a ui-sref="screen" class="card">Status Screen</a>
-    <a ui-sref="queue" class="card">Queue Screen</a>
-    <a ui-sref="filterpanel" class="card">Filters</a>
-    <a ui-sref="stats" class="card">Statistics</a>
-    <a ui-sref="personal" class="card" ng-if="navbar.isAuthenticated()">{{ navbar.username() }}</a>
-    <a ui-sref="login" ng-if="!navbar.isAuthenticated()" class="card">Login</a>
-    <a ng-if="navbar.isAuthenticated()" ng-click="navbar.logout()" class="card">Logout</a>
-    <a href ng-click="navbar.goFullscreen()" class="card">
-        {{ navbar.isFullscreen == true ? 'Exit fullscreen' : 'Fullscreen' }}
+  <div class="navbar" ng-controller="NavbarController as navbar">
+    <a ui-sref-active="active" ui-sref="screen">Status-näkymä</a>
+    <a ui-sref-active="active" ui-sref="queue" >Jono-näkymä</a>
+    <a ui-sref-active="active" ui-sref="filterpanel" >Filtteröi</a>
+    <a ui-sref-active="active" ui-sref="stats" ng-if="navbar.isAuthenticated()">Tilastot</a>
+    <a ui-sref-active="active" ui-sref="personal" ng-if="navbar.isAuthenticated()">{{ navbar.username() }}</a>
+    <a ui-sref-active="active" ui-sref="login" ng-if="!navbar.isAuthenticated()">Kirjaudu sisään</a>
+    <a ng-if="navbar.isAuthenticated()" href="" ng-click="navbar.logout()">Kirjaudu ulos</a>
+    <a href ng-click="navbar.goFullscreen()">
+        {{ navbar.isFullscreen ? 'Pois kokoruudusta' : 'Kokoruutu' }}
     </a>
   </div>
   <ui-view></ui-view>

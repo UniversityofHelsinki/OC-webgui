@@ -31,6 +31,8 @@ angular.module('ocWebGui.shared.time', ['ocWebGui.shared.time.service'])
           } else if (values[1] != null) {
             // use dateobj
             dateobj = values[1];
+          } else {
+            currentSeconds = 0;
           }
           updateTime();
         });

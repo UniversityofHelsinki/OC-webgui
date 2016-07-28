@@ -9,6 +9,11 @@ RSpec.describe BackendService, type: :service do
   before(:all) { savon.mock!   }
   after(:all)  { savon.unmock! }
 
+  def with_utc_offset(timestamp)
+    return nil unless timestamp
+    timestamp + Time.now.strftime("%z")
+  end
+
   it "get_agent_online_state should work if 4 people are online" do
     fixture = File.read("spec/fixtures/backend_service/get_agent_online_state_length_4.xml")
     expected = [
@@ -73,27 +78,38 @@ RSpec.describe BackendService, type: :service do
 
     message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
     agentID: 2000049, startDate: "2016-06-14", endDate: "2016-06-15",
-    contactTypes: 'PBX', useServiceTime: true }
+    contactTypes: 'PBX', useServiceTime: false }
 
     expected = [
       {:ticket_id=>"20160614091049336435", 
-:call_arrived_to_queue=>"14.6.2016 9:11:43", 
-:queued_seconds=>"1", 
-:call_forwarded_to_agent=>"14.6.2016 9:11:44", 
-:call_answered_by_agent=>"14.6.2016 9:11:57", 
-:call_ended=>"14.6.2016 9:13:59", 
-:call_handling_ended=>"14.6.2016 9:21:41", 
-:call_length=>"598", 
-:call_handling_total=>"597",
-:service_type=>"Neuvonta Fin", 
-:contact_direction=>"I", 
+:arrived=>with_utc_offset("14.6.2016 9:11:43"), 
+:time_in_queue=>"1", 
+:forwarded_to_agent=>with_utc_offset("14.6.2016 9:11:44"), 
+:answered=>with_utc_offset("14.6.2016 9:11:57"), 
+:call_ended=>with_utc_offset("14.6.2016 9:13:59"), 
+:after_call_ended=>with_utc_offset("14.6.2016 9:21:41"), 
+:total_response_time=>"598", 
+:total_handle_time=>"597",
+:service_name=>"Neuvonta Fin", 
+:direction=>"I", 
 :contact_type=>"PBX",
-:contact_phone_num=>"0405882759", 
-:contact_handler=>"Seppänen Pekka", 
-:contact_number=>"-1",
-:contact_state=>"Onnistunut kontakti", 
-:contact_total_handling=>"nil", 
-:sub_group=>"-1"}
+:contact_information=>"0405882759", 
+:agent_name=>"Seppänen Pekka", 
+:customer_id=>"-1",
+:contact_reason=>"Onnistunut kontakti", 
+:information=>"nil",
+:ivr_feedback=>"-1",
+:category_of_recording=>nil,
+:recorded=>nil,
+:inserted_to_db=>nil,
+:task_count=>nil,
+:task_time=>nil,
+:processing_total_sum=>nil,
+:subject=>nil,
+:outbound_campaign_name=>nil,
+:outbound_campaign_id=>nil,
+:additional_info=>nil,
+:destination=>nil}
     ]
 
     savon.expects(:get_contacts).with(message: message).returns(fixture)
@@ -111,12 +127,12 @@ RSpec.describe BackendService, type: :service do
     expect(response).to eq(expected)
   end
 
-  it "Should return empty array if there is only non-contact weird numbers" do
+  it "Should return empty array if there is only header data" do
     fixture = File.read("spec/fixtures/backend_service/get_agent_contacts_2.xml")
 
     message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
     agentID: 2000049, startDate: "2016-06-14", endDate: "2016-06-15",
-    contactTypes: 'PBX', useServiceTime: true }
+    contactTypes: 'PBX', useServiceTime: false }
 
     expected = []
 
@@ -142,7 +158,7 @@ it "Should return empty array if there is empty response" do
 
     message = { serviceGroupID: 4, serviceID: 137, teamID: "Helpdesk",
     agentID: 2000049, startDate: "2016-06-14", endDate: "2016-06-15",
-    contactTypes: 'PBX', useServiceTime: true }
+    contactTypes: 'PBX', useServiceTime: false }
 
     expected = []
 
