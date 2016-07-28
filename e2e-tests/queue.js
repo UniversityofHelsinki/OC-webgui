@@ -131,6 +131,7 @@ describe('queue', function () {
     });
 
     it('should contain answered calls', function () {
+      var protractor = require('protractor');
       var prot = protractor.getInstance();
       prot.sleep(5000);
       expect(rows.get(0).element(by.tagName('th')).getText()).toBe('Puhelut:');
