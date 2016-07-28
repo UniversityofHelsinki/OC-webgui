@@ -100,8 +100,8 @@ describe('screen', function () {
   it('should have agent statuses', function () {
     expect(agentCards.get(0).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
     expect(agentCards.get(1).element(by.className('agent-status')).getInnerHtml()).toBe('Vapaa');
-    expect(agentCards.get(2).element(by.className('agent-status')).getInnerHtml()).toBe('Chat');
-    expect(agentCards.get(3).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+    expect(agentCards.get(2).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+    expect(agentCards.get(3).element(by.className('agent-status')).getInnerHtml()).toBe('Chat');
   });
 
   it('should hide open status text', function() {
