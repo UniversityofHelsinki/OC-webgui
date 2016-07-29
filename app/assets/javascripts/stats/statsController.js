@@ -10,5 +10,5 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
   })
   .controller('StatsController', function ($scope, $http, $interval) {
     var vm = this;
-    vm.title = 'Statistics';
+    vm.title = 'Tilastot';
   });

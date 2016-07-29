@@ -5,6 +5,6 @@ describe('homepage', function () {
   });
   it('should contain header', function () {
     browser.get('#/home');
-    expect(element(by.tagName('h1')).getText()).toBe('Home');
+    expect(element(by.tagName('h1')).getText()).toBe('Koti');
   });
 });

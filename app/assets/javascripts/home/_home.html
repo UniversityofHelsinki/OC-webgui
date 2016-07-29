@@ -1,15 +1,15 @@
 <div class="home-bg">
     <div class="home-menu card">
-        <h1>Home</h1>
-        <a ui-sref="screen" class="card">Agents</a>
-        <a ui-sref="queue" class="card">Queue</a>
-        <a ui-sref="filterpanel" class="card">Filters</a>
-        <a ui-sref="stats" class="card" ng-if="home.isAuthenticated()">Statistics</a>
+        <h1>Koti</h1>
+        <a ui-sref="screen" class="card">Status-näkymä</a>
+        <a ui-sref="queue" class="card">Jono-näkymä</a>
+        <a ui-sref="filterpanel" class="card">Filtteröi</a>
+        <a ui-sref="stats" class="card" ng-if="home.isAuthenticated()">Tilastot</a>
         <a ui-sref="personal" class="card" ng-if="home.isAuthenticated()">{{ home.username() }}</a>
-        <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Login</a>
+        <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Kirjaudu sisään</a>
         <div ng-if="home.isAuthenticated()" class="home-logout">
-            Current user: {{ home.username() }}
-            <a href="" ng-click="home.logout()" class="card">Logout</a>
+            Kirjautuneena: {{ home.username() }}
+            <a href="" ng-click="home.logout()" class="card">Kirjaudu ulos</a>
         </div>
     </div>
     <!-- <div class="home-menu card"> -->
