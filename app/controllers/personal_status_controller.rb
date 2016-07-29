@@ -1,19 +1,17 @@
 # API for OC Agent status data
 class PersonalStatusController < ApplicationController
   def index
-    user = User.find_by(id: session[:user_id])
-    agent_id = user.agent_id
-    if agent_id.nil?
-      render json: {}, status: 404
+    unless current_user
+      render json: { error: 'Please log in to access this resouce' }, status: 403
       return
     end
-    agent = Agent.find_by(id: agent_id)
+    agent = Agent.find_by(id: current_user.agent_id)
     if agent.nil?
-      render json: {}, status: 403
+      render json: { error: 'Current user does not match any registered agent'}, status: 400
       return
     end
 
-    contacts_service = ContactsService.new(Agent.find_by(id: agent_id), Time.zone.now.beginning_of_day, Time.zone.now.end_of_day)
+    contacts_service = ContactsService.new(Agent.find_by(id: agent.id), Time.zone.now.beginning_of_day, Time.zone.now.end_of_day)
 
     render json: {
       answered_calls: contacts_service.num_answered_calls,
