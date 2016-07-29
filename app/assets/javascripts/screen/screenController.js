@@ -25,14 +25,14 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
     function fetchData() {
       Agents.query(function (agents) {
         // Mock data
-         agents = [
-           { agent_id: 1, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
-           { agent_id: 2, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
-           { agent_id: 3, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Puhelu', created_at: '2016-06-29T12:50:25.671Z' },
-           { agent_id: 4, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Jälkikirjaus', created_at: '2016-06-29T12:50:25.671Z' },
-           { agent_id: 5, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
-           { agent_id: 6, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
-         ];
+        // agents = [
+        //    { agent_id: 1, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
+        //    { agent_id: 2, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
+        //    { agent_id: 3, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Puhelu', created_at: '2016-06-29T12:50:25.671Z' },
+        //    { agent_id: 4, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Jälkikirjaus', created_at: '2016-06-29T12:50:25.671Z' },
+        //    { agent_id: 5, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
+        //    { agent_id: 6, name: 'Meikäläinen Matti', team: 'Helpdesk', status: 'Vapaa', created_at: '2016-06-29T12:50:25.671Z' },
+        //  ];
 
         var green = 0;
         var yellow = 0;
@@ -50,6 +50,9 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
               agent.color = 'yellow';
               yellow++;
               break;
+            case String(agent.status.match(/^Varattu \(.*\)/)):
+              agent.status = agent.status.match(/^Varattu \((.*)\)/)[1];
+              // fallthrough
             default:
               agent.color = 'red';
               red++;
