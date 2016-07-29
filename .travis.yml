@@ -8,9 +8,6 @@ cache:
     - node_modules
     - vendor/assets/bower_components
 
-services:
-  - postgresql 
-
 env:
   global:
     - TRAVIS_NODE_VERSION="4"
@@ -37,6 +34,7 @@ notifications:
   email: false
 
 addons:
+  postgresql: "9.2"
   code_climate:
     repo_token: 1bb823ed67ec3e33f0047fc2d8231acbfc955fedc2187dc3545c85c956d66c5f
 
