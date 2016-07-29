@@ -24,13 +24,13 @@
         <div ng-if="queue.queue.length > 5" class="plus-5">&#9660</div>
     </div>
     <div class="outer">
-        <div class="queue-stats card">
+        <div class="queue-stats card">            
             <table class="queue-stats-table">
+                <th id="percentage">{{queue.stats.answered_percentage}}%</th>
                 <tr>
                     <th>Puhelut:</th>
                     <td>{{queue.stats.answered_calls}} / 
                         {{queue.stats.answered_calls + queue.stats.missed_calls}}</td>
-                  <!--  <td>{{ queue.stats.answered_calls }}</td> -->
                 </tr>
                 <tr>
                     <th>Puheluiden ka:</th>
@@ -44,12 +44,6 @@
                     <th>Jonotusten ka:</th>
                     <td><oc-time seconds="queue.stats.average_waiting_time"></oc-time></td>
                     
-                </tr>
-                <tr>
-                    <th>Vastattujen osuus:</th>
-                    <td>{{queue.stats.answered_percentage}}%
-                      <!--  [{{queue.stats.answered_calls}} / 
-                        {{queue.stats.answered_calls + queue.stats.missed_calls}}]</td> -->
                 </tr>
             </table>
         </div>
