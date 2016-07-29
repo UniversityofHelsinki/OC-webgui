@@ -18,7 +18,7 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
         var myAgent = agents.filter(function (agent) {
           return User.getUserData().agent_id === agent.id;
         });
-        // ^ CC halus noi == -> ===, emt kyl rikkooks se
+        
         if (myAgent[0] === undefined) {
           vm.myStatus = 'Please login to webgui and OC';
           vm.myColor = 'red';
@@ -32,10 +32,9 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
         vm.queue = queue;
       });
 
+
       Personal.get(function(data) {
-        vm.myCalls_count = data.answered_calls;
-        vm.myCalls_avg = data.average_call_duration;
-        vm.myAftercalls_avg = data.average_after_call_duration;
+        vm.data = data;
       });
     }
 

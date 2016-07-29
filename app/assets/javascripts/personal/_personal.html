@@ -6,26 +6,26 @@
         <table class="personal-statistics">
             <tr>
                 <th>Puheluni:</th>
-                <td>{{ personal.myCalls_count }}</td>
+                <td class="answeredCalls">{{ personal.data.answered_calls }}</td>
             </tr>
             <tr>
                 <th>Puheluiden ka:</th>
-                <td><oc-time seconds="personal.myCalls_avg"></oc-time></td>
+                <td class="avgCallDuration"><oc-time seconds="personal.data.average_call_duration"></oc-time></td>
             </tr>
             <tr>
                 <th>Jälkikirjauksen ka:</th>
-                <td><oc-time seconds="personal.myAftercalls_avg"></oc-time></td>
+                <td class="avgAfterCall"><oc-time seconds="personal.data.average_after_call_duration"></oc-time></td>
             </tr>
         </table>
         <div class="agent-statuses">
             <div class="own-status">
-                <div class="agent-status-color agent-status-color-{{personal.myColor}}"></div>
-                <div>{{ personal.myStatus }}</div>
+                <div id="ownColor" class="agent-status-color agent-status-color-{{personal.myColor}}"></div>
+                <div class="ownStatus">{{ personal.myStatus }}</div>
             </div>
             <ul class="agent-list">
                 <li ng-repeat="agent in personal.agents track by agent.id">
                     <span class="color-square agent-status-color-{{agent.color}}"></span>
-                    <span>{{ agent.first_name }}</span>
+                    <span class="agentName">{{ agent.first_name }}</span>
                 </li>
             </ul>
         </div>
