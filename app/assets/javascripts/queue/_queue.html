@@ -28,7 +28,9 @@
             <table class="queue-stats-table">
                 <tr>
                     <th>Puhelut:</th>
-                    <td>{{ queue.stats.answered_calls }}</td>
+                    <td>{{queue.stats.answered_calls}} / 
+                        {{queue.stats.answered_calls + queue.stats.missed_calls}}</td>
+                  <!--  <td>{{ queue.stats.answered_calls }}</td> -->
                 </tr>
                 <tr>
                     <th>Puheluiden ka:</th>
@@ -46,8 +48,8 @@
                 <tr>
                     <th>Vastattujen osuus:</th>
                     <td>{{queue.stats.answered_percentage}}%
-                        [{{queue.stats.answered_calls}} / 
-                        {{queue.stats.answered_calls + queue.stats.missed_calls}}]</td>
+                      <!--  [{{queue.stats.answered_calls}} / 
+                        {{queue.stats.answered_calls + queue.stats.missed_calls}}]</td> -->
                 </tr>
             </table>
         </div>
