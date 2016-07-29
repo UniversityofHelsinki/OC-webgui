@@ -11,12 +11,12 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
   .controller('PersonalController', function (TrimName, Agents, Queue, User, Personal, $interval, $scope) {
     var vm = this;
 
-    vm.trimName = TrimName.trim
+    vm.trimName = TrimName.trim;
 
     function fetchData() {
       Agents.query(function (agents) {
         vm.agents = agents;
-        var myAgent = agents.find(function(agent) {
+        var myAgent = agents.find(function (agent) {
           return User.getUserData().agent_id === agent.id;
         });
 
@@ -32,7 +32,7 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
         vm.queue = queue;
       });
 
-      Personal.get(function(data) {
+      Personal.get(function (data) {
         vm.data = data;
       });
     }

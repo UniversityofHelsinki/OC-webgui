@@ -66,7 +66,7 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
       });
     }
 
-    vm.trimName = TrimName.trim
+    vm.trimName = TrimName.trim;
 
     fetchDataInterval = $interval(fetchData, 5000);
     $scope.$on('$destroy', function () {
