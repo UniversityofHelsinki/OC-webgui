@@ -41,6 +41,19 @@ class ContactsService
     average_duration(contacts, 'arrived', 'forwarded_to_agent')
   end
 
+  def average_queue_duration_by_hour
+    gmt_offset = Time.now.getlocal.gmt_offset
+    select = [
+      "EXTRACT(HOUR FROM contacts.arrived + '#{gmt_offset} seconds') AS hour",
+      'AVG(EXTRACT(EPOCH FROM contacts.forwarded_to_agent - contacts.arrived)) AS avg_duration'
+    ].join(',')
+    data = answered_contacts.select(select).group('hour')
+
+    result = Array.new(24, 0)
+    data.each { |d| result[(d['hour'])] = d['avg_duration'] }
+    result
+  end
+
   def calls_by_hour
     gmt_offset = Time.now.getlocal.gmt_offset
     select = "EXTRACT(HOUR FROM contacts.arrived + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count"

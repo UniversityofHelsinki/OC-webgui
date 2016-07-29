@@ -67,52 +67,46 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       'values': []
     }];
 
+
     function fetchContactStats() {
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
-        var values = data.calls_by_hour
+        var callsValues = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          // .filter(function (item) { return item.calls !== 0; });
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; })
-          ;
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+
+        var queueValues = data.average_queue_duration_by_hour
+          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+
         if (!angular.isDefined(vm.stats)) {
           vm.stats = {};
         }
-        angular.extend(vm.stats, vm.stats, data);
-        vm.data[0].values = values;
-        
-        var nearest_ten = get_nearest_ten(0);
-        if (nearest_ten == 0) return;
 
-        vm.options.chart.bars.yDomain[1] = nearest_ten;
+        angular.extend(vm.stats, vm.stats, data);
+        vm.data[0].values = callsValues;
+        vm.data[1].values = queueValues;
+        vm.options.chart.bars.yDomain[1] = getNearestTen(0);
+        vm.options.chart.lines.yDomain[1] = getNearestTen(1);
       });
     }
 
     function fetchQueueStats() {
       $http.get('queue/stats.json').then(function (response) {
         var data = response.data;
-        var values = data.queue_items_by_hour
-          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
         if (!angular.isDefined(vm.stats)) {
           vm.stats = {};
         }
         angular.extend(vm.stats, vm.stats, data);
-        vm.data[1].values = values;
-
-        var nearest_ten = get_nearest_ten(1);
-        if (nearest_ten == 0) return;
-
-        vm.options.chart.lines.yDomain[1] = nearest_ten;
       });
     }
 
-    function get_nearest_ten(i) {
-      var max_val = d3.max(vm.data[i].values, function (x) { return x.calls; });
-      if (max_val == null) {
+    function getNearestTen(i) {
+      var maxVal = d3.max(vm.data[i].values, function (x) { return x.calls; });
+      if (maxVal == null) {
         return 0;
       }
-      return Math.ceil(max_val / 10) * 10;
+      return Math.ceil(maxVal / 10) * 10;
     }
 
     vm.message = 'Jono';
