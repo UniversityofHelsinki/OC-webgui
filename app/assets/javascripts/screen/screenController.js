@@ -1,4 +1,4 @@
-angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWebGui.shared.time'])
+angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.trimName.service'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('screen', {
@@ -9,7 +9,7 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         navbarOverlay: true
       });
   })
-  .controller('ScreenController', function ($interval, $scope, shared, Agents) {
+  .controller('ScreenController', function ($interval, $scope, shared, Agents, TrimName) {
     var vm = this;
     var fetchDataInterval;
 
@@ -38,26 +38,23 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         var yellow = 0;
         var red = 0;
 
-        // Agent status coloring and number tally.
-        vm.agents = agents.map(function (agent) {
+        // Agent status number tally.
+        agents.forEach(function (agent) {
           switch (agent.status) {
             case 'Vapaa':
-              agent.color = 'green';
               green++;
               break;
             case 'Jälkikirjaus':
             case 'Puhelu':
-              agent.color = 'yellow';
               yellow++;
               break;
             default:
-              agent.color = 'red';
               red++;
               break;
           }
-          return agent;
         });
 
+        vm.agents = agents;
         vm.green = green;
         vm.yellow = yellow;
         vm.red = red;
@@ -66,9 +63,7 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
       });
     }
 
-    vm.trimName = function (agent) {
-      return agent.first_name + ' ' + agent.last_name.charAt(0);
-    };
+    vm.trimName = TrimName.trim
 
     fetchDataInterval = $interval(fetchData, 5000);
     $scope.$on('$destroy', function () {

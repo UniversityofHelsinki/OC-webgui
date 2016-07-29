@@ -28,6 +28,18 @@ describe ('personal', function() {
                 id: 1,
                 name: 'Helpdesk'
               }
+            },
+            {
+              id: 8754,
+              first_name: 'Tuomas',
+              last_name: 'Ansala',
+              status: 'Tauko',
+              created_at: new Date(baseTime - 30 * 1000),
+              lunch: false,
+              team: {
+                id: 1,
+                name: 'Helpdesk'
+              }
             }
           ]);          
           $httpBackend.whenGET('teams.json').respond([
@@ -43,6 +55,10 @@ describe ('personal', function() {
             },
             {
               name: 'Puhelu',
+              filter: true
+            },
+            {
+              name: 'Tauko',
               filter: true
             }
           ]);
@@ -91,17 +107,22 @@ describe ('personal', function() {
     expect(element(by.className('queue-length')).getText()).toBe('1');
   });
   it('should display own call stats', function() {
-    expect(element(by.className('answeredCalls')).getText()).toBe('7');
-    expect(element(by.className('avgCallDuration')).getText()).toBe("07:56");
-    expect(element(by.className('avgAfterCall')).getText()).toBe("03:02");
+    expect(element(by.id('answered-calls')).getText()).toBe('7');
+    expect(element(by.id('avg-call-duration')).getText()).toBe("07:56");
+    expect(element(by.id('avg-after-call')).getText()).toBe("03:02");
   });
-  it('should display own status', function () {
-    expect(element(by.className('ownStatus')).getText()).toBe('Vapaa');
+  it('should display own status color', function () {
+    expect(element(by.id('own-status-color')).getAttribute('class')).toBe('agent-status-color agent-status-color-green');
   });
-  it('should display active agents', function () {
-    agents = element.all(by.className('agentName'));
+  it('should display active agents except the current with status colors', function () {
+    agents = element.all(by.id('agent-name'));
     expect(agents.count()).toBe(2);
-    expect(agents.get(0).getText()).toBe('Benjamin');
-    expect(agents.get(1).getText()).toBe('Aallotar');
+    expect(agents.get(0).getText()).toBe('Aallotar K');
+    expect(agents.get(1).getText()).toBe('Tuomas A');
+  });
+  it('should display status color for each agent in agents list', function() {
+    agents = element.all(by.id('agent-status-color'));
+    expect(agents.get(0).getAttribute('class')).toBe('color-square agent-status-color-yellow');
+    expect(agents.get(1).getAttribute('class')).toBe('color-square agent-status-color-red');
   });
 });

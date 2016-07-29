@@ -1,4 +1,4 @@
-angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'ocWebGui.queue.service', 'ocWebGui.personal.service', 'ocWebGui.login'])
+angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'ocWebGui.queue.service', 'ocWebGui.personal.service', 'ocWebGui.login', 'ocWebGui.shared.trimName.service'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('personal', {
@@ -8,30 +8,29 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
         controllerAs: 'personal'
       });
   })
-  .controller('PersonalController', function (Agents, Queue, User, Personal, $interval, $scope) {
+  .controller('PersonalController', function (TrimName, Agents, Queue, User, Personal, $interval, $scope) {
     var vm = this;
+
+    vm.trimName = TrimName.trim
 
     function fetchData() {
       Agents.query(function (agents) {
         vm.agents = agents;
-
-        var myAgent = agents.filter(function (agent) {
+        var myAgent = agents.find(function(agent) {
           return User.getUserData().agent_id === agent.id;
         });
-        
-        if (myAgent[0] === undefined) {
-          vm.myStatus = 'Please login to webgui and OC';
-          vm.myColor = 'red';
+
+        if (myAgent === undefined) {
+          vm.myColor = 'grey';
         } else {
-          vm.myStatus = myAgent[0].status;
-          vm.myColor = myAgent[0].color;
+          vm.myColor = myAgent.color;
+          agents.splice(agents.indexOf(myAgent), 1);
         }
       });
 
       Queue.query(function (queue) {
         vm.queue = queue;
       });
-
 
       Personal.get(function(data) {
         vm.data = data;

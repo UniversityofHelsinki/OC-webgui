@@ -6,7 +6,7 @@ class ContactsController < ApplicationController
     time = Time.zone.now
     @start_time = time.beginning_of_day
     @end_time = time.end_of_day
-    @team = Team.find_by(name: 'Helpdesk')
+    @team = Team.find_by_name('Helpdesk')
     @contacts_service = ContactsService.new(@team, @start_time, @end_time)
   end
 
