@@ -40,7 +40,7 @@ angular.module('ocWebGui.login', ['ui.router'])
   })
   .controller('LoginController', function (User, $rootScope, $state) {
     var vm = this;
-    vm.title = 'Login';
+    vm.title = 'Kirjaudu sisään';
     vm.login = function () {
       User.login(vm.username, vm.password, function () {
         $state.go($rootScope.returnToState, $rootScope.returnToParams);
