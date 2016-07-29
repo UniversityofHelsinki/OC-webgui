@@ -29,6 +29,9 @@ angular.module('ocWebGui.login', ['ui.router'])
       getUsername: function () {
         return userData.username;
       },
+      getUserData: function () {
+        return userData;
+      },
       logout: function () {
         $http.delete('logout')
           .then(function () {
