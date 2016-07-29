@@ -50,6 +50,9 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
               agent.color = 'yellow';
               yellow++;
               break;
+            case String(agent.status.match(/^Varattu \(.*\)/)):
+              agent.status = agent.status.match(/^Varattu \((.*)\)/)[1];
+              // fallthrough
             default:
               agent.color = 'red';
               red++;
