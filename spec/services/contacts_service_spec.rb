@@ -67,4 +67,8 @@ RSpec.describe ContactsService, type: :service do
   it "Returns correct average queue duration" do
     expect(@contacts_service.average_queue_duration).to eq(291)
   end
+
+  it "Returns correct average queue duration by hour" do
+    expect(@contacts_service.average_queue_duration_by_hour).to eq([0, 0, 0, 0, 0, 0, 0, 0, 180, 0, 1200, 120, 120, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  end
 end
