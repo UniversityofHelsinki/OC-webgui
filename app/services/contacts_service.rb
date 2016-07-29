@@ -2,7 +2,6 @@
 class ContactsService
   def initialize(team_name, start_time, end_time)
     @contacts = Contact.joins(service: :team).where(teams: { name: team_name }, arrived: start_time..end_time)
-    @start_time = start_time
   end
 
   def num_answered_calls
