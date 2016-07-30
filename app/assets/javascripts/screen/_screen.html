@@ -16,15 +16,15 @@
     <div class="sidebar">
         <div class="agent-status-count">
             <div class="agent-status-color agent-status-color-free" ng-style="{'background-color': $root.settings.colors.statuses.free}"></div>
-            <div class="free-count"> {{screen.green}}</div>
+            <div class="free-count">{{ screen.counts.free }}</div>
         </div>
         <div class="agent-status-count">
             <div class="agent-status-color agent-status-color-call" ng-style="{'background-color': $root.settings.colors.statuses.call}"></div>
-            <div class="call-count"> {{screen.yellow}} </div>
+            <div class="call-count">{{ screen.counts.call }}</div>
         </div>
         <div class="agent-status-count">
             <div class="agent-status-color agent-status-color-busy" ng-style="{'background-color': $root.settings.colors.statuses.busy}"></div>
-            <div class="busy-count"> {{screen.red}} </div>
+            <div class="busy-count">{{ screen.counts.busy }}</div>
         </div>
     </div>
 </div>
