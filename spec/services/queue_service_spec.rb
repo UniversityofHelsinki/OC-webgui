@@ -5,7 +5,7 @@ RSpec.describe QueueService, type: :service do
     FactoryGirl.build(*args)
   end
 
-  before(:example) do    
+  before(:example) do
     build(:team_1).save
     build(:service_1).save
     build(:qitem, created_at: time, closed: time + 10.seconds).save

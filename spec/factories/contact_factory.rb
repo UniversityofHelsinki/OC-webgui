@@ -4,5 +4,4 @@ FactoryGirl.define do
     direction "I"
     contact_type "PBX"    
   end
-
 end

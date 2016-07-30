@@ -4,7 +4,7 @@
             <div class="agent-status-color agent-status-color-{{agent.color}}"></div>
             <div class="agent-status-info">
                 <div class="agent-name">
-                    {{ screen.trimName(agent) }}
+                    {{ screen.trimName(agent.first_name, agent.last_name) }}
                 </div>
                 <div ng-class="{'agent-status-container': true, 'agent-status-open': agent.status === 'Vapaa'}">
                     <div class="agent-status">{{ agent.status }}</div>

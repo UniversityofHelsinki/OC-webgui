@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     get 'queue/stats' => 'queue_items#stats'
     get 'agents' => 'agents#index'
     get 'users' => 'users#index'
+    get 'personal' => 'personal_status#index'
   end
 
   # Example of regular route:

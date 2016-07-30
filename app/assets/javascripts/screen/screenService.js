@@ -13,6 +13,20 @@ angular.module('ocWebGui.screen.service', ['ngResource', 'ocWebGui.filterpanel']
             })
             .map(function (agent) {
               agent.created_at = new Date(agent.created_at);
+
+              switch (agent.status) {
+                case 'Vapaa':
+                  agent.color = 'green';
+                  break;
+                case 'Jälkikirjaus':
+                case 'Puhelu':
+                  agent.color = 'yellow';
+                  break;
+                default:
+                  agent.color = 'red';
+                  break;
+              }
+
               return agent;
             });
         }
