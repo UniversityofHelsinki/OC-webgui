@@ -14,16 +14,21 @@ angular.module('ocWebGui.screen.service', ['ngResource', 'ocWebGui.filterpanel']
             .map(function (agent) {
               agent.created_at = new Date(agent.created_at);
 
+              var match = agent.status.match(/^Varattu \((.*)\)/);
+              if (match) {
+                agent.status = match[1];
+              }
+
               switch (agent.status) {
                 case 'Vapaa':
-                  agent.color = 'green';
+                  agent.color = 'free';
                   break;
                 case 'Jälkikirjaus':
                 case 'Puhelu':
-                  agent.color = 'yellow';
+                  agent.color = 'call';
                   break;
                 default:
-                  agent.color = 'red';
+                  agent.color = 'busy';
                   break;
               }
 
