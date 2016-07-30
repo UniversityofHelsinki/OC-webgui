@@ -14,7 +14,6 @@ $card-padding: 0.5em;
 }
 
 body {
-  background-color: #87aade;
   margin: 0;
   padding: 0;
 
@@ -42,6 +41,7 @@ body {
     padding-bottom: 10em;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 1), transparent);
     box-shadow: none;
+    z-index: 999;
   }
 
   body.hide-mouse & {

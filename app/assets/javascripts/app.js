@@ -6,6 +6,23 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen',
     var $navbar = $('.navbar');
     var mouseHideTimeout;
 
+    $rootScope.settings = {
+      colors: {
+        background: '#87aade',
+        font: '#333333',
+        statuses: {
+          free: '#37c837',
+          call: '#ffff4d',
+          busy: '#ff3333'
+        }
+      }
+    };
+
+    $rootScope.$watch('settings', function () {
+      $body.css('background-color', $rootScope.settings.colors.background);
+      $body.css('color', $rootScope.settings.colors.font);
+    }, true);
+
     function createHideMouseTimeout() {
       return $interval(function () {
         $body.addClass('hide-mouse');

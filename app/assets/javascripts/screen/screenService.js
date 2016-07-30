@@ -16,14 +16,14 @@ angular.module('ocWebGui.screen.service', ['ngResource', 'ocWebGui.filterpanel']
 
               switch (agent.status) {
                 case 'Vapaa':
-                  agent.color = 'green';
+                  agent.color = 'free';
                   break;
                 case 'Jälkikirjaus':
                 case 'Puhelu':
-                  agent.color = 'yellow';
+                  agent.color = 'call';
                   break;
                 default:
-                  agent.color = 'red';
+                  agent.color = 'busy';
                   break;
               }
 

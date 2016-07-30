@@ -1,11 +1,29 @@
-<div class="background center-all">
-    <div class="sidebar" style=".children { padding: auto}">
-        <div class="agent-status-color agent-status-color-green"></div>
-        <div class="agent-status-color agent-status-color-yellow"></div>
-        <div class="agent-status-color agent-status-color-red"></div>
-        <div class="agent-status-color agent-status-color-default"></div>
-        moi
-    </div>
-    <div class="agent-status-color agent-status-color-default" style="height: 4em"></div>
-
+<div class="card">
+  <h1>{{ color.title }}</h1>
+  <fieldset>
+    <legend>Yhteiset</legend>
+    <label>
+      Taustaväri:
+      <input type="color" ng-model="$root.settings.colors.background">
+    </label>
+    <label>
+      Fontti:
+      <input type="color" ng-model="$root.settings.colors.font">
+    </label>
+  </fieldset>
+  <fieldset>
+    <legend>Statukset</legend>
+    <label>
+      Vapaa:
+      <input type="color" ng-model="$root.settings.colors.statuses.free">
+    </label>
+    <label>
+      Puhelu:
+      <input type="color" ng-model="$root.settings.colors.statuses.call">
+    </label>
+    <label>
+      Varattu:
+      <input type="color" ng-model="$root.settings.colors.statuses.busy">
+    </label>
+  </fieldset>
 </div>

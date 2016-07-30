@@ -1,7 +1,7 @@
 <div class="background screen-background">
     <div class="card-container">
         <div ng-repeat="agent in screen.agents track by agent.id" ng-class="{'card': true, 'agent-card': true, 'after-call': agent.status === 'Jälkikirjaus', 'lunch': agent.lunch == true}" class="{{ screen.number_of_columns }}">
-            <div class="agent-status-color agent-status-color-{{agent.color}}"></div>
+            <div class="agent-status-color agent-status-color-{{agent.color}}" ng-style="{'background-color': $root.settings.colors.statuses[agent.color]}"></div>
             <div class="agent-status-info">
                 <div class="agent-name">
                     {{ screen.trimName(agent.first_name, agent.last_name) }}
@@ -15,16 +15,16 @@
     </div>
     <div class="sidebar">
         <div class="agent-status-count">
-            <div class="agent-status-color agent-status-color-green"></div>
-            <div class="green-count"> {{screen.green}}</div>
+            <div class="agent-status-color agent-status-color-free" ng-style="{'background-color': $root.settings.colors.statuses.free}"></div>
+            <div class="free-count"> {{screen.green}}</div>
         </div>
         <div class="agent-status-count">
-            <div class="agent-status-color agent-status-color-yellow"></div>
-            <div class="yellow-count"> {{screen.yellow}} </div>
+            <div class="agent-status-color agent-status-color-call" ng-style="{'background-color': $root.settings.colors.statuses.call}"></div>
+            <div class="call-count"> {{screen.yellow}} </div>
         </div>
         <div class="agent-status-count">
-            <div class="agent-status-color agent-status-color-red"></div>
-            <div class="red-count"> {{screen.red}} </div>
+            <div class="agent-status-color agent-status-color-busy" ng-style="{'background-color': $root.settings.colors.statuses.busy}"></div>
+            <div class="busy-count"> {{screen.red}} </div>
         </div>
     </div>
 </div>
