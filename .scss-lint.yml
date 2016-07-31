@@ -1,5 +1,7 @@
 severity: error
 
+exclude: 'app/assets/stylesheets/bootstrap/**'
+
 linters:
 
   BorderZero:
