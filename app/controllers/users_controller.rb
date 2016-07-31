@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     if @user.save
       render json: { username: @user.username, id: @user.id, is_admin: @user.is_admin, agent_id: @user.agent_id }, status: 201
     else
-      render json: @user.errors, status: 400      
+      render json: @user.errors, status: 400
     end
   end
 
