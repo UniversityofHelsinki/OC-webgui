@@ -1,66 +1,30 @@
 angular.module('ocWebGui.userAdmin.service', ['ngResource'])
   .factory('AgentObjects', function ($resource) {
-    return $resource('agents.json').query(function (data) {
-      return data;
-    });
+    return $resource('agents.json');
   })
   .factory('Users', function ($resource) {
-    return $resource('users.json').query(function (data) {
-      return data;
-    });
+    return $resource('users.json');
   })
   .factory('UserAdmin', function ($resource, $http) {
     return {
       createUser: function (username, password, onSuccess, onError) {
         $http.post('users', { user: { username: username, password: password } })
           .then(function (response) {
-            onSuccess();
-           }, function (response) {
-             onError(response.data);
-           });
-        }
-      /*
-      createUser: function (username, password) {
-        var data = { user: { username: username, password: password }}
-        $resource('users', {}, {
-          create: {method: 'POST', params: data }
-        }).create();*/
-
-      }    
-  });
-
-/*
-        login: function (username, password, onSuccess, onError) {
-        $http.post('login', { username: username, password: password })
-          .then(function (response) {
-            isAuthenticated = true;
-            userData = response.data;
-            onSuccess();
+            onSuccess(response.data, 'Käyttäjä ' + response.data.username + ' lisätty tietokantaan!');
           }, function (response) {
-            isAuthenticated = false;
-            onError(response.data.error);
+            onError(response.data);
           });
       },
-*/
-/*
-
-
-    var agents = [];
-    $resource('agents.json').query(function (data) {
-      agents = data;
-    });
-
-    var users = [];
-    $resource('users.json').query(function (data) {
-      users = data;
-    });
-
-    return {
-      getAgents: function () {
-        return $resource('agents.json');
-      },
-      getUsers: function () {
-        return users;
+      updateUser: function (user, onSuccess, onError) {
+        $http.post('users/update', { user: { username: user.username,
+                                             agent_id: user.agent_id,
+                                             id: user.id,
+                                             is_admin: user.is_admin } })
+          .then(function (response) {
+            onSuccess(response.data, 'Käyttäjän ' + response.data.username + ' tiedot päivitetty!');
+          }, function (response) {
+            onError(response.data);
+          });
       }
     };
-*/
+  });

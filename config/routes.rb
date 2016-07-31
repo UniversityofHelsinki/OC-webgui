@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   post 'login', to: 'session#create'
   post 'users', to: 'users#create'
+  post 'users/update', to: 'users#update'
   delete 'logout', to: 'session#destroy'
 
   scope :format => true, :constraints => { :format => 'json' } do

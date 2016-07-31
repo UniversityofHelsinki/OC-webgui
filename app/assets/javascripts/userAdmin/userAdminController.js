@@ -17,25 +17,20 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service']
   })
   .controller('UserAdminController', function UserAdminController($scope, $timeout, AgentObjects, Users, UserAdmin) {
     var vm = this;
+    vm.notification = '';
 
-    vm.agents = AgentObjects;
-    vm.users = Users;
-/*
-    var successMessage = function () {
-      vm.errorMessage = '';
-      vm.successMessage = "Successfully created user!";
-      $timeout(function() {
-        vm.successMessage = '';
-      }, 5000);
-    };
+    // Setting agent reference for users requires fetching Agents to be complete first
 
-    var errorMessage = function(error) {
-      vm.successMessage = '';
-      vm.errorMessage = error;
-      $timeout(function() {
-        vm.errorMessage = "";
-      }, 5000);
-    };*/
+    vm.agents = AgentObjects.query(function (agents) {
+      vm.users = Users.query(function (users) {
+        vm.users = users.map(function (user) {
+          user.agent = agents.find(function (agent) {
+            return agent.id === user.agent_id;
+          });
+          return user;
+        });
+      });
+    });
 
     var setNotification = function (message) {
       vm.notification = message;
@@ -46,13 +41,18 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service']
     };
 
     var errorNotify = function (message) {
-      vm.notifyClass = '';
+      vm.notifyClass = 'danger';
       setNotification(message);
     };
 
-    var successNotify = function () {
-      vm.notifyClass = '';
-      setNotification('Käyttäjä luotu onnistuneesti!');
+    var successNotify = function (user, message) {
+      vm.notifyClass = 'success';
+      setNotification(message);
+    };
+
+    var createUserSuccess = function (user, message) {
+      vm.users.push(user);
+      successNotify(user, message);
     };
 
     vm.createUser = function () {
@@ -60,7 +60,11 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service']
         errorNotify('Salasanat eivät täsmää.');
         return;
       }
-      UserAdmin.createUser(vm.newUserUsername, vm.newUserPassword, successNotify, errorNotify);
+      UserAdmin.createUser(vm.newUserUsername, vm.newUserPassword, createUserSuccess, errorNotify);
+    };
+
+    vm.updateUser = function (user) {
+      UserAdmin.updateUser(user, successNotify, errorNotify);
     };
   });
 

@@ -1,30 +1,53 @@
 <div class="col-md-2"></div>
   <div class="col-md-8 foreground">
-    <p ng-if="{{userAdmin.notification}}" class="alert alert-{{userAdmin.notifyClass}}">{{userAdmin.notification}}</p>
+    <p ng-if="userAdmin.notification" class="alert alert-{{userAdmin.notifyClass}}">{{userAdmin.notification}}</p>
+    <div class="col-md-6">
       <h2>Luo uusi käyttäjä</h2>
-      <form ng-submit="userAdmin.createUser()">
-        <label>
-          Käyttäjänimi
-          <br>
-          <input class="form-control" ng-model="userAdmin.newUserUsername">
-        </label>
-        <label>
-          Salasana
-          <br>
-          <input class="form-control" type="password" ng-model="userAdmin.newUserPassword">
-        </label>
-        <label>
-          Vahvista salasana
-          <br>
-          <input class="form-control" class="input" type="password" ng-model="userAdmin.newUserPasswordConfirmation">
-          <br>
-          <p><input type="submit" value="Luo käyttäjä" class="btn btn-success"></p>
-        </label>
+      <form class="form-horizontal" ng-submit="userAdmin.createUser()">
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="new-user-name">Käyttäjänimi</label>
+            <div class="col-sm-10">
+                <input id="new-user-name" class="form-control" ng-model="userAdmin.newUserUsername">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="new-user-password">Salasana</label>
+            <div class="col-sm-10">
+                <input id="new-user-password" type="password" class="form-control" ng-model="userAdmin.newUserPassword">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="new-user-password-confirmation">Vahvista salasana</label>
+            <div class="col-sm-10">
+                <input id="new-user-password-confirmation" type="password" class="form-control" ng-model="userAdmin.newUserPasswordConfirmation">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="Luo käyttäjä" class="btn btn-success">
+            </div>
+        </div>
       </form>
+      </div>
+        <div class="col-md-6">
+            <h2>Käyttäjät</h2>
+            <table id="user-list-table" class="table table-hover">            
+                <thead>
+                    <tr>
+                        <th>Käyttäjänimi</th>
+                        <th>Agent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in userAdmin.users | orderBy:'username'">
+                        <td>{{user.username}}</td>
+                        <td>
+                            <select ng-blur="userAdmin.updateUser(user)" class="form-control" ng-model="user.agent_id" ng-options="agent.id as agent.first_name + ' ' + agent.last_name for agent in userAdmin.agents | orderBy:'first_name'"></select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+      </div>
     </div>
  </div>
- <div class="col-md-2">
-       <div ng-repeat="user in userAdmin.users">
-       <p>{{user.username}}</p>
-      </div>
-</div>
+<div class="col-md-2"></div>
