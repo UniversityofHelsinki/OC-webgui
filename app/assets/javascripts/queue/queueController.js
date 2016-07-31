@@ -104,7 +104,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     function getMaxValPlusOne(i) {
       var maxVal = d3.max(vm.data[i].values, function (x) { return x.calls; });
       if (maxVal == null) {
-        return 0;
+        return 1;
       }
       return maxVal + 1;
     }
