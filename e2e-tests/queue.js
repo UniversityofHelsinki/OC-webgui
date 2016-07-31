@@ -108,7 +108,6 @@ describe('queue', function () {
               answered_calls: 11,
               average_call_duration: 2 * 60 + 15,
               average_after_call_duration: 60 + 5,
-              average_call_queue_duration: 24*0,
               calls_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ],
@@ -136,9 +135,9 @@ describe('queue', function () {
 
     it('should contain answered calls', function () {
       expect(rows.get(0).element(by.tagName('th')).getText()).toBe('%');
-    }); 
+    });
 
-    it('should contain calls (answere / all)', function() {
+    it('should contain calls (answered / all)', function() {
       expect(rows.get(1).element(by.tagName('th')).getText()).toBe('Puhelut:');
       expect(rows.get(1).element(by.tagName('td')).getText()).toBe('11 / 11');
     });
@@ -156,6 +155,6 @@ describe('queue', function () {
 // Testi sekoaa siitä, että yksi elementeistä ei näy pienellä resoluutiolla näytöllä.
 /*    it('should contain average queue waiting duration', function () {
       expect(rows.get(4).element(by.tagName('th')).getText()).toBe('Jonotusten ka:');
-    }); */    
+    });*/    
   });
 });
