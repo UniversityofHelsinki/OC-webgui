@@ -7,7 +7,9 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen',
     var mouseHideTimeout;
 
     $rootScope.$on('settings:colors:update', function () {
-      $body.css('color', Settings.getColor('font'));
+      Settings.getColor('font').then(function (color) {
+        $body.css('color', color);
+      });
     });
 
     function createHideMouseTimeout() {

@@ -76,6 +76,17 @@ describe('personal', function () {
               average_after_call_duration: 182
             }
           );
+          $httpBackend.whenGET('settings.json').respond({
+            colors: {
+              background: '#87aade',
+              font: '#333333',
+              statuses: {
+                free: '#37c837',
+                call: '#ffff4d',
+                busy: '#ff3333'
+              }
+            }
+          });
         });
     });
     browser.addMockModule('ocWebGui.shared.time.service', function () {

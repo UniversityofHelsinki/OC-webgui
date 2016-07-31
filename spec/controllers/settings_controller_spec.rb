@@ -18,7 +18,12 @@ RSpec.describe SettingsController, type: :controller do
         expected = {
           'colors' => {
             'background' => '#87aade',
-            'font' => '#333333'
+            'font' => '#333333',
+            'statuses' => {
+              'free' => '#37c837',
+              'call' => '#ffff4d',
+              'busy' => '#ff3333'
+            }
           }
         }
         get :get, format: :json
@@ -32,7 +37,12 @@ RSpec.describe SettingsController, type: :controller do
         expected = {
           'colors' => {
             'background' => '#87aade',
-            'font' => '#333333'
+            'font' => '#333333',
+            'statuses' => {
+              'free' => '#37c837',
+              'call' => '#ffff4d',
+              'busy' => '#ff3333'
+            }
           }
         }
         session['user_id'] = 1
@@ -47,7 +57,12 @@ RSpec.describe SettingsController, type: :controller do
         expected = {
           'colors' => {
             'background' => '#ffffff',
-            'font' => '#000000'
+            'font' => '#000000',
+            'statuses' => {
+              'free' => '#37c837',
+              'call' => '#ffff4d',
+              'busy' => '#ff3333'
+            }
           }
         }
         session['user_id'] = 2
@@ -76,13 +91,25 @@ RSpec.describe SettingsController, type: :controller do
           }
         }
 
+        expected = {
+          'colors' => {
+            'background' => '#123456',
+            'font' => '#654321',
+            'statuses' => {
+              'free' => '#37c837',
+              'call' => '#ffff4d',
+              'busy' => '#ff3333'
+            }
+          }
+        }
+
         session['user_id'] = 2
         post :update, new_settings, format: :json
         expect(response).to be_successful
         data = JSON.parse(response.body)
-        expect(data).to eq(new_settings)
+        expect(data).to eq(expected)
 
-        expect(User.find(2).settings).to eq(new_settings)
+        expect(User.find(2).settings).to eq(expected)
       end
     end
   end

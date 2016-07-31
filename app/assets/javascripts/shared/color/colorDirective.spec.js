@@ -4,7 +4,23 @@ describe('ocColor', function () {
 
   beforeEach(function () {
     module('ocWebGui.shared.color');
-    module('ocWebGui.shared.settings');
+
+    module(function ($provide) {
+      $provide.service('Settings', function ($q) {
+        return {
+          getColor: function (color) {
+            switch (color) {
+              case 'background': return $q.resolve('#87aade');
+              case 'font': return $q.resolve('#333333');
+              case 'statuses.free': return $q.resolve('#37c837');
+              case 'statuses.call': return $q.resolve('#ffff4d');
+              case 'statuses.busy': return $q.resolve('#ff3333');
+              default: throw new Error('Unmocked color: ' + color);
+            }
+          }
+        };
+      });
+    });
 
     inject(function ($compile, $rootScope) {
       compile = $compile;

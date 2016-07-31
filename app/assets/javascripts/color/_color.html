@@ -1,6 +1,7 @@
 <div class="card">
   <h1>{{ color.title }}</h1>
-  <form ng-submit="color.save()">
+  <p ng-if="color.message">{{ color.message }}</p>
+  <form ng-submit="color.save()" ng-if="color.colors">
     <fieldset>
       <legend>Yhteiset</legend>
       <label>

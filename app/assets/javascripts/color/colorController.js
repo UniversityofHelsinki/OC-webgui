@@ -8,11 +8,23 @@ angular.module('ocWebGui.color', ['ui.router', 'ocWebGui.login'])
         controllerAs: 'color'
       });
   })
-  .controller('ColorController', function (Settings) {
+  .controller('ColorController', function ($timeout, Settings) {
     var vm = this;
     vm.title = 'Värit';
-    vm.colors = Settings.getColors();
+
+    function clearMessage() {
+      vm.message = '';
+    }
+
+    vm.message = 'Ladataan...';
+    Settings.getColors().then(function (colors) {
+      vm.colors = colors;
+      clearMessage();
+    });
     vm.save = function () {
-      Settings.setColors(vm.colors);
+      Settings.setColors(vm.colors).then(function () {
+        vm.message = 'Kivat valinnat! Ne on nyt tallennettu!';
+        $timeout(clearMessage, 5000);
+      });
     };
   });

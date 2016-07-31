@@ -7,7 +7,9 @@ angular.module('ocWebGui.shared.color', [])
       },
       link: function (scope, element) {
         function updateColor() {
-          element.css('background-color', Settings.getColor(scope.ocColor));
+          Settings.getColor(scope.ocColor).then(function (color) {
+            element.css('background-color', color);
+          });
         }
         scope.$watch('ocColor', updateColor);
         scope.$on('settings:colors:update', updateColor);

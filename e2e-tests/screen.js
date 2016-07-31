@@ -68,6 +68,17 @@ describe('screen', function () {
               filter: true
             }
           ]);
+          $httpBackend.whenGET('settings.json').respond({
+            colors: {
+              background: '#87aade',
+              font: '#333333',
+              statuses: {
+                free: '#37c837',
+                call: '#ffff4d',
+                busy: '#ff3333'
+              }
+            }
+          });
         });
     });
 
