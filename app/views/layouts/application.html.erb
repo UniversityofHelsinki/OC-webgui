@@ -7,19 +7,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body ng-app="ocWebGui">
-  <div class="navbar" ng-controller="NavbarController as navbar">
-    <a ui-sref-active="active" ui-sref="screen">Status-näkymä</a>
-    <a ui-sref-active="active" ui-sref="queue" >Jono-näkymä</a>
-    <a ui-sref-active="active" ui-sref="filterpanel" >Filtteröi</a>
-    <a ui-sref-active="active" ui-sref="stats" ng-if="navbar.isAuthenticated()">Tilastot</a>
-    <a ui-sref-active="active" ui-sref="personal" ng-if="navbar.isAuthenticated()">{{ navbar.username() }}</a>
-    <a ui-sref-active="active" ui-sref="login" ng-if="!navbar.isAuthenticated()">Kirjaudu sisään</a>
-    <a ng-if="navbar.isAuthenticated()" href="" ng-click="navbar.logout()">Kirjaudu ulos</a>
-    <a ng-if="navbar.isAuthenticated()" href="userAdmin">Käyttäjähallinta</a>
-    <a href ng-click="navbar.goFullscreen()">
-        {{ navbar.isFullscreen ? 'Pois kokoruudusta' : 'Kokoruutu' }}
-    </a>
-  </div>
-  <ui-view></ui-view>
+  <ui-view name="nav"></ui-view>
+  <ui-view name="content"></ui-view>
 </body>
 </html>

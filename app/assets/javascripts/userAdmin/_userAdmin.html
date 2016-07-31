@@ -1,6 +1,6 @@
-
-<p class="alert alert-{{userAdmin.notifyClass}}">{{userAdmin.notification}}</p>
-  <div class="col-md-2">
+<div class="col-md-2"></div>
+  <div class="col-md-8 foreground">
+    <p ng-if="{{userAdmin.notification}}" class="alert alert-{{userAdmin.notifyClass}}">{{userAdmin.notification}}</p>
       <h2>Luo uusi käyttäjä</h2>
       <form ng-submit="userAdmin.createUser()">
         <label>
@@ -23,7 +23,7 @@
       </form>
     </div>
  </div>
- <div class="col-md-8">
+ <div class="col-md-2">
        <div ng-repeat="user in userAdmin.users">
        <p>{{user.username}}</p>
       </div>

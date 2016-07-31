@@ -3,9 +3,17 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
     $stateProvider
       .state('personal', {
         url: '/personal',
-        templateUrl: 'personal/_personal.html',
-        controller: 'PersonalController',
-        controllerAs: 'personal'
+        views: {
+          nav: {
+            templateUrl: 'navbar/navbar_screen.html'
+          },
+          content: {
+            templateUrl: 'personal/_personal.html',
+            controller: 'PersonalController',
+            controllerAs: 'personal'
+          }
+        },
+        navbarOverlay: true
       });
   })
   .controller('PersonalController', function (TrimName, Agents, Queue, User, Personal, $interval, $scope) {

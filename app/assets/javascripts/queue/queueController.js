@@ -3,9 +3,16 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     $stateProvider
       .state('queue', {
         url: '/queue',
-        templateUrl: 'queue/_queue.html',
-        controller: 'QueueController',
-        controllerAs: 'queue',
+        views: {
+          nav: {
+            templateUrl: 'navbar/navbar_screen.html'
+          },
+          content: {
+            templateUrl: 'queue/_queue.html',
+            controller: 'QueueController',
+            controllerAs: 'queue'
+          }
+        },
         navbarOverlay: true
       });
   })

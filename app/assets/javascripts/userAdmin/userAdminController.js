@@ -3,9 +3,16 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service']
     $stateProvider
       .state('userAdmin', {
         url: '/userAdmin',
-        templateUrl: 'userAdmin/_userAdmin.html',
-        controller: 'UserAdminController',
-        controllerAs: 'userAdmin'
+        views: {
+          nav: {
+            templateUrl: 'navbar/navbar_others.html'
+          },
+          content: {
+            templateUrl: 'userAdmin/_userAdmin.html',
+            controller: 'UserAdminController',
+            controllerAs: 'userAdmin'
+          }
+        }
       });
   })
   .controller('UserAdminController', function UserAdminController($scope, $timeout, AgentObjects, Users, UserAdmin) {
@@ -13,13 +20,6 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service']
 
     vm.agents = AgentObjects;
     vm.users = Users;
-
-    var testihomoke = function(parent, varname, message) {
-      parent[varname] = message;
-      $timeout(function() {
-        parent[varname] = '';
-      }, 5000)
-    }
 /*
     var successMessage = function () {
       vm.errorMessage = '';
@@ -37,26 +37,26 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service']
       }, 5000);
     };*/
 
-    var errorNotify = function(message) {
-      vm.notifyClass = "danger"
-      setNotification(message);
-    }
-
-    var successNotify = function() {
-      vm.notifyClass = "success"
-      setNotification('Käyttäjä luotu onnistuneesti!');
-    }
-
     var setNotification = function (message) {
       vm.notification = message;
       $timeout(function () {
-        vm.notification = "";
-        vm.notifyClass = "";
+        vm.notification = '';
+        vm.notifyClass = '';
       }, 5000);
-    }
+    };
+
+    var errorNotify = function (message) {
+      vm.notifyClass = '';
+      setNotification(message);
+    };
+
+    var successNotify = function () {
+      vm.notifyClass = '';
+      setNotification('Käyttäjä luotu onnistuneesti!');
+    };
 
     vm.createUser = function () {
-      if(vm.newUserPassword !== vm.newUserPasswordConfirmation) {
+      if (vm.newUserPassword !== vm.newUserPasswordConfirmation) {
         errorNotify('Salasanat eivät täsmää.');
         return;
       }

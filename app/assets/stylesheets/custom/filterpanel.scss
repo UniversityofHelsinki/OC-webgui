@@ -1,22 +1,19 @@
-@import "common";
+@import "common-screen";
 
-label {
+.label-filter {
   display: block;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-input[type=checkbox] {
-  transform: scale(2.0);
-  -webkit-transform: scale(2.0);
-}
-
-h2 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
   font-weight: normal;
 }
 
+input[type=checkbox] {
+  transform: scale(1.0);
+  -webkit-transform: scale(1.0);
+}
+
 .filter-card {
-  font-size: 300%;
+  font-size: 100%;
   width: 50%;
   height: 100%; //miksei tää ny suostu :D
 }
@@ -31,9 +28,5 @@ h2 {
 
 .filters {
   display: flex;
-  flex-direction: row;
-  align-items: center;
   margin: 2em;
-
-  width: 60%;
 }

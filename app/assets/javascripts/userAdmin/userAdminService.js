@@ -11,11 +11,11 @@ angular.module('ocWebGui.userAdmin.service', ['ngResource'])
   })
   .factory('UserAdmin', function ($resource, $http) {
     return {
-      createUser: function(username, password, onSuccess, onError) {
-        $http.post('users', { user: { username:username, password: password }})
+      createUser: function (username, password, onSuccess, onError) {
+        $http.post('users', { user: { username: username, password: password } })
           .then(function (response) {
             onSuccess();
-           }, function(response) {
+           }, function (response) {
              onError(response.data);
            });
         }

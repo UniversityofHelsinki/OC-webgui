@@ -3,9 +3,16 @@ angular.module('ocWebGui.login', ['ui.router'])
     $stateProvider
       .state('login', {
         url: '/login',
-        templateUrl: 'login/_login.html',
-        controller: 'LoginController',
-        controllerAs: 'login'
+        views: {
+          nav: {
+            templateUrl: 'navbar/navbar_others.html'
+          },
+          content: {
+            templateUrl: 'login/_login.html',
+            controller: 'LoginController',
+            controllerAs: 'login'
+          }
+        }
       });
   })
   .factory('User', function ($http) {

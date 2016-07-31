@@ -15,8 +15,8 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen',
     function activateNavbarOverlay() {
       $interval.cancel(mouseHideTimeout);
       mouseHideTimeout = createHideMouseTimeout();
+      $body.addClass('body-screen');
 
-      $navbar.addClass('overlay');
       $body.on('mousemove', function () {
         $body.removeClass('hide-mouse');
         $interval.cancel(mouseHideTimeout);
@@ -27,8 +27,8 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen',
     function disableNavbarOverlay() {
       $interval.cancel(mouseHideTimeout);
 
-      $navbar.removeClass('overlay');
       $body.removeClass('hide-mouse').off('mousemove');
+      $body.removeClass('body-screen');
     }
 
     $rootScope.returnToState = 'home';
