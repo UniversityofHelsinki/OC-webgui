@@ -26,7 +26,9 @@
     <div class="outer">
         <div class="queue-stats card">            
             <table class="queue-stats-table">
-                <th class="percentage">{{queue.stats.answered_percentage}}%</th>
+                <tr>
+                    <th class="percentage">{{queue.stats.answered_percentage}}%</th>
+                </tr>
                 <tr>
                     <th>Puhelut:</th>
                     <td>{{queue.stats.answered_calls}} / 
@@ -43,7 +45,6 @@
                 <tr>
                     <th>Jonotusten ka:</th>
                     <td><oc-time seconds="queue.stats.average_waiting_time"></oc-time></td>
-                    
                 </tr>
             </table>
         </div>
