@@ -1,6 +1,6 @@
 <div class="col-md-2"></div>
   <div class="col-md-8 foreground">
-    <p ng-if="userAdmin.notification" class="alert alert-{{userAdmin.notifyClass}}">{{userAdmin.notification}}</p>
+    <p class="alert alert-hidden alert-{{userAdmin.notifyClass}}">{{userAdmin.notification}}</p>
     <div class="col-md-5">
       <h2>Luo uusi käyttäjä</h2>
       <form class="form-horizontal" ng-submit="userAdmin.createUser()">

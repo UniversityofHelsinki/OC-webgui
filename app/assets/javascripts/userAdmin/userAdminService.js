@@ -10,7 +10,7 @@ angular.module('ocWebGui.userAdmin.service', ['ngResource'])
       createUser: function (username, password, onSuccess, onError) {
         $http.post('users', { user: { username: username, password: password } })
           .then(function (response) {
-            onSuccess(response.data, 'Käyttäjä ' + response.data.username + ' lisätty tietokantaan!');
+            onSuccess(response.data);
           }, function (response) {
             onError(response.data);
           });
@@ -21,7 +21,7 @@ angular.module('ocWebGui.userAdmin.service', ['ngResource'])
                                              id: user.id,
                                              is_admin: user.is_admin } })
           .then(function (response) {
-            onSuccess(response.data, 'Käyttäjän ' + response.data.username + ' tiedot päivitetty!');
+            onSuccess(response.data);
           }, function (response) {
             onError(response.data);
           });
@@ -29,7 +29,7 @@ angular.module('ocWebGui.userAdmin.service', ['ngResource'])
       deleteUser: function (user, onSuccess, onError) {
         $http.post('users/delete', { user: { id: user.id } })
           .then(function (response) {
-            onSuccess(response.data, 'Käyttäjä ' + response.data.username + ' poistettu onnistuneesti!');
+            onSuccess(response.data);
           }, function (response) {
             onError(response.data);
           });

@@ -17,6 +17,10 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(user_params[:id])
+    if @user.nil?
+      render json: { error: 'No user with specified ID exists!' }, status: 400
+      return
+    end
     if @user.update(user_params)
       render json: { username: @user.username, id: @user.id, is_admin: @user.is_admin, agent_id: @user.agent_id }
     else
@@ -26,6 +30,10 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(user_params[:id])
+    if @user.nil?
+      render json: { error: 'No user with specified ID exists!' }, status: 400
+      return
+    end
     if @user.destroy
       render json: { username: @user.username, id: @user.id }
     else

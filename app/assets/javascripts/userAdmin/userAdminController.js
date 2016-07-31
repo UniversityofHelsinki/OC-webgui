@@ -17,7 +17,7 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service',
   })
   .controller('UserAdminController', function UserAdminController($scope, $timeout, AgentObjects, Users, UserAdmin) {
     var vm = this;
-    vm.notification = '';
+    vm.notification = 'a';
 
     // Setting agent reference for users requires fetching Agents to be complete first
 
@@ -32,10 +32,17 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service',
       });
     });
 
+    var notificationTimeout;
+
     var setNotification = function (message) {
+      var notificationElement = $('.alert');
+      notificationElement.removeClass('alert-hidden');
       vm.notification = message;
-      $timeout(function () {
-        vm.notification = '';
+
+      $timeout.cancel(notificationTimeout);
+      notificationTimeout = $timeout(function () {
+        notificationElement.addClass('alert-hidden');
+        vm.notification = 'a';
         vm.notifyClass = '';
       }, 5000);
     };
@@ -45,23 +52,27 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service',
       setNotification(message);
     };
 
-    var successNotify = function (user, message) {
+    var successNotify = function (message) {
       vm.notifyClass = 'success';
       setNotification(message);
     };
 
-    var createUserSuccess = function (user, message) {
+    var createUserSuccess = function (user) {
       vm.users.push(user);
       vm.newUserPassword = '';
       vm.newUserPasswordConfirmation = '';
       vm.newUserUsername = '';
-      successNotify(user, message);
+      successNotify('Käyttäjä ' + user.username + ' lisätty tietokantaan!');
     };
 
-    var deleteUserSuccess = function (user, message) {
+    var updateUserSuccess = function (user) {
+      successNotify('Käyttäjän ' + user.username + ' tiedot päivitetty!');
+    };
+
+    var deleteUserSuccess = function (user) {
       var userIndex = vm.users.map(function (u) { return u.id; }).indexOf(user.id);
       vm.users.splice(userIndex, 1);
-      successNotify(user, message);
+      successNotify('Käyttäjä ' + user.username + ' poistettu onnistuneesti!');
     };
 
     vm.createUser = function () {
@@ -73,7 +84,7 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service',
     };
 
     vm.updateUser = function (user) {
-      UserAdmin.updateUser(user, successNotify, errorNotify);
+      UserAdmin.updateUser(user, updateUserSuccess, errorNotify);
     };
 
     vm.deleteUser = function (user) {
