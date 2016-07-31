@@ -1,4 +1,4 @@
-angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service'])
+angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service', 'ocWebGui.shared.confirmClick'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('userAdmin', {
@@ -52,6 +52,15 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service']
 
     var createUserSuccess = function (user, message) {
       vm.users.push(user);
+      vm.newUserPassword = '';
+      vm.newUserPasswordConfirmation = '';
+      vm.newUserUsername = '';
+      successNotify(user, message);
+    };
+
+    var deleteUserSuccess = function (user, message) {
+      var userIndex = vm.users.map(function (u) { return u.id; }).indexOf(user.id);
+      vm.users.splice(userIndex, 1);
       successNotify(user, message);
     };
 
@@ -65,6 +74,10 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service']
 
     vm.updateUser = function (user) {
       UserAdmin.updateUser(user, successNotify, errorNotify);
+    };
+
+    vm.deleteUser = function (user) {
+      UserAdmin.deleteUser(user, deleteUserSuccess, errorNotify);
     };
   });
 

@@ -25,6 +25,14 @@ angular.module('ocWebGui.userAdmin.service', ['ngResource'])
           }, function (response) {
             onError(response.data);
           });
+      },
+      deleteUser: function (user, onSuccess, onError) {
+        $http.post('users/delete', { user: { id: user.id } })
+          .then(function (response) {
+            onSuccess(response.data, 'Käyttäjä ' + response.data.username + ' poistettu onnistuneesti!');
+          }, function (response) {
+            onError(response.data);
+          });
       }
     };
   });

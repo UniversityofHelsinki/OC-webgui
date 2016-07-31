@@ -1,7 +1,7 @@
 # JSON API for User objects
 class UsersController < ApplicationController
-  before_action :ensure_user_is_logged_in, only: :create
-  before_action :ensure_user_is_admin, only: :create
+  before_action :ensure_user_is_logged_in, only: [:create, :update, :destroy]
+  before_action :ensure_user_is_admin, only: [:create, :update, :destroy]
   def index
     @users = User.all
   end
@@ -18,7 +18,16 @@ class UsersController < ApplicationController
   def update
     @user = User.find(user_params[:id])
     if @user.update(user_params)
-      render json: { username: @user.username, id: @user.id, iad_adming: @user.is_admin, agent_id: @user.agent_id }
+      render json: { username: @user.username, id: @user.id, is_admin: @user.is_admin, agent_id: @user.agent_id }
+    else
+      render json: @user.errors, status: 400
+    end
+  end
+
+  def destroy
+    @user = User.find(user_params[:id])
+    if @user.destroy
+      render json: { username: @user.username, id: @user.id }
     else
       render json: @user.errors, status: 400
     end

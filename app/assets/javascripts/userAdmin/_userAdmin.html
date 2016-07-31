@@ -1,7 +1,7 @@
 <div class="col-md-2"></div>
   <div class="col-md-8 foreground">
     <p ng-if="userAdmin.notification" class="alert alert-{{userAdmin.notifyClass}}">{{userAdmin.notification}}</p>
-    <div class="col-md-6">
+    <div class="col-md-5">
       <h2>Luo uusi käyttäjä</h2>
       <form class="form-horizontal" ng-submit="userAdmin.createUser()">
         <div class="form-group">
@@ -29,21 +29,25 @@
         </div>
       </form>
       </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
             <h2>Käyttäjät</h2>
             <table id="user-list-table" class="table table-hover">            
                 <thead>
                     <tr>
-                        <th>Käyttäjänimi</th>
-                        <th>Agent</th>
+                        <th>Käyttäjä</th>
+                        <th>Orange Contact-käyttäjä</th>
+                        <th>Ylläpitäjä?</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="user in userAdmin.users | orderBy:'username'">
-                        <td>{{user.username}}</td>
-                        <td>
+                        <td class="col-sm-2">{{user.username}}</td>
+                        <td class="col-sm-6">
                             <select ng-blur="userAdmin.updateUser(user)" class="form-control" ng-model="user.agent_id" ng-options="agent.id as agent.first_name + ' ' + agent.last_name for agent in userAdmin.agents | orderBy:'first_name'"></select>
                         </td>
+                        <td class="col-sm-2"><input ng-blur="userAdmin.updateUser(user)" type="checkbox" ng-model="user.is_admin"></input></td>
+                        <td class="col-sm-2"><button class="btn btn-danger" confirmed-click="userAdmin.deleteUser(user)" oc-confirm-click="Haluatko varmasti poistaa käyttäjän {{user.username}}?">X</button></td>
                     </tr>
                 </tbody>
             </table>
