@@ -19,11 +19,11 @@
         </table>
         <div class="agent-statuses">
             <div class="own-status">
-              <div id="own-status-color" class="agent-status-color agent-status-color-{{personal.myColor}}" ng-style="{'background-color': $root.settings.colors.statuses[personal.myColor]}"></div>
+                <div id="own-status-color" class="agent-status-color agent-status-color-{{personal.myColor}}" oc-color="statuses.{{ personal.myColor }}"></div>
             </div>
             <ul class="agent-list">
                 <li ng-repeat="agent in personal.agents track by agent.id">
-                    <span id="agent-status-color" class="color-square agent-status-color-{{agent.color}}" ng-style="{'background-color': $root.settings.colors.statuses[agent.color]}"></span>
+                    <span id="agent-status-color" class="color-square agent-status-color-{{agent.color}}" oc-color="statuses.{{ agent.color }}"></span>
                     <span id="agent-name">{{ personal.trimName(agent.first_name, agent.last_name) }}</span>
                 </li>
             </ul>
