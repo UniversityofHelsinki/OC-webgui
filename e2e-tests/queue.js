@@ -118,6 +118,7 @@ describe('queue', function () {
 
             $httpBackend.whenGET('queue/stats.json').respond({
               average_waiting_time: 100,
+              answered_percentage: 100,
               queue_items_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ]
@@ -134,7 +135,7 @@ describe('queue', function () {
     });
 
     it('should contain answered calls', function () {
-      expect(rows.get(0).element(by.tagName('th')).getText()).toBe('100%');
+      expect(rows.get(0).element(by.tagName('td')).getText()).toBe('100%');
     });
 
     it('should contain calls (answered / all)', function() {
