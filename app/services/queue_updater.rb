@@ -64,8 +64,8 @@ class QueueUpdater
   end
 
   def same_item(item, match)
-    match.created_at <= item.created_at + 1.second &&
-      match.created_at >= item.created_at - 1.second &&
+    match.created_at <= item.created_at + 2.seconds &&
+      match.created_at >= item.created_at - 2.seconds &&
       match.service_id == item.service_id
   end
 end
