@@ -109,6 +109,7 @@ describe('queue', function () {
               average_call_duration: 2 * 60 + 15,
               answered_percentage: 100,
               average_after_call_duration: 60 + 5,
+              average_queue_duration: 100,
               calls_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ],
