@@ -5,7 +5,7 @@
 # Queue objects do not by default have any unique identifying information, so they are identified by what information they do contain,
 # as well as the time they enter the queue (current time - time_in_queue). This is not guaranteed to be 100% reliable in borderline
 # cases such as when two similar contacts enter the queue (almost) simultaneously or if the time_in_status returned by OC SOAP service
-# is not reliable (for example due to lag). 
+# is not reliable (for example due to lag).
 class QueueUpdater
   include Now
   # Current_time parameter should ALWAYS be current time (Time.zone.now), except for tests
@@ -51,7 +51,7 @@ class QueueUpdater
   end
 
   # Will check for any new items that it can't match to existing old ones. NOTE: It is possible for
-  # the same_item check to fail due to lag in SOAP reply, even if the items are actually the same. 
+  # the same_item check to fail due to lag in SOAP reply, even if the items are actually the same.
   # This means that the same item may be duplicated (the old one will be closed and a new one opened).
   # This is considered acceptable because accurate Queue stats can be calculated from Contact data.
   def check_for_new_items
