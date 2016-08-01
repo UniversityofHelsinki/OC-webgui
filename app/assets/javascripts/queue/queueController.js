@@ -79,11 +79,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
           .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
 
-        if (!angular.isDefined(vm.stats)) {
-          vm.stats = {};
-        }
-
-        angular.extend(vm.stats, vm.stats, data);
+        vm.stats = data;
         vm.data[0].values = callsValues;
         vm.data[1].values = queueValues;
         vm.options.chart.bars.yDomain[1] = getMaxValPlusOne(0);
