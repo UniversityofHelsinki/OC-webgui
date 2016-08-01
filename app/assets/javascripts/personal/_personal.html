@@ -1,39 +1,31 @@
 <div class="personal-bg">
     <div class="personal-card card">
-        <div class="queue-length">3</div>
+        <div class="queue-length">
+             {{ personal.queue.length }}
+        </div>
         <table class="personal-statistics">
             <tr>
                 <th>Puheluni:</th>
-                <td>3</td>
+                <td id="answered-calls">{{ personal.data.answered_calls }}</td>
             </tr>
             <tr>
                 <th>Puheluiden ka:</th>
-                <td>05:28</td>
+                <td id="avg-call-duration"><oc-time seconds="personal.data.average_call_duration"></oc-time></td>
             </tr>
             <tr>
                 <th>Jälkikirjauksen ka:</th>
-                <td>04:47</td>
+                <td id="avg-after-call"><oc-time seconds="personal.data.average_after_call_duration"></oc-time></td>
             </tr>
         </table>
         <div class="agent-statuses">
-            <div class="agent-status-color agent-status-color-green"></div>
-            <table class="agent-list">
-                <tr>
-                    <td class="color-square agent-status-color-green"></td>
-                    <td>Matti A</td>
-                </tr>
-                <tr>
-                    <td class="color-square agent-status-color-red"></td>
-                    <td>Jenni B</td>
-                </tr>
-                <tr>
-                    <td class="color-square agent-status-color-green"></td>
-                    <td>Risto C</td>
-                </tr>
-                <tr>
-                    <td class="color-square agent-status-color-yellow"></td>
-                    <td>Pekka D</td>
-                </tr>
+            <div class="own-status">
+              <div id="own-status-color" class="agent-status-color agent-status-color-{{personal.myColor}}"></div>
+            </div>
+            <ul class="agent-list">
+                <li ng-repeat="agent in personal.agents track by agent.id">
+                    <span id="agent-status-color" class="color-square agent-status-color-{{agent.color}}"></span>
+                    <span id="agent-name">{{ personal.trimName(agent.first_name, agent.last_name) }}</span>
+                </li>
             </ul>
         </div>
     </div>

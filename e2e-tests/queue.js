@@ -110,11 +110,15 @@ describe('queue', function () {
               average_after_call_duration: 60 + 5,
               calls_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+              ],
+              average_queue_duration_by_hour: [
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ]
             });
 
             $httpBackend.whenGET('queue/stats.json').respond({
               average_waiting_time: 100,
+              answered_percentage: 100,
               queue_items_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ]
@@ -126,28 +130,32 @@ describe('queue', function () {
       rows = statsTable.all(by.tagName('tr'));
     });
 
-    it('should contain 4 rows', function () {
-      expect(rows.count()).toBe(4);
+    it('should contain 5 rows', function () {
+      expect(rows.count()).toBe(5);
     });
 
     it('should contain answered calls', function () {
-      expect(rows.get(0).element(by.tagName('th')).getText()).toBe('Puhelut:');
-      expect(rows.get(0).element(by.tagName('td')).getText()).toBe('11');
+      expect(rows.get(0).element(by.tagName('td')).getText()).toBe('100%');
+    });
+
+    it('should contain calls (answered / all)', function() {
+      expect(rows.get(1).element(by.tagName('th')).getText()).toBe('Puhelut:');
+      expect(rows.get(1).element(by.tagName('td')).getText()).toBe('11 / 11');
+    });
+    
+    it('should contain average call duration', function () {
+      expect(rows.get(2).element(by.tagName('th')).getText()).toBe('Puheluiden ka:');
+      expect(rows.get(2).element(by.tagName('td')).getText()).toBe('02:15');
     });
 
     it('should contain average call duration', function () {
-      expect(rows.get(1).element(by.tagName('th')).getText()).toBe('Puheluiden ka:');
-      expect(rows.get(1).element(by.tagName('td')).getText()).toBe('02:15');
-    });
-
-    it('should contain average call duration', function () {
-      expect(rows.get(2).element(by.tagName('th')).getText()).toBe('Jälkikirjausten ka:');
-      expect(rows.get(2).element(by.tagName('td')).getText()).toBe('01:05');
+      expect(rows.get(3).element(by.tagName('th')).getText()).toBe('Jälkikirjausten ka:');
+      expect(rows.get(3).element(by.tagName('td')).getText()).toBe('01:05');
     });
 
     it('should contain average queue waiting duration', function () {
-      expect(rows.get(3).element(by.tagName('th')).getText()).toBe('Jonotusten ka:');
-      expect(rows.get(3).element(by.tagName('td')).getText()).toBe('01:40');
-    });
+      expect(rows.get(4).element(by.tagName('th')).getText()).toBe('Jonotusten ka:');
+      expect(rows.get(4).element(by.tagName('td')).getText()).toBe('01:40');
+    });    
   });
 });

@@ -18,7 +18,7 @@ RSpec.describe GetServiceContactsJob, type: :job do
     expect(contacts[0].forwarded_to_agent).not_to be(nil)
     expect(contacts[0].answered).not_to be(nil)
     expect(contacts[0].call_ended).not_to be(nil)
-    expect(contacts[0].handling_ended).not_to be(nil)
+    expect(contacts[0].after_call_ended).not_to be(nil)
     expect(contacts[0].direction).not_to be(nil)
 
     expect(contacts[0].contact_type).to eq(data[0][:contact_type])
@@ -26,7 +26,7 @@ RSpec.describe GetServiceContactsJob, type: :job do
     expect(contacts[0].forwarded_to_agent).to eq(data[0][:forwarded_to_agent])
     expect(contacts[0].answered).to eq(data[0][:answered])
     expect(contacts[0].call_ended).to eq(data[0][:call_ended])
-    expect(contacts[0].handling_ended).to eq(data[0][:after_call_ended])
+    expect(contacts[0].after_call_ended).to eq(data[0][:after_call_ended])
     expect(contacts[0].direction).to eq(data[0][:direction])
 
     Agent.create(id: 2, first_name: "Antti", last_name: "Agentikkala", team_id: 1)
@@ -45,7 +45,7 @@ RSpec.describe GetServiceContactsJob, type: :job do
     expect(contacts[1].forwarded_to_agent).not_to be(nil)
     expect(contacts[1].answered).not_to be(nil)
     expect(contacts[1].call_ended).not_to be(nil)
-    expect(contacts[1].handling_ended).not_to be(nil)
+    expect(contacts[1].after_call_ended).not_to be(nil)
     expect(contacts[1].direction).not_to be(nil)
 
     expect(contacts[1].contact_type).to eq(data[0][:contact_type])
@@ -53,7 +53,7 @@ RSpec.describe GetServiceContactsJob, type: :job do
     expect(contacts[1].forwarded_to_agent).to eq(data[0][:forwarded_to_agent])
     expect(contacts[1].answered).to eq(data[0][:answered])
     expect(contacts[1].call_ended).to eq(data[0][:call_ended])
-    expect(contacts[1].handling_ended).to eq(data[0][:after_call_ended])
+    expect(contacts[1].after_call_ended).to eq(data[0][:after_call_ended])
     expect(contacts[1].direction).to eq(data[0][:direction])
   end
 
@@ -88,7 +88,7 @@ RSpec.describe GetServiceContactsJob, type: :job do
     expect(contacts[0].forwarded_to_agent).to eq(data[0][:forwarded_to_agent])
     expect(contacts[0].answered).to eq(data[0][:answered])
     expect(contacts[0].call_ended).to eq(data[0][:call_ended])
-    expect(contacts[0].handling_ended).to eq(data[0][:after_call_ended])
+    expect(contacts[0].after_call_ended).to eq(data[0][:after_call_ended])
     expect(contacts[0].direction).to eq(data[0][:direction])
   end
 end

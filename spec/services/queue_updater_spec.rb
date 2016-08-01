@@ -112,20 +112,6 @@ RSpec.describe QueueUpdater, type: :service do
     end
   end
 
-  context 'When it appears that the queue result is not reliable due to lag from SOAP service' do
-    before (:example) do
-      data = [build(:item_2, time_in_queue: "25")]
-      updater(time, time - 1.hour).update_queue(data)
-      updater(time + 10.seconds, time).update_queue(data)
-    end
-
-    it "doesn't make any changes and awaits the next reliable result" do
-      expect(QueueItem.first.open).to be(true)
-      expect(QueueItem.all.length).to eq(1)
-    end
-  end
-
-
   context 'When three very similar items appear in the queue and one of them disappears' do
     before (:example) do
       data1 = [build(:item_1, time_in_queue: "3"), build(:item_1, time_in_queue: "2"), build(:item_1, time_in_queue: "3")]

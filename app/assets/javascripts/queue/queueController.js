@@ -5,19 +5,21 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         url: '/queue',
         templateUrl: 'queue/_queue.html',
         controller: 'QueueController',
-        controllerAs: 'queue'
+        controllerAs: 'queue',
+        navbarOverlay: true
       });
   })
   .controller('QueueController', function ($interval, $scope, Queue, $http) {
     var vm = this;
     vm.api = {};
+
     vm.options = {
       chart: {
         type: 'linePlusBarChart',
-        height: 360,
+        height: 550,
         margin: {
           top: 30,
-          right: 40,
+          right: 90,
           bottom: 60,
           left: 40
         },
@@ -39,10 +41,14 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           showMaxMin: true
         },
         y1Axis: {
-          tickValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          ticks: 5
         },
         y2Axis: {
-          tickValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          ticks: 5,
+          tickFormat: function (seconds) {
+            var formatTime = d3.time.format("%H:%M");
+            return formatTime(new Date(1864, 7, 7, 0, seconds));
+          }
         },
         legend: {
           maxKeyLength: 100
@@ -61,81 +67,46 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       'values': []
     }];
 
+
     function fetchContactStats() {
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
-        var values = data.calls_by_hour
+        var callsValues = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          // .filter(function (item) { return item.calls !== 0; });
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; })
-          ;
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+
+        var queueValues = data.average_queue_duration_by_hour
+          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+
         if (!angular.isDefined(vm.stats)) {
           vm.stats = {};
         }
-        angular.extend(vm.stats, vm.stats, data);
-        vm.data[0].values = values;
-        
-        var nearest_ten = get_nearest_ten_for_max_value(0);
-        if (nearest_ten == 0) return;
 
-        vm.options.chart.bars.yDomain[1] = nearest_ten;
-        setTicks("y1", nearest_ten);
+        angular.extend(vm.stats, vm.stats, data);
+        vm.data[0].values = callsValues;
+        vm.data[1].values = queueValues;
+        vm.options.chart.bars.yDomain[1] = getMaxValPlusOne(0);
+        vm.options.chart.lines.yDomain[1] = getMaxValPlusOne(1);
       });
     }
 
     function fetchQueueStats() {
       $http.get('queue/stats.json').then(function (response) {
         var data = response.data;
-        var values = data.queue_items_by_hour
-          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
         if (!angular.isDefined(vm.stats)) {
           vm.stats = {};
         }
         angular.extend(vm.stats, vm.stats, data);
-        vm.data[1].values = values;
-
-        var nearest_ten = get_nearest_ten_for_max_value(1);
-        if (nearest_ten == 0) return;
-
-        vm.options.chart.lines.yDomain[1] = nearest_ten;
-        
-        setTicks("y2", nearest_ten);
       });
     }
 
-    function setTicks(axis, nearest_ten) {
-      if (axis == "y1") {
-        var ticks = vm.options.chart.y1Axis.tickValues;
-      } else if (axis == "y2") {
-        var ticks = vm.options.chart.y2Axis.tickValues;
+    function getMaxValPlusOne(i) {
+      var maxVal = d3.max(vm.data[i].values, function (x) { return x.calls; });
+      if (maxVal == null) {
+        return 1;
       }
-
-      newTicks = get_new_ticks(nearest_ten);
-      if (angular.equals(ticks, newTicks)) return;
-      
-      if (axis == "y1") {
-        vm.options.chart.y1Axis.tickValues = newTicks.slice(0);
-      } else if(axis == "y2") {
-        vm.options.chart.y2Axis.tickValues = newTicks.slice(0);
-      }
-
-      vm.api.refresh();
-    }
-
-    function get_nearest_ten(i) {
-      var max_val = d3.max(vm.data[i].values, function (x) { return x.calls; });
-      if (max_val == null) {
-        return 0;
-      }
-      return Math.ceil(max_val / 10) * 10;
-    }
-
-    function get_new_ticks(nearest_ten) {
-      if (nearest_ten == 10) {
-        return Array.from({length: 10}, function (v, k) { return k; });
-      }
-      return Array.from({length: nearest_ten / 10}, function (v, k) { return k * 10; });
+      return maxVal + 1;
     }
 
     vm.message = 'Jono';

@@ -13,7 +13,7 @@ Rails:
   Enabled: true
 Rails/TimeZone:
   Exclude:
-    - 'app/jobs/schedule.rb'
+    - 'job_schedule.rb'
 Metrics/ClassLength:
   Exclude:
     - 'app/services/backend_service.rb'
