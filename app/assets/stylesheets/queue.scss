@@ -110,9 +110,8 @@
 
   td {
     width: 50%;
-    font-size: 200%;
+    font-size: 150%;
     line-height: 1;
-    padding: 0.1em;
     text-align: right;
   }
 
@@ -161,6 +160,12 @@
 
 .nvd3 .nv-x.nv-axis line {
   stroke-width: 0;
+}
+
+.percentage {
+  position: relative;
+  left: 2.5em;
+  font-size: 200%;
 }
 
 .nvtooltip {
