@@ -19,7 +19,7 @@ class AgentStatusesController < ApplicationController
     when 'Puhelu (Ulos)', 'Puhelu (Sisään)', 'Ulossoitto'
       return 'Puhelu'
     when /^Varattu \((.*)\)$/
-      return $1
+      return Regexp.last_match[1]
     else
       return status
     end
