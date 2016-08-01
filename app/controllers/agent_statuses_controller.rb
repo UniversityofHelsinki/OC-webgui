@@ -12,7 +12,7 @@ class AgentStatusesController < ApplicationController
   end
 
   # Some statuses are merged into one or renamed according to client specifications
-  def normalize_status(status_)
+  def normalize_status(status)
     case status
     when 'Sisäänkirjaus', 'Sisäänkirjautuminen'
       return 'Vapaa'
