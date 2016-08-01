@@ -72,4 +72,13 @@ RSpec.describe AgentStatusesController, type: :controller do
     agents = JSON.parse(response.body)
     expect(agents).to be_empty
   end
+
+  it 'should normalize statuses' do
+    expect(AgentStatusesController.new.normalize_status('Sisäänkirjaus')).to eq('Vapaa')
+    expect(AgentStatusesController.new.normalize_status('Sisäänkirjautuminen')).to eq('Vapaa')
+    expect(AgentStatusesController.new.normalize_status('Puhelu (Ulos)')).to eq('Puhelu')
+    expect(AgentStatusesController.new.normalize_status('Puhelu (Sisään)')).to eq('Puhelu')
+    expect(AgentStatusesController.new.normalize_status('Ulossoitto')).to eq('Puhelu')
+    expect(AgentStatusesController.new.normalize_status('Varattu (jotaki)')).to eq('jotaki')
+  end
 end
