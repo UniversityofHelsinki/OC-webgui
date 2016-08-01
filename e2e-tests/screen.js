@@ -48,7 +48,7 @@ describe('screen', function () {
               first_name: 'Jenni',
               last_name: 'Ahola',
               status: 'Varattu (Chat)',
-              created_at: new Date(baseTime - (1 * 60 + 5) * 1000),
+              created_at: new Date(baseTime - (3600 + 1 * 60 + 5) * 1000),
               lunch: false,
               team: {
                 id: 1,
@@ -115,7 +115,7 @@ describe('screen', function () {
     expect(agentCards.get(0).element(by.className('status-timer')).getText()).toBe('10:15');
     expect(agentCards.get(1).element(by.className('status-timer')).getCssValue('visibility')).toBe('hidden');
     expect(agentCards.get(2).element(by.className('status-timer')).getText()).toBe('00:30');
-    expect(agentCards.get(3).element(by.className('status-timer')).getText()).toBe('01:05');
+    expect(agentCards.get(3).element(by.className('status-timer')).getText()).toBe('01:01:05');
   });
 
   it('Status color should match status text', function () {
