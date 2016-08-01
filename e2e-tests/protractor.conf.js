@@ -1,7 +1,7 @@
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [
-    '*.js'
+    'userAdmin.js'
   ],
   capabilities: {
     'browserName': 'chrome'

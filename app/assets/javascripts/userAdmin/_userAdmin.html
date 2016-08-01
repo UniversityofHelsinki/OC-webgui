@@ -42,7 +42,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="user in userAdmin.users | orderBy:'username'">
-                        <td class="col-sm-2">{{user.username}}</td>
+                        <td id="td-username" class="col-sm-2">{{user.username}}</td>
                         <td class="col-sm-6">
                             <select ng-blur="userAdmin.updateUser(user)" class="form-control" ng-model="user.agent_id" ng-options="agent.id as agent.first_name + ' ' + agent.last_name for agent in userAdmin.agents | orderBy:'first_name'"></select>
                         </td>

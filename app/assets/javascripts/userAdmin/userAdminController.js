@@ -15,9 +15,9 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service',
         }
       });
   })
-  .controller('UserAdminController', function UserAdminController($scope, $timeout, AgentObjects, Users, UserAdmin) {
+  .controller('UserAdminController', function UserAdminController($scope, $interval, AgentObjects, Users, UserAdmin) {
     var vm = this;
-    vm.notification = 'a';
+    vm.notification = 'placeholder';
 
     // Setting agent reference for users requires fetching Agents to be complete first
 
@@ -39,11 +39,12 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service',
       notificationElement.removeClass('alert-hidden');
       vm.notification = message;
 
-      $timeout.cancel(notificationTimeout);
-      notificationTimeout = $timeout(function () {
+      $interval.cancel(notificationTimeout);
+      notificationTimeout = $interval(function () {
         notificationElement.addClass('alert-hidden');
-        vm.notification = 'a';
+        vm.notification = 'placeholder';
         vm.notifyClass = '';
+        $interval.cancel(notificationTimeout);
       }, 5000);
     };
 
