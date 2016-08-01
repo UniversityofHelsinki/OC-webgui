@@ -48,9 +48,6 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
             case 'Puhelu':
               yellow++;
               break;
-            case String(agent.status.match(/^Varattu \(.*\)/)):
-              agent.status = agent.status.match(/^Varattu \((.*)\)/)[1];
-              // fallthrough
             default:
               red++;
               break;
