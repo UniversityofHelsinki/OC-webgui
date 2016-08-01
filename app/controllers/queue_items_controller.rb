@@ -7,7 +7,6 @@ class QueueItemsController < ApplicationController
   before_action :init
 
   def init
-    @queue_service = QueueService.new
     time = Time.zone.now
     @start_time = time.beginning_of_day
     @end_time = time.end_of_day
