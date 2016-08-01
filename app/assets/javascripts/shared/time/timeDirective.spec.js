@@ -64,7 +64,7 @@ describe('ocTime', function () {
       expect(directiveElem.text()).toBe('03:20');
     });
 
-    it('should display hours if necessary', function() {
+    it('should display hours if necessary', function () {
       scope.myDate = new Date(2016, 7, 7, 7, 58, 43);
       scope.$digest();
       expect(directiveElem.text()).toBe('02:03:20');
@@ -99,7 +99,7 @@ describe('ocTime', function () {
       expect(directiveElem.text()).toBe('02:03');
     });
 
-    it ('should display hours if necessary', function() {
+    it('should display hours if necessary', function () {
       scope.mySeconds = 3777;
       scope.$digest();
       expect(directiveElem.text()).toBe('01:02:57');
