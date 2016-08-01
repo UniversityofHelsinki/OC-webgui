@@ -121,6 +121,4 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
 
     fetchData();
     fetchContactStats();
-    fetchQueueStats();
-
   });
