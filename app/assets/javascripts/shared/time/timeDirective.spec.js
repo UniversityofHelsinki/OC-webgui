@@ -63,6 +63,12 @@ describe('ocTime', function () {
       scope.$digest();
       expect(directiveElem.text()).toBe('03:20');
     });
+
+    it('should display hours if necessary', function() {
+      scope.myDate = new Date(2016, 7, 7, 7, 58, 43);
+      scope.$digest();
+      expect(directiveElem.text()).toBe('02:03:20');
+    });
   });
 
   describe('without update (use seconds)', function () {
@@ -91,6 +97,12 @@ describe('ocTime', function () {
     it('should not update time automatically', function () {
       interval.flush(5000);
       expect(directiveElem.text()).toBe('02:03');
+    });
+
+    it ('should display hours if necessary', function() {
+      scope.mySeconds = 3777;
+      scope.$digest();
+      expect(directiveElem.text()).toBe('01:02:57');
     });
   });
 });
