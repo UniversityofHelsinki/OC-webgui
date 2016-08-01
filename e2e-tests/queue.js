@@ -155,6 +155,7 @@ describe('queue', function () {
 // Testi sekoaa siitä, että yksi elementeistä ei näy pienellä resoluutiolla näytöllä.
     it('should contain average queue waiting duration', function () {
       expect(rows.get(4).element(by.tagName('th')).getText()).toBe('Jonotusten ka:');
+      expect(rows.get(4).element(by.tagName('td')).getText()).toBe('00:00');
     });    
   });
 });
