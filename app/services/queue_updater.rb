@@ -5,7 +5,7 @@
 # Queue objects do not by default have any unique identifying information, so they are identified by what information they do contain,
 # as well as the time they enter the queue (current time - time_in_queue). This is not guaranteed to be 100% reliable in borderline
 # cases such as when two similar contacts enter the queue (almost) simultaneously or if the time_in_status returned by OC SOAP service
-# is not reliable (for example due to lag). The class will attempt to account for these cases but does not guarantee 100% accuracy.
+# is not reliable (for example due to lag). 
 class QueueUpdater
   include Now
   # Current_time parameter should ALWAYS be current time (Time.zone.now), except for tests
@@ -21,10 +21,9 @@ class QueueUpdater
     @new_items = []
 
     check_when_items_entered_queue
-    return false unless new_data_is_reliable
+    check_for_new_items
     check_if_items_left_queue
     save_updates
-    true
   end
 
   private
@@ -34,16 +33,6 @@ class QueueUpdater
     QueueItem.where(id: items_to_close)
              .update_all(open: false, closed: @current_time, last_reliable_status: @last_success)
     QueueItem.create(@new_items)
-  end
-
-  # This check is used for borderline cases where the new queue status from SOAP service is not accurate due to lag. In such
-  # a case an item's time_in_queue status might be inaccurate and it will not be recognized as a one of the already open
-  # queue items, but as a new item instead. This will check whether it's possible for the item to be new, and if not, the
-  # results of this update round should be discarded until a new reliable result can be obtained the next time the update job runs.
-  def plausibly_new_item?(item)
-    return true unless @last_success
-    time_since_last_update = @current_time - @last_success
-    item.time_in_queue.to_i <= time_since_last_update + 1.second
   end
 
   def check_when_items_entered_queue
@@ -61,16 +50,17 @@ class QueueUpdater
     end
   end
 
-  # Returns false if new data doesn't appear reliable, otherwise retuns true and adds new items to array for saving later
-  def new_data_is_reliable
+  # Will check for any new items that it can't match to existing old ones. NOTE: It is possible for
+  # the same_item check to fail due to lag in SOAP reply, even if the items are actually the same. 
+  # This means that the same item may be duplicated (the old one will be closed and a new one opened).
+  # This is considered acceptable because accurate Queue stats can be calculated from Contact data.
+  def check_for_new_items
     @new_queue.each do |item|
       matches = @previous_queue.select { |match| same_item(item, match) }
       unless matches.any?
-        return false unless plausibly_new_item? item
         @new_items.push(created_at: item.created_at, service_id: item.service_id, open: true)
       end
     end
-    true
   end
 
   def same_item(item, match)

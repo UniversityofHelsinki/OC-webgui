@@ -9,7 +9,8 @@ class TrackQueueItemsJob
                     time_in_queue: data[:time_in_queue])
     end
     last_success = Rails.cache.read('track_queue_items_job_last_success')
-    Rails.cache.write('track_queue_items_job_last_success', now) if QueueUpdater.new(now, last_success).update_queue(current)
+    QueueUpdater.new(now, last_success).update_queue(current)
+    Rails.cache.write('track_queue_items_job_last_success', now)
   end
 
   def self.queue_priority
