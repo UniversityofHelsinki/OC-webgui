@@ -115,14 +115,6 @@ describe('queue', function () {
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ]
             });
-
-            $httpBackend.whenGET('queue/stats.json').respond({
-              average_waiting_time: 100,
-              answered_percentage: 100,
-              queue_items_by_hour: [
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-              ]
-            });
           });
       });
       browser.get('#/queue');
