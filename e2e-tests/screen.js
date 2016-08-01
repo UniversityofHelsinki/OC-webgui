@@ -47,7 +47,7 @@ describe('screen', function () {
               id: 666,
               first_name: 'Jenni',
               last_name: 'Ahola',
-              status: 'Varattu (Chat)',
+              status: 'Chat',
               created_at: new Date(baseTime - (3600 + 1 * 60 + 5) * 1000),
               lunch: false,
               team: {
