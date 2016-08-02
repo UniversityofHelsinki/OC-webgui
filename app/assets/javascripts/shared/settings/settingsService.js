@@ -50,6 +50,11 @@ angular.module('ocWebGui.shared.settings', [])
         }).then(function () {
           $rootScope.$broadcast('settings:colors:update');
         });
+      },
+      invalidateCache: function () {
+        getSettingsPromise = undefined;
+        settingsCache = undefined;
+        $rootScope.$broadcast('settings:colors:update');
       }
     };
   });
