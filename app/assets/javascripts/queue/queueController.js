@@ -88,11 +88,12 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         vm.data[0].values = callsValues;
         vm.data[1].values = queueValues;
         var callMax = getMaxValPlusOne(0);
-        var queueMax = getMaxValPlusOne(1);
+        // Multiply by 1.05 so highest value is high enough that highest point in chart isn't hidden
+        var queueMax = getMaxValPlusOne(1) * 1.05;
         vm.options.chart.bars.yDomain[1] = callMax;
-        vm.options.chart.lines.yDomain[1] = queueMax * 1.05;
+        vm.options.chart.lines.yDomain[1] = queueMax;
         vm.options.chart.y1Axis.tickValues = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
-        vm.options.chart.y2Axis.tickValues = [queueMax / 4 * 1.05, queueMax / 2 * 1.05, queueMax / (1 + 1.0 / 3) * 1.05];
+        vm.options.chart.y2Axis.tickValues = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
         vm.api.refresh();
       });
     }
