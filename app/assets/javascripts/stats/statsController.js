@@ -70,8 +70,8 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
             return d3.time.format('%H.%M')(new Date(d));
           }
         },
+        yAxis1: {},
         yAxis2: {
-          ticks: 10,
           tickFormat: function (seconds) {
             var formatTime = d3.time.format('%H:%M');
             return formatTime(new Date(1864, 7, 7, 0, seconds));
@@ -132,7 +132,25 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
 
         vm.options2.chart.xAxis.tickValues = d3.time.hour.range(clock8, clock18, 1)
           .map(function (f) { return f.getTime() });
+
+        var callMax = getMaxValPlusOne(0); // because sum is always same or bigger than missed calls
+        // Multiply by 1.05 so highest value is high enough that highest point in chart isn't hidden
+        var queueMax = getMaxValPlusOne(2) * 1.105;
+        console.log(queueMax + " ja " + callMax);
+        // vm.options2.chart.yDomain1[1] = callMax;
+        // vm.options2.chart.yDomain2[1] = queueMax;
+        vm.options2.chart.yAxis1.tickValues = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
+        vm.options2.chart.yAxis2.tickValues = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
+        vm.api2.refresh();
       });
+    }
+
+    function getMaxValPlusOne(i) {
+      var maxVal = d3.max(vm.data2[i].values, function (x) { return x.y; });
+      if (maxVal == null) {
+        return 1;
+      }
+      return maxVal + 1;
     }
 
     var fetchContactStatsInterval = $interval(fetchContactStats, 5 * 60 * 1000);
