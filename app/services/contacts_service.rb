@@ -1,9 +1,7 @@
 # Calculates various statistics data based on Contact objects.
 class ContactsService
   def initialize(filter_by_model, start_time, end_time)
-    @filter_by_model = filter_by_model
-    @start_time = start_time
-    @end_time = end_time
+    @gmt_offset = Time.now.getlocal.gmt_offset
     if filter_by_model.is_a? Team
       @contacts = Contact.joins(:service).where(services: { team_id: filter_by_model.id }, arrived: start_time..end_time)
     elsif filter_by_model.is_a? Agent
@@ -68,9 +66,8 @@ class ContactsService
   end
 
   def queue_durations_by_times
-    gmt_offset = Time.now.getlocal.gmt_offset
     @contacts.pluck(:arrived, :forwarded_to_agent)
-             .map { |d| [d[0], d[1] - d[0]] unless d[1].nil? }
+             .map { |d| [d[0] + @gmt_offset, d[1] - d[0]] unless d[1].nil? }
              .compact
              .select { |s| not s.nil? }
              .select { |s| s[1] != 0.0 }

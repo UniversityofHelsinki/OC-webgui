@@ -55,11 +55,11 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
 
-        var queueDurationsByTimes = data.queueDurationsByTimes
+        var queueDurationsByTimes = data.queue_durations_by_times
           .map(function (j) {
             return { hour: new Date(j[0]).getTime(), calls: j[1] };
           });
-        vm.data[0].values = queue_durations_by_times;
+        vm.data[0].values = queueDurationsByTimes;
       });
     }
 
