@@ -2,6 +2,7 @@
 class ContactsService
   def initialize(filter_by_model, start_time, end_time)
     @gmt_offset = Time.now.getlocal.gmt_offset
+    @start_time = start_time
     if filter_by_model.is_a? Team
       @contacts = Contact.joins(:service).where(services: { team_id: filter_by_model.id }, arrived: start_time..end_time)
     elsif filter_by_model.is_a? Agent
@@ -74,7 +75,12 @@ class ContactsService
   end
 
   def correlation_of_average_queue_length_and_missed_calls
-    beginning = Time.now.beginning_of_day
+    if @start_time.is_a? String
+      beginning = Time.parse(@start_time).beginning_of_day if @start_time.is_a? String
+    else
+      beginning = @start_time.beginning_of_day
+    end
+
     stats = []
     # gmt offset
     (0..48).each do
