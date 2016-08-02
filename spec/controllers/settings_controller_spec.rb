@@ -111,6 +111,40 @@ RSpec.describe SettingsController, type: :controller do
 
         expect(User.find(2).settings).to eq(expected)
       end
+
+      it 'fails with invalid colors' do
+        new_settings = {
+          'colors' => {
+            'font' => '#333',
+            'statuses' => {
+              'free' => '#l0l0l'
+            }
+          }
+        }
+
+        expected = {
+          'colors' => {
+            'background' => '#ffffff',
+            'font' => '#000000'
+          }
+        }
+
+        error_response = {
+          'colors' => {
+            'font' => 'invalid color',
+            'statuses' => {
+              'free' => 'invalid color'
+            }
+          }
+        }
+
+        session['user_id'] = 2
+        post :update, new_settings, format: :json
+        expect(response.status).to eq(400)
+        expect(JSON.parse(response.body)).to eq(error_response)
+
+        expect(User.find(2).settings).to eq(expected)
+      end
     end
   end
 end
