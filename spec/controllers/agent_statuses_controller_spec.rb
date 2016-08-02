@@ -36,7 +36,7 @@ RSpec.describe AgentStatusesController, type: :controller do
         'id' => 1_100_039,
         'first_name' => 'test',
         'last_name' => 'kolmas',
-        'status' => 'Vapaa',
+        'status' => 'JokuSyy',
         'created_at' => '2016-07-11T11:10:05.000Z',
         'lunch' => false,
         'team' => {
@@ -56,9 +56,9 @@ RSpec.describe AgentStatusesController, type: :controller do
     agent3 = Agent.create(id: 1_100_039, first_name: 'test', last_name: 'kolmas', team: team2)
     agent4 = Agent.create(id: 2_525_208, first_name: 'oleva', last_name: 'kiinni', team: team3)
 
-    AgentStatus.create(agent: agent1, status: 'Vapaa', open: true, created_at: Time.utc(2016, 7, 11, 10, 0, 16))
+    AgentStatus.create(agent: agent1, status: 'Sisäänkirjautuminen', open: true, created_at: Time.utc(2016, 7, 11, 10, 0, 16))
     AgentStatus.create(agent: agent2, status: 'Jälkikirjaus', open: true, created_at: Time.utc(2016, 7, 11, 10, 32, 44))
-    AgentStatus.create(agent: agent3, status: 'Vapaa', open: true, created_at: Time.utc(2016, 7, 11, 11, 10, 5))
+    AgentStatus.create(agent: agent3, status: 'Varattu (JokuSyy)', open: true, created_at: Time.utc(2016, 7, 11, 11, 10, 5))
     AgentStatus.create(agent: agent4, status: 'Vapaa', open: false, created_at: Time.utc(2016, 7, 11, 12, 0))
 
     get :index, format: :json
@@ -71,5 +71,14 @@ RSpec.describe AgentStatusesController, type: :controller do
     get :index, format: :json
     agents = JSON.parse(response.body)
     expect(agents).to be_empty
+  end
+
+  it 'should normalize statuses' do
+    expect(AgentStatusesController.new.normalize_status('Sisäänkirjaus')).to eq('Vapaa')
+    expect(AgentStatusesController.new.normalize_status('Sisäänkirjautuminen')).to eq('Vapaa')
+    expect(AgentStatusesController.new.normalize_status('Puhelu (Ulos)')).to eq('Puhelu')
+    expect(AgentStatusesController.new.normalize_status('Puhelu (Sisään)')).to eq('Puhelu')
+    expect(AgentStatusesController.new.normalize_status('Ulossoitto')).to eq('Puhelu')
+    expect(AgentStatusesController.new.normalize_status('Varattu (jotaki)')).to eq('jotaki')
   end
 end
