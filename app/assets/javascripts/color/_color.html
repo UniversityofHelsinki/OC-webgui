@@ -1,33 +1,33 @@
 <div class="card">
-  <h1>{{ color.title }}</h1>
-  <p ng-if="color.message">{{ color.message }}</p>
-  <form ng-submit="color.save()" ng-if="color.colors">
-    <fieldset>
-      <legend>Yhteiset</legend>
-      <label>
-        Taustaväri:
-        <input type="color" ng-model="color.colors.background">
-      </label>
-      <label>
-        Fontti:
-        <input type="color" ng-model="color.colors.font">
-      </label>
-    </fieldset>
-    <fieldset>
-      <legend>Statukset</legend>
-      <label>
-        Vapaa:
-        <input type="color" ng-model="color.colors.statuses.free">
-      </label>
-      <label>
-        Puhelu:
-        <input type="color" ng-model="color.colors.statuses.call">
-      </label>
-      <label>
-        Varattu:
-        <input type="color" ng-model="color.colors.statuses.busy">
-      </label>
-    </fieldset>
-    <button type="submit">Tallenna</button>
-  </form>
+    <h1>{{ color.title }}</h1>
+    <p ng-if="color.message">{{ color.message }}</p>
+    <form ng-submit="color.save()" ng-if="color.colors">
+        <fieldset>
+            <legend>Yhteiset</legend>
+            <label>
+                Taustaväri:
+                <input type="color" ng-model="color.colors.background">
+            </label>
+            <label>
+                Fontti:
+                <input type="color" ng-model="color.colors.font">
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Statukset</legend>
+            <label>
+                Vapaa:
+                <input type="color" ng-model="color.colors.statuses.free">
+            </label>
+            <label>
+                Puhelu:
+                <input type="color" ng-model="color.colors.statuses.call">
+            </label>
+            <label>
+                Varattu:
+                <input type="color" ng-model="color.colors.statuses.busy">
+            </label>
+        </fieldset>
+        <button type="submit">Tallenna</button>
+    </form>
 </div>

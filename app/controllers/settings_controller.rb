@@ -8,9 +8,9 @@ class SettingsController < ApplicationController
         'free' => '#37c837',
         'call' => '#ffff4d',
         'busy' => '#ff3333'
-      }
-    }
-  }
+      }.freeze
+    }.freeze
+  }.freeze
 
   def get
     if current_user
