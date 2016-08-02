@@ -109,7 +109,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       vm.date = new Date();
     }
     var fetchDataInterval = $interval(fetchData, 5 * 1000);
-    var fetchContactStatsInterval = $interval(fetchContactStats, 5 * 60 * 1000);
+    var fetchContactStatsInterval = $interval(fetchContactStats, 30 * 1000);
     $scope.$on('$destroy', function () {
       $interval.cancel(fetchDataInterval);
       $interval.cancel(fetchContactStatsInterval);
