@@ -8,7 +8,7 @@ angular.module('ocWebGui.color', ['ui.router', 'ocWebGui.login'])
         controllerAs: 'color'
       });
   })
-  .controller('ColorController', function ($timeout, Settings) {
+  .controller('ColorController', function ($interval, Settings) {
     var vm = this;
     vm.title = 'Värit';
 
@@ -24,7 +24,7 @@ angular.module('ocWebGui.color', ['ui.router', 'ocWebGui.login'])
     vm.save = function () {
       Settings.setColors(vm.colors).then(function () {
         vm.message = 'Kivat valinnat! Ne on nyt tallennettu!';
-        $timeout(clearMessage, 5000);
+        $interval(clearMessage, 5000, 1);
       });
     };
   });
