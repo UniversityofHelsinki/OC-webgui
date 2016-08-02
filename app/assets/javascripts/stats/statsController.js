@@ -89,7 +89,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
     }, {
       'key': 'Luopuneet',
       'values': [],
-      'type': 'line',
+      'type': 'area',
       'yAxis': 1,
       'color': '#0000ff'
     }, {
