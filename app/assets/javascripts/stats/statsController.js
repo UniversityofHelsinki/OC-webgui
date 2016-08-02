@@ -30,9 +30,8 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         xAxis: {
           axisLabel: 'Kellonaika',
           tickFormat: function (d){
-            return d3.time.format('%H.%M')(new Date(d * 1000));
-          },
-          ticks: 10,
+            return d3.time.format('%H.%M')(new Date(d));
+          }
         },
         yAxis: {
           axisLabel: 'Jonotusaika',
@@ -58,7 +57,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
 
         var queue_durations_by_times = data.queue_durations_by_times
           .map(function (j) {
-            return { hour: j[0], calls: j[1]};
+            return { hour: new Date(j[0]).getTime(), calls: j[1]};
           });
         vm.data[0].values = queue_durations_by_times;
       });

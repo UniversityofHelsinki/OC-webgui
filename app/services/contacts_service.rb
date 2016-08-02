@@ -70,7 +70,7 @@ class ContactsService
   def queue_durations_by_times
     c = @contacts
       .pluck(:arrived, :forwarded_to_agent)
-      .map { |d| [d[0].to_i, d[1] - d[0]] unless d[1].nil? }
+      .map { |d| [d[0], d[1] - d[0]] unless d[1].nil? }
       .compact
       .select { |s| not s.nil? }
       .select { |s| s[1] != 0.0 }
