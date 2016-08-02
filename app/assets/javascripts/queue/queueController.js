@@ -79,25 +79,11 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
           .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
 
-        if (!angular.isDefined(vm.stats)) {
-          vm.stats = {};
-        }
-
-        angular.extend(vm.stats, vm.stats, data);
+        vm.stats = data;
         vm.data[0].values = callsValues;
         vm.data[1].values = queueValues;
         vm.options.chart.bars.yDomain[1] = getMaxValPlusOne(0);
         vm.options.chart.lines.yDomain[1] = getMaxValPlusOne(1);
-      });
-    }
-
-    function fetchQueueStats() {
-      $http.get('queue/stats.json').then(function (response) {
-        var data = response.data;
-        if (!angular.isDefined(vm.stats)) {
-          vm.stats = {};
-        }
-        angular.extend(vm.stats, vm.stats, data);
       });
     }
 
@@ -124,15 +110,11 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     }
     var fetchDataInterval = $interval(fetchData, 5 * 1000);
     var fetchContactStatsInterval = $interval(fetchContactStats, 5 * 60 * 1000);
-    var fetchQueueStatsInterval = $interval(fetchQueueStats, 5 * 60 * 1000);
     $scope.$on('$destroy', function () {
       $interval.cancel(fetchDataInterval);
       $interval.cancel(fetchContactStatsInterval);
-      $interval.cancel(fetchQueueStatsInterval);
     });
 
     fetchData();
     fetchContactStats();
-    fetchQueueStats();
-
   });
