@@ -9,8 +9,8 @@ angular.module('ocWebGui.colormanagement', ['ui.router', 'ocWebGui.shared.time']
         navbarOverlay: true
       });
   })
-  .controller('colorManagementController', function () {
-        var vm = this;
+  .controller('colorManagementController', function ($interval, $scope, shared, Agents, TrimName) {
+    var vm = this;
     var fetchDataInterval;
 
     //vm.teams = shared.getTeams();
@@ -61,10 +61,10 @@ angular.module('ocWebGui.colormanagement', ['ui.router', 'ocWebGui.shared.time']
 
     vm.trimName = TrimName.trim;
 
-    fetchDataInterval = $interval(fetchData, 5000);
+ /*   fetchDataInterval = $interval(fetchData, 5000);
     $scope.$on('$destroy', function () {
       $interval.cancel(fetchDataInterval);
-    });
+    }); */
 
     fetchData();
   });
