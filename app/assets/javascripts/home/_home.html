@@ -4,7 +4,6 @@
         <h1>Koti</h1>
         <a ui-sref="screen" class="card">Statusnäkymä</a>
         <a ui-sref="queue" class="card">Jononäkymä</a>        
-        <a ui-sref="personal" class="card" ng-if="home.isAuthenticated()">Oma näkymä</a>
         <a ui-sref="filterpanel" class="card">Filtteröi</a>
         <a ui-sref="stats" class="card" ng-if="home.isAuthenticated()">Tilastot</a>
         <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Kirjaudu sisään</a>
