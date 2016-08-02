@@ -68,6 +68,7 @@ class ContactsService
   end
 
   def queue_durations_by_times
+    gmt_offset = Time.now.getlocal.gmt_offset
     @contacts.pluck(:arrived, :forwarded_to_agent)
              .map { |d| [d[0], d[1] - d[0]] unless d[1].nil? }
              .compact
