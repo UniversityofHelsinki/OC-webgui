@@ -60,7 +60,7 @@ describe('color', function () {
     });
 
     it('changes color from settings', function () {
-      browser.get('#/color');
+      element(by.linkText('Säädä värejä')).click();
 
       var bgInput = browser.element(by.model('color.colors.background'));
       bgInput.evaluate('color.colors.background = "#ff0000";');
