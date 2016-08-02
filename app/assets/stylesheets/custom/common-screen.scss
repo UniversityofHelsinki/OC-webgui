@@ -15,7 +15,8 @@ $card-padding: 0.5em;
 
 .body-screen {
   background-color: #87aade;
-  font-size: 13px;
+  margin: 0;
+  padding: 0;
 
   &.hide-mouse {
     cursor: none;
