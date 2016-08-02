@@ -3,7 +3,7 @@ angular.module('ocWebGui.colormanagement', ['ui.router', 'ocWebGui.shared.time']
     $stateProvider
       .state('colormanagement', {
         url: '/colors',
-        templateUrl: 'colormanagement/_colormanagement.html',
+        templateUrl: 'color_management/_colormanagement.html',
         controller: 'colorManagementController',
         controllerAs: 'colormanagement',
         navbarOverlay: true
