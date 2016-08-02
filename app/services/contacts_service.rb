@@ -73,6 +73,26 @@ class ContactsService
              .sort
   end
 
+  def correlation_of_average_queue_length_and_missed_calls
+    beginning = Time.now.beginning_of_day
+    stats = []
+    # gmt offset
+    (0..48).each do |i|
+      beginning = beginning + 30.minutes
+      ending = beginning + 29.minutes + 59.seconds
+      missed = missed_contacts.where(arrived: beginning..ending).count
+      answered = answered_contacts.where(arrived: beginning..ending).count
+      sum = missed + answered
+      queuers = @contacts.where(contact_type: 'PBX')
+                         .where.not(forwarded_to_agent: nil, service_id: 120)
+                         .where(arrived: beginning..ending)
+      queue_average = average_duration(queuers, 'arrived', 'forwarded_to_agent')
+      stats.push([beginning, sum, missed, queue_average])
+    end
+
+    stats
+  end
+
   private
 
   def answered_contacts
