@@ -76,7 +76,7 @@ class ContactsService
 
   def correlation_of_average_queue_length_and_missed_calls
     if @start_time.is_a? String
-      beginning = Time.parse(@start_time).beginning_of_day if @start_time.is_a? String
+      beginning = Time.zone.parse(@start_time).beginning_of_day if @start_time.is_a? String
     else
       beginning = @start_time.beginning_of_day
     end
