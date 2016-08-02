@@ -1,10 +1,10 @@
-.nv-point {
+#queue-chart .nv-point {
   stroke-opacity: 1 !important;
   stroke-width: 0.7em;
   fill-opacity: 1 !important;
 }
 
-.nvd3 g.nv-groups path.nv-line {
+#queue-chart .nvd3 g.nv-groups path.nv-line {
   stroke-width: 0;
 }
 
@@ -13,22 +13,22 @@
 //  display: none !important;
 //}
 
-.nv-context {
+#queue-chart .nv-context {
   display: none !important;
 }
 
-.nvd3 text {
+#queue-chart .nvd3 text {
   font-size: 2.0em !important;
 }
 
-.nvd3 .nv-axis line {
+#queue-chart .nvd3 .nv-axis line {
   stroke: #bebebe !important;
 }
 
-.nvd3 .nv-x.nv-axis line {
+#queue-chart .nvd3 .nv-x.nv-axis line {
   stroke-width: 0;
 }
 
-.nvtooltip {
+#queue-chart .nvtooltip {
   display: none !important;
 }

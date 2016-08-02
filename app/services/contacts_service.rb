@@ -1,6 +1,9 @@
 # Calculates various statistics data based on Contact objects.
 class ContactsService
   def initialize(filter_by_model, start_time, end_time)
+    @filter_by_model = filter_by_model
+    @start_time = start_time
+    @end_time = end_time
     if filter_by_model.is_a? Team
       @contacts = Contact.joins(:service).where(services: { team_id: filter_by_model.id }, arrived: start_time..end_time)
     elsif filter_by_model.is_a? Agent
@@ -62,6 +65,18 @@ class ContactsService
     result = Array.new(24, 0)
     data.each { |d| result[(d['hour'])] = d['count'] }
     result
+  end
+
+  def queue_durations_by_times
+    contax = Contact.joins(:service).where(services: { team_id: @filter_by_model.id }, arrived: @start_time..@end_time)
+    mm = contax
+      .map { |c|
+        j = contax.where(ticket_id: c[:ticket_id])
+        durr = average_duration(j, 'arrived', 'forwarded_to_agent')
+        [c[:arrived].to_i, durr]
+      }.select { |e|
+        e[1] > 0
+      }
   end
 
   private

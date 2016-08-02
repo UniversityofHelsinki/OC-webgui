@@ -8,7 +8,66 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         controllerAs: 'stats'
       });
   })
-  .controller('StatsController', function ($scope, $http) {
+  .controller('StatsController', function ($interval, $scope, $http) {
     var vm = this;
     vm.title = 'Tilastot';
+
+    vm.api = {};
+    vm.options = {
+      chart: {
+        type: 'scatterChart',
+        width: 700,
+        height: 550,
+        margin: {
+          top: 30,
+          right: 90,
+          bottom: 60,
+          left: 90
+        },
+        color: d3.scale.category10().range(),
+        showDistX: true,
+        showDistY: true,
+        xAxis: {
+          axisLabel: 'Kellonaika',
+          tickFormat: function (d){
+            return d3.time.format('%H.%M')(new Date(d * 1000));
+          },
+          ticks: 10,
+        },
+        yAxis: {
+          axisLabel: 'Jonotusaika',
+          axisLabelDistance: 10,
+          tickFormat: function (seconds) {
+            var formatTime = d3.time.format("%H:%M");
+            return formatTime(new Date(1864, 7, 7, 0, seconds));
+          }
+        },
+        x: function (d) { return d.hour; },
+        y: function (d) { return d.calls; },
+      }
+    };
+
+    vm.data = [{
+      'key': 'Jonotusaika',
+      'values': []
+    }];
+
+    function fetchContactStats() {
+      $http.get('contacts/stats.json').then(function (response) {
+        var data = response.data;
+
+        var queue_durations_by_times = data.queue_durations_by_times
+          .map(function (j) {
+            return { hour: j[0], calls: j[1]};
+          });
+        vm.data[0].values = queue_durations_by_times;
+      });
+    }
+
+    var fetchContactStatsInterval = $interval(fetchContactStats, 5 * 60 * 1000);
+    $scope.$on('$destroy', function () {
+      $interval.cancel(fetchContactStatsInterval);
+    });
+
+    fetchContactStats();
   });
