@@ -8,7 +8,9 @@ angular.module('ocWebGui.userAdmin.service', ['ngResource'])
   .factory('UserAdmin', function ($resource, $http) {
     return {
       createUser: function (username, password, onSuccess, onError) {
-        $http.post('users', { user: { username: username, password: password } })
+        $http.post('users', { user: { username: username,
+                                      password: password }
+                            })
           .then(function (response) {
             onSuccess(response.data);
           }, function (response) {
@@ -19,7 +21,8 @@ angular.module('ocWebGui.userAdmin.service', ['ngResource'])
         $http.post('users/update', { user: { username: user.username,
                                              agent_id: user.agent_id,
                                              id: user.id,
-                                             is_admin: user.is_admin } })
+                                             is_admin: user.is_admin }
+                                    })
           .then(function (response) {
             onSuccess(response.data);
           }, function (response) {
