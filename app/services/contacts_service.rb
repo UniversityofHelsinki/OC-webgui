@@ -69,8 +69,8 @@ class ContactsService
     @contacts.pluck(:arrived, :forwarded_to_agent)
              .map { |d| [d[0] + @gmt_offset, d[1] - d[0]] unless d[1].nil? }
              .compact
-             .select { |s| not s.nil? }
-             .select { |s| s[1] != 0.0 }
+             .select { |s| !s.nil? && s[1] != 0.0 }
+             .sort
   end
 
   private

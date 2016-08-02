@@ -37,7 +37,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
           axisLabel: 'Jonotusaika',
           axisLabelDistance: 10,
           tickFormat: function (seconds) {
-            var formatTime = d3.time.format("%H:%M");
+            var formatTime = d3.time.format('%H:%M');
             return formatTime(new Date(1864, 7, 7, 0, seconds));
           }
         },
