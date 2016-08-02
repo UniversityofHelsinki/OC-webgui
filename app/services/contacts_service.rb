@@ -83,8 +83,8 @@ class ContactsService
 
     stats = []
     # gmt offset
-    (0..48).each do
-      beginning = beginning + 30.minutes
+    48.times do
+      beginning += 30.minutes
       ending = beginning + 29.minutes + 59.seconds
       missed = missed_contacts.where(arrived: beginning..ending).count
       answered = answered_contacts.where(arrived: beginning..ending).count
@@ -94,6 +94,7 @@ class ContactsService
                          .where(arrived: beginning..ending)
       queue_average = average_duration(queuers, 'arrived', 'forwarded_to_agent')
       stats.push([beginning, sum, missed, queue_average])
+      # TODO thinkin shud begining variable be change here and not in beginning
     end
 
     stats
