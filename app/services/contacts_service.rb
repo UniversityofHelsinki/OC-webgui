@@ -68,15 +68,12 @@ class ContactsService
   end
 
   def queue_durations_by_times
-    contax = Contact.joins(:service).where(services: { team_id: @filter_by_model.id }, arrived: @start_time..@end_time)
-    mm = contax
-      .map { |c|
-        j = contax.where(ticket_id: c[:ticket_id])
-        durr = average_duration(j, 'arrived', 'forwarded_to_agent')
-        [c[:arrived].to_i, durr]
-      }.select { |e|
-        e[1] > 0
-      }
+    c = @contacts
+      .pluck(:arrived, :forwarded_to_agent)
+      .map { |d| [d[0].to_i, d[1] - d[0]] unless d[1].nil? }
+      .compact
+      .select { |s| not s.nil? }
+      .select { |s| s[1] != 0.0 }
   end
 
   private
