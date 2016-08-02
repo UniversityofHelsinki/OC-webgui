@@ -47,8 +47,8 @@ describe('screen', function () {
               id: 666,
               first_name: 'Jenni',
               last_name: 'Ahola',
-              status: 'Varattu (Chat)',
-              created_at: new Date(baseTime - (1 * 60 + 5) * 1000),
+              status: 'Chat',
+              created_at: new Date(baseTime - (3600 + 1 * 60 + 5) * 1000),
               lunch: false,
               team: {
                 id: 1,
@@ -91,38 +91,38 @@ describe('screen', function () {
   });
 
   it('should have agent names', function () {
-    expect(agentCards.get(0).element(by.className('agent-name')).getText()).toBe('Benjamin K');
-    expect(agentCards.get(1).element(by.className('agent-name')).getText()).toBe('Aallotar K');
-    expect(agentCards.get(2).element(by.className('agent-name')).getText()).toBe('Tuomas A');
-    expect(agentCards.get(3).element(by.className('agent-name')).getText()).toBe('Jenni A');
+    expect(agentCards.get(0).element(by.className('agent-name')).getText()).toBe('Aallotar K');
+    expect(agentCards.get(1).element(by.className('agent-name')).getText()).toBe('Benjamin K');
+    expect(agentCards.get(2).element(by.className('agent-name')).getText()).toBe('Jenni A');
+    expect(agentCards.get(3).element(by.className('agent-name')).getText()).toBe('Tuomas A');
   });
 
   it('should have agent statuses', function () {
-    expect(agentCards.get(0).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
-    expect(agentCards.get(1).element(by.className('agent-status')).getInnerHtml()).toBe('Vapaa');
-    expect(agentCards.get(2).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
-    expect(agentCards.get(3).element(by.className('agent-status')).getInnerHtml()).toBe('Chat');
+    expect(agentCards.get(0).element(by.className('agent-status')).getInnerHtml()).toBe('Vapaa');
+    expect(agentCards.get(1).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
+    expect(agentCards.get(2).element(by.className('agent-status')).getInnerHtml()).toBe('Chat');
+    expect(agentCards.get(3).element(by.className('agent-status')).getInnerHtml()).toBe('Tauko');
   });
 
   it('should hide open status text', function() {
-    expect(agentCards.get(0).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
-    expect(agentCards.get(1).element(by.className('agent-status-container')).getCssValue('visibility')).toBe('hidden');
+    expect(agentCards.get(0).element(by.className('agent-status-container')).getCssValue('visibility')).toBe('hidden');
+    expect(agentCards.get(1).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
     expect(agentCards.get(2).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
     expect(agentCards.get(3).element(by.className('agent-status-container')).getCssValue('visibility')).not.toBe('hidden');
   });
 
   it('should have agent time in status', function () {
-    expect(agentCards.get(0).element(by.className('status-timer')).getText()).toBe('10:15');
-    expect(agentCards.get(1).element(by.className('status-timer')).getCssValue('visibility')).toBe('hidden');
-    expect(agentCards.get(2).element(by.className('status-timer')).getText()).toBe('00:30');
-    expect(agentCards.get(3).element(by.className('status-timer')).getText()).toBe('01:05');
+    expect(agentCards.get(0).element(by.className('status-timer')).getCssValue('visibility')).toBe('hidden');
+    expect(agentCards.get(1).element(by.className('status-timer')).getText()).toBe('10:15');
+    expect(agentCards.get(2).element(by.className('status-timer')).getText()).toBe('01:01:05');
+    expect(agentCards.get(3).element(by.className('status-timer')).getText()).toBe('00:30');
   });
 
   it('Status color should match status text', function () {
     expect(agentCards.get(0).element(by.className('agent-status-color')).getAttribute('class'))
-      .toMatch('agent-status-color-red');
-    expect(agentCards.get(1).element(by.className('agent-status-color')).getAttribute('class'))
       .toMatch('agent-status-color-green');
+    expect(agentCards.get(1).element(by.className('agent-status-color')).getAttribute('class'))
+      .toMatch('agent-status-color-red');
     expect(agentCards.get(2).element(by.className('agent-status-color')).getAttribute('class'))
       .toMatch('agent-status-color-red');
     expect(agentCards.get(3).element(by.className('agent-status-color')).getAttribute('class'))
