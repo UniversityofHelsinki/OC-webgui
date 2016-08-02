@@ -4,9 +4,6 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
       .state('personal', {
         url: '/personal',
         views: {
-          nav: {
-            templateUrl: 'navbar/navbar_screen.html'
-          },
           content: {
             templateUrl: 'personal/_personal.html',
             controller: 'PersonalController',

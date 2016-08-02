@@ -5,7 +5,7 @@
                 <ul class="nav navbar-nav">                    
                     <li><a ui-sref-active="active" ui-sref="screen">Statukset</a></li>
                     <li><a ui-sref-active="active" ui-sref="queue" >Jono</a></li>
-                    <li><a ui-sref-active="active" ui-sref="personal" ng-if="navbar.isAuthenticated()">Oma näkymä</a></li>
+                    <li><a ng-if="navbar.isAuthenticated()" href="" ng-click="navbar.openPersonalView()">Oma näkymä</a></li>
                 </ul>
             </div>
             <div class="col-md-6">
