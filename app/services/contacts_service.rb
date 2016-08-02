@@ -77,7 +77,7 @@ class ContactsService
     beginning = Time.now.beginning_of_day
     stats = []
     # gmt offset
-    (0..48).each do |i|
+    (0..48).each do
       beginning = beginning + 30.minutes
       ending = beginning + 29.minutes + 59.seconds
       missed = missed_contacts.where(arrived: beginning..ending).count

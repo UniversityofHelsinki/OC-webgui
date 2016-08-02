@@ -51,8 +51,8 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
       'values': []
     }];
 
-   vm.api2 = {};
-   vm.options2 = {
+    vm.api2 = {};
+    vm.options2 = {
       chart: {
         type: 'multiChart',
         width: 700,
@@ -68,7 +68,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
           axisLabel: 'Kellonaika',
           tickFormat: function (d) {
             return d3.time.format('%H.%M')(new Date(d));
-          },
+          }
         },
         yAxis2: {
           ticks: 10,
@@ -76,7 +76,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
             var formatTime = d3.time.format('%H:%M');
             return formatTime(new Date(1864, 7, 7, 0, seconds));
           }
-        },
+        }
       }
     };
 
@@ -109,7 +109,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         vm.data[0].values = queueDurationsByTimes;
 
         var clock8 = new Date();
-        clock8.setDate(clock8.getDate())
+        clock8.setDate(clock8.getDate());
         clock8.setHours(8, 0, 0);
 
         var clock18 = new Date();
@@ -117,17 +117,17 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         clock18.setHours(18, 0, 0);
         var first = data.correlation_of_average_queue_length_and_missed_calls
           .map(function (j) { return { x: new Date(j[0]).getTime(), y: j[1] }; })
-          .filter(function (item) { return item.x >= clock8 && item.x <= clock18});
+          .filter(function (item) { return item.x >= clock8 && item.x <= clock18; });
         vm.data2[0].values = first;
 
         var second = data.correlation_of_average_queue_length_and_missed_calls
           .map(function (j) { return { x: new Date(j[0]).getTime(), y: j[2] }; })
-          .filter(function (item) { return item.x >= clock8 && item.x <= clock18});
+          .filter(function (item) { return item.x >= clock8 && item.x <= clock18; });
         vm.data2[1].values = second;
 
         var third = data.correlation_of_average_queue_length_and_missed_calls
           .map(function (j) { return { x: new Date(j[0]).getTime(), y: j[3] }; })
-          .filter(function (item) { return item.x >= clock8 && item.x <= clock18});
+          .filter(function (item) { return item.x >= clock8 && item.x <= clock18; });
         vm.data2[2].values = third;
 
         vm.options2.chart.xAxis.tickValues = d3.time.hour.range(clock8, clock18, 1)
