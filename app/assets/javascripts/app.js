@@ -1,6 +1,6 @@
 angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen',
   'ocWebGui.queue', 'ocWebGui.filterpanel', 'ocWebGui.stats', 'ocWebGui.login',
-  'ocWebGui.navbar', 'ocWebGui.personal'])
+  'ocWebGui.navbar', 'ocWebGui.personal', 'ocWebGui.colormanagement'])
   .run(function ($rootScope, $state, User, $interval) {
     var $body = $(document.body);
     var $navbar = $('.navbar');
