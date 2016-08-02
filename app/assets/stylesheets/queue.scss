@@ -110,9 +110,8 @@
 
   td {
     width: 50%;
-    font-size: 200%;
+    font-size: 150%;
     line-height: 1;
-    padding: 0.1em;
     text-align: right;
   }
 
@@ -132,37 +131,8 @@
   height: 50%;
 }
 
-.nv-point {
-  stroke-opacity: 1 !important;
-  stroke-width: 0.7em;
-  fill-opacity: 1 !important;
-}
-
-.nvd3 g.nv-groups path.nv-line {
-  stroke-width: 0;
-}
-
-// ettei näytä nollan kokosia pylväitä */
-//.nvd3 rect[height="1"] {
-//  display: none !important;
-//}
-
-.nv-context {
-  display: none !important;
-}
-
-.nvd3 text {
-  font-size: 2.0em !important;
-}
-
-.nvd3 .nv-axis line {
-  stroke: #bebebe !important;
-}
-
-.nvd3 .nv-x.nv-axis line {
-  stroke-width: 0;
-}
-
-.nvtooltip {
-  display: none !important;
+.percentage {
+  position: relative;
+  left: 2.5em;
+  font-size: 200%;
 }
