@@ -3,12 +3,23 @@ body {
   margin: 0;
   padding: 0;
   color: #333;
-  font-size: 12px;
-  line-height: 1em;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
 }
 
-html {
-  font-family: verdana, arial, helvetica, sans-serif;  
+
+a {
+  color: #000;
+
+  &:visited {
+    color: #666;
+  }
+
+  &:hover {
+    color: #fff;
+    background-color: #000;
+  }
 }
 
 .foreground {
