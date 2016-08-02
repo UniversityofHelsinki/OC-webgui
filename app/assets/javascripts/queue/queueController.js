@@ -19,9 +19,9 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         height: 550,
         margin: {
           top: 30,
-          right: 90,
+          right: 70,
           bottom: 60,
-          left: 40
+          left: 70
         },
         x: function (d) { return d.hour; },
         y: function (d) { return d.calls; },
@@ -41,12 +41,10 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
           showMaxMin: true
         },
         y1Axis: {
-          ticks: 5
         },
         y2Axis: {
-          ticks: 5,
           tickFormat: function (seconds) {
-            var formatTime = d3.time.format("%H:%M");
+            var formatTime = d3.time.format('%H:%M');
             return formatTime(new Date(1864, 7, 7, 0, seconds));
           }
         },
@@ -67,6 +65,13 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       'values': []
     }];
 
+    function getMaxValPlusOne(i) {
+      var maxVal = d3.max(vm.data[i].values, function (x) { return x.calls; });
+      if (maxVal == null) {
+        return 1;
+      }
+      return maxVal + 1;
+    }
 
     function fetchContactStats() {
       $http.get('contacts/stats.json').then(function (response) {
@@ -82,23 +87,18 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         vm.stats = data;
         vm.data[0].values = callsValues;
         vm.data[1].values = queueValues;
-        vm.options.chart.bars.yDomain[1] = getMaxValPlusOne(0);
-        vm.options.chart.lines.yDomain[1] = getMaxValPlusOne(1);
+        var callMax = getMaxValPlusOne(0);
+        // Multiply by 1.05 so highest value is high enough that highest point in chart isn't hidden
+        var queueMax = getMaxValPlusOne(1) * 1.05;
+        vm.options.chart.bars.yDomain[1] = callMax;
+        vm.options.chart.lines.yDomain[1] = queueMax;
+        vm.options.chart.y1Axis.tickValues = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
+        vm.options.chart.y2Axis.tickValues = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
+        vm.api.refresh();
       });
     }
 
-    function getMaxValPlusOne(i) {
-      var maxVal = d3.max(vm.data[i].values, function (x) { return x.calls; });
-      if (maxVal == null) {
-        return 1;
-      }
-      return maxVal + 1;
-    }
-
-    vm.message = 'Jono';
-
     vm.queue = [];
-
     vm.date = new Date();
 
     function fetchData() {
