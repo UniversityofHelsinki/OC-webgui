@@ -61,7 +61,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
           top: 30,
           right: 90,
           bottom: 60,
-          left: 40
+          left: 90
         },
         duration: 500,
         xAxis: {
@@ -70,8 +70,11 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
             return d3.time.format('%H.%M')(new Date(d));
           }
         },
-        yAxis1: {},
+        yAxis1: {
+          axisLabel: 'Kpl',
+        },
         yAxis2: {
+          axisLabel: 'Aikaa',
           tickFormat: function (seconds) {
             var formatTime = d3.time.format('%H:%M');
             return formatTime(new Date(1864, 7, 7, 0, seconds));
@@ -103,11 +106,6 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
     function fetchContactStats() {
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
-
-        var queueDurationsByTimes = data.queue_durations_by_times
-          .map(function (j) { return { hour: new Date(j[0]).getTime(), calls: j[1] }; });
-        vm.data[0].values = queueDurationsByTimes;
-
         var clock8 = new Date();
         clock8.setDate(clock8.getDate());
         clock8.setHours(8, 0, 0);
@@ -115,6 +113,15 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         var clock18 = new Date();
         clock18.setDate(clock18.getDate());
         clock18.setHours(18, 0, 0);
+
+        var queueDurationsByTimes = data.queue_durations_by_times
+          .map(function (j) { return { hour: new Date(j[0]).getTime(), calls: j[1] }; });
+        vm.data[0].values = queueDurationsByTimes;
+
+//        vm.options.chart.xAxis.tickValues = d3.time.hour.range(clock8, clock18, 1)
+//          .map(function (f) { return f.getTime() });
+//        vm.api.refresh();
+
         var first = data.correlation_of_average_queue_length_and_missed_calls
           .map(function (j) { return { x: new Date(j[0]).getTime(), y: j[1] }; })
           .filter(function (item) { return item.x >= clock8 && item.x <= clock18; });
