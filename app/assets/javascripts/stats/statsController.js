@@ -29,7 +29,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         showDistY: true,
         xAxis: {
           axisLabel: 'Kellonaika',
-          tickFormat: function (d){
+          tickFormat: function (d) {
             return d3.time.format('%H.%M')(new Date(d));
           }
         },
@@ -42,7 +42,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
           }
         },
         x: function (d) { return d.hour; },
-        y: function (d) { return d.calls; },
+        y: function (d) { return d.calls; }
       }
     };
 
@@ -55,9 +55,9 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
 
-        var queue_durations_by_times = data.queue_durations_by_times
+        var queueDurationsByTimes = data.queueDurationsByTimes
           .map(function (j) {
-            return { hour: new Date(j[0]).getTime(), calls: j[1]};
+            return { hour: new Date(j[0]).getTime(), calls: j[1] };
           });
         vm.data[0].values = queue_durations_by_times;
       });
