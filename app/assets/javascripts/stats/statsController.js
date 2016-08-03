@@ -118,9 +118,9 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
           .map(function (j) { return { hour: new Date(j[0]).getTime(), calls: j[1] }; });
         vm.data[0].values = queueDurationsByTimes;
 
-//        vm.options.chart.xAxis.tickValues = d3.time.hour.range(clock8, clock18, 1)
-//          .map(function (f) { return f.getTime() });
-//        vm.api.refresh();
+        vm.options.chart.xAxis.tickValues = d3.time.hour.range(clock8, clock18, 1)
+          .map(function (f) { return f.getTime() });
+        vm.api.refresh();
 
         var first = data.correlation_of_average_queue_length_and_missed_calls
           .map(function (j) { return { x: new Date(j[0]).getTime(), y: j[1] }; })
