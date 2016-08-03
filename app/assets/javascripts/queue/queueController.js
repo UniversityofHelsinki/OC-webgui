@@ -104,9 +104,15 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         var queueMax = getMaxValPlusOne(1) * 1.05;
         vm.options.chart.bars.yDomain[1] = callMax;
         vm.options.chart.lines.yDomain[1] = queueMax;
-        vm.options.chart.y1Axis.tickValues = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
-        vm.options.chart.y2Axis.tickValues = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
-        vm.api.refresh();
+        y1AxisNewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
+        y2AxisNewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
+        y1AxisOldTicks = vm.options.chart.y1Axis.tickValues;
+        y2AxisOldTicks = vm.options.chart.y2Axis.tickValues;
+        vm.options.chart.y1Axis.tickValues = y1AxisNewTicks;
+        vm.options.chart.y2Axis.tickValues = y2AxisNewTicks;
+        if (!angular.equals(y1AxisOldTicks, y1AxisNewTicks) || !angular.equals(y2AxisOldTicks, y2AxisNewTicks)) {
+          vm.api.refresh();
+        }
       });
     }
 
