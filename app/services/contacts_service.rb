@@ -68,7 +68,7 @@ class ContactsService
 
   def queue_durations_by_times
     @contacts.pluck(:arrived, :forwarded_to_agent)
-             .map { |d| [d[0] + @gmt_offset, d[1] - d[0]] unless d[1].nil? }
+             .map { |d| [d[0], d[1] - d[0]] unless d[1].nil? }
              .compact
              .select { |s| !s.nil? && s[1] != 0.0 }
              .sort
