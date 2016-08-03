@@ -6,6 +6,7 @@
         <a ui-sref="filterpanel" class="card">Filtteröi</a>
         <a ui-sref="stats" class="card" ng-if="home.isAuthenticated()">Tilastot</a>
         <a ui-sref="personal" class="card" ng-if="home.isAuthenticated()">{{ home.username() }}</a>
+        <a ui-sref="color" class="card" ng-if="home.isAuthenticated()">Säädä värejä</a>
         <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Kirjaudu sisään</a>
         <div ng-if="home.isAuthenticated()" class="home-logout">
             Kirjautuneena: {{ home.username() }}

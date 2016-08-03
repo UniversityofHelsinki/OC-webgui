@@ -76,6 +76,17 @@ describe('personal', function () {
               average_after_call_duration: 182
             }
           );
+          $httpBackend.whenGET('settings.json').respond({
+            colors: {
+              background: '#87aade',
+              font: '#333333',
+              statuses: {
+                free: '#37c837',
+                call: '#ffff4d',
+                busy: '#ff3333'
+              }
+            }
+          });
         });
     });
     browser.addMockModule('ocWebGui.shared.time.service', function () {
@@ -112,8 +123,9 @@ describe('personal', function () {
     expect(element(by.id('avg-after-call')).getText()).toBe('03:02');
   });
   it('should display own status color', function () {
-    expect(element(by.id('own-status-color')).getAttribute('class'))
-                                             .toBe('agent-status-color agent-status-color-green');
+    var el = element(by.id('own-status-color'));
+    expect(el.getAttribute('class')).toBe('agent-status-color agent-status-color-free');
+    expect(el.getCssValue('background-color')).toBe('rgba(55, 200, 55, 1)');
   });
   it('should display active agents except the current with status colors', function () {
     var agents = element.all(by.id('agent-name'));
@@ -123,7 +135,11 @@ describe('personal', function () {
   });
   it('should display status color for each agent in agents list', function () {
     var agents = element.all(by.id('agent-status-color'));
-    expect(agents.get(0).getAttribute('class')).toBe('color-square agent-status-color-yellow');
-    expect(agents.get(1).getAttribute('class')).toBe('color-square agent-status-color-red');
+
+    expect(agents.get(0).getAttribute('class')).toBe('color-square agent-status-color-call');
+    expect(agents.get(0).getCssValue('background-color')).toBe('rgba(255, 255, 77, 1)');
+
+    expect(agents.get(1).getAttribute('class')).toBe('color-square agent-status-color-busy');
+    expect(agents.get(1).getCssValue('background-color')).toBe('rgba(255, 51, 51, 1)');
   });
 });
