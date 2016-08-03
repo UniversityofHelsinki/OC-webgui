@@ -38,7 +38,7 @@ RSpec.describe ContactsService, type: :service do
     build(:contact, params(1, '7', @agent.id, time + (2.hours + 10.minutes), nil, nil, time + (2.hours + 15.minutes), nil)) # Missed contact
     build(:contact, params(1, '8', nil, time + (3.hours + 10.minutes), nil, nil, time + (3.hours + 18.minutes), nil)) # Missed contact
     build(:contact, params(1, '9', nil, time + 4.hours, nil, nil, nil, nil)) # In Queue at the moment, shouldn't affect any calculations
-    build(:contact, params(2, '10', nil, time + 4.hours, time + (4.hours + 2.minutes), nil, nil, nil )) # Forwarded from Queue to agent but not answered yet, should show up in queue statistics
+    build(:contact, params(2, '10', nil, time + 4.hours, time + (4.hours + 2.minutes), nil, nil, nil )) # Forwarded from Queue to agent but not answered yet, should not show up in queue statistics as it may still be missed in case agent doesn't pick up
   end
   
   context "When searching for stats by team" do
@@ -72,7 +72,7 @@ RSpec.describe ContactsService, type: :service do
     end
 
     it "Returns correct average queue duration" do
-      expect(@contacts_service.average_queue_duration).to eq(291)
+      expect(@contacts_service.average_queue_duration).to eq(320)
     end
 
     it "Returns correct average queue duration by hour" do

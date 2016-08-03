@@ -19,6 +19,7 @@
 //= require angular-ui-router
 //= require angular-mocks
 //= stub ./shared/time/timeDirective.spec.js
+//= stub ./shared/color/colorDirective.spec.js
 //= require_tree ./shared
 //= require_tree ./home
 //= stub ./screen/screenController.spec.js
@@ -31,6 +32,7 @@
 //= require_tree ./stats
 //= require_tree ./login
 //= require_tree ./personal
+//= require_tree ./color
 //= require ./app.js
 //= require angular-i18n/angular-locale_fi.js
 //= require d3

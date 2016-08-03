@@ -15,12 +15,11 @@ class ContactsService
   end
 
   def average_call_duration
-    average_duration(answered_contacts, 'answered', 'call_ended')
+    average_duration(finished_contacts, 'answered', 'call_ended')
   end
 
   def average_after_call_duration
-    contacts = @contacts.where(contact_type: 'PBX').where.not(call_ended: nil, answered: nil, service_id: 120, after_call_ended: nil)
-    average_duration(contacts, 'call_ended', 'after_call_ended')
+    average_duration(closed_contacts, 'call_ended', 'after_call_ended')
   end
 
   def answered_percentage
@@ -39,8 +38,7 @@ class ContactsService
   end
 
   def average_queue_duration
-    contacts = @contacts.where(contact_type: 'PBX').where.not(forwarded_to_agent: nil, service_id: 120)
-    average_duration(contacts, 'arrived', 'forwarded_to_agent')
+    average_duration(answered_contacts, 'arrived', 'forwarded_to_agent')
   end
 
   def average_queue_duration_by_hour
@@ -102,10 +100,22 @@ class ContactsService
 
   private
 
-  def answered_contacts
-    @contacts.where(contact_type: 'PBX').where.not(call_ended: nil, answered: nil, service_id: 120)
+  # Contacts that have been completely handled
+  def closed_contacts
+    @contacts.where(contact_type: 'PBX').where.not(call_ended: nil, answered: nil, service_id: 120, after_call_ended: nil)
   end
 
+  # Contacts that have finished, but after call may still be ongoing
+  def finished_contacts
+    @contacts.where(contact_type: 'PBX').where.not(answered: nil, call_ended: nil, service_id: 120)
+  end
+
+  # Contacts that have been answered(and hence won't be missed contacts for sure), but may still be ongoing
+  def answered_contacts
+    @contacts.where(contact_type: 'PBX').where.not(answered: nil, service_id: 120)
+  end
+
+  # Contacts that have been missed for certain
   def missed_contacts
     @contacts.where(contact_type: 'PBX', answered: nil, after_call_ended: nil, direction: 'I').where.not(call_ended: nil, service_id: 120)
   end

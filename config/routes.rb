@@ -17,9 +17,11 @@ Rails.application.routes.draw do
     get 'states' => 'states#index'
     get 'contacts/today' => 'contacts#today'
     get 'contacts/stats' => 'contacts#stats'
-    get 'queue/stats' => 'queue_items#stats'
     get 'personal' => 'personal_status#index'
   end
+
+  get 'settings' => 'settings#get', format: :json
+  post 'settings' => 'settings#update', format: :json
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

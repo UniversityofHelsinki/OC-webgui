@@ -6,7 +6,7 @@
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
-<body ng-app="ocWebGui">
+<body ng-app="ocWebGui" oc-color="background">
   <div class="navbar" ng-controller="NavbarController as navbar">
     <a ui-sref-active="active" ui-sref="screen">Status-näkymä</a>
     <a ui-sref-active="active" ui-sref="queue" >Jono-näkymä</a>

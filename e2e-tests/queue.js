@@ -107,19 +107,13 @@ describe('queue', function () {
             $httpBackend.whenGET('contacts/stats.json').respond({
               answered_calls: 11,
               average_call_duration: 2 * 60 + 15,
+              answered_percentage: 100,
               average_after_call_duration: 60 + 5,
+              average_queue_duration: 100,
               calls_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ],
               average_queue_duration_by_hour: [
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-              ]
-            });
-
-            $httpBackend.whenGET('queue/stats.json').respond({
-              average_waiting_time: 100,
-              answered_percentage: 100,
-              queue_items_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ]
             });
