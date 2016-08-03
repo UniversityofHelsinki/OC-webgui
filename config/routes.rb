@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     get 'personal' => 'personal_status#index'
   end
 
+  get 'settings' => 'settings#get', format: :json
+  post 'settings' => 'settings#update', format: :json
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

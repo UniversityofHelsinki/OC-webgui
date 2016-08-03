@@ -15,7 +15,7 @@ angular.module('ocWebGui.login', ['ui.router'])
         }
       });
   })
-  .factory('User', function ($http) {
+  .factory('User', function ($http, Settings) {
     var isAuthenticated = false;
     var userData = { username: null };
     return {
@@ -24,6 +24,7 @@ angular.module('ocWebGui.login', ['ui.router'])
           .then(function (response) {
             isAuthenticated = true;
             userData = response.data;
+            Settings.invalidateCache();
             onSuccess();
           }, function (response) {
             isAuthenticated = false;
@@ -44,6 +45,7 @@ angular.module('ocWebGui.login', ['ui.router'])
           .then(function () {
             isAuthenticated = false;
             userData = { username: null };
+            Settings.invalidateCache();
           });
       }
     };

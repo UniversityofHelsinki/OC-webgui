@@ -6,6 +6,7 @@
         <a ui-sref="queue" class="card">Jononäkymä</a>        
         <a ui-sref="filterpanel" class="card">Filtteröi</a>
         <a ui-sref="stats" class="card" ng-if="home.isAuthenticated()">Tilastot</a>
+        <a ui-sref="color" class="card" ng-if="home.isAuthenticated()">Säädä värejä</a>
         <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Kirjaudu sisään</a>
         <a ng-if="home.isAuthenticated()" ng-click="home.logout()" class="card">Kirjaudu ulos</a>        
     </div>

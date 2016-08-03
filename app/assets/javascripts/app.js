@@ -1,10 +1,17 @@
-angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen',
-  'ocWebGui.queue', 'ocWebGui.filterpanel', 'ocWebGui.stats', 'ocWebGui.login',
-  'ocWebGui.navbar', 'ocWebGui.personal', 'ocWebGui.userAdmin'])
-  .run(function ($rootScope, $state, User, $interval) {
+angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'ocWebGui.queue',
+    'ocWebGui.filterpanel', 'ocWebGui.stats', 'ocWebGui.login', 'ocWebGui.navbar',
+    'ocWebGui.personal', 'ocWebGui.color', 'ocWebGui.shared.color', 'ocWebGui.shared.settings',
+    'ocWebGui.userAdmin'])
+  .run(function ($rootScope, $state, User, $interval, Settings) {
     var $body = $(document.body);
     var $navbar = $('.navbar');
     var mouseHideTimeout;
+
+    $rootScope.$on('settings:colors:update', function () {
+      Settings.getColor('font').then(function (color) {
+        $body.css('color', color);
+      });
+    });
 
     function createHideMouseTimeout() {
       return $interval(function () {

@@ -68,6 +68,17 @@ describe('screen', function () {
               filter: true
             }
           ]);
+          $httpBackend.whenGET('settings.json').respond({
+            colors: {
+              background: '#87aade',
+              font: '#333333',
+              statuses: {
+                free: '#37c837',
+                call: '#ffff4d',
+                busy: '#ff3333'
+              }
+            }
+          });
         });
     });
 
@@ -119,22 +130,29 @@ describe('screen', function () {
   });
 
   it('Status color should match status text', function () {
-    expect(agentCards.get(0).element(by.className('agent-status-color')).getAttribute('class'))
-      .toMatch('agent-status-color-green');
-    expect(agentCards.get(1).element(by.className('agent-status-color')).getAttribute('class'))
-      .toMatch('agent-status-color-red');
-    expect(agentCards.get(2).element(by.className('agent-status-color')).getAttribute('class'))
-      .toMatch('agent-status-color-red');
-    expect(agentCards.get(3).element(by.className('agent-status-color')).getAttribute('class'))
-      .toMatch('agent-status-color-red');
+    var el = agentCards.get(0).element(by.className('agent-status-color'));
+    expect(el.getAttribute('class')).toMatch('agent-status-color-free');
+    expect(el.getCssValue('background-color')).toBe('rgba(55, 200, 55, 1)');
+
+    el = agentCards.get(1).element(by.className('agent-status-color'));
+    expect(el.getAttribute('class')).toMatch('agent-status-color-busy');
+    expect(el.getCssValue('background-color')).toBe('rgba(255, 51, 51, 1)');
+
+    el = agentCards.get(2).element(by.className('agent-status-color'));
+    expect(el.getAttribute('class')).toMatch('agent-status-color-busy');
+    expect(el.getCssValue('background-color')).toBe('rgba(255, 51, 51, 1)');
+
+    el = agentCards.get(3).element(by.className('agent-status-color'));
+    expect(el.getAttribute('class')).toMatch('agent-status-color-busy');
+    expect(el.getCssValue('background-color')).toBe('rgba(255, 51, 51, 1)');
   });
 
   it('Sidebar status view should be correct', function () {
     var statusCount = element.all(by.className('agent-status-count'));
 
-    expect(statusCount.get(0).element(by.className('green-count')).getText()).toBe('1');
-    expect(statusCount.get(1).element(by.className('yellow-count')).getText()).toBe('0');
-    expect(statusCount.get(2).element(by.className('red-count')).getText()).toBe('3');
+    expect(statusCount.get(0).element(by.className('free-count')).getText()).toBe('1');
+    expect(statusCount.get(1).element(by.className('call-count')).getText()).toBe('0');
+    expect(statusCount.get(2).element(by.className('busy-count')).getText()).toBe('3');
   });
 
   it('should filter correctly', function () {
