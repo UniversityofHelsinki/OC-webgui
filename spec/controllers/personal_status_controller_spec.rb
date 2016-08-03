@@ -10,8 +10,6 @@ RSpec.describe PersonalStatusController, type: :controller do
       @user = User.create(id: 1, password: "a", agent_id: agent.id)      
     end
 
-
-    
     it 'should return personal stats from ContactsService' do
     expected = {
       'answered_calls' => 3,

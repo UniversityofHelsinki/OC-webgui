@@ -20,4 +20,8 @@ angular.module('ocWebGui.navbar', ['ui.router', 'ocWebGui.login', 'FBAngular'])
       vm.isFullscreen = isEnabled;
       $scope.$apply();
     });
+
+    vm.openPersonalView = function () {
+      window.open('#/personal', 'Oma näkymä', 'height=300, width=225, menubar=no, toolbar=no, location=no, personalbar=no, status=no');
+    };
   });

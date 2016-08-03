@@ -3,9 +3,16 @@ angular.module('ocWebGui.home', ['ui.router', 'ocWebGui.login'])
     $stateProvider
       .state('home', {
         url: '/home',
-        templateUrl: 'home/_home.html',
-        controller: 'HomeController',
-        controllerAs: 'home'
+        views: {
+          nav: {
+            templateUrl: 'navbar/navbar_others.html'
+          },
+          content: {
+            templateUrl: 'home/_home.html',
+            controller: 'HomeController',
+            controllerAs: 'home'
+          }
+        }
       });
     $urlRouterProvider.otherwise('home');
   })

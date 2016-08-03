@@ -160,7 +160,7 @@ describe('screen', function () {
     element(by.className('navbar')).element(by.linkText('Filtteröi')).click();
     element(by.id('Tauko')).click();
     browser.actions().mouseMove(element(by.className('navbar'))).perform();
-    element(by.className('navbar')).element(by.linkText('Status-näkymä')).click();
+    element(by.className('navbar')).element(by.linkText('Statukset')).click();
     agentCards = element.all(by.className('agent-card'));
     expect(agentCards.count()).toBe(2);
     expect(agentCards.get(0).element(by.className('agent-name')).getText())

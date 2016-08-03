@@ -1,0 +1,27 @@
+@import "common-screen";
+
+.label-filter {
+  display: block;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-weight: normal;
+}
+
+.filter-card {
+  font-size: 100%;
+  width: 50%;
+  height: 100%;
+}
+
+.filter-bg {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.filters {
+  display: flex;
+  margin: 2em;
+}
