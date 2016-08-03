@@ -10,7 +10,9 @@ class SettingsController < ApplicationController
         'busy' => '#ff3333'
       }.freeze
     }.freeze, 'others' => {
-      'service_height' => '300'
+      'service_height' => '300',
+      'working_day_start' => '2',
+      'working_day_end' => '4'
     }.freeze
   }.freeze
 
@@ -36,7 +38,7 @@ class SettingsController < ApplicationController
 
   def update
     return render json: { error: 'not logged in' }, status: :unauthorized unless current_user
-    new_settings = DEFAULT_SETTINGS.deep_merge(params.permit(colors: [:background, :font, statuses: [:free, :call, :busy]], others: [:service_height]))
+    new_settings = DEFAULT_SETTINGS.deep_merge(params.permit(colors: [:background, :font, statuses: [:free, :call, :busy]], others: [:service_height, :working_day_start, :working_day_end]))
     errors = check_colors(new_settings['colors'])
     # check others jne jne
     return render json: { colors: errors }, status: :bad_request unless errors.empty?
