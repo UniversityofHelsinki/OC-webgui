@@ -92,7 +92,7 @@ class ContactsService
                          .where(arrived: beginning..ending)
       queue_average = average_duration(queuers, 'arrived', 'forwarded_to_agent')
       stats.push([beginning, sum, missed, queue_average])
-      # TODO thinkin shud begining variable be change here and not in beginning
+      # TODO: thinkin shud begining variable be change here and not in beginning
     end
 
     stats

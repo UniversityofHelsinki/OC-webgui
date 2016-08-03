@@ -71,7 +71,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
           }
         },
         yAxis1: {
-          axisLabel: 'Kpl',
+          axisLabel: 'Jonottajat'
         },
         yAxis2: {
           axisLabel: 'Aikaa',
@@ -103,6 +103,14 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
       'color': '#00ff00'
     }];
 
+    function getMaxValPlusOne(i) {
+      var maxVal = d3.max(vm.data2[i].values, function (x) { return x.y; });
+      if (maxVal == null) {
+        return 1;
+      }
+      return maxVal + 1;
+    }
+
     function fetchContactStats() {
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
@@ -119,7 +127,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         vm.data[0].values = queueDurationsByTimes;
 
         vm.options.chart.xAxis.tickValues = d3.time.hour.range(clock8, clock18, 1)
-          .map(function (f) { return f.getTime() });
+          .map(function (f) { return f.getTime(); });
         vm.api.refresh();
 
         var first = data.correlation_of_average_queue_length_and_missed_calls
@@ -138,26 +146,17 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         vm.data2[2].values = third;
 
         vm.options2.chart.xAxis.tickValues = d3.time.hour.range(clock8, clock18, 1)
-          .map(function (f) { return f.getTime() });
+          .map(function (f) { return f.getTime(); });
 
         var callMax = getMaxValPlusOne(0); // because sum is always same or bigger than missed calls
         // Multiply by 1.05 so highest value is high enough that highest point in chart isn't hidden
         var queueMax = getMaxValPlusOne(2) * 1.105;
-        console.log(queueMax + " ja " + callMax);
         // vm.options2.chart.yDomain1[1] = callMax;
         // vm.options2.chart.yDomain2[1] = queueMax;
         vm.options2.chart.yAxis1.tickValues = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
         vm.options2.chart.yAxis2.tickValues = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
         vm.api2.refresh();
       });
-    }
-
-    function getMaxValPlusOne(i) {
-      var maxVal = d3.max(vm.data2[i].values, function (x) { return x.y; });
-      if (maxVal == null) {
-        return 1;
-      }
-      return maxVal + 1;
     }
 
     var fetchContactStatsInterval = $interval(fetchContactStats, 5 * 60 * 1000);
