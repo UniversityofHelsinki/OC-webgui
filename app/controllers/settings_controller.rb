@@ -10,7 +10,7 @@ class SettingsController < ApplicationController
         'busy' => '#ff3333'
       }.freeze
     }.freeze, 'others' => {
-      'service_height' => '111'
+      'service_height' => '300'
     }.freeze
   }.freeze
 

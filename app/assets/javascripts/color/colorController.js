@@ -28,9 +28,6 @@ angular.module('ocWebGui.color', ['ui.router', 'ocWebGui.login'])
       vm.colors = colors;
       clearMessage();
     });
-    Settings.getOthers().then(function (others) {
-      vm.others = others;
-    });
     vm.save = function () {
       Settings.setColors(vm.colors).then(function () {
         vm.message = 'Kivat valinnat! Ne on nyt tallennettu!';
