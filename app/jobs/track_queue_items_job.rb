@@ -11,7 +11,7 @@ class TrackQueueItemsJob
         time_in_queue: data[:time_in_queue]
       }
     end
-    Rails.cache.write('queue_items', queue_items)
+    Rails.cache.write('queue_items', queue_items, expires_in: 30.seconds)
   end
 
   def self.queue_priority
