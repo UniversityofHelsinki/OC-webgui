@@ -62,6 +62,13 @@ class ContactsService
     result
   end
 
+  def service_level_agreement
+    t = 300
+    s = @contacts.select("EXTRACT(EPOCH FROM contacts.answered - contacts.arrived) AS avg").map { |i| i[:avg] }
+    r = s.select { |i| i.nil? || i <= t }
+    return 100 * r.count / s.count
+  end
+
   private
 
   # Contacts that have been completely handled
