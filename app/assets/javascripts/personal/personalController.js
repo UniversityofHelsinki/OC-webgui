@@ -27,8 +27,10 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
 
         if (myAgent === undefined) {
           vm.myColor = 'grey';
+          vm.myStatus = 'Offline';
         } else {
           vm.myColor = myAgent.color;
+          vm.myStatus = myAgent.status;
           agents.splice(agents.indexOf(myAgent), 1);
         }
       });

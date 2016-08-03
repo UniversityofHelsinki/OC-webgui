@@ -3,9 +3,16 @@ angular.module('ocWebGui.color', ['ui.router', 'ocWebGui.login'])
     $stateProvider
       .state('color', {
         url: '/color',
-        templateUrl: 'color/_color.html',
-        controller: 'ColorController',
-        controllerAs: 'color'
+        views: {
+          nav: {
+            templateUrl: 'navbar/navbar_others.html'
+          },
+          content: {
+            templateUrl: 'color/_color.html',
+            controller: 'ColorController',
+            controllerAs: 'color'
+          }
+        }
       });
   })
   .controller('ColorController', function ($interval, Settings) {
