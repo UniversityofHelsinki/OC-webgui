@@ -18,7 +18,7 @@
         <!-- Show first five in queue -->
         <div ng-repeat="queuer in queue.queue | limitTo: 5" class="queuer card">
             <span class="queuer-index">{{ $index + 1 }}.</span>
-            <oc-time dateobj="queuer.created_at" class="queuer-time"></oc-time>
+            <oc-time seconds="queuer.time_in_queue" class="queuer-time"></oc-time>
             <span class="queuer-flag queuer-flag-{{ queuer.language }}"></span>
         </div>
         <div ng-if="queue.queue.length > 5" class="plus-5">&#9660</div>

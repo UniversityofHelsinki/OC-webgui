@@ -8,24 +8,33 @@ RSpec.describe QueueItemsController, type: :controller do
 
   time = Time.parse('2016-07-11T10:30:46.000Z')
 
+  before(:each) do
+    Rails.cache.clear
+  end
+
   it 'queue json should work' do
-    item1 = { "created_at"=>anything,
+    item1 = { "time_in_queue"=>20,
               "team"=>"Team A",
               "language"=>"English"
             }
 
-    item2 = { "created_at"=>anything,
+    item2 = { "time_in_queue"=>11,
               "team"=>"Team B",
               "language"=>"Finnish"
             }
 
-    Team.create(id: 1, name: "Team A")
-    Team.create(id: 2, name: "Team B")
-    Service.create(id: 136, name: "A", team_id: 1, language: "English")
-    Service.create(id: 133, name: "B", team_id: 2, language: "Finnish")
-
-    QueueItem.create(service_id: 136, created_at: time - 20.seconds, open: true)
-    QueueItem.create(service_id: 133, created_at: time - 11.seconds, open: true)
+    Rails.cache.write('queue_items', [
+      {
+        time_in_queue: 20,
+        team: 'Team A',
+        language: 'English'
+      },
+      {
+        time_in_queue: 11,
+        team: 'Team B',
+        language: 'Finnish'
+      }
+    ])
 
     get :index, format: :json
     queueitems = JSON.parse(response.body)
