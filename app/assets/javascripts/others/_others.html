@@ -1,0 +1,16 @@
+<div class="col-md-2"></div>
+<div class="col-md-8 foreground">
+    <h1>{{ others.title }}</h1>
+    <p ng-if="others.message">{{ color.message }}</p>
+    <form ng-submit="others.save()" ng-if="others.others">
+        <fieldset>
+            <label>
+                Yleinen palvelutaso:
+                <input type="text" ng-model="others.others.service_height">
+            </label>
+        </fieldset>
+        <button class="btn btn-success" type="submit">Tallenna</button>
+    </form>
+joooohhhh {{others.others.service_height}}
+</div>
+<div class="col-md-2"></div>

@@ -51,10 +51,23 @@ angular.module('ocWebGui.shared.settings', [])
           $rootScope.$broadcast('settings:colors:update');
         });
       },
+      getOthers: function () {
+        return fetchSettings().then(function (settings) {
+          return angular.copy(settings.others);
+        });
+      },
+      setOthers: function (others) {
+        return fetchSettings().then(function (settings) {
+          return postSettings(angular.extend({}, settings, { others: others }));
+        }).then(function () {
+          $rootScope.$broadcast('settings:others:update');
+        });
+      },
       invalidateCache: function () {
         getSettingsPromise = undefined;
         settingsCache = undefined;
         $rootScope.$broadcast('settings:colors:update');
+        $rootScope.$broadcast('settings:others:update');
       }
     };
   });

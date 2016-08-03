@@ -1,38 +1,34 @@
-angular.module('ocWebGui.color', ['ui.router', 'ocWebGui.login'])
+angular.module('ocWebGui.others', ['ui.router', 'ocWebGui.login'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('color', {
-        url: '/color',
+      .state('others', {
+        url: '/others',
         views: {
           nav: {
             templateUrl: 'navbar/navbar_others.html'
           },
           content: {
-            templateUrl: 'color/_color.html',
-            controller: 'ColorController',
-            controllerAs: 'color'
+            templateUrl: 'others/_others.html',
+            controller: 'OthersController',
+            controllerAs: 'others'
           }
         }
       });
   })
-  .controller('ColorController', function ($interval, Settings) {
+  .controller('OthersController', function ($interval, Settings) {
     var vm = this;
-    vm.title = 'Värit';
+    vm.title = 'Muut asetukset';
 
     function clearMessage() {
       vm.message = '';
     }
 
     vm.message = 'Ladataan...';
-    Settings.getColors().then(function (colors) {
-      vm.colors = colors;
-      clearMessage();
-    });
     Settings.getOthers().then(function (others) {
       vm.others = others;
     });
     vm.save = function () {
-      Settings.setColors(vm.colors).then(function () {
+      Settings.setOthers(vm.others).then(function () {
         vm.message = 'Kivat valinnat! Ne on nyt tallennettu!';
         $interval(clearMessage, 5000, 1);
       });

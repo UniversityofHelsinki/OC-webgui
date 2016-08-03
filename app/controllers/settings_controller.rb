@@ -9,6 +9,8 @@ class SettingsController < ApplicationController
         'call' => '#ffff4d',
         'busy' => '#ff3333'
       }.freeze
+    }.freeze, 'others' => {
+      'service_height' => '111'
     }.freeze
   }.freeze
 
