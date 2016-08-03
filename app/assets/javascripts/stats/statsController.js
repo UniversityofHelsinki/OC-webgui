@@ -17,7 +17,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
       chart: {
         type: 'scatterChart',
         width: 700,
-        height: 550,
+        height: 300,
         margin: {
           top: 30,
           right: 90,
