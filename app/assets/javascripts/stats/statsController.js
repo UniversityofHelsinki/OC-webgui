@@ -108,6 +108,12 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
       'type': 'bar',
       'yAxis': 2,
       'color': '#00ff00'
+    }, {
+      'key': 'Palvelutaso',
+      'values': [],
+      'type': 'line',
+      'yAxis': 2,
+      'color': '#ff0000'
     }];
 
     function getMaxValPlusOne(i) {
@@ -157,7 +163,16 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
 
         var callMax = getMaxValPlusOne(0); // because sum is always same or bigger than missed calls
         // Multiply by 1.05 so highest value is high enough that highest point in chart isn't hidden
-        var queueMax = getMaxValPlusOne(2) * 1.105;
+        var queueMax = getMaxValPlusOne(2) * 1.05;
+
+        var sla = 300;
+        if (sla <= queueMax) {
+          var fourth = d3.time.hour.range(clock8, clock18, 1)
+            .map(function (j) { return { x: new Date(j).getTime(), y: sla }; })
+            .filter(function (item) { return item.x >= clock8 && item.x <= clock18; });
+          vm.data2[3].values = fourth;
+        }
+
         // vm.options2.chart.yDomain1[1] = callMax;
         // vm.options2.chart.yDomain2[1] = queueMax;
         vm.options2.chart.yAxis1.tickValues = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
