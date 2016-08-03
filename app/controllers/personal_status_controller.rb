@@ -1,10 +1,7 @@
 # API for OC Agent status data
 class PersonalStatusController < ApplicationController
+  before_action :ensure_user_is_logged_in, only: :index
   def index
-    unless current_user
-      render json: { error: 'Please log in to access this resouce' }, status: 403
-      return
-    end
     if current_user.agent.nil?
       render json: { error: 'Current user does not match any registered agent' }, status: 400
       return

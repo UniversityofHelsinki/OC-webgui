@@ -1,6 +1,7 @@
 angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'ocWebGui.queue',
     'ocWebGui.filterpanel', 'ocWebGui.stats', 'ocWebGui.login', 'ocWebGui.navbar',
-    'ocWebGui.personal', 'ocWebGui.color', 'ocWebGui.shared.color', 'ocWebGui.shared.settings'])
+    'ocWebGui.personal', 'ocWebGui.color', 'ocWebGui.shared.color', 'ocWebGui.shared.settings',
+    'ocWebGui.userAdmin'])
   .run(function ($rootScope, $state, User, $interval, Settings) {
     var $body = $(document.body);
     var $navbar = $('.navbar');
@@ -21,8 +22,8 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'oc
     function activateNavbarOverlay() {
       $interval.cancel(mouseHideTimeout);
       mouseHideTimeout = createHideMouseTimeout();
+      $body.addClass('body-screen');
 
-      $navbar.addClass('overlay');
       $body.on('mousemove', function () {
         $body.removeClass('hide-mouse');
         $interval.cancel(mouseHideTimeout);
@@ -33,8 +34,8 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'oc
     function disableNavbarOverlay() {
       $interval.cancel(mouseHideTimeout);
 
-      $navbar.removeClass('overlay');
       $body.removeClass('hide-mouse').off('mousemove');
+      $body.removeClass('body-screen');
     }
 
     $rootScope.returnToState = 'home';

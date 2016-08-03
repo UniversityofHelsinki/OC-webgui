@@ -3,9 +3,14 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
     $stateProvider
       .state('personal', {
         url: '/personal',
-        templateUrl: 'personal/_personal.html',
-        controller: 'PersonalController',
-        controllerAs: 'personal'
+        views: {
+          content: {
+            templateUrl: 'personal/_personal.html',
+            controller: 'PersonalController',
+            controllerAs: 'personal'
+          }
+        },
+        navbarOverlay: true
       });
   })
   .controller('PersonalController', function (TrimName, Agents, Queue, User, Personal, $interval, $scope) {
@@ -22,8 +27,10 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
 
         if (myAgent === undefined) {
           vm.myColor = 'grey';
+          vm.myStatus = 'Offline';
         } else {
           vm.myColor = myAgent.color;
+          vm.myStatus = myAgent.status;
           agents.splice(agents.indexOf(myAgent), 1);
         }
       });

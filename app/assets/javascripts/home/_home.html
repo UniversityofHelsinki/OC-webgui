@@ -1,19 +1,18 @@
-<div class="home-bg">
-    <div class="home-menu card">
+<div class="col-md-2"></div>
+<div class="col-md-8 foreground">
+    <div class="home-menu">
         <h1>Koti</h1>
-        <a ui-sref="screen" class="card">Status-näkymä</a>
-        <a ui-sref="queue" class="card">Jono-näkymä</a>
+        <a ui-sref="screen" class="card">Statusnäkymä</a>
+        <a ui-sref="queue" class="card">Jononäkymä</a>        
         <a ui-sref="filterpanel" class="card">Filtteröi</a>
         <a ui-sref="stats" class="card" ng-if="home.isAuthenticated()">Tilastot</a>
-        <a ui-sref="personal" class="card" ng-if="home.isAuthenticated()">{{ home.username() }}</a>
         <a ui-sref="color" class="card" ng-if="home.isAuthenticated()">Säädä värejä</a>
         <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Kirjaudu sisään</a>
-        <div ng-if="home.isAuthenticated()" class="home-logout">
-            Kirjautuneena: {{ home.username() }}
-            <a href="" ng-click="home.logout()" class="card">Kirjaudu ulos</a>
-        </div>
+        <a ng-if="home.isAuthenticated()" ng-click="home.logout()" class="card">Kirjaudu ulos</a>        
     </div>
     <!-- <div class="home-menu card"> -->
     <!--     <p>Fancy statistics for user if logged in?</p> -->
     <!-- </div> -->
+    </div>
+<div class="col-md-2">
 </div>

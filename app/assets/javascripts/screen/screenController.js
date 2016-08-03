@@ -3,9 +3,16 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
     $stateProvider
       .state('screen', {
         url: '/screen',
-        templateUrl: 'screen/_screen.html',
-        controller: 'ScreenController',
-        controllerAs: 'screen',
+        views: {
+          nav: {
+            templateUrl: 'navbar/navbar_screen.html'
+          },
+          content: {
+            templateUrl: 'screen/_screen.html',
+            controller: 'ScreenController',
+            controllerAs: 'screen'
+          }
+        },
         navbarOverlay: true
       });
   })

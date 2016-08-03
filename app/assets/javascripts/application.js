@@ -32,6 +32,7 @@
 //= require_tree ./stats
 //= require_tree ./login
 //= require_tree ./personal
+//= require_tree ./userAdmin
 //= require_tree ./color
 //= require ./app.js
 //= require angular-i18n/angular-locale_fi.js

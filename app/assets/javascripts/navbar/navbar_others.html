@@ -1,0 +1,26 @@
+<div class="navbar navbar-default" ng-controller="NavbarController as navbar">
+ <a class="navbar-brand" ui-sref-active="active" ui-sref="home">OC-WebGUI</a>
+    <div class="container">
+            <div class="col-md-4">
+                <ul class="nav navbar-nav">                    
+                    <li><a ui-sref-active="active" ui-sref="screen">Statukset</a></li>
+                    <li><a ui-sref-active="active" ui-sref="queue" >Jono</a></li>
+                    <li><a ng-if="navbar.isAuthenticated()" href="" ng-click="navbar.openPersonalView()">Oma näkymä</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="nav navbar-nav">
+                    <li><a ui-sref-active="active" ui-sref="filterpanel" >Filtteröi</a></li>
+                    <li><a ui-sref-active="active" ui-sref="stats" ng-if="navbar.isAuthenticated()">Tilastot</a></li>
+                    <li><a us-sref-active="active" ui-sref="userAdmin" ng-if="navbar.isAuthenticated()">Käyttäjähallinta</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a ui-sref-active="active" ui-sref="login" ng-if="!navbar.isAuthenticated()">Kirjaudu sisään</a></li>
+                    <li><a ng-if="navbar.isAuthenticated()" href="" ng-click="navbar.logout()">Kirjaudu ulos</a></li>
+                </ul>
+            </div>
+        
+    </div>
+</div>

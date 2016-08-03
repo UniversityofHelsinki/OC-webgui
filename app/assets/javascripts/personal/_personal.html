@@ -1,4 +1,3 @@
-<div class="personal-bg">
     <div class="personal-card card">
         <div class="queue-length">
              {{ personal.queue.length }}
@@ -19,7 +18,8 @@
         </table>
         <div class="agent-statuses">
             <div class="own-status">
-                <div id="own-status-color" class="agent-status-color agent-status-color-{{personal.myColor}}" oc-color="statuses.{{ personal.myColor }}"></div>
+                <div id="own-status-color" class="agent-status-color agent-status-color-{{personal.myColor}}" oc-color="statuses.{{ personal.myColor }}"></div> {{personal.myStatus}}
+
             </div>
             <ul class="agent-list">
                 <li ng-repeat="agent in personal.agents track by agent.id">
@@ -29,4 +29,3 @@
             </ul>
         </div>
     </div>
-</div>
