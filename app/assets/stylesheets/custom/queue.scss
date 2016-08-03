@@ -98,7 +98,7 @@
 .queue-stats {
   height: 50%;
   text-align: center;
-  line-height: 1.5;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,14 +108,14 @@
   border-spacing: 0 1em;
   font-size: 3em;
 
-  td {
+  .stats_td {
     width: 50%;
     font-size: 150%;
-    line-height: 1;
     text-align: right;
   }
 
-  th {
+  .stats_th {
+    font-size: 150%;
     font-weight: normal;
     text-align: left;
   }
@@ -131,7 +131,13 @@
   height: 50%;
 }
 
+.answer {
+  text-align: left;
+  font-size: 1.75em;
+  border-bottom: 2px solid #ccc;
+}
+
 .percentage {
+  text-align: right;
   font-weight: bold;
-  font-size: 200%;
 }

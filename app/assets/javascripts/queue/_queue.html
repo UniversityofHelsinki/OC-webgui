@@ -27,25 +27,25 @@
         <div class="queue-stats card">            
             <table class="queue-stats-table">
                 <tr>
-                    <th class="percentage">Vastausprosentti:</th>
-                    <td class="percentage">{{queue.stats.answered_percentage}}%</td>
+                    <th class="answer">Vastausprosentti:</th>
+                    <td class="answer percentage">{{queue.stats.answered_percentage}}%</td>
                 </tr>
                 <tr>
-                    <th>Puhelut:</th>
-                    <td>{{queue.stats.answered_calls}} / 
+                    <th class="stats_th">Puhelut:</th>
+                    <td class="stats_td">{{queue.stats.answered_calls}} / 
                         {{queue.stats.answered_calls + queue.stats.missed_calls}}</td>
                 </tr>
                 <tr>
-                    <th>Puheluiden ka:</th>
-                    <td><oc-time seconds="queue.stats.average_call_duration"></oc-time></td>
+                    <th class="stats_th">Puheluiden ka:</th>
+                    <td class="stats_td"><oc-time seconds="queue.stats.average_call_duration"></oc-time></td>
                 </tr>
                 <tr>
-                    <th>Jälkikirjausten ka:</th>
-                    <td><oc-time seconds="queue.stats.average_after_call_duration"></oc-time></td>
+                    <th class="stats_th">Jälkikirjausten ka:</th>
+                    <td class="stats_td"><oc-time seconds="queue.stats.average_after_call_duration"></oc-time></td>
                 </tr>
                 <tr>
-                    <th>Jonotusten ka:</th>
-                    <td><oc-time seconds="queue.stats.average_queue_duration"></oc-time></td>
+                    <th class="stats_th">Jonotusten ka:</th>
+                    <td class="stats_td"><oc-time seconds="queue.stats.average_queue_duration"></oc-time></td>
                 </tr>
             </table>
         </div>
