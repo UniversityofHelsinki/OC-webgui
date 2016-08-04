@@ -6,15 +6,15 @@
         <fieldset>
             <label>
                 Yleinen palvelutaso:
-                <input type="number" ng-model="others.others.service_height">
+                <input type="number" ng-model="others.others.service_height" min="0">
             </label>
             <label>
                 Työpäivän alkamisajankohta:
-                <input type="number" ng-model="others.others.working_day_start">
+                <input type="number" ng-model="others.others.working_day_start" min="0" max="24">
             </label>
             <label>
                 Työpäivän loppumisajankohta:
-                <input type="number" ng-model="others.others.working_day_end">
+                <input type="number" ng-model="others.others.working_day_end" min="0" max="24">
             </label>
         </fieldset>
         <button class="btn btn-success" type="submit">Tallenna</button>
