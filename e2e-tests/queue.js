@@ -15,7 +15,7 @@ describe('queue', function () {
               { team: 'Helpdesk', language: 'Swedish', time_in_queue: 34 }
             ]);
             $httpBackend.whenGET('settings.json').respond([
-{"colors":{"background":"#87aade","font":"#333333","statuses":{"free":"#37c837","call":"#ffff4d","busy":"#ff3333"}},"others":{"service_height":"300","working_day_start":"8","working_day_end":"18"}}
+{"colors":{"background":"#87aade","font":"#333333","statuses":{"free":"#37c837","call":"#ffff4d","busy":"#ff3333"}},"others":{"service_height":"300","working_day_start":8,"working_day_end":18}}
 ]);
           });
       });
@@ -63,7 +63,7 @@ describe('queue', function () {
               { team: 'Helpdesk', language: 'Finnish' }
             ]);
             $httpBackend.whenGET('settings.json').respond([
-{"colors":{"background":"#87aade","font":"#333333","statuses":{"free":"#37c837","call":"#ffff4d","busy":"#ff3333"}},"others":{"service_height":"300","working_day_start:8,"working_day_end":18}}
+{"colors":{"background":"#87aade","font":"#333333","statuses":{"free":"#37c837","call":"#ffff4d","busy":"#ff3333"}},"others":{"service_height":"300","working_day_start":8,"working_day_end":18}}
 ]);
           });
       });
