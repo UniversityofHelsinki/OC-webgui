@@ -1,7 +1,8 @@
 # API for Queue status data
 class QueueItemsController < ApplicationController
   def index
-    @queue_items = QueueItem.includes(:team, :service).where(open: true)
+    return render json: [] if Rails.cache.read('queue_items').nil?
+    render json: Rails.cache.read('queue_items')
   end
 
   before_action :init
