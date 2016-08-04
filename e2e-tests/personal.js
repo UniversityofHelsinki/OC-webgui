@@ -87,6 +87,9 @@ describe('personal', function () {
               }
             }
           });
+          $httpBackend.whenGET('user.json').respond({
+            agent_id: 1234
+          });
         });
     });
     browser.addMockModule('ocWebGui.shared.time.service', function () {
@@ -99,18 +102,6 @@ describe('personal', function () {
           };
         });
     });
-    browser.addMockModule('ocWebGui.login', function () {
-      angular.module('ocWebGui.login', [])
-        .factory('User', function () {
-          return {
-            getUserData: function () {
-              return { agent_id: 1234 };
-            }
-          };
-        });
-    });
-
-
     browser.get('#/personal');
   });
 
