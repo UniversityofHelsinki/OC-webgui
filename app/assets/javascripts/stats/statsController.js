@@ -77,14 +77,16 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
           axisLabel: 'Kellonaika',
         },
         yAxis1: {
-          axisLabel: 'Jonottajat'
+          axisLabel: 'Jonottajat',
+          yDomani: [0, 10]
         },
         yAxis2: {
           axisLabel: 'Aikaa',
           tickFormat: function (seconds) {
             var formatTime = d3.time.format('%H:%M');
             return formatTime(new Date(1864, 7, 7, 0, seconds));
-          }
+          },
+          yDomain: [0, 10]
         }
       }
     };
@@ -142,7 +144,6 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
           .map(function (f) { return f.getTime(); });
         vm.api.refresh();
 
-
         var callsByHours = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
           .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
@@ -169,11 +170,16 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
             .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
           vm.data2[3].values = slaLine;
         }
-        // vm.options2.chart.yDomain1[1] = callMax;
-        // vm.options2.chart.yDomain2[1] = queueMax;
-        vm.options2.chart.yAxis1.tickValues = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
-        vm.options2.chart.yAxis2.tickValues = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
-        vm.api2.refresh();
+
+        vm.options2.chart.yAxis1.yDomain = callMax;
+        vm.options2.chart.yAxis2.yDomain = queueMax;
+        y1AxisNewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
+        y2AxisNewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
+        y1AxisOldTicks = vm.options2.chart.y1Axis.tickValues;
+        y2AxisOldTicks = vm.options2.chart.y2Axis.tickValues;
+        if (!angular.equals(y1AxisOldTicks, y1AxisNewTicks) || !angular.equals(y2AxisOldTicks, y2AxisNewTicks)) {
+          vm.api2.refresh();
+        }
       });
     }
 
