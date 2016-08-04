@@ -19,7 +19,10 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
     vm.trimName = TrimName.trim;
 
     function fetchData() {
-      $q.all({ agents: Agents.query(), userData: User.getUserData() }).then(function (values) {
+      $q.all({
+        agents: Agents.query().$promise,
+        userData: User.getUserData()
+      }).then(function (values) {
         vm.agents = values.agents;
         vm.currentAgent = vm.agents.find(function (agent) {
           return values.userData.agent_id === agent.id;
