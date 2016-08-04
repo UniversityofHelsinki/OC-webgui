@@ -97,5 +97,9 @@ RSpec.describe ContactsService, type: :service do
     it "Returns correct average after call duration" do
       expect(@contacts_service.average_after_call_duration).to eq(120)
     end
+
+    it "eikö tää toimi??????? palauttaa liian vähän kai" do
+      expect(@contacts_service.yhteensa).to eq(10)
+    end
   end
 end

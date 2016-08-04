@@ -8,6 +8,10 @@ class ContactsService
     end
   end
 
+  def yhteensa
+    @contacts.count
+  end
+
   def num_answered_calls
     answered_contacts.count
   end
