@@ -10,6 +10,11 @@ class SessionController < ApplicationController
     render json: user.attributes.slice('id', 'agent_id', 'username', 'is_admin')
   end
 
+  def get
+    return render json: { error: 'not logged in' }, status: :unauthorized unless current_user
+    render json: current_user.attributes.slice('id', 'agent_id', 'username', 'is_admin')
+  end
+
   def destroy
     session[:user_id] = nil
     render nothing: true
