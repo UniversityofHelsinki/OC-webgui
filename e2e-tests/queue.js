@@ -199,8 +199,6 @@ describe('queue', function () {
     
     it('should contain average call duration', function () {
       expect(rows.get(2).element(by.tagName('th')).getText()).toBe('Puheluiden ka:');
-browser.pause();
-
       expect(rows.get(2).element(by.tagName('td')).getText()).toBe('02:15');
     });
 
