@@ -93,9 +93,13 @@ RSpec.describe ContactsService, type: :service do
     it "Returns correct average call duration" do
       expect(@contacts_service.average_call_duration).to eq(260)
     end
-   
+
     it "Returns correct average after call duration" do
       expect(@contacts_service.average_after_call_duration).to eq(120)
+    end
+
+    it "Returns correct service level agreement percentage"do
+      expect(@contacts_service.service_level_agreement_percentage(300)).to eq(75)
     end
   end
 end

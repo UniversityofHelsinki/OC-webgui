@@ -9,7 +9,8 @@ RSpec.describe ContactsController, type: :controller do
       'average_missed_call_duration' => 190,
       'answered_percentage' => 69,
       'average_queue_duration' => 28,
-      'average_queue_duration_by_hour' => [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3]
+      'average_queue_duration_by_hour' => [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3],
+      'service_level_agreement' => 85
     }
 
     allow_any_instance_of(ContactsService).to receive(:num_answered_calls).and_return(expected['answered_calls'])
@@ -21,6 +22,7 @@ RSpec.describe ContactsController, type: :controller do
     allow_any_instance_of(ContactsService).to receive(:answered_percentage).and_return(expected['answered_percentage'])
     allow_any_instance_of(ContactsService).to receive(:average_queue_duration).and_return(expected['average_queue_duration'])
     allow_any_instance_of(ContactsService).to receive(:average_queue_duration_by_hour).and_return(expected['average_queue_duration_by_hour'])
+    allow_any_instance_of(ContactsService).to receive(:service_level_agreement_percentage).and_return(expected['service_level_agreement'])
     get :stats, format: :json
     expect(JSON.parse(response.body)).to eq(expected)
   end
