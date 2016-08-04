@@ -14,6 +14,14 @@ class ContactsController < ApplicationController
     @contacts_service.contacts_for_team(@team_name, @start_time, @end_time)
   end
 
+  
+
+  def get_settings
+    s = SettingsController.new
+    s.request = request
+    return s.get_settings
+  end
+
   def stats
     render json: {
       answered_calls: @contacts_service.num_answered_calls,
@@ -25,7 +33,7 @@ class ContactsController < ApplicationController
       answered_percentage: @contacts_service.answered_percentage,
       average_queue_duration: @contacts_service.average_queue_duration,
       average_queue_duration_by_hour: @contacts_service.average_queue_duration_by_hour,
-#      service_level_agreement: @contacts_service.service_level_agreement(current_user[:settings]['others']['service_height'].to_i)
+      service_level_agreement: @contacts_service.service_level_agreement_percentage(get_settings['others']['service_height'].to_i)
     }
   end
 end

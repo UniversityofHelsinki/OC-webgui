@@ -11,17 +11,21 @@ class SettingsController < ApplicationController
       }.freeze
     }.freeze, 'others' => {
       'service_height' => '300',
-      'working_day_start' => '2',
-      'working_day_end' => '4'
+      'working_day_start' => '8',
+      'working_day_end' => '18'
     }.freeze
   }.freeze
 
-  def get
+  def get_settings
     if current_user
-      render json: DEFAULT_SETTINGS.deep_merge(current_user.settings)
+      DEFAULT_SETTINGS.deep_merge(current_user.settings)
     else
-      render json: DEFAULT_SETTINGS
+      DEFAULT_SETTINGS
     end
+  end
+
+  def get
+    render json: get_settings
   end
 
   def check_colors(hash, errors = {})

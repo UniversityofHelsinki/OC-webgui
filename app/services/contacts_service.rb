@@ -62,7 +62,7 @@ class ContactsService
     result
   end
 
-  def service_level_agreement(t)
+  def service_level_agreement_percentage(t)
     s = @contacts.select("EXTRACT(EPOCH FROM contacts.answered - contacts.arrived) AS avg").map { |i| i[:avg] }
     r = s.select { |i| i.nil? || i <= t }
     return 100 * r.count / s.count

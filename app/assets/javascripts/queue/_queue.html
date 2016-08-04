@@ -27,12 +27,12 @@
         <div class="queue-stats card">            
             <table class="queue-stats-table">
                 <tr>
-                    <td class="percentage">{{queue.stats.answered_percentage}}%</td>
+                    <td class="percentage">{{ queue.stats.answered_percentage }}%</td>
                 </tr>
                 <tr>
                     <th>Puhelut:</th>
-                    <td>{{queue.stats.answered_calls}} / 
-                        {{queue.stats.answered_calls + queue.stats.missed_calls}}</td>
+                    <td>{{ queue.stats.answered_calls }} / 
+                        {{ queue.stats.answered_calls + queue.stats.missed_calls }}</td>
                 </tr>
                 <tr>
                     <th>Puheluiden ka:</th>
@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <th>Palvelutaso:</th>
-                    <td><oc-time seconds="queue.stats.service_level_agreement"></oc-time></td>
+                    <td>{{ queue.stats.service_level_agreement }}%</td>
                 </tr>
             </table>
         </div>
