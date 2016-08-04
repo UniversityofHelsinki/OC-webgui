@@ -14,8 +14,6 @@ class ContactsController < ApplicationController
     @contacts_service.contacts_for_team(@team_name, @start_time, @end_time)
   end
 
-  
-
   def get_settings
     s = SettingsController.new
     s.request = request

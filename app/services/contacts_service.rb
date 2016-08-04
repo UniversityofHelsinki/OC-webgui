@@ -62,10 +62,16 @@ class ContactsService
     result
   end
 
-  def service_level_agreement_percentage(t)
-    s = @contacts.select("EXTRACT(EPOCH FROM contacts.answered - contacts.arrived) AS avg").map { |i| i[:avg] }
-    r = s.select { |i| i.nil? || i <= t }
-    return 100 * r.count / s.count
+  def service_level_agreement_percentage(time_limit)
+    all = (answered_contacts + missed_contacts).count
+
+    answered_in_time = answered_contacts.pluck(:arrived, :answered)
+                                        .map { |i| i[1] - i[0] }
+                                        .map { |e| e if e <= time_limit }
+                                        .compact
+                                        .count
+
+    return 100 * answered_in_time / all
   end
 
   private
