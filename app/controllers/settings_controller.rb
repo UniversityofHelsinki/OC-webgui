@@ -10,9 +10,9 @@ class SettingsController < ApplicationController
         'busy' => '#ff3333'
       }.freeze
     }.freeze, 'others' => {
-      'service_height' => 300,
-      'working_day_start' => 8,
-      'working_day_end' => 18
+      'service_height' => '300',
+      'working_day_start' => '8',
+      'working_day_end' => '18'
     }.freeze
   }.freeze
 
