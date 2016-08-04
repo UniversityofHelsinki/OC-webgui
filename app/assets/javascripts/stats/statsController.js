@@ -128,38 +128,40 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
     function fetchContactStats() {
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
-        var clock8 = new Date();
-        clock8.setDate(clock8.getDate());
-        clock8.setHours(8, 0, 0);
+        var beginningOfDay = new Date();
+        beginningOfDay.setDate(beginningOfDay.getDate());
+        beginningOfDay.setHours(8, 0, 0);
 
-        var clock18 = new Date();
-        clock18.setDate(clock18.getDate());
-        clock18.setHours(18, 0, 0);
+        var endOfDay = new Date();
+        endOfDay.setDate(endOfDay.getDate());
+        endOfDay.setHours(18, 0, 0);
 
         var queueDurationsByTimes = data.queue_durations_by_times
           .map(function (j) { return { hour: new Date(j[0]).getTime(), calls: j[1] }; });
         vm.data[0].values = queueDurationsByTimes;
 
-        vm.options.chart.xAxis.tickValues = d3.time.hour.range(clock8, clock18, 1)
+        vm.options.chart.xAxis.tickValues = d3.time.hour.range(beginningOfDay, endOfDay, 1)
           .map(function (f) { return f.getTime(); });
         vm.api.refresh();
 
         var callsByHours = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
           .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
-        vm.data2[0].values = callsByHours;
 
         var missedCallsByHours = data.missed_calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
           .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
-        vm.data2[1].values = missedCallsByHours;
 
         var averageQueueDurationByHour = data.average_queue_duration_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
           .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+
+        vm.data2[0].values = callsByHours;
+        vm.data2[1].values = missedCallsByHours;
         vm.data2[2].values = averageQueueDurationByHour;
 
-        var callMax = getMaxValPlusOne(0); // because all calls is always same or bigger than missed calls
+        // use 0 because all calls is always same or bigger than missed calls
+        var callMax = getMaxValPlusOne(0); 
         // Multiply by 1.05 so highest value is high enough that highest point in chart isn't hidden
         var queueMax = getMaxValPlusOne(2) * 1.05;
 
@@ -173,10 +175,10 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
 
         vm.options2.chart.yAxis1.yDomain = callMax;
         vm.options2.chart.yAxis2.yDomain = queueMax;
-        var y1AxisNewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
-        var y2AxisNewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
         var y1AxisOldTicks = vm.options2.chart.y1Axis.tickValues;
         var y2AxisOldTicks = vm.options2.chart.y2Axis.tickValues;
+        var y1AxisNewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
+        var y2AxisNewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
         if (!angular.equals(y1AxisOldTicks, y1AxisNewTicks) || !angular.equals(y2AxisOldTicks, y2AxisNewTicks)) {
           vm.api2.refresh();
         }
