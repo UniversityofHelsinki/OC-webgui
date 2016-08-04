@@ -83,16 +83,18 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     function fetchContactStats() {
       Settings.getOthers().then(function (others) {
         vm.otherSettings = others;
+      });
+
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
 
         var callsValues = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= parseInt(vm.otherSettings.working_day_start) && item.hour <= parseInt(vm.otherSettings.working_day_end); });
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
 
         var queueValues = data.average_queue_duration_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= parseInt(vm.otherSettings.working_day_start) && item.hour <= parseInt(vm.otherSettings.working_day_end); });
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
 
         vm.stats = data;
         vm.data[0].values = callsValues;
@@ -105,7 +107,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         vm.options.chart.y1Axis.tickValues = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
         vm.options.chart.y2Axis.tickValues = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
         vm.api.refresh();
-      });
       });
     }
 
