@@ -64,14 +64,14 @@ class ContactsService
 
   def service_level_agreement_percentage(time_limit)
     all = (answered_contacts + missed_contacts).count
-
+    return 100.0 if all == 0
     answered_in_time = answered_contacts.pluck(:arrived, :answered)
                                         .map { |i| i[1] - i[0] }
                                         .select { |e| e if e <= time_limit }
                                         .compact
                                         .count
 
-    return 100 * answered_in_time / all
+    100.0 * answered_in_time.to_f / all
   end
 
   private

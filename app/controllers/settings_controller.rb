@@ -16,7 +16,7 @@ class SettingsController < ApplicationController
     }.freeze
   }.freeze
 
-  def get_settings
+  def settings
     if current_user
       DEFAULT_SETTINGS.deep_merge(current_user.settings)
     else
@@ -25,7 +25,7 @@ class SettingsController < ApplicationController
   end
 
   def get
-    render json: get_settings
+    render json: settings
   end
 
   def check_colors(hash, errors = {})
@@ -42,7 +42,9 @@ class SettingsController < ApplicationController
 
   def update
     return render json: { error: 'not logged in' }, status: :unauthorized unless current_user
-    new_settings = DEFAULT_SETTINGS.deep_merge(params.permit(colors: [:background, :font, statuses: [:free, :call, :busy]], others: [:service_height, :working_day_start, :working_day_end]))
+    new_settings = DEFAULT_SETTINGS.deep_merge(params.permit(
+      colors: [:background, :font, statuses: [:free, :call, :busy]],
+      others: [:service_height, :working_day_start, :working_day_end]))
     errors = check_colors(new_settings['colors'])
     return render json: { colors: errors }, status: :bad_request unless errors.empty?
     current_user.update(settings: new_settings)
