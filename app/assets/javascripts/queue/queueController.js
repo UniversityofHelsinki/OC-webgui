@@ -81,6 +81,10 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     }
 
     function fetchContactStats() {
+      Settings.getOthers().then(function (others) {
+        vm.otherSettings = others;
+      });
+
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
         var callsValues = data.calls_by_hour
