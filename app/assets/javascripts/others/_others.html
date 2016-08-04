@@ -1,0 +1,26 @@
+<div class="col-md-2"></div>
+<div class="col-md-8 foreground">
+    <h1>{{ others.title }}</h1>
+    <p ng-if="others.message">{{ others.message }}</p>
+    <form ng-submit="others.save()" ng-if="others.others">
+        <fieldset>
+            <label>
+                Yleinen palvelutaso:
+                <input type="text" ng-model="others.others.service_height">
+            </label>
+            <label>
+                Työpäivän alkamisajankohta:
+                <input type="text" ng-model="others.others.working_day_start">
+            </label>
+            <label>
+                Työpäivän loppumisajankohta:
+                <input type="text" ng-model="others.others.working_day_end">
+            </label>
+        </fieldset>
+        <button class="btn btn-success" type="submit">Tallenna</button>
+    </form>
+<h4>joooohhhh {{others.others.service_height}}</h4>
+<h4>joooohhhh {{others.others.working_day_start}}</h4>
+<h4>joooohhhh {{others.others.working_day_end}}</h4>
+</div>
+<div class="col-md-2"></div>
