@@ -2,7 +2,7 @@
 class ContactsService
   def initialize(filter_by_model, start_time, end_time)
     if filter_by_model.is_a? Team
-      @contacts = Contact.joins(:service).where(services: { team_id: filter_by_model.id }, arrived: start_time - 2.day..end_time - 2.day)
+      @contacts = Contact.joins(:service).where(services: { team_id: filter_by_model.id }, arrived: start_time..end_time)
     elsif filter_by_model.is_a? Agent
       @contacts = Contact.where(agent: filter_by_model, arrived: start_time..end_time)
     end
