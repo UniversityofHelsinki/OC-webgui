@@ -16,7 +16,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         navbarOverlay: true
       });
   })
-  .controller('QueueController', function ($interval, $scope, Queue, $http) {
+  .controller('QueueController', function ($interval, $scope, Queue, $http, Settings) {
     var vm = this;
     vm.api = {};
 
@@ -81,15 +81,19 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     }
 
     function fetchContactStats() {
+      Settings.getOthers().then(function (others) {
+        vm.otherSettings = others;
+      });
+
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
         var callsValues = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+          .filter(function (item) { return item.hour >= vm.otherSettings['working_day_start'] && item.hour <= vm.otherSettings['working_day_end']; });
 
         var queueValues = data.average_queue_duration_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+          .filter(function (item) { return item.hour >= vm.otherSettings['working_day_start'] && item.hour <= vm.otherSettings['working_day_end']; });
 
         vm.stats = data;
         vm.data[0].values = callsValues;
