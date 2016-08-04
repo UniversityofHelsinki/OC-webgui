@@ -6,13 +6,13 @@
                LENGTH |  DATE
                       |  WEEK
             -->
-            <div class="q-length">
-                <span>{{ queue.queue.length }}</span>
-            </div>
             <div class="time-date-week">
-                <div> {{ queue.date | date:'HH.mm' }}</div>
+                <div class="time"> {{ queue.date | date:'HH.mm' }}</div>
                 <div> {{ queue.date | date:'EEE d.M.' }}</div>
                 <div> {{ queue.date | date:'viikko w' }}</div>
+            </div>
+            <div class="q-length">
+                <span>{{ queue.queue.length }}</span>
             </div>
         </div>
         <!-- Show first five in queue -->

@@ -33,7 +33,7 @@
   text-shadow: $card-shadow;
 }
 
-.time-date-week {
+.time-date-week{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,6 +44,11 @@
   div {
     height: 33.3%;
     padding: 3%;
+  }
+  
+  .time {
+    font-weight: bold;
+    font-size: 120%;
   }
 }
 
@@ -108,23 +113,37 @@
   border-spacing: 0 1em;
   font-size: 3em;
   padding: 0.5em;
-
+  $line-color: black;
+  
 td {
   text-align: right;
+  color: $line-color;
 }
 
 th {
   text-align: left;
+  color: $line-color;
 }
 
   .stats_td {
     width: 50%;
     font-size: 150%;
+    color: $line-color;
   }
 
   .stats_th {
     font-size: 150%;
     font-weight: normal;
+    color: $line-color;
+  }
+  
+  .answer {
+  font-size: 1.75em;
+  border-bottom: 2px solid $line-color;
+  }
+
+  .percentage {
+    font-weight: bold;
   }
 }
 
@@ -138,11 +157,4 @@ th {
   height: 50%;
 }
 
-.answer {
-  font-size: 1.75em;
-  border-bottom: 2px solid #ccc;
-}
 
-.percentage {
-  font-weight: bold;
-}
