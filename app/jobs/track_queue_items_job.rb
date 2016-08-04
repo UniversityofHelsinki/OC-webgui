@@ -3,14 +3,15 @@ class TrackQueueItemsJob
   extend Now
 
   def self.perform
-    current = BackendService.new.get_general_queue.map do |data|
-      QueueItem.new(service_id: data[:service_id],
-                    service_name: data[:service_name],
-                    time_in_queue: data[:time_in_queue])
+    queue_items = BackendService.new.get_general_queue.map do |data|
+      service = Service.find(data[:service_id])
+      {
+        team: service.team.name,
+        language: service.language,
+        time_in_queue: data[:time_in_queue]
+      }
     end
-    last_success = Rails.cache.read('track_queue_items_job_last_success')
-    QueueUpdater.new(now, last_success).update_queue(current)
-    Rails.cache.write('track_queue_items_job_last_success', now)
+    Rails.cache.write('queue_items', queue_items, expires_in: 30.seconds)
   end
 
   def self.queue_priority
