@@ -24,7 +24,8 @@ class ContactsController < ApplicationController
       average_missed_call_duration: @contacts_service.average_missed_call_duration,
       answered_percentage: @contacts_service.answered_percentage,
       average_queue_duration: @contacts_service.average_queue_duration,
-      average_queue_duration_by_hour: @contacts_service.average_queue_duration_by_hour
+      average_queue_duration_by_hour: @contacts_service.average_queue_duration_by_hour,
+      test: 'ju'
     }
   end
 end
