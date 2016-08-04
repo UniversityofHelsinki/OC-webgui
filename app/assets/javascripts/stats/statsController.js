@@ -70,12 +70,11 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
           bottom: 60,
           left: 90
         },
+        x: function (d) { return d.hour; },
+        y: function (d) { return d.calls; },
         duration: 500,
         xAxis: {
           axisLabel: 'Kellonaika',
-          tickFormat: function (d) {
-            return d3.time.format('%H.%M')(new Date(d));
-          }
         },
         yAxis1: {
           axisLabel: 'Jonottajat'
@@ -117,7 +116,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
     }];
 
     function getMaxValPlusOne(i) {
-      var maxVal = d3.max(vm.data2[i].values, function (x) { return x.y; });
+      var maxVal = d3.max(vm.data2[i].values, function (x) { return x.calls; });
       if (maxVal == null) {
         return 1;
       }
@@ -143,36 +142,33 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
           .map(function (f) { return f.getTime(); });
         vm.api.refresh();
 
-        var first = data.correlation_of_average_queue_length_and_missed_calls
-          .map(function (j) { return { x: new Date(j[0]).getTime(), y: j[1] }; })
-          .filter(function (item) { return item.x >= clock8 && item.x <= clock18; });
-        vm.data2[0].values = first;
 
-        var second = data.correlation_of_average_queue_length_and_missed_calls
-          .map(function (j) { return { x: new Date(j[0]).getTime(), y: j[2] }; })
-          .filter(function (item) { return item.x >= clock8 && item.x <= clock18; });
-        vm.data2[1].values = second;
+        var callsByHours = data.calls_by_hour
+          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+        vm.data2[0].values = callsByHours;
 
-        var third = data.correlation_of_average_queue_length_and_missed_calls
-          .map(function (j) { return { x: new Date(j[0]).getTime(), y: j[3] }; })
-          .filter(function (item) { return item.x >= clock8 && item.x <= clock18; });
-        vm.data2[2].values = third;
+        var missedCallsByHours = data.missed_calls_by_hour
+          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+        vm.data2[1].values = missedCallsByHours;
 
-        vm.options2.chart.xAxis.tickValues = d3.time.hour.range(clock8, clock18, 1)
-          .map(function (f) { return f.getTime(); });
+        var averageQueueDurationByHour = data.average_queue_duration_by_hour
+          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+        vm.data2[2].values = averageQueueDurationByHour;
 
-        var callMax = getMaxValPlusOne(0); // because sum is always same or bigger than missed calls
+        var callMax = getMaxValPlusOne(0); // because all calls is always same or bigger than missed calls
         // Multiply by 1.05 so highest value is high enough that highest point in chart isn't hidden
         var queueMax = getMaxValPlusOne(2) * 1.05;
 
         var sla = 300;
         if (sla <= queueMax) {
-          var fourth = d3.time.hour.range(clock8, clock18, 1)
-            .map(function (j) { return { x: new Date(j).getTime(), y: sla }; })
-            .filter(function (item) { return item.x >= clock8 && item.x <= clock18; });
-          vm.data2[3].values = fourth;
+          var slaLine = data.calls_by_hour
+            .map(function (calls, hour) { return { hour: hour, calls: sla }; })
+            .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+          vm.data2[3].values = slaLine;
         }
-
         // vm.options2.chart.yDomain1[1] = callMax;
         // vm.options2.chart.yDomain2[1] = queueMax;
         vm.options2.chart.yAxis1.tickValues = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];

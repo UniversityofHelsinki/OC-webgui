@@ -1,10 +1,8 @@
 # Calculates various statistics data based on Contact objects.
 class ContactsService
   def initialize(filter_by_model, start_time, end_time)
-    @gmt_offset = Time.now.getlocal.gmt_offset
-    @start_time = start_time
     if filter_by_model.is_a? Team
-      @contacts = Contact.joins(:service).where(services: { team_id: filter_by_model.id }, arrived: start_time..end_time)
+      @contacts = Contact.joins(:service).where(services: { team_id: filter_by_model.id }, arrived: start_time - 2.day..end_time - 2.day)
     elsif filter_by_model.is_a? Agent
       @contacts = Contact.where(agent: filter_by_model, arrived: start_time..end_time)
     end
@@ -72,30 +70,14 @@ class ContactsService
              .sort
   end
 
-  def correlation_of_average_queue_length_and_missed_calls
-    if @start_time.is_a? String
-      beginning = Time.zone.parse(@start_time).beginning_of_day if @start_time.is_a? String
-    else
-      beginning = @start_time.beginning_of_day
-    end
+  def missed_calls_by_hour
+    gmt_offset = Time.now.getlocal.gmt_offset
+    select = "EXTRACT(HOUR FROM contacts.arrived + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count"
+    data = missed_contacts.select(select).group('hour')
 
-    stats = []
-    # gmt offset
-    48.times do
-      beginning += 30.minutes
-      ending = beginning + 29.minutes + 59.seconds
-      missed = missed_contacts.where(arrived: beginning..ending).count
-      answered = answered_contacts.where(arrived: beginning..ending).count
-      sum = missed + answered
-      queuers = @contacts.where(contact_type: 'PBX')
-                         .where.not(forwarded_to_agent: nil, service_id: 120)
-                         .where(arrived: beginning..ending)
-      queue_average = average_duration(queuers, 'arrived', 'forwarded_to_agent')
-      stats.push([beginning, sum, missed, queue_average])
-      # TODO: thinkin shud begining variable be change here and not in beginning
-    end
-
-    stats
+    result = Array.new(24, 0)
+    data.each { |d| result[(d['hour'])] = d['count'] }
+    result
   end
 
   private

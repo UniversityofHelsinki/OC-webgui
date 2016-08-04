@@ -26,7 +26,7 @@ class ContactsController < ApplicationController
       average_queue_duration: @contacts_service.average_queue_duration,
       average_queue_duration_by_hour: @contacts_service.average_queue_duration_by_hour,
       queue_durations_by_times: @contacts_service.queue_durations_by_times,
-      correlation_of_average_queue_length_and_missed_calls: @contacts_service.correlation_of_average_queue_length_and_missed_calls
+      missed_calls_by_hour: @contacts_service.missed_calls_by_hour
     }
   end
 end
