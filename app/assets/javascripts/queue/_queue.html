@@ -18,7 +18,7 @@
         <!-- Show first five in queue -->
         <div ng-repeat="queuer in queue.queue | limitTo: 5" class="queuer card">
             <span class="queuer-index">{{ $index + 1 }}.</span>
-            <oc-time dateobj="queuer.created_at" class="queuer-time"></oc-time>
+            <oc-time seconds="queuer.time_in_queue" class="queuer-time"></oc-time>
             <span class="queuer-flag queuer-flag-{{ queuer.language }}"></span>
         </div>
         <div ng-if="queue.queue.length > 5" class="plus-5">&#9660</div>
@@ -27,12 +27,12 @@
         <div class="queue-stats card">            
             <table class="queue-stats-table">
                 <tr>
-                    <td class="percentage">{{ queue.stats.answered_percentage }}%</td>
+                    <td class="percentage">{{queue.stats.answered_percentage}}%</td>
                 </tr>
                 <tr>
                     <th>Puhelut:</th>
-                    <td>{{ queue.stats.answered_calls }} / 
-                        {{ queue.stats.answered_calls + queue.stats.missed_calls }}</td>
+                    <td>{{queue.stats.answered_calls}} / 
+                        {{queue.stats.answered_calls + queue.stats.missed_calls}}</td>
                 </tr>
                 <tr>
                     <th>Puheluiden ka:</th>
