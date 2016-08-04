@@ -20,6 +20,8 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     var vm = this;
     vm.api = {};
 
+    vm.otherSettings = [];
+
     vm.options = {
       chart: {
         type: 'linePlusBarChart',
