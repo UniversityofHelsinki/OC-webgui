@@ -165,8 +165,8 @@ describe('queue', function () {
     });
 
     it('should contain testtest', function () {
-      expect(rows.get(5).element(by.tagName('th')).getText()).toBe('testi:');
-      expect(rows.get(5).element(by.tagName('td')).getText()).toBe('91');
+      expect(rows.get(5).element(by.tagName('th')).getText()).toBe('Palvelutaso:');
+      expect(rows.get(5).element(by.tagName('td')).getText()).toBe('91%');
     });
   });
 });
