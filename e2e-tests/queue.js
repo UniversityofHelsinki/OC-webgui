@@ -114,8 +114,7 @@ describe('queue', function () {
               ],
               average_queue_duration_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-              ],
-              test: 'jjju'
+              ]
             });
           });
       });
@@ -125,7 +124,7 @@ describe('queue', function () {
     });
 
     it('should contain 5 rows', function () {
-      expect(rows.count()).toBe(6);
+      expect(rows.count()).toBe(5);
     });
 
     it('should contain answered calls', function () {
@@ -151,10 +150,5 @@ describe('queue', function () {
       expect(rows.get(4).element(by.tagName('th')).getText()).toBe('Jonotusten ka:');
       expect(rows.get(4).element(by.tagName('td')).getText()).toBe('01:40');
     });    
-
-    it('should contain test', function () {
-      expect(rows.get(5).element(by.tagName('th')).getText()).toBe('testi:');
-      expect(rows.get(5).element(by.tagName('td')).getText()).toBe('jjju');
-    });
   });
 });
