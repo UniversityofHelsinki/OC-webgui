@@ -67,7 +67,7 @@ class ContactsService
 
     answered_in_time = answered_contacts.pluck(:arrived, :answered)
                                         .map { |i| i[1] - i[0] }
-                                        .map { |e| e if e <= time_limit }
+                                        .select { |e| e if e <= time_limit }
                                         .compact
                                         .count
 
