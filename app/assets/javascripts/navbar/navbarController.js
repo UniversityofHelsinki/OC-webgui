@@ -24,6 +24,6 @@ angular.module('ocWebGui.navbar', ['ui.router', 'ocWebGui.login', 'FBAngular'])
     });
 
     vm.openPersonalView = function () {
-      window.open('#/personal', 'Oma näkymä', 'height=300, width=225, menubar=no, toolbar=no, location=no, personalbar=no, status=no');
+      window.open('#/personal', 'Oma näkymä', 'height=300, width=225, menubar=no, toolbar=no, location=no, personalbar=no, status=no, scrollbars=yes');
     };
   });
