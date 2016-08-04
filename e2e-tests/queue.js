@@ -161,6 +161,11 @@ describe('queue', function () {
     it('should contain average queue waiting duration', function () {
       expect(rows.get(4).element(by.tagName('th')).getText()).toBe('Jonotusten ka:');
       expect(rows.get(4).element(by.tagName('td')).getText()).toBe('01:40');
-    });    
+    });
+
+    it('should contain testtest', function () {
+      expect(rows.get(5).element(by.tagName('th')).getText()).toBe('testi:');
+      expect(rows.get(5).element(by.tagName('td')).getText()).toBe('jjj');
+    });
   });
 });
