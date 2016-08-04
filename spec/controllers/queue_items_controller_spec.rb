@@ -6,41 +6,47 @@ require Rails.root.to_s + '/app/services/backend_service.rb'
 RSpec.describe QueueItemsController, type: :controller do
   render_views
 
-  time = Time.parse('2016-07-11T10:30:46.000Z')
-
-  it 'queue json should work' do
-    item1 = { "created_at"=>anything,
-              "team"=>"Team A",
-              "language"=>"English"
-            }
-
-    item2 = { "created_at"=>anything,
-              "team"=>"Team B",
-              "language"=>"Finnish"
-            }
-
-    Team.create(id: 1, name: "Team A")
-    Team.create(id: 2, name: "Team B")
-    Service.create(id: 136, name: "A", team_id: 1, language: "English")
-    Service.create(id: 133, name: "B", team_id: 2, language: "Finnish")
-
-    QueueItem.create(service_id: 136, created_at: time - 20.seconds, open: true)
-    QueueItem.create(service_id: 133, created_at: time - 11.seconds, open: true)
-
-    get :index, format: :json
-    queueitems = JSON.parse(response.body)
-
-    expect(queueitems).to include(item1)
-    expect(queueitems).to include(item2)
+  before(:each) do
+    Rails.cache.clear
   end
 
-  it 'queue json should work with empty queue' do
-    expected = []
+  context 'has queue' do
+    before(:each) do
+      Rails.cache.write('queue_items', [
+        {
+          time_in_queue: 20,
+          team: 'Team A',
+          language: 'English'
+        },
+        {
+          time_in_queue: 11,
+          team: 'Team B',
+          language: 'Finnish'
+        }
+      ])
+    end
 
-    get :index, format: :json
-    queueitems = JSON.parse(response.body)
+    it 'returns queue items' do
+      get :index, format: :json
+      expect(JSON.parse(response.body)).to eq([
+        {
+          'time_in_queue' => 20,
+          'team' => 'Team A',
+          'language' => 'English'
+        },
+        {
+          'time_in_queue' => 11,
+          'team' => 'Team B',
+          'language' => 'Finnish'
+        }
+      ])
+    end
+  end
 
-    expect(queueitems).to eq(expected)
+  context 'no queue' do
+    it 'returns empty array' do
+      get :index, format: :json
+      expect(JSON.parse(response.body)).to be_empty
+    end
   end
 end
-
