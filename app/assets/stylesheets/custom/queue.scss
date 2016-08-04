@@ -107,17 +107,24 @@
 .queue-stats-table {
   border-spacing: 0 1em;
   font-size: 3em;
+  padding: 0.5em;
+
+td {
+  text-align: right;
+}
+
+th {
+  text-align: left;
+}
 
   .stats_td {
     width: 50%;
     font-size: 150%;
-    text-align: right;
   }
 
   .stats_th {
     font-size: 150%;
     font-weight: normal;
-    text-align: left;
   }
 }
 
@@ -132,12 +139,10 @@
 }
 
 .answer {
-  text-align: left;
   font-size: 1.75em;
   border-bottom: 2px solid #ccc;
 }
 
 .percentage {
-  text-align: right;
   font-weight: bold;
 }
