@@ -20,8 +20,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     var vm = this;
     vm.api = {};
 
-    vm.otherSettings = [];
-
     vm.options = {
       chart: {
         type: 'linePlusBarChart',
@@ -92,11 +90,11 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
 
         var callsValues = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18 });
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
 
         var queueValues = data.average_queue_duration_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18 });
+          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
 
         vm.stats = data;
         vm.data[0].values = callsValues;
