@@ -7,7 +7,7 @@ class SessionController < ApplicationController
       return render json: { error: 'wrong password' }, status: :unauthorized
     end
     session[:user_id] = user.id
-    render json: user
+    render json: user.attributes.slice('id', 'agent_id', 'username', 'is_admin')
   end
 
   def destroy

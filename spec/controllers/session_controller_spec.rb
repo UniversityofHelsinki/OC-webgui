@@ -28,8 +28,12 @@ RSpec.describe SessionController, type: :controller do
     it 'succeeds with correct password' do
       post :create, { 'username' => 'olemas', 'password' => 'sala1nen' }, format: :json
       expect(response).to be_successful
-      data = JSON.parse(response.body)
-      expect(data['username']).to eq('olemas')
+      expect(JSON.parse(response.body)).to eq({
+        'id' => 1,
+        'agent_id' => nil,
+        'username' => 'olemas',
+        'is_admin' => false
+      })
       expect(session['user_id']).to eq(1)
       expect(subject.current_user).to eq(@valid_user)
     end
