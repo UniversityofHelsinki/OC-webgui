@@ -9,7 +9,7 @@ RSpec.describe SettingsController, type: :controller do
                     background: '#ffffff',
                     font: '#000000'
                   }, others: {
-                    service_height: 333,
+                    sla: 333,
                     working_day_start: 10,
                     working_day_end: 14
                   }
@@ -29,7 +29,7 @@ RSpec.describe SettingsController, type: :controller do
               'busy' => '#ff3333'
             }
           }, 'others' => {
-            'service_height' => 300,
+            'sla' => 300,
             'working_day_start' => 8,
             'working_day_end' => 18
           }
@@ -51,7 +51,7 @@ RSpec.describe SettingsController, type: :controller do
               'call' => '#ffff4d',
               'busy' => '#ff3333'
             }
-          }, "others"=>{"service_height"=>300, "working_day_start"=>8, "working_day_end"=>18}
+          }, "others"=>{"sla"=>300, "working_day_start"=>8, "working_day_end"=>18}
         }
         session['user_id'] = 1
         get :get, format: :json
@@ -72,7 +72,7 @@ RSpec.describe SettingsController, type: :controller do
               'busy' => '#ff3333'
             }
           }, 'others' => {
-            'service_height' => 333,
+            'sla' => 333,
             'working_day_start' => 10,
             'working_day_end' => 14
           }
@@ -112,7 +112,7 @@ RSpec.describe SettingsController, type: :controller do
               'call' => '#ffff4d',
               'busy' => '#ff3333'
             }
-          }, "others"=>{"service_height"=>300, "working_day_start"=>8, "working_day_end"=>18}
+          }, "others"=>{"sla"=>300, "working_day_start"=>8, "working_day_end"=>18}
         }
 
         session['user_id'] = 2
@@ -138,7 +138,7 @@ RSpec.describe SettingsController, type: :controller do
           'colors' => {
             'background' => '#ffffff',
             'font' => '#000000'
-          }, "others"=>{"service_height"=>333, "working_day_start"=>10, "working_day_end"=>14}
+          }, "others"=>{"sla"=>333, "working_day_start"=>10, "working_day_end"=>14}
         }
 
         error_response = {

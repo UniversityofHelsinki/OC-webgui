@@ -31,7 +31,7 @@ class ContactsController < ApplicationController
       answered_percentage: @contacts_service.answered_percentage,
       average_queue_duration: @contacts_service.average_queue_duration,
       average_queue_duration_by_hour: @contacts_service.average_queue_duration_by_hour,
-      service_level_agreement: @contacts_service.service_level_agreement_percentage(settings['others']['service_height'])
+      service_level_agreement: @contacts_service.service_level_agreement_percentage(settings['others']['sla'])
     }
   end
 end

@@ -24,7 +24,7 @@ describe('queue', function () {
                   busy: "#ff3333"
                 }
               }, others: {
-                service_height: 300,
+                sla: 300,
                 working_day_start: 8,
                 working_day_end: 18
               }
@@ -84,7 +84,7 @@ describe('queue', function () {
                   busy: "#ff3333"
                 }
               }, others: {
-                service_height: 300,
+                sla: 300,
                 working_day_start: 8,
                 working_day_end: 18
               }
@@ -126,7 +126,7 @@ describe('queue', function () {
                   busy: "#ff3333"
                 }
               }, others: {
-                service_height: 300,
+                sla: 300,
                 working_day_start: 8,
                 working_day_end: 18
               }
@@ -172,7 +172,7 @@ describe('queue', function () {
                   busy: "#ff3333"
                 }
               }, others: {
-                service_height: 300,
+                sla: 300,
                 working_day_start: 8,
                 working_day_end: 18
               }
