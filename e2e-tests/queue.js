@@ -123,7 +123,8 @@ describe('queue', function () {
               ],
               average_queue_duration_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-              ]
+              ],
+              service_level_agreement: 91
             });
             $httpBackend.whenGET('settings.json').respond([
 {"colors":{"background":"#87aade","font":"#333333","statuses":{"free":"#37c837","call":"#ffff4d","busy":"#ff3333"}},"others":{"service_height":"300","working_day_start":"8","working_day_end":"18"}}
@@ -165,7 +166,7 @@ describe('queue', function () {
 
     it('should contain testtest', function () {
       expect(rows.get(5).element(by.tagName('th')).getText()).toBe('testi:');
-      expect(rows.get(5).element(by.tagName('td')).getText()).toBe('jjj');
+      expect(rows.get(5).element(by.tagName('td')).getText()).toBe('91');
     });
   });
 });
