@@ -115,7 +115,8 @@ describe('queue', function () {
               ],
               average_queue_duration_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-              ]
+              ],
+              service_level_agreement: 90
             });
           });
       });
@@ -124,8 +125,8 @@ describe('queue', function () {
       rows = statsTable.all(by.tagName('tr'));
     });
 
-    it('should contain 5 rows', function () {
-      expect(rows.count()).toBe(5);
+    it('should contain 6 rows', function () {
+      expect(rows.count()).toBe(6);
     });
 
     it('should contain answered calls', function () {
@@ -150,6 +151,11 @@ describe('queue', function () {
     it('should contain average queue waiting duration', function () {
       expect(rows.get(4).element(by.tagName('th')).getText()).toBe('Jonotusten ka:');
       expect(rows.get(4).element(by.tagName('td')).getText()).toBe('01:40');
-    });    
+    });
+
+    it('should contain service level percentage', function () {
+      expect(rows.get(5).element(by.tagName('th')).getText()).toBe('Palvelutaso:');
+      expect(rows.get(5).element(by.tagName('td')).getText()).toBe('90%');
+    });
   });
 });
