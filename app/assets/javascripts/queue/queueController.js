@@ -88,8 +88,8 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
 
-        var dayStart = vm.otherSettings.working_day_start
-        var dayEnd = vm.otherSettings.working_day_end
+        var dayStart = vm.otherSettings.working_day_start;
+        var dayEnd = vm.otherSettings.working_day_end;
 
         var callsValues = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
