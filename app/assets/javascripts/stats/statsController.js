@@ -15,7 +15,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         }
       });
   })
-  .controller('StatsController', function ($interval, $scope, $http, Settings, Chart) {
+  .controller('StatsController', function ($q, $interval, $scope, $http, Settings, Chart) {
     var vm = this;
     vm.title = 'Tilastot';
 
