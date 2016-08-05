@@ -104,6 +104,7 @@ RSpec.describe ContactsService, type: :service do
 
     it "Returns correct service level agreement percentage"do
       expect(@contacts_service.service_level_agreement_percentage(300)).to eq(50)
+    end
 
     it "Returns correct queue durations by times" do
       expect(@contacts_service.queue_durations_by_times).to eq([['2016-07-18 08:00:00.000000000 +0000', 60.0], ['2016-07-18 11:00:00.000000000 +0000', 240.0], ['2016-07-18 12:00:00.000000000 +0000', 120.0]])
