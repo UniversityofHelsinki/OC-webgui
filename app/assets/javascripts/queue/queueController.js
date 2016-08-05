@@ -16,7 +16,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         navbarOverlay: true
       });
   })
-  .controller('QueueController', function ($interval, $scope, Queue, $http, Settings, Chart) {
+  .controller('QueueController', function ($q, $interval, $scope, Queue, $http, Settings, Chart) {
     var vm = this;
     vm.api = {};
 
@@ -33,13 +33,13 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     }];
 
     function fetchContactStats() {
-      Settings.getOthers().then(function (others) {
-        vm.otherSettings = others;
-      });
+      return $q.all({
+        otherSettings: Settings.getOthers(),
+        response: $http.get('contacts/stats.json')
+      }).then(function (values) {
+        vm.otherSettings = values.otherSettings;
 
-      $http.get('contacts/stats.json').then(function (response) {
-        var data = response.data;
-
+        var data = values.response.data;
         var callsValues = Chart.mapAndFilter(data.calls_by_hour, vm.otherSettings);
         var queueValues = Chart.mapAndFilter(data.average_queue_duration_by_hour, vm.otherSettings);
 
