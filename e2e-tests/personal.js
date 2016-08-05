@@ -4,6 +4,7 @@ describe('personal', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
         .run(function ($httpBackend) {
           var baseTime = new Date(2013, 9, 23, 12, 0).getTime();
+
           $httpBackend.whenGET('agent_statuses.json').respond([
             {
               id: 1234,
@@ -42,12 +43,14 @@ describe('personal', function () {
               }
             }
           ]);
+
           $httpBackend.whenGET('teams.json').respond([
             {
               name: 'Helpdesk',
               filter: true
             }
           ]);
+
           $httpBackend.whenGET('states.json').respond([
             {
               name: 'Vapaa',
@@ -62,6 +65,7 @@ describe('personal', function () {
               filter: true
             }
           ]);
+
           $httpBackend.whenGET('queue.json').respond([
             {
               created_at: new Date(baseTime - (3 * 60 + 22) * 1000),
@@ -69,13 +73,13 @@ describe('personal', function () {
               language: 'Finnish'
             }
           ]);
-          $httpBackend.whenGET('personal.json').respond(
-            {
-              answered_calls: 7,
-              average_call_duration: 476,
-              average_after_call_duration: 182
-            }
-          );
+
+          $httpBackend.whenGET('personal.json').respond({
+            answered_calls: 7,
+            average_call_duration: 476,
+            average_after_call_duration: 182
+          });
+
           $httpBackend.whenGET('settings.json').respond({
             colors: {
               background: '#87aade',
@@ -87,43 +91,39 @@ describe('personal', function () {
               }
             }
           });
+
           $httpBackend.whenGET('user.json').respond({
             agent_id: 1234
           });
         });
     });
-    browser.addMockModule('ocWebGui.shared.time.service', function () {
-      angular.module('ocWebGui.shared.time.service', [])
-        .factory('CustomDate', function () {
-          return {
-            getDate: function () {
-              return new Date(2013, 9, 23, 12, 0);
-            }
-          };
-        });
-    });
+
     browser.get('#/personal');
   });
 
   it('should display queue length', function () {
     expect(element(by.className('queue-length')).getText()).toBe('1');
   });
+
   it('should display own call stats', function () {
     expect(element(by.id('answered-calls')).getText()).toBe('7');
     expect(element(by.id('avg-call-duration')).getText()).toBe('07:56');
     expect(element(by.id('avg-after-call')).getText()).toBe('03:02');
   });
+
   it('should display own status color', function () {
     var el = element(by.id('own-status-color'));
     expect(el.getAttribute('class')).toBe('agent-status-color agent-status-color-free');
     expect(el.getCssValue('background-color')).toBe('rgba(55, 200, 55, 1)');
   });
+
   it('should display active agents except the current with status colors', function () {
     var agents = element.all(by.id('agent-name'));
     expect(agents.count()).toBe(2);
     expect(agents.get(0).getText()).toBe('Aallotar K');
     expect(agents.get(1).getText()).toBe('Tuomas A');
   });
+
   it('should display status color for each agent in agents list', function () {
     var agents = element.all(by.id('agent-status-color'));
 

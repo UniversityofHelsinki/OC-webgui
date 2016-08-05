@@ -19,19 +19,18 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
     vm.trimName = TrimName.trim;
 
     function fetchData() {
-      $q.all({ agents: Agents.query(), userData: User.getUserData() }).then(function (values) {
+      $q.all({
+        agents: Agents.query().$promise,
+        userData: User.getUserData()
+      }).then(function (values) {
         vm.agents = values.agents;
-        var myAgent = values.agents.find(function (agent) {
+        vm.currentAgent = vm.agents.find(function (agent) {
           return values.userData.agent_id === agent.id;
         });
-
-        if (myAgent === undefined) {
-          vm.myColor = 'grey';
-          vm.myStatus = 'Offline';
-        } else {
-          vm.myColor = myAgent.color;
-          vm.myStatus = myAgent.status;
-          values.agents.splice(values.agents.indexOf(myAgent), 1);
+        if (vm.currentAgent) {
+          vm.agents = vm.agents.filter(function (agent) {
+            return agent !== vm.currentAgent;
+          });
         }
       });
 

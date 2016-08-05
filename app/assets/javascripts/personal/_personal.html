@@ -1,31 +1,34 @@
-    <div class="personal-card card">
-        <div class="queue-length">
-             {{ personal.queue.length }}
-        </div>
-        <table class="personal-statistics">
-            <tr>
-                <th>Puheluni:</th>
-                <td id="answered-calls">{{ personal.data.answered_calls }}</td>
-            </tr>
-            <tr>
-                <th>Puheluiden ka:</th>
-                <td id="avg-call-duration"><oc-time seconds="personal.data.average_call_duration"></oc-time></td>
-            </tr>
-            <tr>
-                <th>Jälkikirjauksen ka:</th>
-                <td id="avg-after-call"><oc-time seconds="personal.data.average_after_call_duration"></oc-time></td>
-            </tr>
-        </table>
-        <div class="agent-statuses">
-            <div class="own-status">
-                <div id="own-status-color" class="agent-status-color agent-status-color-{{personal.myColor}}" oc-color="statuses.{{ personal.myColor }}"></div> {{personal.myStatus}}
-
-            </div>
-            <ul class="agent-list">
-                <li ng-repeat="agent in personal.agents track by agent.id">
-                    <span id="agent-status-color" class="color-square agent-status-color-{{agent.color}}" oc-color="statuses.{{ agent.color }}"></span>
-                    <span id="agent-name">{{ personal.trimName(agent.first_name, agent.last_name) }}</span>
-                </li>
-            </ul>
-        </div>
+<div class="personal-card">
+    <div class="queue-length">
+        {{ personal.queue.length }}
     </div>
+    <table class="personal-statistics">
+        <tr>
+            <th>Puheluni:</th>
+            <td id="answered-calls">{{ personal.data.answered_calls }}</td>
+        </tr>
+        <tr>
+            <th>Puheluiden ka:</th>
+            <td id="avg-call-duration"><oc-time seconds="personal.data.average_call_duration"></oc-time></td>
+        </tr>
+        <tr>
+            <th>Jälkikirjauksen ka:</th>
+            <td id="avg-after-call"><oc-time seconds="personal.data.average_after_call_duration"></oc-time></td>
+        </tr>
+    </table>
+    <div class="agent-statuses">
+        <div class="own-status">
+            <div ng-if="personal.currentAgent" id="own-status-color"
+                class="agent-status-color agent-status-color-{{ personal.currentAgent.color }}"
+                oc-color="statuses.{{ personal.currentAgent.color }}"></div>
+            <div ng-if="!personal.currentAgent" id="own-status-color" class="agent-status-color agent-status-offline"></div>
+            {{ personal.currentAgent ? personal.currentAgent.status : 'Offline' }}
+        </div>
+        <ul class="agent-list">
+            <li ng-repeat="agent in personal.agents track by agent.id">
+                <span id="agent-status-color" class="color-square agent-status-color-{{agent.color}}" oc-color="statuses.{{ agent.color }}"></span>
+                <span id="agent-name">{{ personal.trimName(agent.first_name, agent.last_name) }}</span>
+            </li>
+        </ul>
+    </div>
+</div>
