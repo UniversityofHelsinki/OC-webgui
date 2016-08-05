@@ -71,9 +71,14 @@ class ContactsService
     (answered_in_time.to_f / all * 100).round(1)
   end
 
+def seconds_since_midnight(time)
+  time.hour * 3600 + time.min * 60 + time.sec
+end
+
   def queue_durations_by_times
+    gmt_offset = Time.now.getlocal.gmt_offset
     @contacts.pluck(:arrived, :forwarded_to_agent)
-             .map { |d| [d[0], d[1] - d[0]] unless d[1].nil? }
+             .map { |d| [seconds_since_midnight(d[0]) + gmt_offset, d[1] - d[0]] unless d[1].nil? }
              .compact
              .select { |s| !s.nil? && s[1] != 0.0 }
              .sort
