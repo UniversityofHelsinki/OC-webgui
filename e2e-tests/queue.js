@@ -14,7 +14,7 @@ describe('queue', function () {
               { team: 'Helpdesk', language: 'Finnish', time_in_queue: 71 },
               { team: 'Helpdesk', language: 'Swedish', time_in_queue: 34 }
             ]);
-            $httpBackend.whenGET('settings.json').respond([{
+            $httpBackend.whenGET('settings.json').respond({
               colors: {
                 background: "#87aade",
                 font: "#333333",
@@ -28,7 +28,7 @@ describe('queue', function () {
                 working_day_start: 8,
                 working_day_end: 18
               }
-            }]);
+            });
           });
       });
 
@@ -74,7 +74,7 @@ describe('queue', function () {
               { team: 'Helpdesk', language: 'Finnish' },
               { team: 'Helpdesk', language: 'Finnish' }
             ]);
-            $httpBackend.whenGET('settings.json').respond([{
+            $httpBackend.whenGET('settings.json').respond({
               colors: {
                 background: "#87aade",
                 font: "#333333",
@@ -88,7 +88,7 @@ describe('queue', function () {
                 working_day_start: 8,
                 working_day_end: 18
               }
-            }]);
+            });
           });
       });
       browser.get('#/queue');
@@ -116,7 +116,7 @@ describe('queue', function () {
               { team: 'Helpdesk', language: 'Finnish' },
               { team: 'Helpdesk', language: 'Finnish' }
             ]);
-            $httpBackend.whenGET('settings.json').respond([{
+            $httpBackend.whenGET('settings.json').respond({
               colors: {
                 background: "#87aade",
                 font: "#333333",
@@ -130,7 +130,7 @@ describe('queue', function () {
                 working_day_start: 8,
                 working_day_end: 18
               }
-            }]);
+            });
           });
       });
       browser.get('#/queue');
@@ -162,7 +162,7 @@ describe('queue', function () {
               ],
               service_level_agreement: 91
             });
-            $httpBackend.whenGET('settings.json').respond([{
+            $httpBackend.whenGET('settings.json').respond({
               colors: {
                 background: "#87aade",
                 font: "#333333",
@@ -176,7 +176,7 @@ describe('queue', function () {
                 working_day_start: 8,
                 working_day_end: 18
               }
-            }]);
+            });
           });
       });
       browser.get('#/queue');
@@ -193,7 +193,6 @@ describe('queue', function () {
     });
 
     it('should contain calls (answered / all)', function() {
-      browser.pause();
       expect(rows.get(1).element(by.tagName('th')).getText()).toBe('Puhelut:');
       expect(rows.get(1).element(by.tagName('td')).getText()).toBe('11 / 11');
     });

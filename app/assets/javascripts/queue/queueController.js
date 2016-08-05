@@ -88,13 +88,16 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
 
+        var dayStart = vm.otherSettings.beginning_of_day
+        var dayEnd = vm.otherSettings.end_of_day
+
         var callsValues = data.calls_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+          .filter(function (item) { return item.hour >= dayStart && item.hour <= dayEnd; });
 
         var queueValues = data.average_queue_duration_by_hour
           .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+          .filter(function (item) { return item.hour >= dayStart && item.hour <= dayEnd; });
 
         vm.stats = data;
         vm.data[0].values = callsValues;
