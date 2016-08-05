@@ -95,7 +95,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         if (sla <= queueMax) {
           var slaLine = data.calls_by_hour
             .map(function (calls, hour) { return { hour: hour, calls: sla }; })
-            .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+            .filter(function (item) { return item.hour >= vm.otherSettings.working_day_start && item.hour <= vm.otherSettings.working_day_end; });
           vm.multiChartData[3].values = slaLine;
         }
 
