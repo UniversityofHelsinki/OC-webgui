@@ -19,8 +19,8 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
     var vm = this;
     vm.title = 'Tilastot';
 
-    vm.api = {};
-    vm.options = {
+    vm.scatterApi = {};
+    vm.scatterOptions = {
       chart: {
         type: 'scatterChart',
         width: 700,
@@ -53,13 +53,13 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
       }
     };
 
-    vm.data = [{
+    vm.scatterData = [{
       'key': 'Jonotusaika',
       'values': []
     }];
 
-    vm.api2 = {};
-    vm.options2 = {
+    vm.multiChartApi = {};
+    vm.multiChartOptions = {
       chart: {
         type: 'multiChart',
         width: 700,
@@ -91,7 +91,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
       }
     };
 
-    vm.data2 = [{
+    vm.multiChartData = [{
       'key': 'Henkilöitä',
       'values': [],
       'type': 'line',
@@ -126,51 +126,50 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         var data = response.data;
         var beginningOfDay = new Date();
         beginningOfDay.setDate(beginningOfDay.getDate());
-        beginningOfDay.setHours(8, 0, 0);
-
+        beginningOfDay.setHours(vm.otherSettings.working_day_start, 0, 0);
         var endOfDay = new Date();
         endOfDay.setDate(endOfDay.getDate());
-        endOfDay.setHours(18, 0, 0);
+        endOfDay.setHours(vm.otherSettings.working_day_end, 0, 0);
 
         var queueDurationsByTimes = data.queue_durations_by_times
           .map(function (j) { return { hour: new Date(j[0]).getTime(), calls: j[1] }; });
-        vm.data[0].values = queueDurationsByTimes;
+        vm.scatterData[0].values = queueDurationsByTimes;
 
-        vm.options.chart.xAxis.tickValues = d3.time.hour.range(beginningOfDay, endOfDay, 1)
+        vm.scatterOptions.chart.xAxis.tickValues = d3.time.hour.range(beginningOfDay, endOfDay, 1)
           .map(function (f) { return f.getTime(); });
-        vm.api.refresh();
+        vm.scatterApi.refresh();
 
         var callsByHours = ChartJuttu.mapAndFilter(data.calls_by_hour, vm.otherSettings);
         var missedCallsByHours = ChartJuttu.mapAndFilter(data.missed_calls_by_hour, vm.otherSettings);
         var averageQueueDurationByHour = ChartJuttu.mapAndFilter(data.average_queue_duration_by_hour, vm.otherSettings);
 
-        vm.data2[0].values = callsByHours;
-        vm.data2[1].values = missedCallsByHours;
-        vm.data2[2].values = averageQueueDurationByHour;
+        vm.multiChartData[0].values = callsByHours;
+        vm.multiChartData[1].values = missedCallsByHours;
+        vm.multiChartData[2].values = averageQueueDurationByHour;
 
         // use 0 because all calls is always same or bigger than missed calls
-        var callMax = ChartJuttu.getMaxValPlusOne(vm.data2[0]);
+        var callMax = ChartJuttu.getMaxValPlusOne(vm.multiChartData[0]);
         // Multiply by 1.05 so highest value is high enough that highest point in chart isn't hidden
-        var queueMax = ChartJuttu.getMaxValPlusOne(vm.data2[2]) * 1.05;
+        var queueMax = ChartJuttu.getMaxValPlusOne(vm.multiChartData[2]) * 1.05;
 
         var sla = 300;
         if (sla <= queueMax) {
           var slaLine = data.calls_by_hour
             .map(function (calls, hour) { return { hour: hour, calls: sla }; })
             .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
-          vm.data2[3].values = slaLine;
+          vm.multiChartData[3].values = slaLine;
         }
 
-        vm.options2.chart.yAxis1.yDomain = callMax;
-        vm.options2.chart.yAxis2.yDomain = queueMax;
-        var yAxis1OldTicks = vm.options2.chart.yAxis1.tickValues;
-        var yAxis2OldTicks = vm.options2.chart.yAxis2.tickValues;
+        vm.multiChartOptions.chart.yAxis1.yDomain = callMax;
+        vm.multiChartOptions.chart.yAxis2.yDomain = queueMax;
+        var yAxis1OldTicks = vm.multiChartOptions.chart.yAxis1.tickValues;
+        var yAxis2OldTicks = vm.multiChartOptions.chart.yAxis2.tickValues;
         var yAxis1NewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
         var yAxis2NewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
         if (!angular.equals(yAxis1OldTicks, yAxis1NewTicks) || !angular.equals(yAxis2OldTicks, yAxis2NewTicks)) {
-          vm.options2.chart.yAxis1.tickValues = yAxis1NewTicks;
-          vm.options2.chart.yAxis2.tickValues = yAxis2NewTicks;
-          vm.api2.refresh();
+          vm.multiChartOptions.chart.yAxis1.tickValues = yAxis1NewTicks;
+          vm.multiChartOptions.chart.yAxis2.tickValues = yAxis2NewTicks;
+          vm.multiChartApi.refresh();
         }
       });
     }
