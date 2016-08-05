@@ -3,7 +3,9 @@ angular.module('ocWebGui.navbar', ['ui.router', 'ocWebGui.login', 'FBAngular'])
     var vm = this;
 
     vm.isAuthenticated = User.isAuthenticated;
-    vm.username = User.getUsername;
+    User.getUsername().then(function (username) {
+      vm.username = username;
+    });
     vm.logout = User.logout;
 
     vm.isFullscreen = Fullscreen.isEnabled();
