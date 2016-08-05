@@ -11,6 +11,7 @@ angular.module('ocWebGui.shared.chartJuttu.service', [])
             bottom: 40,
             left: 70
           },
+          pointSize: 200,
           x: function (d) { return d.hour; },
           y: function (d) { return d.calls; },
           bars: {
@@ -54,6 +55,7 @@ angular.module('ocWebGui.shared.chartJuttu.service', [])
             bottom: 60,
             left: 90
           },
+          pointRange: [100, 100],
           color: d3.scale.category10().range(),
           showDistX: true,
           showDistY: true,
