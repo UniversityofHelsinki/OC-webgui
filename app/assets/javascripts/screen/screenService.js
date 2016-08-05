@@ -1,15 +1,16 @@
-angular.module('ocWebGui.screen.service', ['ngResource', 'ocWebGui.filterpanel'])
-  .factory('Agents', function ($resource, shared) {
-    var teams = shared.getTeams();
-    var states = shared.getStates();
-    return $resource('agent_statuses.json', {}, {
-      query: {
-        method: 'get',
-        isArray: true,
-        transformResponse: function (data) {
-          return angular.fromJson(data)
+angular.module('ocWebGui.screen.service', ['ngResource', 'ocWebGui.shared.filter'])
+  .factory('Agents', function ($q, $http, Filter) {
+    return {
+      query: function () {
+        return $q.all({
+          teams: Filter.getTeams(),
+          states: Filter.getStates(),
+          agents: $http.get('agent_statuses.json')
+        }).then(function (values) {
+          return values.agents.data
             .filter(function (agent) {
-              return teams[agent.team.name] && (states[agent.status] || (states.Muut && !(agent.status in states)));
+              return values.teams[agent.team.name] && (values.states[agent.status] ||
+                  (values.states.Muut && !(agent.status in values.states)));
             })
             .map(function (agent) {
               agent.created_at = new Date(agent.created_at);
@@ -29,7 +30,7 @@ angular.module('ocWebGui.screen.service', ['ngResource', 'ocWebGui.filterpanel']
 
               return agent;
             });
-        }
+        });
       }
-    });
+    };
   });
