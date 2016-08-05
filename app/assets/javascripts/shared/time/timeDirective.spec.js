@@ -18,7 +18,7 @@ describe('ocTime', function () {
             return (value < 10 ? '0' : '') + value;
           },
 
-          secondsToHoursMinutesSeconds function (currentSeconds) {
+          secondsToHoursMinutesSeconds: function (currentSeconds) {
             var seconds = currentSeconds % 60;
             var minutes = Math.floor(currentSeconds / 60);
 
