@@ -158,7 +158,11 @@ describe('screen', function () {
   it('should filter correctly', function () {
     browser.actions().mouseMove(element(by.className('navbar'))).perform();
     element(by.className('navbar')).element(by.linkText('Filtteröi')).click();
+
     element(by.name('state-Tauko')).click();
+    var notification = element(by.className('alert'));
+    expect(notification.getText()).toBe('Valintasi on tallennettu väliaikaisesti!');
+
     browser.actions().mouseMove(element(by.className('navbar'))).perform();
     element(by.className('navbar')).element(by.linkText('Statukset')).click();
     agentCards = element.all(by.className('agent-card'));

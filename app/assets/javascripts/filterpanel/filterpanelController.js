@@ -15,12 +15,28 @@ angular.module('ocWebGui.filterpanel', ['ui.router', 'ocWebGui.shared.filter'])
         }
       });
   })
-  .controller('FilterpanelController', function (Filter) {
+  .controller('FilterpanelController', function ($scope, $interval, Filter) {
     var vm = this;
+
+    var notificationInterval;
+    function clearMessage() {
+      vm.notification = '';
+    }
+    function showNotification(newValue, oldValue) {
+      if (oldValue === newValue) {
+        return;
+      }
+      $interval.cancel(notificationInterval);
+      vm.notification = 'Valintasi on tallennettu väliaikaisesti!';
+      notificationInterval = $interval(clearMessage, 2000, 1);
+    }
+
     Filter.getTeams().then(function (teams) {
       vm.teams = teams;
+      $scope.$watch('filterpanel.teams', showNotification, true);
     });
     Filter.getStates().then(function (states) {
       vm.states = states;
+      $scope.$watch('filterpanel.states', showNotification, true);
     });
   });
