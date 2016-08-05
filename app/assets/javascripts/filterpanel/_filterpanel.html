@@ -2,16 +2,18 @@
 <div class="col-md-8 foreground">
     <div class="col-md-6">
         <h2>Ryhmät</h2>
-        <label class="label-filter" ng-repeat="(team,enabled) in filterpanel.teams">
-            <input type="checkbox" id="{{team}}" ng-model="filterpanel.teams[team]" /> {{team}}
+        <label class="label-filter" ng-repeat="(team, enabled) in filterpanel.teams">
+            <input type="checkbox" name="team-{{ team }}" ng-model="filterpanel.teams[team]">
+            {{ team }}
         </label>
     </div>
         <div class="col-md-6">
             <h2>Tilat</h2>
-            <label class="label-filter" ng-repeat="(state,enabled) in filterpanel.states">
-                <input type="checkbox" id="{{state}}" ng-model="filterpanel.states[state]" /> {{state}}
+            <label class="label-filter" ng-repeat="(state, enabled) in filterpanel.states">
+                <input type="checkbox" name="state-{{ state }}" ng-model="filterpanel.states[state]">
+                {{ state }}
             </label>
-        </div>    
+        </div>
     </div>
 </div>
 <div class="col-md-2"></div>
