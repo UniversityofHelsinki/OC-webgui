@@ -57,12 +57,13 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
     }];
 
     function fetchContactStats() {
-      Settings.getOthers().then(function (others) {
-        vm.otherSettings = others;
-      });
+      return $q.all({
+        otherSettings: Settings.getOthers(),
+        response: $http.get('contacts/stats.json')
+      }).then(function (values) {
+        vm.otherSettings = values.otherSettings;
 
-      $http.get('contacts/stats.json').then(function (response) {
-        var data = response.data;
+        var data = values.response.data;
         var beginningOfDay = new Date();
         beginningOfDay.setDate(beginningOfDay.getDate());
         beginningOfDay.setHours(vm.otherSettings.working_day_start, 0, 0);
