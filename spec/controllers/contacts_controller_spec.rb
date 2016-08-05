@@ -10,7 +10,7 @@ RSpec.describe ContactsController, type: :controller do
       'answered_percentage' => 69,
       'average_queue_duration' => 28,
       'average_queue_duration_by_hour' => [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3],
-      'service_level_agreement' => 85
+      'service_level_agreement' => 85,
       'queue_durations_by_times' => [['2016-07-18 05:00:00.000000000 +0000', 60.0], ['2016-07-18 08:00:00.000000000 +0000', 240.0], ['2016-07-18 09:00:00.000000000 +0000', 120.0]],
       'missed_calls_by_hour' => [0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 11, 11, 11, 11, 11, 11, 11, 11]
     }

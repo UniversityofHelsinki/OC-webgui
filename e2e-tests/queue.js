@@ -160,7 +160,14 @@ describe('queue', function () {
               average_queue_duration_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ],
-              service_level_agreement: 91
+              service_level_agreement: 91,
+              queue_durations_by_times: [
+                ['2016-07-18 05:00:00.000000000 +0000', 60.0],
+                ['2016-07-18 08:00:00.000000000 +0000', 240.0],
+                ['2016-07-18 09:00:00.000000000 +0000', 120.0]],
+              missed_calls_by_hour: [
+                0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 11, 11, 11, 11, 11, 11, 11, 11
+              ]
             });
             $httpBackend.whenGET('settings.json').respond({
               colors: {
@@ -176,13 +183,6 @@ describe('queue', function () {
                 working_day_start: 8,
                 working_day_end: 18
               }
-              queue_durations_by_times: [
-                ['2016-07-18 05:00:00.000000000 +0000', 60.0],
-                ['2016-07-18 08:00:00.000000000 +0000', 240.0],
-                ['2016-07-18 09:00:00.000000000 +0000', 120.0]],
-              missed_calls_by_hour: [
-                0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 11, 11, 11, 11, 11, 11, 11, 11
-              ]
             });
           });
       });
