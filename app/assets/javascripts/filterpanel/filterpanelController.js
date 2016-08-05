@@ -1,4 +1,4 @@
-angular.module('ocWebGui.filterpanel', ['ui.router', 'ngResource'])
+angular.module('ocWebGui.filterpanel', ['ui.router', 'ocWebGui.shared.filter'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('filterpanel', {
@@ -15,40 +15,9 @@ angular.module('ocWebGui.filterpanel', ['ui.router', 'ngResource'])
         }
       });
   })
-  .controller('FilterpanelController', function FilterpanelController($scope, shared) {
+  .controller('FilterpanelController', function (Filter) {
     var vm = this;
 
-    vm.teams = shared.getTeams();
-    vm.states = shared.getStates();
-  })
-  .factory('shared', function ($resource) {
-    var teams = {};
-    var states = { 'Muut': true };
-
-    $resource('teams.json').query(function (data) {
-      data.forEach(function (team) {
-        teams[team.name] = team.filter;
-      });
-    });
-
-    $resource('states.json').query(function (data) {
-      data.forEach(function (state) {
-        states[state.name] = state.filter;
-      });
-    });
-
-    return {
-      getTeams: function () {
-        return teams;
-      },
-      setTeams: function (value) {
-        teams = value;
-      },
-      getStates: function () {
-        return states;
-      },
-      setStates: function (value) {
-        states = value;
-      }
-    };
+    vm.teams = Filter.getTeams();
+    vm.states = Filter.getStates();
   });
