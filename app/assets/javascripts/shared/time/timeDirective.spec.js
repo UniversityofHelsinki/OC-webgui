@@ -14,13 +14,13 @@ describe('ocTime', function () {
             return currentDate;
           },
 
-          pad2: function (value) {
-            return (value < 10 ? '0' : '') + value;
-          },
-
           secondsToHoursMinutesSeconds: function (currentSeconds) {
             var seconds = currentSeconds % 60;
             var minutes = Math.floor(currentSeconds / 60);
+
+            var pad2 = function (value) {
+              return (value < 10 ? '0' : '') + value;
+            };
 
             if (minutes >= 60) {
               minutes = Math.floor(currentSeconds / 60 % 60);
