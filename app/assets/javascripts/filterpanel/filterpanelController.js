@@ -17,7 +17,10 @@ angular.module('ocWebGui.filterpanel', ['ui.router', 'ocWebGui.shared.filter'])
   })
   .controller('FilterpanelController', function (Filter) {
     var vm = this;
-
-    vm.teams = Filter.getTeams();
-    vm.states = Filter.getStates();
+    Filter.getTeams().then(function (teams) {
+      vm.teams = teams;
+    });
+    Filter.getStates().then(function (states) {
+      vm.states = states;
+    });
   });

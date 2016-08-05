@@ -20,7 +20,7 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
 
     function fetchData() {
       $q.all({
-        agents: Agents.query().$promise,
+        agents: Agents.query(),
         userData: User.getUserData()
       }).then(function (values) {
         vm.agents = values.agents;
@@ -34,7 +34,7 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
         }
       });
 
-      Queue.query(function (queue) {
+      Queue.query().then(function (queue) {
         vm.queue = queue;
       });
 

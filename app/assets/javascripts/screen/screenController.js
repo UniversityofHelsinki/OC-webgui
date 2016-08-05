@@ -26,7 +26,7 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
     vm.number_of_columns = 0;
 
     function fetchData() {
-      Agents.query(function (agents) {
+      Agents.query().then(function (agents) {
         vm.agents = agents;
 
         vm.counts = agents.reduce(function (counts, agent) {
