@@ -62,6 +62,24 @@ class ContactsService
     result
   end
 
+  def queue_durations_by_times
+    @contacts.pluck(:arrived, :forwarded_to_agent)
+             .map { |d| [d[0], d[1] - d[0]] unless d[1].nil? }
+             .compact
+             .select { |s| !s.nil? && s[1] != 0.0 }
+             .sort
+  end
+
+  def missed_calls_by_hour
+    gmt_offset = Time.now.getlocal.gmt_offset
+    select = "EXTRACT(HOUR FROM contacts.arrived + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count"
+    data = missed_contacts.select(select).group('hour')
+
+    result = Array.new(24, 0)
+    data.each { |d| result[(d['hour'])] = d['count'] }
+    result
+  end
+
   private
 
   # Contacts that have been completely handled

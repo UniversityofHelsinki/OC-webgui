@@ -64,7 +64,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     vm.data = [{
       'key': 'Puheluja tunnissa',
       'bar': true,
-      'color': '#000000',
+      'color': '#888888',
       'values': []
     }, {
       'key': 'Keskim. jonotusaika',

@@ -97,5 +97,13 @@ RSpec.describe ContactsService, type: :service do
     it "Returns correct average after call duration" do
       expect(@contacts_service.average_after_call_duration).to eq(120)
     end
+
+    it "Returns correct queue durations by times" do
+      expect(@contacts_service.queue_durations_by_times).to eq([['2016-07-18 08:00:00.000000000 +0000', 60.0], ['2016-07-18 11:00:00.000000000 +0000', 240.0], ['2016-07-18 12:00:00.000000000 +0000', 120.0]])
+    end
+
+    it "Returns correct missed calls by hour" do
+      expect(@contacts_service.missed_calls_by_hour).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    end
   end
 end
