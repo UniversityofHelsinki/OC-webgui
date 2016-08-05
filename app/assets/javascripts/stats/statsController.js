@@ -74,11 +74,11 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         y: function (d) { return d.calls; },
         duration: 500,
         xAxis: {
-          axisLabel: 'Kellonaika',
+          axisLabel: 'Kellonaika'
         },
         yAxis1: {
           axisLabel: 'Jonottajat',
-          yDomani: [0, 10]
+          yDomain: [0, 10]
         },
         yAxis2: {
           axisLabel: 'Aikaa',
