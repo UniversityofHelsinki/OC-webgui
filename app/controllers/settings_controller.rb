@@ -40,13 +40,21 @@ class SettingsController < ApplicationController
     errors
   end
 
+  def check_others(hash, errors = {})
+    if hash['working_day_start'] >= hash['working_day_end']
+      errors['working_day_start'] = 'työpäivän alku ei voi olla työpäivän lopun jälkeen'
+    end
+    errors
+  end
+
   def update
     return render json: { error: 'not logged in' }, status: :unauthorized unless current_user
     new_settings = DEFAULT_SETTINGS.deep_merge(params.permit(
       colors: [:background, :font, statuses: [:free, :call, :busy]],
       others: [:sla, :working_day_start, :working_day_end]))
-    errors = check_colors(new_settings['colors'])
-    return render json: { colors: errors }, status: :bad_request unless errors.empty?
+    errors_colors = check_colors(new_settings['colors'])
+    errors_others = check_others(new_settings['others'])
+    return render json: { colors: errors_colors, others: errors_others }, status: :bad_request unless errors_colors.empty? && errors_others.empty?
     current_user.update(settings: new_settings)
     render json: new_settings
   end
