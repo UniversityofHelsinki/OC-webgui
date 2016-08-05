@@ -3,7 +3,9 @@ angular.module('ocWebGui.navbar', ['ui.router', 'ocWebGui.login', 'FBAngular'])
     var vm = this;
 
     vm.isAuthenticated = User.isAuthenticated;
-    vm.username = User.getUsername;
+    User.getUsername().then(function (username) {
+      vm.username = username;
+    });
     vm.logout = User.logout;
 
     vm.isFullscreen = Fullscreen.isEnabled();
@@ -22,6 +24,6 @@ angular.module('ocWebGui.navbar', ['ui.router', 'ocWebGui.login', 'FBAngular'])
     });
 
     vm.openPersonalView = function () {
-      window.open('#/personal', 'Oma näkymä', 'height=300, width=225, menubar=no, toolbar=no, location=no, personalbar=no, status=no');
+      window.open('#/personal', 'Oma näkymä', 'height=300, width=225, menubar=no, toolbar=no, location=no, personalbar=no, status=no, scrollbars=yes');
     };
   });

@@ -1,14 +1,10 @@
-.personal-bg {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: 2em;
-}
+@import "common-screen";
 
 .personal-card {
   padding: 1em;
   line-height: 1;
+  background-color: $card-bg;
+  min-height: 100vh;
 
   > * {
     width: 100%;
@@ -74,4 +70,9 @@
   .color-square {
     margin-right: 0.25em;
   }
+}
+
+.agent-status-offline {
+  background-color: black;
+  opacity: 0.25;
 }

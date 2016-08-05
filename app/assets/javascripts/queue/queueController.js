@@ -24,7 +24,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     vm.data = [{
       'key': 'Puheluja tunnissa',
       'bar': true,
-      'color': '#000000',
+      'color': '#888888',
       'values': []
     }, {
       'key': 'Keskim. jonotusaika',
@@ -61,7 +61,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     vm.date = new Date();
 
     function fetchData() {
-      Queue.query(function (queue) {
+      Queue.query().then(function (queue) {
         vm.queue = queue;
       });
       // Also update date/time

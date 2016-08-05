@@ -13,29 +13,28 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screen.service', 'oc
         navbarOverlay: true
       });
   })
-  .controller('PersonalController', function (TrimName, Agents, Queue, User, Personal, $interval, $scope) {
+  .controller('PersonalController', function ($q, TrimName, Agents, Queue, User, Personal, $interval, $scope) {
     var vm = this;
 
     vm.trimName = TrimName.trim;
 
     function fetchData() {
-      Agents.query(function (agents) {
-        vm.agents = agents;
-        var myAgent = agents.find(function (agent) {
-          return User.getUserData().agent_id === agent.id;
+      $q.all({
+        agents: Agents.query(),
+        userData: User.getUserData()
+      }).then(function (values) {
+        vm.agents = values.agents;
+        vm.currentAgent = vm.agents.find(function (agent) {
+          return values.userData.agent_id === agent.id;
         });
-
-        if (myAgent === undefined) {
-          vm.myColor = 'grey';
-          vm.myStatus = 'Offline';
-        } else {
-          vm.myColor = myAgent.color;
-          vm.myStatus = myAgent.status;
-          agents.splice(agents.indexOf(myAgent), 1);
+        if (vm.currentAgent) {
+          vm.agents = vm.agents.filter(function (agent) {
+            return agent !== vm.currentAgent;
+          });
         }
       });
 
-      Queue.query(function (queue) {
+      Queue.query().then(function (queue) {
         vm.queue = queue;
       });
 

@@ -1,16 +1,16 @@
-angular.module('ocWebGui.queue.service', ['ngResource', 'ocWebGui.filterpanel'])
-  .factory('Queue', function ($resource, shared) {
-    var teams = shared.getTeams();
-    return $resource('queue.json', {}, {
-      query: {
-        method: 'get',
-        isArray: true,
-        transformResponse: function (data) {
-          var queue = angular.fromJson(data);
-          return queue.filter(function (queuer) {
-            return teams[queuer.team];
-          });
-        }
+angular.module('ocWebGui.queue.service', ['ngResource', 'ocWebGui.shared.filter'])
+  .factory('Queue', function ($q, $http, Filter) {
+    return {
+      query: function () {
+        return $q.all({
+          teams: Filter.getTeams(),
+          queue: $http.get('queue.json')
+        }).then(function (values) {
+          return values.queue.data
+            .filter(function (queuer) {
+              return values.teams[queuer.team];
+            });
+        });
       }
-    });
+    };
   });
