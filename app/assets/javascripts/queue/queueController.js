@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.chartJuttu.service', 'nvd3'])
+angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.chart.service', 'nvd3'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('queue', {
@@ -16,11 +16,11 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         navbarOverlay: true
       });
   })
-  .controller('QueueController', function ($interval, $scope, Queue, $http, Settings, ChartJuttu) {
+  .controller('QueueController', function ($interval, $scope, Queue, $http, Settings, Chart) {
     var vm = this;
     vm.api = {};
 
-    vm.options = ChartJuttu.queueChart;
+    vm.options = Chart.queueChart;
     vm.data = [{
       'key': 'Puheluja tunnissa',
       'bar': true,
@@ -40,15 +40,15 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
 
-        var callsValues = ChartJuttu.mapAndFilter(data.calls_by_hour, vm.otherSettings);
-        var queueValues = ChartJuttu.mapAndFilter(data.average_queue_duration_by_hour, vm.otherSettings);
+        var callsValues = Chart.mapAndFilter(data.calls_by_hour, vm.otherSettings);
+        var queueValues = Chart.mapAndFilter(data.average_queue_duration_by_hour, vm.otherSettings);
 
         vm.stats = data;
         vm.data[0].values = callsValues;
         vm.data[1].values = queueValues;
-        var callMax = ChartJuttu.getMaxValPlusOne(vm.data[0]);
+        var callMax = Chart.getMaxValPlusOne(vm.data[0]);
         // Multiply by 1.05 so highest value is high enough that highest point in chart isn't hidden
-        var queueMax = ChartJuttu.getMaxValPlusOne(vm.data[1]) * 1.05;
+        var queueMax = Chart.getMaxValPlusOne(vm.data[1]) * 1.05;
         vm.options.chart.bars.yDomain[1] = callMax;
         vm.options.chart.lines.yDomain[1] = queueMax;
         vm.options.chart.y1Axis.tickValues = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];

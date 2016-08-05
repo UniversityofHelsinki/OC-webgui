@@ -1,5 +1,5 @@
-angular.module('ocWebGui.shared.chartJuttu.service', [])
-  .factory('ChartJuttu', function () {
+angular.module('ocWebGui.shared.chart.service', [])
+  .factory('Chart', function () {
     return {
       queueChart: {
         chart: {

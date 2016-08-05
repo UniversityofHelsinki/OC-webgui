@@ -15,12 +15,12 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         }
       });
   })
-  .controller('StatsController', function ($interval, $scope, $http, Settings, ChartJuttu) {
+  .controller('StatsController', function ($interval, $scope, $http, Settings, Chart) {
     var vm = this;
     vm.title = 'Tilastot';
 
     vm.scatterApi = {};
-    vm.scatterOptions = ChartJuttu.scatterOptions;
+    vm.scatterOptions = Chart.scatterOptions;
 
     vm.scatterData = [{
       'key': 'Jonotusaika',
@@ -28,7 +28,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
     }];
 
     vm.multiChartApi = {};
-    vm.multiChartOptions = ChartJuttu.multiChartOptions;
+    vm.multiChartOptions = Chart.multiChartOptions;
 
     vm.multiChartData = [{
       'key': 'Henkilöitä',
@@ -78,18 +78,18 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
           .map(function (f) { return f.getTime(); });
         vm.scatterApi.refresh();
 
-        var callsByHours = ChartJuttu.mapAndFilter(data.calls_by_hour, vm.otherSettings);
-        var missedCallsByHours = ChartJuttu.mapAndFilter(data.missed_calls_by_hour, vm.otherSettings);
-        var averageQueueDurationByHour = ChartJuttu.mapAndFilter(data.average_queue_duration_by_hour, vm.otherSettings);
+        var callsByHours = Chart.mapAndFilter(data.calls_by_hour, vm.otherSettings);
+        var missedCallsByHours = Chart.mapAndFilter(data.missed_calls_by_hour, vm.otherSettings);
+        var averageQueueDurationByHour = Chart.mapAndFilter(data.average_queue_duration_by_hour, vm.otherSettings);
 
         vm.multiChartData[0].values = callsByHours;
         vm.multiChartData[1].values = missedCallsByHours;
         vm.multiChartData[2].values = averageQueueDurationByHour;
 
         // use 0 because all calls is always same or bigger than missed calls
-        var callMax = ChartJuttu.getMaxValPlusOne(vm.multiChartData[0]);
+        var callMax = Chart.getMaxValPlusOne(vm.multiChartData[0]);
         // Multiply by 1.05 so highest value is high enough that highest point in chart isn't hidden
-        var queueMax = ChartJuttu.getMaxValPlusOne(vm.multiChartData[2]) * 1.05;
+        var queueMax = Chart.getMaxValPlusOne(vm.multiChartData[2]) * 1.05;
 
         var sla = 300;
         if (sla <= queueMax) {
