@@ -117,14 +117,6 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
       'color': '#ff0000'
     }];
 
-    function getMaxValPlusOne(i) {
-      var maxVal = d3.max(vm.data2[i].values, function (x) { return x.calls; });
-      if (maxVal == null) {
-        return 1;
-      }
-      return maxVal + 1;
-    }
-
     function fetchContactStats() {
       Settings.getOthers().then(function (others) {
         vm.otherSettings = others;
@@ -157,9 +149,9 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         vm.data2[2].values = averageQueueDurationByHour;
 
         // use 0 because all calls is always same or bigger than missed calls
-        var callMax = getMaxValPlusOne(0); 
+        var callMax = ChartJuttu.getMaxValPlusOne(vm.data2[0]);
         // Multiply by 1.05 so highest value is high enough that highest point in chart isn't hidden
-        var queueMax = getMaxValPlusOne(2) * 1.05;
+        var queueMax = ChartJuttu.getMaxValPlusOne(vm.data2[2]) * 1.05;
 
         var sla = 300;
         if (sla <= queueMax) {
