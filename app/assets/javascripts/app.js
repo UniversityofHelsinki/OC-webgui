@@ -10,6 +10,7 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'oc
     $rootScope.$on('settings:colors:update', function () {
       Settings.getColor('font').then(function (color) {
         $body.css('color', color);
+        $('.answer').css('border-bottom-color', "color"); //TODO: Testaa tämä osa koodista että homma toimii kunnolla!!!
       });
     });
 

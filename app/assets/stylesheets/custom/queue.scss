@@ -113,33 +113,28 @@
   border-spacing: 0 1em;
   font-size: 3em;
   padding: 0.5em;
-  $line-color: black;
   
 td {
   text-align: right;
-  color: $line-color;
 }
 
 th {
   text-align: left;
-  color: $line-color;
 }
 
   .stats_td {
     width: 50%;
     font-size: 150%;
-    color: $line-color;
   }
 
   .stats_th {
     font-size: 150%;
     font-weight: normal;
-    color: $line-color;
   }
   
   .answer {
   font-size: 1.75em;
-  border-bottom: 2px solid $line-color;
+  border-bottom: 2px solid;
   }
 
   .percentage {
