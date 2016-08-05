@@ -1,3 +1,4 @@
+require 'pp'
 # Calculates various statistics data based on Contact objects.
 class ContactsService
   def initialize(filter_by_model, start_time, end_time)
@@ -65,10 +66,8 @@ class ContactsService
   def service_level_agreement_percentage(time_limit)
     all = num_answered_calls + num_missed_calls
     return 100.0 if all == 0
-    answered_in_time = answered_contacts.pluck(:arrived, :answered)
-                                        .map { |i| i[1] - i[0] }
-                                        .select { |e| e if e <= time_limit }
-                                        .compact
+    answered_in_time = answered_contacts.select("EXTRACT(EPOCH FROM contacts.answered - contacts.arrived) AS duration")
+                                        .select { |c| c if c['duration'] < time_limit }
                                         .count
     (answered_in_time.to_f / all * 100).round(1)
   end

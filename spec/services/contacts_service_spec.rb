@@ -78,6 +78,10 @@ RSpec.describe ContactsService, type: :service do
     it "Returns correct average queue duration by hour" do
       expect(@contacts_service.average_queue_duration_by_hour).to eq([0, 0, 0, 0, 0, 0, 0, 0, 180, 0, 1200, 120, 120, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     end
+
+    it "Returns correct service level agreement percentage"do
+      expect(@contacts_service.service_level_agreement_percentage(300)).to eq(37.5)
+    end
   end
 
   context "When searching for stats by agent" do
@@ -99,7 +103,7 @@ RSpec.describe ContactsService, type: :service do
     end
 
     it "Returns correct service level agreement percentage"do
-      expect(@contacts_service.service_level_agreement_percentage(300)).to eq(75)
+      expect(@contacts_service.service_level_agreement_percentage(300)).to eq(50)
     end
   end
 end
