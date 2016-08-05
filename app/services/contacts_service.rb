@@ -48,7 +48,7 @@ class ContactsService
     data = answered_contacts.select(select).group('hour')
 
     result = Array.new(24, 0)
-    data.each { |d| result[(d['hour'])] = d['avg_duration'] }
+    data.each { |d| result[(d['hour'])] = d['avg_duration'].round }
     result
   end
 
