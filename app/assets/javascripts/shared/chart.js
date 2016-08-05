@@ -29,9 +29,9 @@ angular.module('ocWebGui.shared.chart.service', [])
             axisLabel: 'Kellonaika',
             showMaxMin: true
           },
-          y1Axis: {
+          yAxis1: {
           },
-          y2Axis: {
+          yAxis2: {
             tickFormat: function (seconds) {
               var formatTime = d3.time.format('%H:%M');
               return formatTime(new Date(1864, 7, 7, 0, seconds));
