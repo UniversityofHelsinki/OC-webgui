@@ -64,19 +64,11 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         vm.otherSettings = values.otherSettings;
 
         var data = values.response.data;
-        var beginningOfDay = new Date();
-        beginningOfDay.setDate(beginningOfDay.getDate());
-        beginningOfDay.setHours(vm.otherSettings.working_day_start, 0, 0);
-        var endOfDay = new Date();
-        endOfDay.setDate(endOfDay.getDate());
-        endOfDay.setHours(vm.otherSettings.working_day_end, 0, 0);
-
         var queueDurationsByTimes = data.queue_durations_by_times
-          .map(function (j) { return { hour: new Date(j[0]).getTime(), calls: j[1] }; });
+          .map(function (j) { return { hour: j[0], calls: j[1] }; });
         vm.scatterData[0].values = queueDurationsByTimes;
-
-        vm.scatterOptions.chart.xAxis.tickValues = d3.time.hour.range(beginningOfDay, endOfDay, 1)
-          .map(function (f) { return f.getTime(); });
+//        vm.scatterOptions.chart.xAxis.tickValues = d3.time.hour.range(beginningOfDay, endOfDay, 1)
+//          .map(function (f) { return f.getTime(); });
         vm.scatterApi.refresh();
 
         var callsByHours = Chart.mapAndFilter(data.calls_by_hour, vm.otherSettings);
