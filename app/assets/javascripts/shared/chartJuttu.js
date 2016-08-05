@@ -92,6 +92,7 @@ angular.module('ocWebGui.shared.chartJuttu.service', [])
           x: function (d) { return d.hour; },
           y: function (d) { return d.calls; },
           duration: 500,
+          useInteractiveGuideline: true,
           xAxis: {
             axisLabel: 'Kellonaika'
           },

@@ -24,7 +24,6 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
 
     vm.scatterData = [{
       'key': 'Jonotusaika',
-      'slope': 2,
       'values': []
     }];
 
