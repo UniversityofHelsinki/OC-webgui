@@ -1,4 +1,3 @@
-require 'pp'
 # Calculates various statistics data based on Contact objects.
 class ContactsService
   def initialize(filter_by_model, start_time, end_time)
