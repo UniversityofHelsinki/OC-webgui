@@ -15,7 +15,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         }
       });
   })
-  .controller('StatsController', function ($interval, $scope, $http) {
+  .controller('StatsController', function ($interval, $scope, $http, Settings, ChartJuttu) {
     var vm = this;
     vm.title = 'Tilastot';
 
@@ -126,6 +126,10 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
     }
 
     function fetchContactStats() {
+      Settings.getOthers().then(function (others) {
+        vm.otherSettings = others;
+      });
+
       $http.get('contacts/stats.json').then(function (response) {
         var data = response.data;
         var beginningOfDay = new Date();
@@ -144,17 +148,9 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
           .map(function (f) { return f.getTime(); });
         vm.api.refresh();
 
-        var callsByHours = data.calls_by_hour
-          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
-
-        var missedCallsByHours = data.missed_calls_by_hour
-          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
-
-        var averageQueueDurationByHour = data.average_queue_duration_by_hour
-          .map(function (calls, hour) { return { hour: hour, calls: calls }; })
-          .filter(function (item) { return item.hour >= 8 && item.hour <= 18; });
+        var callsByHours = ChartJuttu.mapAndFilter(data.calls_by_hour, vm.otherSettings);
+        var missedCallsByHours = ChartJuttu.mapAndFilter(data.missed_calls_by_hour, vm.otherSettings);
+        var averageQueueDurationByHour = ChartJuttu.mapAndFilter(data.average_queue_duration_by_hour, vm.otherSettings);
 
         vm.data2[0].values = callsByHours;
         vm.data2[1].values = missedCallsByHours;
@@ -180,8 +176,8 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         var yAxis1NewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
         var yAxis2NewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
         if (!angular.equals(yAxis1OldTicks, yAxis1NewTicks) || !angular.equals(yAxis2OldTicks, yAxis2NewTicks)) {
-          vm.options.chart.yAxis1.tickValues = yAxis1NewTicks;
-          vm.options.chart.yAxis2.tickValues = yAxis2NewTicks;
+          vm.options2.chart.yAxis1.tickValues = yAxis1NewTicks;
+          vm.options2.chart.yAxis2.tickValues = yAxis2NewTicks;
           vm.api2.refresh();
         }
       });
