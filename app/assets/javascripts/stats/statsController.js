@@ -175,11 +175,13 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
 
         vm.options2.chart.yAxis1.yDomain = callMax;
         vm.options2.chart.yAxis2.yDomain = queueMax;
-        var y1AxisOldTicks = vm.options2.chart.y1Axis.tickValues;
-        var y2AxisOldTicks = vm.options2.chart.y2Axis.tickValues;
-        var y1AxisNewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
-        var y2AxisNewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
-        if (!angular.equals(y1AxisOldTicks, y1AxisNewTicks) || !angular.equals(y2AxisOldTicks, y2AxisNewTicks)) {
+        var yAxis1OldTicks = vm.options2.chart.yAxis1.tickValues;
+        var yAxis2OldTicks = vm.options2.chart.yAxis2.tickValues;
+        var yAxis1NewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
+        var yAxis2NewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
+        if (!angular.equals(yAxis1OldTicks, yAxis1NewTicks) || !angular.equals(yAxis2OldTicks, yAxis2NewTicks)) {
+          vm.options.chart.yAxis1.tickValues = yAxis1NewTicks;
+          vm.options.chart.yAxis2.tickValues = yAxis2NewTicks;
           vm.api2.refresh();
         }
       });
