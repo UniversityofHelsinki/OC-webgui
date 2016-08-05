@@ -193,6 +193,7 @@ describe('queue', function () {
     });
 
     it('should contain calls (answered / all)', function() {
+      browser.pause();
       expect(rows.get(1).element(by.tagName('th')).getText()).toBe('Puhelut:');
       expect(rows.get(1).element(by.tagName('td')).getText()).toBe('11 / 11');
     });
