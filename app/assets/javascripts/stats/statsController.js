@@ -99,6 +99,8 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         var yAxis1NewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
         var yAxis2NewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
         if (!angular.equals(yAxis1OldTicks, yAxis1NewTicks) || !angular.equals(yAxis2OldTicks, yAxis2NewTicks)) {
+          vm.multiChartOptions.chart.yDomain1[1] = callMax;
+          vm.multiChartOptions.chart.yDomain2[1] = queueMax;
           vm.multiChartOptions.chart.yAxis1.tickValues = yAxis1NewTicks;
           vm.multiChartOptions.chart.yAxis2.tickValues = yAxis2NewTicks;
           vm.multiChartApi.refresh();

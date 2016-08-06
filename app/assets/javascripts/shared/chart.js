@@ -57,6 +57,7 @@ angular.module('ocWebGui.shared.chart.service', [])
           },
           pointRange: [100, 100],
           color: d3.scale.category10().range(),
+          noData: 'Ei tilastotietoa tälle päivälle',
           showDistX: true,
           showDistY: true,
           xAxis: {
@@ -98,7 +99,6 @@ angular.module('ocWebGui.shared.chart.service', [])
           },
           yAxis1: {
             axisLabel: 'Jonottajat',
-            yDomain: [0, 10]
           },
           yAxis2: {
             axisLabel: 'Aikaa',
@@ -106,8 +106,9 @@ angular.module('ocWebGui.shared.chart.service', [])
               var formatTime = d3.time.format('%H:%M');
               return formatTime(new Date(1864, 7, 7, 0, seconds));
             },
-            yDomain: [0, 10]
-          }
+          },
+          yDomain1: [0, 10],
+          yDomain2: [0, 10]
         }
       },
 
