@@ -1,5 +1,5 @@
 angular.module('ocWebGui.shared.chart.service', [])
-  .factory('Chart', function (CustomDate) {
+  .factory('Chart', function () {
     return {
       queueChart: {
         chart: {
@@ -33,7 +33,8 @@ angular.module('ocWebGui.shared.chart.service', [])
           },
           yAxis2: {
             tickFormat: function (seconds) {
-              return CustomDate.secondsToHoursMinutesSeconds(seconds);
+              var formatTime = d3.time.format('%H:%M');
+              return formatTime(new Date(1864, 7, 7, 0, seconds));
             }
           },
           legend: {
@@ -60,15 +61,16 @@ angular.module('ocWebGui.shared.chart.service', [])
           showDistY: true,
           xAxis: {
             axisLabel: 'Kellonaika',
-            tickFormat: function (seconds) {
-              return CustomDate.secondsToHoursMinutesSeconds(seconds);
+            tickFormat: function (d) {
+              return d3.time.format('%H.%M')(new Date(d));
             }
           },
           yAxis: {
             axisLabel: 'Jonotusaika',
             axisLabelDistance: 10,
             tickFormat: function (seconds) {
-              return CustomDate.secondsToHoursMinutesSeconds(seconds);
+              var formatTime = d3.time.format('%H:%M');
+              return formatTime(new Date(1864, 7, 7, 0, seconds));
             }
           },
           x: function (d) { return d.hour; },
