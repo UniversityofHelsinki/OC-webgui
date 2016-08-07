@@ -70,6 +70,6 @@ class AgentStatusUpdater
     @statuses_to_create.push(agent_id: status.agent_id,
                              status: status.status,
                              open: true,
-                             created_at: status.created_at)
+                             created_at: @current_time)
   end
 end
