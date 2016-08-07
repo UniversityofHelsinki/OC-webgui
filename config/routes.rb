@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post 'users', to: 'users#create'
   post 'users/update', to: 'users#update'
   post 'users/delete', to: 'users#destroy'
+  post 'agent_statuses/stats', to: 'agent_statuses#stats'
   delete 'logout', to: 'session#destroy'
 
   scope :format => true, :constraints => { :format => 'json' } do

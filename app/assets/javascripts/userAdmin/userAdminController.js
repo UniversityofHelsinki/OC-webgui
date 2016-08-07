@@ -20,7 +20,6 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service',
     vm.notification = 'placeholder';
 
     // Setting agent reference for users requires fetching Agents to be complete first
-
     vm.agents = AgentObjects.query(function (agents) {
       vm.users = Users.query(function (users) {
         vm.users = users.map(function (user) {

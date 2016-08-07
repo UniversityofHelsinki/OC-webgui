@@ -1,5 +1,7 @@
 # API for OC Agent status data
 class AgentStatusesController < ApplicationController
+#  before_action :ensure_user_is_logged_in, only: [:stats]
+#  before_action :ensure_user_is_admin, only: [:stats]
   def index
     @agent_statuses = AgentStatus.where(open: true).joins(agent: :team)
     lunched = Rails.cache.read 'lunched'
@@ -9,6 +11,13 @@ class AgentStatusesController < ApplicationController
       a.lunch = lunched.include? a.agent_id
     end
     @agent_statuses
+  end
+
+  def stats
+    stats = AgentStatusService.new(params[:team_name], Time.parse(params[:start_date]), Time.parse(params[:end_date]))
+    render json: {
+      stats_by_hour: stats.stats_by_hour
+    }
   end
 
   # Some statuses are merged into one or renamed according to client specifications

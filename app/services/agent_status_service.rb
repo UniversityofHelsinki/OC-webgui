@@ -29,6 +29,10 @@ class AgentStatusService
     stats    
   end
 
+  def statuses
+    @statuses
+  end
+
   def duration(statuses)
     statuses.inject(0) { |sum, status| sum += status.closed - status.created_at }
   end

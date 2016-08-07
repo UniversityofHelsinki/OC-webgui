@@ -36,6 +36,7 @@
 //= require_tree ./color
 //= require_tree ./statusChart
 //= require ./app.js
+//= require ./angular-datepicker.js
 //= require angular-i18n/angular-locale_fi.js
 //= require d3
 //= require nvd3
