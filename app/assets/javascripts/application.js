@@ -40,3 +40,4 @@
 //= require nvd3
 //= require angular-nvd3
 //= require angular-fullscreen
+//= require angular-animate

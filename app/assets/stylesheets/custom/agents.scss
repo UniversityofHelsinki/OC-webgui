@@ -157,3 +157,21 @@
   background-size: 60px 60px;
   background-position: right 5px top 5px;
 }
+
+.agent-card.ng-enter {
+  opacity: 0;
+  transition: opacity 2s ease-out;
+}
+
+.agent-card.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+
+.agent-card.ng-leave {
+  opacity: 1;
+  transition: opacity 2s ease-out;
+}
+
+.agent-card.ng-leave.ng-leave-active {
+  opacity: 0;
+}

@@ -1,4 +1,4 @@
-angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.trimName.service'])
+angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.trimName.service', 'ngAnimate'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('screen', {
