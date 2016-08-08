@@ -5,12 +5,15 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'oc
   .run(function ($rootScope, $state, User, $interval, Settings) {
     var $body = $(document.body);
     var $navbar = $('.navbar');
+    var $queue = $('.answer');
+    var $personal = $('.personal-statistics');
     var mouseHideTimeout;
 
     $rootScope.$on('settings:colors:update', function () {
       Settings.getColor('font').then(function (color) {
         $body.css('color', color);
-        $('.answer').css('border-bottom-color', "color"); //TODO: Testaa tämä osa koodista että homma toimii kunnolla!!!
+        $queue.css('border-bottom-color', color); //TODO: Testaa tämä osa koodista että homma toimii kunnolla!!!
+        $personal.css('border-bottom-color', color); //TODO: Testaa tämä osa koodista että homma toimii kunnolla!!!
       });
     });
 
