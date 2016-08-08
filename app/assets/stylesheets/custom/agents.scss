@@ -159,32 +159,34 @@
 }
 
 .agent-card.ng-enter {
-  max-width: 0;
-  opacity: 0;
   transition: max-width 2.0s ease-out, opacity 2.0s ease-out;
+}
+
+.agent-card.ng-enter.ng-enter-active {
+  opacity: 1;
 }
 
 .three-col.agent-card.ng-enter.ng-enter-active {
-  max-width: (100% / 3);
-  opacity:1;
+  @include card-max-width(100% / 3);
+}
+
+.four-col.agent-card.ng-enter.ng-enter-active {
+  @include card-width(25%);
 }
 
 .three-col.agent-card.ng-leave {
-  max-width: (100% / 3);
-  transition: max-width 2.0s ease-out, opacity 2.0s ease-out;
+  @include card-max-width(100% / 3);
 }
 
-.agent-card.ng-leave.ng-leave-active {
+.four-col.agent-card.ng-leave {
+  @include card-width(25%);
+}
+
+.agent-card.ng-enter, .agent-card.ng-leave.ng-leave-active {
   max-width: 0;
   opacity: 0;
 }
 
-.four-col.agent-card.ng-enter.ng-enter-active {
-  max-width: 25%;
-  opacity:1;
-}
-
-.four-col.agent-card.ng-leave {
-  max-width: 25%;
+.agent-card.ng-leave {
   transition: max-width 2.0s ease-out, opacity 2.0s ease-out;
 }
