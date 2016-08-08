@@ -15,8 +15,9 @@ angular.module('ocWebGui.statusChart', ['ui.router', 'ocWebGui.statusChart.servi
         }
       });
   })
-  .controller('StatusChartController', function StatusChartController($scope, AgentStatusStats) {
+  .controller('StatusChartController', function StatusChartController($scope, AgentStatusStats, StatusChart) {
     var vm = this;
+    vm.reportType = 'day';
     vm.api = {};
     vm.data = [{
       'key': 'Vapaa',
@@ -36,7 +37,7 @@ angular.module('ocWebGui.statusChart', ['ui.router', 'ocWebGui.statusChart.servi
 
 
     var onSuccess = function (data) {
-      var stats = data.stats_by_hour;
+      var stats = data.stats;
       for (var i = 0; i < 17; i++) {
         vm.data[0].values[i] = {};
         vm.data[1].values[i] = {};
@@ -52,34 +53,8 @@ angular.module('ocWebGui.statusChart', ['ui.router', 'ocWebGui.statusChart.servi
     };
 
     vm.fetchData = function () {
-      AgentStatusStats.statsByHour(vm.startDate, vm.endDate, onSuccess, onSuccess);
+      AgentStatusStats.stats(vm.startDate, vm.endDate, onSuccess, onSuccess, vm.reportType);
     };
 
-    vm.options = {
-      chart: {
-        type: 'multiBarChart',
-        height: 600,
-        margin: {
-          left: 150
-        },
-        showControls: false,
-        stacked: true,
-        fillOpacity: 0.9,
-        x: function (d) { return d.hour; },
-        y: function (d) { return d.value; },
-        x1Axis: {
-          tickFormat: function (d) {
-            return d3.format(',f')(d);
-          }
-        },
-        yAxis: {
-          tickFormat: function (seconds) {
-            var hours = Math.floor(seconds / 3600);
-            var mins = Math.floor(seconds % 3600 / 60);
-            var secs = seconds % 3600 % 60;
-            return hours + ':' + mins + ':' + secs;
-          }
-        }
-      }
-    };
+    vm.options = StatusChart.options();
   });

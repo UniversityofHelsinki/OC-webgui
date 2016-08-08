@@ -14,10 +14,10 @@ class AgentStatusesController < ApplicationController
   end
 
   def stats
-    stats = AgentStatusService.new(params[:team_name], Time.parse(params[:start_date]), Time.parse(params[:end_date]))
-    render json: {
-      stats_by_hour: stats.stats_by_hour
-    }
+    stats = AgentStatusService.new(params[:team_name], Time.parse(params[:start_date]), Time.parse(params[:end_date]))    
+    return render json: { stats: stats.stats_by_hour } if params[:report_type] == 'day'
+    return render json: { stats: stats.stats_by_day } if params[:report_type] == 'month'
+    render json: { error: 'Invalid report type requested' }, status: 400
   end
 
   # Some statuses are merged into one or renamed according to client specifications

@@ -1,10 +1,13 @@
 # Provides statistics based on Agent Status data
 class AgentStatusService
   def initialize(team_name, start_date, end_date)
+    start_date = Time.zone.parse(start_date) if start_date.class == String
+    end_date = Time.zone.parse(end_date) if end_date.class == String
     @statuses = AgentStatus.joins(agent: :team).where(teams: { name: team_name },
                                                       created_at: start_date.beginning_of_day..end_date.end_of_day,
                                                       open: false)
                                                .where('agent_statuses.created_at::date = agent_statuses.closed::date')
+                                               .order(:created_at)
   end
 
   # Returns a hash where the keys are numbers 0-23, corresponding to each hour. For each hour, values are sub-keys free, busy and other,
@@ -26,11 +29,22 @@ class AgentStatusService
         stats[start_hour + i][type] += portion_within_range(range_start, range_start + 1.hour, status.created_at + gmt_offset, status.closed + gmt_offset)
       end
     end
-    stats    
+    stats
   end
 
-  def statuses
-    @statuses
+  def stats_by_day
+    gmt_offset = Time.now.getlocal.gmt_offset
+    stats = {}
+    date = @statuses.first.created_at.to_date
+    while date != @statuses.last.created_at.to_date.tomorrow do
+      stats[date] = { free: 0, busy: 0, other: 0 }
+      date = date.tomorrow
+    end
+    @statuses.each do |status|
+      date = status.created_at.to_date
+      stats[date][status_type(status.status)] += status.closed - status.created_at
+    end
+    stats
   end
 
   def duration(statuses)
