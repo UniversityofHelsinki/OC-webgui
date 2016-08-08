@@ -158,6 +158,12 @@
   background-position: right 5px top 5px;
 }
 
+.agent-card.ng-enter {
+  max-width: 0;
+  opacity: 0;
+  transition: max-width 2.0s ease-out, opacity 2.0s ease-out;
+}
+
 .three-col.agent-card.ng-enter.ng-enter-active {
   max-width: (100% / 3);
   opacity:1;
