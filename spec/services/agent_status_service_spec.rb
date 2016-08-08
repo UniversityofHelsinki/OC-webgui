@@ -13,9 +13,9 @@ RSpec.describe AgentStatusService, type: :service do
     AgentStatus.create(open: false, agent_id: a.id, created_at: time + (1.hour - 1.day + 25.minutes), closed: time + (2.hours + 5.minutes))
     
     a = AgentStatusService.new('Helpdesk', Time.parse('2016-07-17'), Time.parse('2016-07-19'))
-    expect(a.stats_by_hour).to include(10=>{free: 0, busy: 0, other: 300})
-    expect(a.stats_by_hour).to include(9=>{free: 0, busy: 0, other: 2100})
-    expect(a.stats_by_hour).to include(8=>{free: 0, busy: 0, other: 1800})    
+    expect(a.stats_by_hour).to include({hour: 10, free: 0, busy: 0, other: 300})
+    expect(a.stats_by_hour).to include({hour: 9, free: 0, busy: 0, other: 2100})
+    expect(a.stats_by_hour).to include({hour: 8, free: 0, busy: 0, other: 1800})
   end
 
 end

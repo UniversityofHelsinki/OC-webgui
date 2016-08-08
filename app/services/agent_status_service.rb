@@ -29,7 +29,9 @@ class AgentStatusService
         stats[start_hour + i][type] += portion_within_range(range_start, range_start + 1.hour, status.created_at + gmt_offset, status.closed + gmt_offset)
       end
     end
-    stats
+    stats.map do |hour, data|
+      data.merge({hour: hour})
+    end
   end
 
   def stats_by_day
