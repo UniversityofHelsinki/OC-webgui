@@ -158,20 +158,27 @@
   background-position: right 5px top 5px;
 }
 
-.agent-card.ng-enter {
-  opacity: 0;
-  transition: opacity 2s ease-out;
+.three-col.agent-card.ng-enter.ng-enter-active {
+  max-width: (100% / 3);
+  opacity:1;
 }
 
-.agent-card.ng-enter.ng-enter-active {
-  opacity: 1;
-}
-
-.agent-card.ng-leave {
-  opacity: 1;
-  transition: opacity 2s ease-out;
+.three-col.agent-card.ng-leave {
+  max-width: (100% / 3);
+  transition: max-width 2.0s ease-out, opacity 2.0s ease-out;
 }
 
 .agent-card.ng-leave.ng-leave-active {
+  max-width: 0;
   opacity: 0;
+}
+
+.four-col.agent-card.ng-enter.ng-enter-active {
+  max-width: 25%;
+  opacity:1;
+}
+
+.four-col.agent-card.ng-leave {
+  max-width: 25%;
+  transition: max-width 2.0s ease-out, opacity 2.0s ease-out;
 }
