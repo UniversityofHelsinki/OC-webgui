@@ -44,7 +44,9 @@ class AgentStatusService
       date = status.created_at.to_date
       stats[date][status_type(status.status)] += status.closed - status.created_at
     end
-    stats
+    stats.map do |date, data|
+      data.merge({date: date})
+    end
   end
 
   def duration(statuses)

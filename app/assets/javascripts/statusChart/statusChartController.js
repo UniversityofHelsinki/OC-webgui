@@ -37,18 +37,27 @@ angular.module('ocWebGui.statusChart', ['ui.router', 'ocWebGui.statusChart.servi
 
 
     var onSuccess = function (data) {
-      var stats = data.stats;
-      for (var i = 0; i < 17; i++) {
-        vm.data[0].values[i] = {};
-        vm.data[1].values[i] = {};
-        vm.data[2].values[i] = {};
-        if (i < 8) continue;
-        vm.data[0].values[i].hour = i;
-        vm.data[0].values[i].value = stats[i].free;
-        vm.data[1].values[i].hour = i;
-        vm.data[1].values[i].value = stats[i].busy;
-        vm.data[2].values[i].hour = i;
-        vm.data[2].values[i].value = stats[i].other;
+      if (vm.reportType === 'day') {
+        var stats = data.stats;
+        vm.data[0].values = [];
+        vm.data[1].values = [];
+        vm.data[2].values = [];
+        for (var i = 0; i < 17; i++) {
+          vm.data[0].values[i] = {};
+          vm.data[1].values[i] = {};
+          vm.data[2].values[i] = {};
+          if (i < 8) continue;
+          vm.data[0].values[i].hour = i;
+          vm.data[0].values[i].value = stats[i].free;
+          vm.data[1].values[i].hour = i;
+          vm.data[1].values[i].value = stats[i].busy;
+          vm.data[2].values[i].hour = i;
+          vm.data[2].values[i].value = stats[i].other;
+        }
+      } else if (vm.reportType === 'month') {
+        vm.data[0].values = data.stats.map(function (d) { return { hour: d.date, value: d.free }; });
+        vm.data[1].values = data.stats.map(function (d) { return { hour: d.date, value: d.busy }; });
+        vm.data[2].values = data.stats.map(function (d) { return { hour: d.date, value: d.other }; });
       }
     };
 
