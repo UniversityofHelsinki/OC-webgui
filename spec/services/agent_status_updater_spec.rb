@@ -119,9 +119,11 @@ RSpec.describe AgentStatusUpdater, type: :service do
 
   context "if an agent's status has the same name but the time has decreased" do
     before (:example) do 
+      oldest_data = [build(:status_1a, time_in_status: "5")]
       old_data = [build(:status_1a, time_in_status: "22"), build(:status_2a, time_in_status: "5")]
       new_data = [build(:status_1a, time_in_status: "15"), build(:status_2a, time_in_status: "20")]
-      updater(test_time, nil).update_statuses(old_data)
+      updater(test_time - 17.seconds, nil).update_statuses(oldest_data)
+      updater(test_time, test_time - 17.seconds).update_statuses(old_data)
       updater(test_time + 15.seconds, test_time).update_statuses(new_data)
     end
 

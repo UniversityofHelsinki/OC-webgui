@@ -18,7 +18,7 @@
         <!-- Show first five in queue -->
         <div ng-repeat="queuer in queue.queue | limitTo: 5" class="queuer card">
             <span class="queuer-index">{{ $index + 1 }}.</span>
-            <oc-time dateobj="queuer.created_at" class="queuer-time"></oc-time>
+            <oc-time seconds="queuer.time_in_queue" class="queuer-time"></oc-time>
             <span class="queuer-flag queuer-flag-{{ queuer.language }}"></span>
         </div>
         <div ng-if="queue.queue.length > 5" class="plus-5">&#9660</div>
@@ -46,10 +46,14 @@
                     <th>Jonotusten ka:</th>
                     <td><oc-time seconds="queue.stats.average_queue_duration"></oc-time></td>
                 </tr>
+                <tr>
+                    <th>Palvelutaso:</th>
+                    <td>{{queue.stats.service_level_agreement}}%</td>
+                </tr>
             </table>
         </div>
         <div class="chart card">
-            <nvd3 options="queue.options" data="queue.data" api="queue.api"></nvd3>
+            <nvd3 options="queue.options" data="queue.data" api="queue.api" class="queue-chart"></nvd3>
         </div>
     </div>
 </div>

@@ -48,7 +48,7 @@ class ContactsService
     data = answered_contacts.select(select).group('hour')
 
     result = Array.new(24, 0)
-    data.each { |d| result[(d['hour'])] = d['avg_duration'] }
+    data.each { |d| result[(d['hour'])] = d['avg_duration'].round }
     result
   end
 
@@ -56,6 +56,38 @@ class ContactsService
     gmt_offset = Time.now.getlocal.gmt_offset
     select = "EXTRACT(HOUR FROM contacts.arrived + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count"
     data = answered_contacts.select(select).group('hour')
+
+    result = Array.new(24, 0)
+    data.each { |d| result[(d['hour'])] = d['count'] }
+    result
+  end
+
+  def service_level_agreement_percentage(time_limit)
+    all = num_answered_calls + num_missed_calls
+    return 100.0 if all == 0
+    answered_in_time = answered_contacts.select("EXTRACT(EPOCH FROM contacts.answered - contacts.arrived) AS duration")
+                                        .select { |c| c if c['duration'] < time_limit }
+                                        .count
+    (answered_in_time.to_f / all * 100).round(1)
+  end
+
+def seconds_since_midnight(time)
+  time.hour * 3600 + time.min * 60 + time.sec
+end
+
+  def queue_durations_by_times
+    gmt_offset = Time.now.getlocal.gmt_offset
+    @contacts.pluck(:arrived, :forwarded_to_agent)
+             .map { |d| [seconds_since_midnight(d[0]) + gmt_offset, d[1] - d[0]] unless d[1].nil? }
+             .compact
+             .select { |s| !s.nil? && s[1] != 0.0 }
+             .sort
+  end
+
+  def missed_calls_by_hour
+    gmt_offset = Time.now.getlocal.gmt_offset
+    select = "EXTRACT(HOUR FROM contacts.arrived + '#{gmt_offset} seconds') AS hour, COUNT(*) AS count"
+    data = missed_contacts.select(select).group('hour')
 
     result = Array.new(24, 0)
     data.each { |d| result[(d['hour'])] = d['count'] }

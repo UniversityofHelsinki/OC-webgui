@@ -4,7 +4,6 @@ describe('queue', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
-            var baseTime = new Date(2013, 9, 23, 12, 0).getTime();
             $httpBackend.whenGET('teams.json').respond([
               {
                 name: "Helpdesk",
@@ -12,9 +11,24 @@ describe('queue', function () {
               }
             ]);
             $httpBackend.whenGET('queue.json').respond([
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date(baseTime - (4 * 60 + 25) * 1000) },
-              { team: 'Helpdesk', language: 'Swedish', created_at: new Date(baseTime - 73 * 1000) }
+              { team: 'Helpdesk', language: 'Finnish', time_in_queue: 71 },
+              { team: 'Helpdesk', language: 'Swedish', time_in_queue: 34 }
             ]);
+            $httpBackend.whenGET('settings.json').respond({
+              colors: {
+                background: "#87aade",
+                font: "#333333",
+                statuses: {
+                  free: "#37c837",
+                  call: "#ffff4d",
+                  busy: "#ff3333"
+                }
+              }, others: {
+                sla: 300,
+                working_day_start: 8,
+                working_day_end: 18
+              }
+            });
           });
       });
 
@@ -35,9 +49,9 @@ describe('queue', function () {
 
       expect(queue.count()).toBe(2);
 
-      expect(queue.get(0).element(by.className('queuer-time')).getText()).toBe('04:25');
+      expect(queue.get(0).element(by.className('queuer-time')).getText()).toBe('01:11');
       expect(queue.get(0).isElementPresent(by.className('queuer-flag-Finnish'))).toBe(true);
-      expect(queue.get(1).element(by.className('queuer-time')).getText()).toBe('01:13');
+      expect(queue.get(1).element(by.className('queuer-time')).getText()).toBe('00:34');
       expect(queue.get(1).isElementPresent(by.className('queuer-flag-Swedish'))).toBe(true);
 
       expect(browser.isElementPresent(by.className('plus-5'))).toBe(false);
@@ -54,12 +68,27 @@ describe('queue', function () {
               }
             ]);
             $httpBackend.whenGET('queue.json').respond([
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { team: 'Helpdesk', language: 'Swedish', created_at: new Date() },
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() }
+              { team: 'Helpdesk', language: 'Finnish' },
+              { team: 'Helpdesk', language: 'Swedish' },
+              { team: 'Helpdesk', language: 'Finnish' },
+              { team: 'Helpdesk', language: 'Finnish' },
+              { team: 'Helpdesk', language: 'Finnish' }
             ]);
+            $httpBackend.whenGET('settings.json').respond({
+              colors: {
+                background: "#87aade",
+                font: "#333333",
+                statuses: {
+                  free: "#37c837",
+                  call: "#ffff4d",
+                  busy: "#ff3333"
+                }
+              }, others: {
+                sla: 300,
+                working_day_start: 8,
+                working_day_end: 18
+              }
+            });
           });
       });
       browser.get('#/queue');
@@ -80,13 +109,28 @@ describe('queue', function () {
               }
             ]);
             $httpBackend.whenGET('queue.json').respond([
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { team: 'Helpdesk', language: 'Swedish', created_at: new Date() },
-              { team: 'Helpdesk', language: 'English', created_at: new Date() },
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { team: 'Helpdesk', language: 'Finnish', created_at: new Date() }
+              { team: 'Helpdesk', language: 'Finnish' },
+              { team: 'Helpdesk', language: 'Swedish' },
+              { team: 'Helpdesk', language: 'English' },
+              { team: 'Helpdesk', language: 'Finnish' },
+              { team: 'Helpdesk', language: 'Finnish' },
+              { team: 'Helpdesk', language: 'Finnish' }
             ]);
+            $httpBackend.whenGET('settings.json').respond({
+              colors: {
+                background: "#87aade",
+                font: "#333333",
+                statuses: {
+                  free: "#37c837",
+                  call: "#ffff4d",
+                  busy: "#ff3333"
+                }
+              }, others: {
+                sla: 300,
+                working_day_start: 8,
+                working_day_end: 18
+              }
+            });
           });
       });
       browser.get('#/queue');
@@ -115,7 +159,30 @@ describe('queue', function () {
               ],
               average_queue_duration_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+              ],
+              service_level_agreement: 91,
+              queue_durations_by_times: [
+                ['2016-07-18 05:00:00.000000000 +0000', 60.0],
+                ['2016-07-18 08:00:00.000000000 +0000', 240.0],
+                ['2016-07-18 09:00:00.000000000 +0000', 120.0]],
+              missed_calls_by_hour: [
+                0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 11, 11, 11, 11, 11, 11, 11, 11
               ]
+            });
+            $httpBackend.whenGET('settings.json').respond({
+              colors: {
+                background: "#87aade",
+                font: "#333333",
+                statuses: {
+                  free: "#37c837",
+                  call: "#ffff4d",
+                  busy: "#ff3333"
+                }
+              }, others: {
+                sla: 300,
+                working_day_start: 8,
+                working_day_end: 18
+              }
             });
           });
       });
@@ -124,8 +191,8 @@ describe('queue', function () {
       rows = statsTable.all(by.tagName('tr'));
     });
 
-    it('should contain 5 rows', function () {
-      expect(rows.count()).toBe(5);
+    it('should contain 6 rows', function () {
+      expect(rows.count()).toBe(6);
     });
 
     it('should contain answered calls', function () {
@@ -150,6 +217,11 @@ describe('queue', function () {
     it('should contain average queue waiting duration', function () {
       expect(rows.get(4).element(by.tagName('th')).getText()).toBe('Jonotusten ka:');
       expect(rows.get(4).element(by.tagName('td')).getText()).toBe('01:40');
-    });    
+    });
+
+    it('should contain testtest', function () {
+      expect(rows.get(5).element(by.tagName('th')).getText()).toBe('Palvelutaso:');
+      expect(rows.get(5).element(by.tagName('td')).getText()).toBe('91%');
+    });
   });
 });

@@ -1,4 +1,4 @@
-angular.module('ocWebGui.filterpanel', ['ui.router', 'ngResource'])
+angular.module('ocWebGui.filterpanel', ['ui.router', 'ocWebGui.shared.filter'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('filterpanel', {
@@ -15,40 +15,28 @@ angular.module('ocWebGui.filterpanel', ['ui.router', 'ngResource'])
         }
       });
   })
-  .controller('FilterpanelController', function FilterpanelController($scope, shared) {
+  .controller('FilterpanelController', function ($scope, $interval, Filter) {
     var vm = this;
 
-    vm.teams = shared.getTeams();
-    vm.states = shared.getStates();
-  })
-  .factory('shared', function ($resource) {
-    var teams = {};
-    var states = { 'Muut': true };
-
-    $resource('teams.json').query(function (data) {
-      data.forEach(function (team) {
-        teams[team.name] = team.filter;
-      });
-    });
-
-    $resource('states.json').query(function (data) {
-      data.forEach(function (state) {
-        states[state.name] = state.filter;
-      });
-    });
-
-    return {
-      getTeams: function () {
-        return teams;
-      },
-      setTeams: function (value) {
-        teams = value;
-      },
-      getStates: function () {
-        return states;
-      },
-      setStates: function (value) {
-        states = value;
+    var notificationInterval;
+    function clearMessage() {
+      vm.notification = '';
+    }
+    function showNotification(newValue, oldValue) {
+      if (oldValue === newValue) {
+        return;
       }
-    };
+      $interval.cancel(notificationInterval);
+      vm.notification = 'Valintasi on tallennettu väliaikaisesti!';
+      notificationInterval = $interval(clearMessage, 2000, 1);
+    }
+
+    Filter.getTeams().then(function (teams) {
+      vm.teams = teams;
+      $scope.$watch('filterpanel.teams', showNotification, true);
+    });
+    Filter.getStates().then(function (states) {
+      vm.states = states;
+      $scope.$watch('filterpanel.states', showNotification, true);
+    });
   });
