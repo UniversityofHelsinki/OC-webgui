@@ -14,6 +14,21 @@ describe('queue', function () {
               { team: 'Helpdesk', language: 'Finnish', time_in_queue: 71 },
               { team: 'Helpdesk', language: 'Swedish', time_in_queue: 34 }
             ]);
+            $httpBackend.whenGET('settings.json').respond({
+              colors: {
+                background: "#87aade",
+                font: "#333333",
+                statuses: {
+                  free: "#37c837",
+                  call: "#ffff4d",
+                  busy: "#ff3333"
+                }
+              }, others: {
+                sla: 300,
+                working_day_start: 8,
+                working_day_end: 18
+              }
+            });
           });
       });
 
@@ -59,6 +74,21 @@ describe('queue', function () {
               { team: 'Helpdesk', language: 'Finnish' },
               { team: 'Helpdesk', language: 'Finnish' }
             ]);
+            $httpBackend.whenGET('settings.json').respond({
+              colors: {
+                background: "#87aade",
+                font: "#333333",
+                statuses: {
+                  free: "#37c837",
+                  call: "#ffff4d",
+                  busy: "#ff3333"
+                }
+              }, others: {
+                sla: 300,
+                working_day_start: 8,
+                working_day_end: 18
+              }
+            });
           });
       });
       browser.get('#/queue');
@@ -86,6 +116,21 @@ describe('queue', function () {
               { team: 'Helpdesk', language: 'Finnish' },
               { team: 'Helpdesk', language: 'Finnish' }
             ]);
+            $httpBackend.whenGET('settings.json').respond({
+              colors: {
+                background: "#87aade",
+                font: "#333333",
+                statuses: {
+                  free: "#37c837",
+                  call: "#ffff4d",
+                  busy: "#ff3333"
+                }
+              }, others: {
+                sla: 300,
+                working_day_start: 8,
+                working_day_end: 18
+              }
+            });
           });
       });
       browser.get('#/queue');
@@ -115,6 +160,7 @@ describe('queue', function () {
               average_queue_duration_by_hour: [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
               ],
+              service_level_agreement: 91,
               queue_durations_by_times: [
                 ['2016-07-18 05:00:00.000000000 +0000', 60.0],
                 ['2016-07-18 08:00:00.000000000 +0000', 240.0],
@@ -123,6 +169,21 @@ describe('queue', function () {
                 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 11, 11, 11, 11, 11, 11, 11, 11
               ]
             });
+            $httpBackend.whenGET('settings.json').respond({
+              colors: {
+                background: "#87aade",
+                font: "#333333",
+                statuses: {
+                  free: "#37c837",
+                  call: "#ffff4d",
+                  busy: "#ff3333"
+                }
+              }, others: {
+                sla: 300,
+                working_day_start: 8,
+                working_day_end: 18
+              }
+            });
           });
       });
       browser.get('#/queue');
@@ -130,8 +191,8 @@ describe('queue', function () {
       rows = statsTable.all(by.tagName('tr'));
     });
 
-    it('should contain 5 rows', function () {
-      expect(rows.count()).toBe(5);
+    it('should contain 6 rows', function () {
+      expect(rows.count()).toBe(6);
     });
 
     it('should contain answered calls', function () {
@@ -156,6 +217,11 @@ describe('queue', function () {
     it('should contain average queue waiting duration', function () {
       expect(rows.get(4).element(by.tagName('th')).getText()).toBe('Jonotusten ka:');
       expect(rows.get(4).element(by.tagName('td')).getText()).toBe('01:40');
-    });    
+    });
+
+    it('should contain testtest', function () {
+      expect(rows.get(5).element(by.tagName('th')).getText()).toBe('Palvelutaso:');
+      expect(rows.get(5).element(by.tagName('td')).getText()).toBe('91%');
+    });
   });
 });
