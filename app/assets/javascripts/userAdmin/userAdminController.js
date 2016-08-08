@@ -45,7 +45,7 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service',
         vm.notification = 'placeholder';
         vm.notifyClass = '';
         $interval.cancel(notificationTimeout);
-      }, 5000);
+      }, 10000);
     };
 
     var errorNotify = function (message) {
