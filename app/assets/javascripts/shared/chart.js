@@ -1,5 +1,5 @@
-angular.module('ocWebGui.shared.chart.service', [])
-  .factory('Chart', function () {
+angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service'])
+  .factory('Chart', function (CustomDate) {
     return {
       queueChart: {
         chart: {
@@ -33,8 +33,7 @@ angular.module('ocWebGui.shared.chart.service', [])
           },
           yAxis2: {
             tickFormat: function (seconds) {
-              var formatTime = d3.time.format('%H:%M');
-              return formatTime(new Date(1864, 7, 7, 0, seconds));
+              return CustomDate.niceFormatting(seconds);
             }
           },
           legend: {
@@ -62,16 +61,15 @@ angular.module('ocWebGui.shared.chart.service', [])
           showDistY: true,
           xAxis: {
             axisLabel: 'Kellonaika',
-            tickFormat: function (d) {
-              return d3.time.format('%H.%M')(new Date(d));
+            tickFormat: function (seconds) {
+              return CustomDate.niceFormatting(seconds);
             }
           },
           yAxis: {
             axisLabel: 'Jonotusaika',
             axisLabelDistance: 10,
             tickFormat: function (seconds) {
-              var formatTime = d3.time.format('%H:%M');
-              return formatTime(new Date(1864, 7, 7, 0, seconds));
+              return CustomDate.niceFormatting(seconds);
             }
           },
           x: function (d) { return d.hour; },
@@ -103,9 +101,8 @@ angular.module('ocWebGui.shared.chart.service', [])
           yAxis2: {
             axisLabel: 'Aikaa',
             tickFormat: function (seconds) {
-              var formatTime = d3.time.format('%H:%M');
-              return formatTime(new Date(1864, 7, 7, 0, seconds));
-            },
+              return CustomDate.niceFormatting(seconds);
+            }
           },
           yDomain1: [0, 10],
           yDomain2: [0, 10]
