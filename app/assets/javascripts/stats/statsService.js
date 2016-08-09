@@ -1,4 +1,4 @@
-angular.module('ocWebGui.stats.service', ['ngResource', 'ocWebGui.shared.filter'])
+angular.module('ocWebGui.stats.service', ['ngResource'])
   .factory('Stats', function ($q, $http, Settings) {
     return {
       query: function () {

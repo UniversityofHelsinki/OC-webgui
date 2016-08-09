@@ -16,7 +16,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         navbarOverlay: true
       });
   })
-  .controller('QueueController', function ($q, $interval, $scope, Queue, $http, Settings, Chart, Stats) {
+  .controller('QueueController', function ($q, $interval, $scope, $http, Queue, Chart, Stats) {
     var vm = this;
     vm.api = {};
 
