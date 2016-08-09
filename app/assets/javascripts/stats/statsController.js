@@ -1,4 +1,4 @@
-angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
+angular.module('ocWebGui.stats', ['ocWebGui.stats.service', 'ui.router', 'nvd3'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('stats', {
@@ -15,7 +15,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
         }
       });
   })
-  .controller('StatsController', function ($q, $interval, $scope, $http, Settings, Chart) {
+  .controller('StatsController', function ($q, $interval, $scope, $http, Settings, Chart, Stats) {
     var vm = this;
     vm.title = 'Tilastot';
 
@@ -57,10 +57,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'nvd3'])
     }];
 
     function fetchContactStats() {
-      return $q.all({
-        otherSettings: Settings.getOthers(),
-        response: $http.get('contacts/stats.json')
-      }).then(function (values) {
+      Stats.query().then(function (values) {
         vm.otherSettings = values.otherSettings;
 
         var data = values.response.data;
