@@ -62,8 +62,12 @@ angular.module('ocWebGui.shared.chart.service', [])
           showDistY: true,
           xAxis: {
             axisLabel: 'Kellonaika',
-            tickFormat: function (d) {
-              return d3.time.format('%H.%M')(new Date(d));
+            tickFormat: function (currentSeconds) {
+              var pad2 = function (value) { return (value < 10 ? '0' : '') + value; };
+              var seconds = currentSeconds % 60;
+              var minutes = Math.floor(currentSeconds / 60 % 60);
+              var hours = Math.floor(currentSeconds / 60 / 60);
+              return pad2(hours) + ':' + pad2(minutes) + ':' + pad2(seconds);
             }
           },
           yAxis: {
