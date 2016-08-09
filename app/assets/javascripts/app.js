@@ -4,6 +4,7 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'oc
     'ocWebGui.userAdmin'])
   .run(function ($rootScope, $state, User, $interval, Settings) {
     var $body = $(document.body);
+    var $h3 = $('h3');
     var $navbar = $('.navbar');
     var $queue = $('.answer');
     var $personal = $('.personal-statistics');
@@ -12,8 +13,12 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'oc
     $rootScope.$on('settings:colors:update', function () {
       Settings.getColor('font').then(function (color) {
         $body.css('color', color);
-        $queue.css('border-bottom-color', color); //TODO: Testaa tämä osa koodista että homma toimii kunnolla!!!
-        $personal.css('border-bottom-color', color); //TODO: Testaa tämä osa koodista että homma toimii kunnolla!!!
+        
+        $h3.css('color', color);
+        $h3.css('border-bottom-color', color);
+        
+        $queue.css('border-bottom-color', color);
+        $personal.css('border-bottom-color', color);
       });
     });
 
