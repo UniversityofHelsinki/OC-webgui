@@ -1,9 +1,9 @@
 angular.module('ocWebGui.userAdmin.service', ['ngResource'])
   .factory('AgentObjects', function ($resource) {
-    return $resource('agents.json');
+    return $resource('api/agents');
   })
   .factory('Users', function ($resource) {
-    return $resource('users.json');
+    return $resource('api/users');
   })
   .factory('UserAdmin', function ($resource, $http) {
     return {

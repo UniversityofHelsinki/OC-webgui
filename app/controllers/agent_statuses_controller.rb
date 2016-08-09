@@ -8,7 +8,7 @@ class AgentStatusesController < ApplicationController
       a.status = normalize_status(a.status)
       a.lunch = lunched.include? a.agent_id
     end
-    @agent_statuses
+    render json: @agent_statuses
   end
 
   # Some statuses are merged into one or renamed according to client specifications

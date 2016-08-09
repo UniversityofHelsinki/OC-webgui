@@ -15,21 +15,19 @@ Rails.application.routes.draw do
   post 'users/update', to: 'users#update'
   post 'users/delete', to: 'users#destroy'
 
-  scope :format => true, :constraints => { :format => 'json' } do
-    get 'agent_statuses' => 'agent_statuses#index'
-    get 'queue' => 'queue_items#index'
-    get 'teams' => 'teams#index'
-    get 'states' => 'states#index'
-    get 'contacts/today' => 'contacts#today'
-    get 'contacts/stats' => 'contacts#stats'
-    get 'queue/stats' => 'queue_items#stats'
-    get 'agents' => 'agents#index'
-    get 'users' => 'users#index'
-    get 'personal' => 'personal_status#index'
-  end
+  get 'api/agent_statuses' => 'agent_statuses#index'
+  get 'api/queue' => 'queue_items#index'
+  get 'api/teams' => 'teams#index'
+  get 'api/states' => 'states#index'
+  get 'api/contacts/today' => 'contacts#today'
+  get 'api/contacts/stats' => 'contacts#stats'
+  get 'api/queue/stats' => 'queue_items#stats'
+  get 'api/agents' => 'agents#index'
+  get 'api/users' => 'users#index'
+  get 'api/personal' => 'personal_status#index'
 
-  get 'settings' => 'settings#get', format: :json
-  post 'settings' => 'settings#update', format: :json
+  get 'api/settings' => 'settings#get', format: :json
+  post 'api/settings' => 'settings#update', format: :json
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

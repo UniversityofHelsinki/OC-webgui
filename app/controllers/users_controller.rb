@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :ensure_user_is_logged_in, only: [:create, :update, :destroy]
   before_action :ensure_user_is_admin, only: [:create, :update, :destroy]
   def index
-    @users = User.all
+    render json: @users = User.all
   end
 
   def create

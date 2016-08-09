@@ -5,7 +5,7 @@ angular.module('ocWebGui.screen.service', ['ngResource', 'ocWebGui.shared.filter
         return $q.all({
           teams: Filter.getTeams(),
           states: Filter.getStates(),
-          agents: $http.get('agent_statuses.json')
+          agents: $http.get('api/agent_statuses')
         }).then(function (values) {
           return values.agents.data
             .filter(function (agent) {

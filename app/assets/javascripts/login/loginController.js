@@ -23,7 +23,7 @@ angular.module('ocWebGui.login', ['ui.router'])
       if (isAuthenticated) {
         return $q.resolve(userData);
       }
-      return $http.get('user.json').then(function (response) {
+      return $http.get('api/user').then(function (response) {
         isAuthenticated = true;
         userData = response.data;
         return userData;
