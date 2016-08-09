@@ -4,21 +4,23 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'oc
     'ocWebGui.userAdmin'])
   .run(function ($rootScope, $state, User, $interval, Settings) {
     var $body = $(document.body);
-    var $h3 = $('h3');
+    var $color_menu = $('.legend');
     var $navbar = $('.navbar');
     var $queue = $('.answer');
-    var $personal = $('.personal-statistics');
+    var $personal = $('.Kokeilu');
     var mouseHideTimeout;
 
     $rootScope.$on('settings:colors:update', function () {
-      Settings.getColor('font').then(function (color) {
+      Settings.getColor('font').then(function (color) {        
         $body.css('color', color);
-        
-        $h3.css('color', color);
-        $h3.css('border-bottom-color', color);
+        $color_menu.css('color', color);
+        $color_menu.css('border-bottom-color', color);
+     
+        $('.answer').show();
+        $('.Kokeilu').show();
         
         $queue.css('border-bottom-color', color);
-        $personal.css('border-bottom-color', color);
+   //     $personal.css('color', color);
       });
     });
 

@@ -4,7 +4,7 @@
     <p ng-if="color.message">{{ color.message }}</p>
     <form ng-submit="color.save()" ng-if="color.colors">
         <fieldset>
-            <h3>Yhteiset</h3>
+            <h3 class="legend">Yhteiset</h3>
             <label>
                 Taustaväri:
                 <input type="color" ng-model="color.colors.background">
@@ -15,7 +15,7 @@
             </label>
         </fieldset>
         <fieldset>
-            <h3>Statukset</h3>
+            <h3 class="legend">Statukset</h3>
             <label>
                 Vapaa:
                 <input type="color" ng-model="color.colors.statuses.free">
