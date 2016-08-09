@@ -15,7 +15,7 @@ describe('color', function () {
             return [204];
           });
 
-          $httpBackend.whenGET('settings.json').respond(function () {
+          $httpBackend.whenGET('api/settings').respond(function () {
             return [200, {
               colors: {
                 background: loggedIn ? '#ff00ff' : '#0000ff',
@@ -29,7 +29,7 @@ describe('color', function () {
             }];
           });
 
-          $httpBackend.whenPOST('settings.json').respond(function (method, url, data) {
+          $httpBackend.whenPOST('api/settings').respond(function (method, url, data) {
             return [200, data];
           });
         });

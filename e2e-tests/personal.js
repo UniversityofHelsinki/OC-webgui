@@ -5,7 +5,7 @@ describe('personal', function () {
         .run(function ($httpBackend) {
           var baseTime = new Date(2013, 9, 23, 12, 0).getTime();
 
-          $httpBackend.whenGET('agent_statuses.json').respond([
+          $httpBackend.whenGET('api/agent_statuses').respond([
             {
               id: 1234,
               first_name: 'Benjamin',
@@ -44,14 +44,14 @@ describe('personal', function () {
             }
           ]);
 
-          $httpBackend.whenGET('teams.json').respond([
+          $httpBackend.whenGET('api/teams').respond([
             {
               name: 'Helpdesk',
               filter: true
             }
           ]);
 
-          $httpBackend.whenGET('states.json').respond([
+          $httpBackend.whenGET('api/states').respond([
             {
               name: 'Vapaa',
               filter: true
@@ -66,7 +66,7 @@ describe('personal', function () {
             }
           ]);
 
-          $httpBackend.whenGET('queue.json').respond([
+          $httpBackend.whenGET('api/queue').respond([
             {
               created_at: new Date(baseTime - (3 * 60 + 22) * 1000),
               team: 'Helpdesk',
@@ -74,13 +74,13 @@ describe('personal', function () {
             }
           ]);
 
-          $httpBackend.whenGET('personal.json').respond({
+          $httpBackend.whenGET('api/personal').respond({
             answered_calls: 7,
             average_call_duration: 476,
             average_after_call_duration: 182
           });
 
-          $httpBackend.whenGET('settings.json').respond({
+          $httpBackend.whenGET('api/settings').respond({
             colors: {
               background: '#87aade',
               font: '#333333',
