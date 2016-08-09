@@ -29,9 +29,9 @@ angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service']
             axisLabel: 'Kellonaika',
             showMaxMin: true
           },
-          yAxis1: {
+          y1Axis: {
           },
-          yAxis2: {
+          y2Axis: {
             tickFormat: function (seconds) {
               return CustomDate.niceFormatting(seconds);
             }
