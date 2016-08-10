@@ -11,7 +11,7 @@ angular.module('ocWebGui.statusChart.service', ['ngResource'])
       }
     };
   })
-  .factory('StatusChart', function () {
+  .factory('StatusChart', function (CustomDate) {
     return {
       options: function () {
         return {
@@ -28,10 +28,7 @@ angular.module('ocWebGui.statusChart.service', ['ngResource'])
             y: function (d) { return d.value; },
             yAxis1: {
               tickFormat: function (seconds) {
-                var hours = Math.floor(seconds / 3600);
-                var mins = Math.floor(seconds % 3600 / 60);
-                var secs = seconds % 3600 % 60;
-                return hours + ':' + mins + ':' + secs;
+                return CustomDate.niceFormatting(seconds);
               }
             }
           }
