@@ -22,12 +22,10 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
 
     vm.options = Chart.queueChart;
     vm.data = [{
-      'key': 'Puheluja tunnissa',
       'bar': true,
       'color': '#888888',
       'values': []
     }, {
-      'key': 'Keskim. jonotusaika',
       'color': '#ff0000',
       'values': []
     }];
