@@ -15,12 +15,9 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'oc
         $body.css('color', color);
         $color_menu.css('color', color);
         $color_menu.css('border-bottom-color', color);
-     
-        $('.answer').show();
-        $('.Kokeilu').show();
         
         $queue.css('border-bottom-color', color);
-   //     $personal.css('color', color);
+        $personal.css('color', color);
       });
     });
 
