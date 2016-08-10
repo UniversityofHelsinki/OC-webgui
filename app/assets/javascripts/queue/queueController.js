@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.chart.service', 'nvd3'])
+angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.chart.service', 'ocWebGui.stats.service', 'nvd3'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('queue', {
@@ -16,7 +16,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         navbarOverlay: true
       });
   })
-  .controller('QueueController', function ($q, $interval, $scope, Queue, $http, Settings, Chart) {
+  .controller('QueueController', function ($q, $interval, $scope, $http, Queue, Chart, Stats) {
     var vm = this;
     vm.api = {};
 
@@ -33,10 +33,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     }];
 
     function fetchContactStats() {
-      return $q.all({
-        otherSettings: Settings.getOthers(),
-        response: $http.get('contacts/stats.json')
-      }).then(function (values) {
+      Stats.query().then(function (values) {
         vm.otherSettings = values.otherSettings;
 
         var data = values.response.data;
