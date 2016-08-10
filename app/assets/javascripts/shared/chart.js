@@ -107,7 +107,7 @@ angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service']
             }
           },
           yDomain1: [0, 10],
-          yDomain2: [0, 10],
+          yDomain2: [0, 10]
         }
       },
 
