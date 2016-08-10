@@ -10,29 +10,4 @@ angular.module('ocWebGui.statusChart.service', ['ngResource'])
         });
       }
     };
-  })
-  .factory('StatusChart', function (CustomDate) {
-    return {
-      options: function () {
-        return {
-          chart: {
-            type: 'multiChart',
-            bars1: {
-              stacked: true
-            },
-            height: 600,
-            margin: {
-              left: 150
-            },
-            x: function (d) { return d.hour; },
-            y: function (d) { return d.value; },
-            yAxis1: {
-              tickFormat: function (seconds) {
-                return CustomDate.niceFormatting(seconds);
-              }
-            }
-          }
-        };
-      }
-    };
   });
