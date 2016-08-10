@@ -1,6 +1,6 @@
 # API for Agents data
 class AgentsController < ApplicationController
   def index
-    @agents = Agent.all
+    render json: @agents = Agent.all
   end
 end

@@ -10,7 +10,7 @@ angular.module('ocWebGui.shared.settings', [])
       if (settingsCache) {
         return $q.resolve(settingsCache);
       }
-      getSettingsPromise = $http.get('settings.json').then(function (response) {
+      getSettingsPromise = $http.get('api/settings').then(function (response) {
         settingsCache = response.data;
         getSettingsPromise = undefined;
         return settingsCache;
@@ -19,7 +19,7 @@ angular.module('ocWebGui.shared.settings', [])
     }
 
     function postSettings(settings) {
-      return $http.post('settings.json', settings).then(function () {
+      return $http.post('api/settings', settings).then(function () {
         settingsCache = angular.copy(settings);
         return settingsCache;
       });

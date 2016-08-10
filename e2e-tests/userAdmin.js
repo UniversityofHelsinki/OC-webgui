@@ -3,7 +3,7 @@ describe('userAdmin', function () {
     browser.addMockModule('httpBackendMock', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
         .run(function ($httpBackend) {
-          $httpBackend.whenGET('agents.json').respond([
+          $httpBackend.whenGET('api/agents').respond([
             {
               first_name: 'Etunimi',
               last_name: 'Sukunimi',
@@ -20,7 +20,7 @@ describe('userAdmin', function () {
               id: 3
             }
           ]);
-          $httpBackend.whenGET('users.json').respond([
+          $httpBackend.whenGET('api/users').respond([
             {
               id: 1,
               username: 'user1',

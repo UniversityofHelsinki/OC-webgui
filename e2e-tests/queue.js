@@ -4,17 +4,17 @@ describe('queue', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
-            $httpBackend.whenGET('teams.json').respond([
+            $httpBackend.whenGET('api/teams').respond([
               {
                 name: "Helpdesk",
                 filter: true
               }
             ]);
-            $httpBackend.whenGET('queue.json').respond([
+            $httpBackend.whenGET('api/queue').respond([
               { team: 'Helpdesk', language: 'Finnish', time_in_queue: 71 },
               { team: 'Helpdesk', language: 'Swedish', time_in_queue: 34 }
             ]);
-            $httpBackend.whenGET('settings.json').respond({
+            $httpBackend.whenGET('api/settings').respond({
               colors: {
                 background: "#87aade",
                 font: "#333333",
@@ -77,20 +77,20 @@ describe('queue', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
-            $httpBackend.whenGET('teams.json').respond([
+            $httpBackend.whenGET('api/teams').respond([
               {
                 name: "Helpdesk",
                 filter: true
               }
             ]);
-            $httpBackend.whenGET('queue.json').respond([
+            $httpBackend.whenGET('api/queue').respond([
               { team: 'Helpdesk', language: 'Finnish' },
               { team: 'Helpdesk', language: 'Swedish' },
               { team: 'Helpdesk', language: 'Finnish' },
               { team: 'Helpdesk', language: 'Finnish' },
               { team: 'Helpdesk', language: 'Finnish' }
             ]);
-            $httpBackend.whenGET('settings.json').respond({
+            $httpBackend.whenGET('api/settings').respond({
               colors: {
                 background: "#87aade",
                 font: "#333333",
@@ -118,13 +118,13 @@ describe('queue', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
-            $httpBackend.whenGET('teams.json').respond([
+            $httpBackend.whenGET('api/teams').respond([
               {
                 name: "Helpdesk",
                 filter: true
               }
             ]);
-            $httpBackend.whenGET('queue.json').respond([
+            $httpBackend.whenGET('api/queue').respond([
               { team: 'Helpdesk', language: 'Finnish' },
               { team: 'Helpdesk', language: 'Swedish' },
               { team: 'Helpdesk', language: 'English' },
@@ -132,7 +132,7 @@ describe('queue', function () {
               { team: 'Helpdesk', language: 'Finnish' },
               { team: 'Helpdesk', language: 'Finnish' }
             ]);
-            $httpBackend.whenGET('settings.json').respond({
+            $httpBackend.whenGET('api/settings').respond({
               colors: {
                 background: "#87aade",
                 font: "#333333",
@@ -164,7 +164,7 @@ describe('queue', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
-            $httpBackend.whenGET('contacts/stats.json').respond({
+            $httpBackend.whenGET('api/contacts/stats').respond({
               answered_calls: 11,
               average_call_duration: 2 * 60 + 15,
               answered_percentage: 100,
@@ -185,7 +185,7 @@ describe('queue', function () {
                 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 11, 11, 11, 11, 11, 11, 11, 11
               ]
             });
-            $httpBackend.whenGET('settings.json').respond({
+            $httpBackend.whenGET('api/settings').respond({
               colors: {
                 background: "#87aade",
                 font: "#333333",
