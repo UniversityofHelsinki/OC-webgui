@@ -88,6 +88,22 @@ describe('screen', function () {
           return {
             getDate: function () {
               return new Date(2013, 9, 23, 12, 0);
+            },
+
+            niceFormatting: function (currentSeconds) {
+              var pad2 = function (value) {
+                return (value < 10 ? '0' : '') + value;
+              };
+              var seconds = Math.floor(currentSeconds % 60);
+              var minutes = Math.floor(currentSeconds / 60);
+
+              if (minutes > 60) {
+                minutes = Math.floor(currentSeconds / 60 % 60);
+                var hours = Math.floor(currentSeconds / 60 / 60);
+                return pad2(hours) + ':' + pad2(minutes) + ':' + pad2(seconds);
+              }
+
+              return pad2(minutes) + ':' + pad2(seconds);
             }
           };
         });
@@ -158,7 +174,11 @@ describe('screen', function () {
   it('should filter correctly', function () {
     browser.actions().mouseMove(element(by.className('navbar'))).perform();
     element(by.className('navbar')).element(by.linkText('Filtteröi')).click();
-    element(by.id('Tauko')).click();
+
+    element(by.name('state-Tauko')).click();
+    var notification = element(by.className('alert'));
+    expect(notification.getText()).toBe('Valintasi on tallennettu väliaikaisesti!');
+
     browser.actions().mouseMove(element(by.className('navbar'))).perform();
     element(by.className('navbar')).element(by.linkText('Statukset')).click();
     agentCards = element.all(by.className('agent-card'));

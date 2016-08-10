@@ -24,6 +24,11 @@ RSpec.describe SettingsController, type: :controller do
               'call' => '#ffff4d',
               'busy' => '#ff3333'
             }
+          },
+          'others' => {
+            'sla' => 300,
+            'working_day_start' => 8,
+            'working_day_end' => 18
           }
         }
         get :get, format: :json
@@ -43,7 +48,13 @@ RSpec.describe SettingsController, type: :controller do
               'call' => '#ffff4d',
               'busy' => '#ff3333'
             }
+          },
+          'others' => {
+            'sla' => 300,
+            'working_day_start' => 8,
+            'working_day_end' => 18
           }
+
         }
         session['user_id'] = 1
         get :get, format: :json
@@ -62,7 +73,12 @@ RSpec.describe SettingsController, type: :controller do
               'free' => '#37c837',
               'call' => '#ffff4d',
               'busy' => '#ff3333'
-            }
+            },
+          },
+          'others' => {
+            'sla' => 300,
+            'working_day_start' => 8,
+            'working_day_end' => 18
           }
         }
         session['user_id'] = 2
@@ -100,6 +116,11 @@ RSpec.describe SettingsController, type: :controller do
               'call' => '#ffff4d',
               'busy' => '#ff3333'
             }
+          },
+          'others' => {
+            'sla' => 300,
+            'working_day_start' => 8,
+            'working_day_end' => 18
           }
         }
 
@@ -135,7 +156,38 @@ RSpec.describe SettingsController, type: :controller do
             'statuses' => {
               'free' => 'invalid color'
             }
+          },
+          'others' => {}
+        }
+
+        session['user_id'] = 2
+        post :update, new_settings, format: :json
+        expect(response.status).to eq(400)
+        expect(JSON.parse(response.body)).to eq(error_response)
+
+        expect(User.find(2).settings).to eq(expected)
+      end
+
+      it 'fails with invalid working day times' do
+        new_settings = {
+          'others' => {
+            'working_day_start' => '12',
+            'working_day_end' => '10'
           }
+        }
+
+        expected = {
+          'colors' => {
+            'background' => '#ffffff',
+            'font' => '#000000'
+          }
+        }
+
+        error_response = {
+          "colors" => {},
+          "others" => {
+            "working_day_start" => "työpäivän alku ei voi olla työpäivän lopun jälkeen"
+          },
         }
 
         session['user_id'] = 2

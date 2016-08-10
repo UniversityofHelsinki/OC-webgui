@@ -8,10 +8,12 @@ Rails.application.routes.draw do
   root 'application#angular'
 
   post 'login', to: 'session#create'
+  get 'user', to: 'session#get', format: :json
+  delete 'logout', to: 'session#destroy'
+
   post 'users', to: 'users#create'
   post 'users/update', to: 'users#update'
   post 'users/delete', to: 'users#destroy'
-  delete 'logout', to: 'session#destroy'
 
   scope :format => true, :constraints => { :format => 'json' } do
     get 'agent_statuses' => 'agent_statuses#index'

@@ -47,10 +47,14 @@
                     <th class="stats_th">Jonotusten ka:</th>
                     <td class="stats_td"><oc-time seconds="queue.stats.average_queue_duration"></oc-time></td>
                 </tr>
+                <tr>
+                    <th>Palvelutaso:</th>
+                    <td>{{queue.stats.service_level_agreement}}%</td>
+                </tr>
             </table>
         </div>
         <div class="chart card">
-            <nvd3 options="queue.options" data="queue.data" api="queue.api"></nvd3>
+            <nvd3 options="queue.options" data="queue.data" api="queue.api" class="queue-chart"></nvd3>
         </div>
     </div>
 </div>

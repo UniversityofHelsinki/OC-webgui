@@ -16,19 +16,17 @@ angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWe
         navbarOverlay: true
       });
   })
-  .controller('ScreenController', function ($interval, $scope, shared, Agents, TrimName) {
+  .controller('ScreenController', function ($interval, $scope, Agents, TrimName) {
     var vm = this;
     var fetchDataInterval;
 
-    vm.teams = shared.getTeams();
-    vm.states = shared.getStates();
     vm.message = 'Tilat';
     vm.agents = [];
     vm.counts = { free: 0, call: 0, busy: 0 };
     vm.number_of_columns = 0;
 
     function fetchData() {
-      Agents.query(function (agents) {
+      Agents.query().then(function (agents) {
         vm.agents = agents;
 
         vm.counts = agents.reduce(function (counts, agent) {
