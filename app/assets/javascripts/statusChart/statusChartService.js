@@ -16,22 +16,17 @@ angular.module('ocWebGui.statusChart.service', ['ngResource'])
       options: function () {
         return {
           chart: {
-            type: 'multiBarChart',
+            type: 'multiChart',
+            bars1: {
+              stacked: true
+            },
             height: 600,
             margin: {
               left: 150
             },
-            showControls: false,
-            stacked: true,
-            fillOpacity: 0.9,
             x: function (d) { return d.hour; },
             y: function (d) { return d.value; },
-            xAxis: {
-              tickFormat: function (hour) {
-                return hour;
-              }
-            },
-            yAxis: {
+            yAxis1: {
               tickFormat: function (seconds) {
                 var hours = Math.floor(seconds / 3600);
                 var mins = Math.floor(seconds % 3600 / 60);

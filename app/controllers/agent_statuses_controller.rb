@@ -14,9 +14,19 @@ class AgentStatusesController < ApplicationController
   end
 
   def stats
-    stats = AgentStatusService.new(params[:team_name], Time.parse(params[:start_date]), Time.parse(params[:end_date]))    
-    return render json: { stats: stats.stats_by_hour } if params[:report_type] == 'day'
-    return render json: { stats: stats.stats_by_day } if params[:report_type] == 'month'
+    start_date = Time.parse(params[:start_date]).beginning_of_day
+    end_date = Time.parse(params[:end_date]).end_of_day
+    team = Team.find_by_name(params[:team_name])
+    stats = AgentStatusService.new(team.name, start_date, end_date)
+    contacts = ContactsService.new(team, start_date, end_date)
+    return render json: {
+      stats: stats.stats_by_hour,
+      dropped: contacts.dropped_calls_by_hour(settings['others']['sla'])
+    } if params[:report_type] == 'day'
+    return render json: {
+      stats: stats.stats_by_day,
+      dropped: contacts.dropped_calls_by_day(settings['others']['sla'])
+    } if params[:report_type] == 'month'
     render json: { error: 'Invalid report type requested' }, status: 400
   end
 

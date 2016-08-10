@@ -62,6 +62,30 @@ class ContactsService
     result
   end
 
+  def dropped_calls_by_hour(sla)
+    gmt_offset = Time.now.getlocal.gmt_offset
+    select = [
+      "EXTRACT(HOUR FROM contacts.arrived + '#{gmt_offset} seconds') AS hour",
+      'EXTRACT(EPOCH FROM contacts.call_ended - contacts.arrived) AS duration'
+    ].join(',')
+
+    result = Array.new(24, 0)
+    missed_contacts.select(select)
+                   .select { |c| c if c['duration'] > sla }
+                   .each { |c| result[c['hour']] += 1 }
+    result
+  end
+
+  def dropped_calls_by_day(sla)
+    result = Hash.new 0
+    missed_contacts.select('contacts.arrived, EXTRACT(EPOCH FROM contacts.call_ended - contacts.arrived) AS duration')
+                   .select { |c| c if c['duration'] > sla }
+                   .each { |c| result[c['arrived'].to_date] += 1 }
+    result.map do |date, count|
+      { date: date, count: count }
+    end
+  end
+
   def service_level_agreement_percentage(time_limit)
     all = num_answered_calls + num_missed_calls
     return 100.0 if all == 0
