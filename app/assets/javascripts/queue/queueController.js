@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.chart.service', 'nvd3'])
+angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.chart.service', 'ocWebGui.stats.service', 'nvd3'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('queue', {
@@ -16,7 +16,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         navbarOverlay: true
       });
   })
-  .controller('QueueController', function ($q, $interval, $scope, Queue, $http, Settings, Chart) {
+  .controller('QueueController', function ($q, $interval, $scope, $http, Queue, Chart, Stats) {
     var vm = this;
     vm.api = {};
 
@@ -33,10 +33,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     }];
 
     function fetchContactStats() {
-      return $q.all({
-        otherSettings: Settings.getOthers(),
-        response: $http.get('contacts/stats.json')
-      }).then(function (values) {
+      Stats.query().then(function (values) {
         vm.otherSettings = values.otherSettings;
 
         var data = values.response.data;
@@ -50,15 +47,15 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         // Multiply by 1.05 so highest value is high enough that highest point in chart isn't hidden
         var queueMax = Chart.getMaxValPlusOne(vm.data[1]) * 1.05;
 
-        var yAxis1OldTicks = vm.options.chart.yAxis1.tickValues;
-        var yAxis2OldTicks = vm.options.chart.yAxis2.tickValues;
-        var yAxis1NewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
-        var yAxis2NewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
-        if (!angular.equals(yAxis1OldTicks, yAxis1NewTicks) || !angular.equals(yAxis2OldTicks, yAxis2NewTicks)) {
+        var y1AxisOldTicks = vm.options.chart.y1Axis.tickValues;
+        var y2AxisOldTicks = vm.options.chart.y2Axis.tickValues;
+        var y1AxisNewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
+        var y2AxisNewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
+        if (!angular.equals(y1AxisOldTicks, y1AxisNewTicks) || !angular.equals(y2AxisOldTicks, y2AxisNewTicks)) {
           vm.options.chart.bars.yDomain[1] = callMax;
           vm.options.chart.lines.yDomain[1] = queueMax;
-          vm.options.chart.yAxis1.tickValues = yAxis1NewTicks;
-          vm.options.chart.yAxis2.tickValues = yAxis2NewTicks;
+          vm.options.chart.y1Axis.tickValues = y1AxisNewTicks;
+          vm.options.chart.y2Axis.tickValues = y2AxisNewTicks;
           vm.api.refresh();
         }
       });
