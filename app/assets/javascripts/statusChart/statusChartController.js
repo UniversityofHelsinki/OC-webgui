@@ -19,7 +19,7 @@ angular.module('ocWebGui.statusChart', ['ui.router', 'ocWebGui.statusChart.servi
   .controller('StatusChartController', function (AgentStatusStats) {
     var vm = this;
     vm.reportType = 'day';
-    vm.chartData = {};
+    vm.chartData = null;
 
     vm.fetchData = function () {
       AgentStatusStats.stats(vm.startDate, vm.endDate, vm.reportType).then(function (response) {
