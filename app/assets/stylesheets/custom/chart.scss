@@ -32,6 +32,14 @@
   fill: red;
 }
 
+.queue-chart .nv-y2.nv-axis path.domain {
+  stroke: red;
+}
+
 .stats-chart2 .nv-y2 {
   fill: #00ff00;
+}
+
+.stats-chart2 .nv-y2.nv-axis path.domain {
+  stroke: #00ff00;
 }
