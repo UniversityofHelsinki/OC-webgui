@@ -128,6 +128,11 @@ class BackendService
       {
         service_id: attrs[:string][0],
         service_name: attrs[:string][1],
+        channel_id: attrs[:string][2],
+        channel_name: attrs[:string][3],
+        contact_type: attrs[:string][4],
+        directive: attrs[:string][5],
+        queue_length: attrs[:string][6],
         time_in_queue: attrs[:string][7]
       }
     end
