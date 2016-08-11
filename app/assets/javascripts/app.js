@@ -7,9 +7,19 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'oc
     var $color_menu = $('.legend');
     var $navbar = $('.navbar');
     var $queue = $('.answer');
-    var $personal = $('.Kokeilu');
+    var $personal = $('.personal-statistics');
     var mouseHideTimeout;
 
+    Settings.getColor('font').then(function (color) {        
+        $body.css('color', color);
+        $color_menu.css('color', color);
+        $color_menu.css('border-bottom-color', color);
+        
+        $queue.css('border-bottom-color', color);
+        $personal.css('color', color);
+        $personal.css('border-bottom-color', color);
+      });
+      
     $rootScope.$on('settings:colors:update', function () {
       Settings.getColor('font').then(function (color) {        
         $body.css('color', color);
@@ -64,3 +74,7 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'oc
       }
     });
   });
+  
+  function colorChange(Settings) {
+    
+  };
