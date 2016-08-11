@@ -44,7 +44,7 @@
                     <tr ng-repeat="user in userAdmin.users | orderBy:'username'">
                         <td id="td-username" class="col-sm-2">{{user.username}}</td>
                         <td class="col-sm-6">
-                            <select ng-blur="userAdmin.updateUser(user)" class="form-control" ng-model="user.agent_id" ng-options="agent.id as agent.first_name + ' ' + agent.last_name for agent in userAdmin.agents | orderBy:'first_name'"></select>
+                            <select ng-blur="userAdmin.updateUser(user)" class="form-control" ng-model="user.agent_id" ng-options="agent.id as agent.first_name + ' ' + agent.last_name for agent in userAdmin.agents | orderBy:'team_id'"></select>
                         </td>
                         <td class="col-sm-2"><input ng-blur="userAdmin.updateUser(user)" type="checkbox" ng-model="user.is_admin"></input></td>
                         <td class="col-sm-2"><button class="btn btn-danger" confirmed-click="userAdmin.deleteUser(user)" oc-confirm-click="Haluatko varmasti poistaa käyttäjän {{user.username}}?">X</button></td>
