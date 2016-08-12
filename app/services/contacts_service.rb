@@ -8,6 +8,8 @@ class ContactsService
       @contacts = Contact.joins(:service).where(services: { team_id: filter_by_model.id }, arrived: start_time..end_time)
     elsif filter_by_model.is_a? Agent
       @contacts = Contact.where(agent: filter_by_model, arrived: start_time..end_time)
+    else
+      @contacts = Contact.where(arrived: start_time..end_time)
     end
   end
 
@@ -107,6 +109,11 @@ class ContactsService
     result = Array.new(24, 0)
     data.each { |d| result[(d['hour'])] = d['count'] }
     result
+  end
+
+  # Contacts waiting in queue to be answered
+  def queue_contacts
+    @contacts.where(contact_type: 'PBX', direction: 'I', forwarded_to_agent: nil, call_ended: nil).where.not(service_id: 120)
   end
 
   private
