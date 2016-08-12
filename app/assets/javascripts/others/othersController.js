@@ -1,4 +1,4 @@
-angular.module('ocWebGui.others', ['ui.router', 'ocWebGui.login', 'ocWebGui.others.service'])
+angular.module('ocWebGui.others', ['ui.router', 'ocWebGui.login'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('others', {
@@ -15,7 +15,7 @@ angular.module('ocWebGui.others', ['ui.router', 'ocWebGui.login', 'ocWebGui.othe
         }
       });
   })
-  .controller('OthersController', function ($interval, Settings, Others) {
+  .controller('OthersController', function ($interval, Settings) {
     var vm = this;
     vm.title = 'Muut asetukset';
 
@@ -24,8 +24,7 @@ angular.module('ocWebGui.others', ['ui.router', 'ocWebGui.login', 'ocWebGui.othe
     }
 
     vm.message = 'Ladataan...';
-    Settings.getOthers().then(function (others) {
-      Others.saveData(others);  // Pass data to others-service.     
+    Settings.getOthers().then(function (others) {     
       vm.others = others;
       clearMessage();
     });

@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.chart.service', 'ocWebGui.stats.service', 'ocWebGui.others.service', 'nvd3'])
+angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.chart.service', 'ocWebGui.stats.service','nvd3'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('queue', {
@@ -16,11 +16,14 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         navbarOverlay: true
       });
   })
-  .controller('QueueController', function ($q, $interval, $scope, $http, Queue, Chart, Stats, Others) {
+  .controller('QueueController', function ($q, $interval, $scope, $http, Queue, Chart, Stats, Settings) {
     var vm = this;
     vm.api = {};
+    vm.sla = {};
 
-    vm.sla_data = Others.getData();
+    vm.sla_time = Settings.getOthers().then(function (others) {
+      return others.sla; 
+    });
     
     vm.options = Chart.queueChart;
     vm.data = [{
