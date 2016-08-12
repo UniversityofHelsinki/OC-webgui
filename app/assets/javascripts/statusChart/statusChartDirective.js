@@ -70,7 +70,7 @@ angular.module('ocWebGui.statusChart.directive', [])
             'xAxis': 1,
             'yAxis': 2,
             'key': 'Toivonsa menettäneet',
-            'color': '#f00',
+            'color': '#a0a',
             'values': []
           }
         ];
