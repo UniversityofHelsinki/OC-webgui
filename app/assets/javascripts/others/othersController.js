@@ -1,4 +1,4 @@
-angular.module('ocWebGui.others', ['ui.router', 'ocWebGui.login'])
+angular.module('ocWebGui.others', ['ui.router', 'ocWebGui.login', 'ocWebGui.others.service'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('others', {
