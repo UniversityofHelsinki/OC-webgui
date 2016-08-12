@@ -25,10 +25,7 @@ angular.module('ocWebGui.others', ['ui.router', 'ocWebGui.login', 'ocWebGui.othe
 
     vm.message = 'Ladataan...';
     Settings.getOthers().then(function (others) {
-      Others.saveData(others);  // Pass data to others-service.
-      console.log("SLA-data koe:");
-      console.log(Others.getData.sla_time);
-      
+      Others.saveData(others);  // Pass data to others-service.     
       vm.others = others;
       clearMessage();
     });

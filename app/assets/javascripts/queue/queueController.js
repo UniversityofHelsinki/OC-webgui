@@ -82,7 +82,6 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     fetchContactStats();
     
     function slaTime() {
-    //  data = Others.getData();
       data = "Kokeilu"
       console.log(data);
       
