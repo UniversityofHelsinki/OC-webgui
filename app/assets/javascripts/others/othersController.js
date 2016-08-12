@@ -15,7 +15,7 @@ angular.module('ocWebGui.others', ['ui.router', 'ocWebGui.login', 'ocWebGui.othe
         }
       });
   })
-  .controller('OthersController', function ($interval, Settings) {
+  .controller('OthersController', function ($interval, Settings, Others) {
     var vm = this;
     vm.title = 'Muut asetukset';
 
@@ -25,6 +25,10 @@ angular.module('ocWebGui.others', ['ui.router', 'ocWebGui.login', 'ocWebGui.othe
 
     vm.message = 'Ladataan...';
     Settings.getOthers().then(function (others) {
+      Others.saveData(others);  // Pass data to others-service.
+      console.log("SLA-data koe:");
+      console.log(Others.getData.sla_time);
+      
       vm.others = others;
       clearMessage();
     });

@@ -16,7 +16,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
         navbarOverlay: true
       });
   })
-  .controller('QueueController', function ($q, $interval, $scope, $http, Queue, Chart, Stats) {
+  .controller('QueueController', function ($q, $interval, $scope, $http, Queue, Chart, Stats, Others) {
     var vm = this;
     vm.api = {};
 
@@ -80,4 +80,12 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
 
     fetchData();
     fetchContactStats();
+    
+    function slaTime() {
+    //  data = Others.getData();
+      data = "Kokeilu"
+      console.log(data);
+      
+      return data;
+    };
   });
