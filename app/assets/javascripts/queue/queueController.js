@@ -20,6 +20,8 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     var vm = this;
     vm.api = {};
 
+    vm.sla_data = Others.getData();
+    
     vm.options = Chart.queueChart;
     vm.data = [{
       'key': 'Puheluja tunnissa',
@@ -80,11 +82,4 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
 
     fetchData();
     fetchContactStats();
-    
-    function slaTime() {
-      data = "Kokeilu"
-      console.log(data);
-      
-      return data;
-    };
   });
