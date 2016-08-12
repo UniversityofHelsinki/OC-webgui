@@ -12,8 +12,8 @@ describe('queue', function () {
               }
             ]);
             $httpBackend.whenGET('queue.json').respond([
+              { id: 2, team: 'Helpdesk', language: 'Swedish', created_at: new Date(baseTime - 73 * 1000) },
               { id: 1, team: 'Helpdesk', language: 'Finnish', created_at: new Date(baseTime - (4 * 60 + 25) * 1000) },
-              { id: 2, team: 'Helpdesk', language: 'Swedish', created_at: new Date(baseTime - 73 * 1000) }
             ]);
             $httpBackend.whenGET('settings.json').respond({
               colors: {
