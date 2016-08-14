@@ -20,7 +20,6 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service',
     vm.notification = 'placeholder';
 
     // Setting agent reference for users requires fetching Agents to be complete first
-
     vm.agents = AgentObjects.query(function (agents) {
       vm.users = Users.query(function (users) {
         vm.users = users.map(function (user) {
@@ -38,8 +37,9 @@ angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service',
       var notificationElement = $('.alert');
       notificationElement.removeClass('alert-hidden');
       vm.notification = message;
-
+      // If a previous notification was already visible, reset the timer to hide the notification
       $interval.cancel(notificationTimeout);
+
       notificationTimeout = $interval(function () {
         notificationElement.addClass('alert-hidden');
         vm.notification = 'placeholder';

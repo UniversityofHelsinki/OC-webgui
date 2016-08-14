@@ -2,6 +2,7 @@
 class AgentStatusesController < ApplicationController
   def index
     @agent_statuses = AgentStatus.where(open: true).joins(agent: :team)
+    # Check which agents have been to lunch already, and include the information in the API
     lunched = Rails.cache.read 'lunched'
     lunched ||= Set.new
     @agent_statuses.each do |a|
