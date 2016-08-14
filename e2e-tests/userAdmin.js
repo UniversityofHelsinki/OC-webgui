@@ -42,7 +42,7 @@ describe('userAdmin', function () {
           });
         });
     });
-    browser.get('#/userAdmin');
+    browser.get('#/settings/users');
   });
 
   it('should list all current users', function () {
@@ -53,9 +53,9 @@ describe('userAdmin', function () {
   });
 
   it('should allow adding users', function () {
-    element(by.model('userAdmin.newUserUsername')).sendKeys('user3');
-    element(by.model('userAdmin.newUserPassword')).sendKeys('abc123');
-    element(by.model('userAdmin.newUserPasswordConfirmation')).sendKeys('abc123');
+    element(by.model('users.newUserUsername')).sendKeys('user3');
+    element(by.model('users.newUserPassword')).sendKeys('abc123');
+    element(by.model('users.newUserPasswordConfirmation')).sendKeys('abc123');
     element(by.buttonText('Luo käyttäjä')).click();
 
     var users = element.all(by.id('td-username'));

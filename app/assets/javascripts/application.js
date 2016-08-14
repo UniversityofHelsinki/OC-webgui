@@ -26,15 +26,11 @@
 //= require_tree ./screen
 //= stub ./queue/queueController.spec.js
 //= require_tree ./queue
-//= stub ./filterpanel/filterpanelController.spec.js
 //= require_tree ./navbar
-//= require_tree ./filterpanel
 //= require_tree ./stats
 //= require_tree ./login
 //= require_tree ./personal
-//= require_tree ./userAdmin
-//= require_tree ./color
-//= require_tree ./others
+//= require_tree ./settings
 //= require ./app.js
 //= require angular-i18n/angular-locale_fi.js
 //= require d3

@@ -1,4 +1,4 @@
-angular.module('ocWebGui.userAdmin.service', ['ngResource'])
+angular.module('ocWebGui.settings.users.service', ['ngResource'])
   .factory('AgentObjects', function ($resource) {
     return $resource('agents.json');
   })

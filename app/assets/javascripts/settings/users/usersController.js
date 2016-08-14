@@ -1,21 +1,14 @@
-angular.module('ocWebGui.userAdmin', ['ui.router', 'ocWebGui.userAdmin.service', 'ocWebGui.shared.confirmClick'])
+angular.module('ocWebGui.settings.users', ['ui.router', 'ocWebGui.settings.users.service', 'ocWebGui.shared.confirmClick'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('userAdmin', {
-        url: '/userAdmin',
-        views: {
-          nav: {
-            templateUrl: 'navbar/navbar_others.html'
-          },
-          content: {
-            templateUrl: 'userAdmin/_userAdmin.html',
-            controller: 'UserAdminController',
-            controllerAs: 'userAdmin'
-          }
-        }
+      .state('settings.users', {
+        url: '/users',
+        templateUrl: 'settings/users/_users.html',
+        controller: 'UsersController',
+        controllerAs: 'users'
       });
   })
-  .controller('UserAdminController', function UserAdminController($scope, $interval, AgentObjects, Users, UserAdmin) {
+  .controller('UsersController', function ($scope, $interval, AgentObjects, Users, UserAdmin) {
     var vm = this;
     vm.notification = 'placeholder';
 
