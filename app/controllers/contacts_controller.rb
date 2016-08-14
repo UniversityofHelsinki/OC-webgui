@@ -16,6 +16,7 @@ class ContactsController < ApplicationController
     s.settings
   end
 
+  # Statistics for the current day
   def stats
     render json: {
       answered_calls: @contacts_service.num_answered_calls,
