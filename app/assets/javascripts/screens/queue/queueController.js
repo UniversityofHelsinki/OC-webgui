@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.chart.service', 'ocWebGui.stats.service', 'nvd3'])
+angular.module('ocWebGui.screens.queue', ['ocWebGui.screens.queue.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.chart.service', 'ocWebGui.stats.service', 'nvd3'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('queue', {
@@ -8,7 +8,7 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
             templateUrl: 'navbar/navbar_screen.html'
           },
           content: {
-            templateUrl: 'queue/_queue.html',
+            templateUrl: 'screens/queue/_queue.html',
             controller: 'QueueController',
             controllerAs: 'queue'
           }

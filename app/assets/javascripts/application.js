@@ -22,10 +22,7 @@
 //= stub ./shared/color/colorDirective.spec.js
 //= require_tree ./shared
 //= require_tree ./home
-//= stub ./screen/screenController.spec.js
-//= require_tree ./screen
-//= stub ./queue/queueController.spec.js
-//= require_tree ./queue
+//= require_tree ./screens
 //= require_tree ./navbar
 //= require_tree ./stats
 //= require_tree ./login

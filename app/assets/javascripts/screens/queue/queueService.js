@@ -1,4 +1,4 @@
-angular.module('ocWebGui.queue.service', ['ngResource', 'ocWebGui.shared.filter'])
+angular.module('ocWebGui.screens.queue.service', ['ngResource', 'ocWebGui.shared.filter'])
   .factory('Queue', function ($q, $http, Filter) {
     return {
       query: function () {
