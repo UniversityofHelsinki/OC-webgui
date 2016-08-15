@@ -21,17 +21,17 @@ RSpec.describe AgentsController, type: :controller do
   end
 
   it "returns all current agents in index and new found from soap" do
-    agents_map = [{:agent_id => 1,
+    agents_map = [{:first_name => "keke",
                    :last_name => "x",
-                   :first_name => "keke",
+                   :agent_id => 1,
                    :team_name => "Helpdesk"},
-                  {:agent_id => 2,
+                  {:first_name => "spede",
                    :last_name => "x",
-                   :first_name => "spede",
+                   :agent_id => 2,
                    :team_name => "Helpdesk"},
-                  {:agent_id => 3,
+                  {:first_name => "harri",
                    :last_name => "x",
-                   :first_name => "harri",
+                   :agent_id => 3,
                    :team_name => "Puhelinvaihde"}]
     allow_any_instance_of(BackendService).to receive(:get_agents).and_return(agents_map)
     Agent.create(id: 1, first_name: "keke", last_name: "x")
