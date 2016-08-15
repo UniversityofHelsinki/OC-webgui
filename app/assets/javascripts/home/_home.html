@@ -1,5 +1,4 @@
-<div class="col-md-2"></div>
-<div class="col-md-8 foreground">
+<div class="container foreground">
     <div class="home-menu">
         <h1>Koti</h1>
         <a ui-sref="status" class="card">Statusnäkymä</a>
@@ -10,6 +9,4 @@
         <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Kirjaudu sisään</a>
         <a ng-if="home.isAuthenticated()" ng-click="home.logout()" class="card">Kirjaudu ulos</a>
     </div>
-</div>
-<div class="col-md-2">
 </div>
