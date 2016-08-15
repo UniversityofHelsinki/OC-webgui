@@ -15,6 +15,7 @@ RSpec.describe AgentsController, type: :controller do
       "first_name"=>"spede",
       "last_name"=>"x"
     }
+    allow_any_instance_of(AgentsController).to receive(:get_all).and_return(nil)
     expect(JSON.parse(response.body)).to include(agent1)
     expect(JSON.parse(response.body)).to include(agent2)
   end
