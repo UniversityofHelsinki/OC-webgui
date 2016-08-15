@@ -33,7 +33,7 @@ RSpec.describe AgentsController, type: :controller do
                    :last_name => "x",
                    :first_name => "harri",
                    :team_name => "Puhelinvaihde"}]
-    allow_any_instance_of(BackendService).to receive(:get_agents).and_return(nil)
+    allow_any_instance_of(BackendService).to receive(:get_agents).and_return(agents_map)
     Agent.create(id: 1, first_name: "keke", last_name: "x")
     Agent.create(id: 2, first_name: "spede", last_name: "x")
     get :index, format: :json
