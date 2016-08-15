@@ -47,7 +47,7 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screens.stat
         disableNavbarOverlay();
       }
 
-      if (toState.name === 'stats' && !User.isAuthenticated()) {
+      if (toState.name.indexOf('stats') === 0 && !User.isAuthenticated()) {
         $rootScope.returnToState = toState;
         $rootScope.returnToParams = toParams;
         event.preventDefault();
