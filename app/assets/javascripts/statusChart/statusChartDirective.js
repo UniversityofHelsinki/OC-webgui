@@ -1,5 +1,5 @@
 angular.module('ocWebGui.statusChart.directive', [])
-  .directive('ocStatusChart', function (CustomDate) {
+  .directive('ocStatusChart', function (CustomDate, Chart) {
     return {
       restrict: 'E',
       scope: {
@@ -9,7 +9,6 @@ angular.module('ocWebGui.statusChart.directive', [])
       template: '<nvd3 options="options" data="newData" api="api"></nvd3>',
       controller: function ($scope) {
         $scope.api = {};
-
         $scope.options = {
           chart: {
             type: 'multiChart',
@@ -22,11 +21,17 @@ angular.module('ocWebGui.statusChart.directive', [])
             },
             x: function (d) { return d.hour; },
             y: function (d) { return d.value; },
+            xAxis: {
+            },
             yAxis1: {
               tickFormat: function (seconds) {
                 return CustomDate.niceFormatting(seconds);
               }
-            }
+            },
+            yAxis2: {
+            },
+            yDomain1: [0, 10],
+            yDomain2: [0, 10]
           }
         };
 
@@ -107,14 +112,29 @@ angular.module('ocWebGui.statusChart.directive', [])
                 hour: i,
                 value: d
               };
+              $scope.options.chart.xAxis.tickFormat = function (d) { return d; };
             }).slice(7, 17);
           } else if (newData.type === 'month') {
             $scope.newData[3].values = newData.values.dropped.map(function (d) {
               return {
-                hour: new Date(d.date).getTime(),
+                hour: d.date, //new Date(d.date).getTime(),
                 value: d.count
               };
             });
+            $scope.options.chart.xAxis.tickFormat = function (seconds) { return d3.time.format('%d.%m %a')(new Date(seconds)); };
+          }
+          var queueMax = d3.max($scope.newData[3].values, function (x) { return x.value; });
+          var callMax = $scope.options.chart.yDomain1[1];
+          var y1AxisOldTicks = $scope.options.chart.yAxis1.tickValues;
+          var y2AxisOldTicks = $scope.options.chart.yAxis2.tickValues;
+          var y1AxisNewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
+          var y2AxisNewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
+          if (!angular.equals(y1AxisOldTicks, y1AxisNewTicks) || !angular.equals(y2AxisOldTicks, y2AxisNewTicks)) {
+            $scope.options.chart.yDomain1[1] = callMax;
+            $scope.options.chart.yDomain2[1] = queueMax;
+            $scope.options.chart.yAxis1.tickValues = y1AxisNewTicks;
+            $scope.options.chart.yAxis2.tickValues = y2AxisNewTicks;
+            $scope.api.refresh();
           }
         });
       }
