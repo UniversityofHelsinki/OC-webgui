@@ -22,7 +22,8 @@
     "d3": "^3.5.17",
     "nvd3": "^1.8.3",
     "angular-nvd3": "^1.0.7",
-    "angular-fullscreen": "^1.0.1"
+    "angular-fullscreen": "^1.0.1",
+    "angularjs-datepicker": "^2.1.6"
   },
   "resolutions": {
     "d3": "^3.4.4",

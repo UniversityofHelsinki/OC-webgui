@@ -37,7 +37,7 @@
 //= require_tree ./statusChart
 //= require_tree ./others
 //= require ./app.js
-//= require ./angular-datepicker.js
+//= require angularjs-datepicker
 //= require angular-i18n/angular-locale_fi.js
 //= require d3
 //= require nvd3
