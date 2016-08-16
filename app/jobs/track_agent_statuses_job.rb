@@ -1,4 +1,4 @@
-# Retrieves agent statuses and calls AgentStatusUpdater to update them where necessary
+# Retrieves data for the current status of each agent who is logged in, and uses AgentStatusUpdater class to update them in the DB.
 class TrackAgentStatusesJob
   extend Now
 
@@ -14,6 +14,8 @@ class TrackAgentStatusesJob
     Rails.cache.write('track_agent_statuses_job_last_success', now)
   end
 
+  # Checks if agents are currently on lunch, and stores the information in cache, where it can be retrieved by controllers.
+  # This information can be displayed in the frontend to allow easy checking of which agents have already been to lunch.
   def self.lunch(states)
     luncheds = Rails.cache.read 'lunched'
 

@@ -1,21 +1,14 @@
-angular.module('ocWebGui.filterpanel', ['ui.router', 'ocWebGui.shared.filter'])
+angular.module('ocWebGui.settings.filters', ['ui.router', 'ocWebGui.shared.filter'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('filterpanel', {
-        url: '/filterpanel',
-        views: {
-          nav: {
-            templateUrl: 'navbar/navbar_others.html'
-          },
-          content: {
-            templateUrl: 'filterpanel/_filterpanel.html',
-            controller: 'FilterpanelController',
-            controllerAs: 'filterpanel'
-          }
-        }
+      .state('settings.filters', {
+        url: '/filters',
+        templateUrl: 'settings/filters/_filters.html',
+        controller: 'FiltersController',
+        controllerAs: 'filters'
       });
   })
-  .controller('FilterpanelController', function ($scope, $interval, Filter) {
+  .controller('FiltersController', function ($scope, $interval, Filter) {
     var vm = this;
 
     var notificationInterval;
@@ -33,10 +26,10 @@ angular.module('ocWebGui.filterpanel', ['ui.router', 'ocWebGui.shared.filter'])
 
     Filter.getTeams().then(function (teams) {
       vm.teams = teams;
-      $scope.$watch('filterpanel.teams', showNotification, true);
+      $scope.$watch('filters.teams', showNotification, true);
     });
     Filter.getStates().then(function (states) {
       vm.states = states;
-      $scope.$watch('filterpanel.states', showNotification, true);
+      $scope.$watch('filters.states', showNotification, true);
     });
   });

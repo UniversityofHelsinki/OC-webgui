@@ -1,9 +1,8 @@
-<div class="stats-bg">
-    <div class="stats card">
-        <h3>{{ stats.title }}</h3>
-        <p>Secrets and</p>
-        <p>Cool statistics</p>
-        <nvd3 options="stats.options" data="stats.data" api="stats.api" class="stats-chart"></nvd3>
-        <nvd3 options="stats.options2" data="stats.data2" api="stats.api2" class="stats-chart2"></nvd3>
+<div class="container foreground">
+    <ul class="col-md-2 nav nav-pills nav-stacked" style="margin-top:1em">
+        <li ui-sref-active="active"><a ui-sref="stats.today">Tänään</a></li>
+    </ul>
+    <div class="col-md-10">
+        <ui-view></ui-view>
     </div>
 </div>

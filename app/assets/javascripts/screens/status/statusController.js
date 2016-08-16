@@ -1,22 +1,22 @@
-angular.module('ocWebGui.screen', ['ocWebGui.screen.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.trimName.service', 'ngAnimate'])
+angular.module('ocWebGui.screens.status', ['ocWebGui.screens.status.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.trimName.service'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('screen', {
-        url: '/screen',
+      .state('status', {
+        url: '/status',
         views: {
           nav: {
             templateUrl: 'navbar/navbar_screen.html'
           },
           content: {
-            templateUrl: 'screen/_screen.html',
-            controller: 'ScreenController',
-            controllerAs: 'screen'
+            templateUrl: 'screens/status/_status.html',
+            controller: 'StatusController',
+            controllerAs: 'status'
           }
         },
         navbarOverlay: true
       });
   })
-  .controller('ScreenController', function ($interval, $scope, Agents, TrimName) {
+  .controller('StatusController', function ($interval, $scope, Agents, TrimName) {
     var vm = this;
     var fetchDataInterval;
 

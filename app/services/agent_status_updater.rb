@@ -1,6 +1,6 @@
-# Compares two arrays of AgentStatus objects. The assumption is that they represent two queries made to the OC SOAP service, where
-# new_statuses contains results from the most recent query, and previous_from the one made prior to it. These queries are compared,
-# and AgentStatuses are created and updated when new ones or changes are detected.
+# Provides functionality for tracking the statuses of Agents over time and storing the current status of logged in Agents in the DB.
+# This is done by comparing the latest agent status data from OC to AgentStatus data stored in the DB. Any changes are updated.
+#
 # Current_time parameter should always be current time (Time.zone.now), except for tests
 # Last_success should contain timestamp of the last time the update job was run successfully
 class AgentStatusUpdater
@@ -10,6 +10,11 @@ class AgentStatusUpdater
     @last_success = last_success
   end
 
+  # Updates the statuses of each logged in agent. Any statuses that are no longer active will be marked as closed,
+  # and their closed time updated to current time. Any new statuses (belonging either to agents who logged in, or whose
+  # status has changed) will be stored as new AgentStatus objects in the DB such that their open status is set to true.
+  #
+  # new_statuses should be an Array of AgentStatus objects representing the current state of each logged in agent
   def update_statuses(new_statuses)
     new_statuses ||= []
 
@@ -26,6 +31,7 @@ class AgentStatusUpdater
 
   private
 
+  # Assign created_at time for each new status to help determine whether the statuses are the same as those already stored in DB
   def check_when_new_statuses_opened
     @new_statuses.each { |_agent_id, status| status.created_at = Time.zone.at(@current_time.to_i - status.time_in_status.to_i) }
   end
@@ -36,6 +42,7 @@ class AgentStatusUpdater
     end
   end
 
+  # Create a new AgentStatus for each agent who either logged in since the last check, or whose status has changed
   def update_new_and_changed_statuses
     @new_statuses.each do |agent_id, status|
       # If agent didn't appear in the previous query, it means they must have signed in, so create a new status for them
@@ -50,7 +57,8 @@ class AgentStatusUpdater
   def check_if_status_has_changed(agent_id, status)
     previous = @previous_statuses[agent_id]
     # The agent's status has changed if either the status name is different, or the time spent in it is less than before
-    # 10 second buffer is included to account for random delays when fetching SOAP responses
+    # Since AgentStatus data from OC is only updated every 5 seconds and there may be random delays, there is a 10 second buffer
+    # to ensure that an existing status is not registered as a changed one.
     if previous.status != status.status ||
        status.created_at > previous.created_at + 10.seconds
 
@@ -66,6 +74,7 @@ class AgentStatusUpdater
     AgentStatus.create(@statuses_to_create)
   end
 
+  # Adds status to list of statuses to be saved later
   def save_new_status(status)
     @statuses_to_create.push(agent_id: status.agent_id,
                              status: status.status,

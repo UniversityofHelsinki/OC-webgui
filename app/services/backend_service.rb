@@ -15,6 +15,8 @@ class BackendService
     )
   end
 
+  # Gets all contacts for the specified Team. NOTE: Does not return contacts which have not been assigned to an agent, ie.
+  # contacts that are still in the queue, or which have been missed.
   def get_team_contacts(team_name, start_date, end_date)
     get_agent_contacts(service_group_id: -1,
                        service_id: -1,
@@ -25,6 +27,7 @@ class BackendService
                        contact_type: 'PBX EMAIL SMS FAX SCAN CHAT COBRO MANUAL FACE TASK VIDEO')
   end
 
+  # Gets all contacts for the specified service, including those that are still in the queue or which have been missed.
   def get_service_contacts(service_id, start_date, end_date)
     get_agent_contacts(service_group_id: -1,
                        service_id: service_id,
@@ -59,6 +62,7 @@ class BackendService
     data
   end
 
+  # Gets all Agents registered in OC
   def get_agents
     reply = @client.call(:get_agents)
 
@@ -77,6 +81,7 @@ class BackendService
     end
   end
 
+  # Gets all Services registered in OC
   def get_services
     reply = @client.call(:get_services)
 
@@ -93,6 +98,7 @@ class BackendService
     end
   end
 
+  # Gets the current status of all logged in agents
   def get_agent_online_state
     reply = @client.call(:get_agent_online_state)
     data = reply.body.dig(:get_agent_online_state_response,
@@ -117,6 +123,7 @@ class BackendService
     return []
   end
 
+  # Returns the current state of the queue for all services (and hence all teams)
   def get_general_queue
     reply = @client.call(:get_general_queue)
     data = reply.body.dig(:get_general_queue_response,
@@ -128,6 +135,11 @@ class BackendService
       {
         service_id: attrs[:string][0],
         service_name: attrs[:string][1],
+        channel_id: attrs[:string][2],
+        channel_name: attrs[:string][3],
+        contact_type: attrs[:string][4],
+        directive: attrs[:string][5],
+        queue_length: attrs[:string][6],
         time_in_queue: attrs[:string][7]
       }
     end
@@ -136,6 +148,7 @@ class BackendService
     return []
   end
 
+  # Gets all teams currently registered in OC.
   def get_teams
     reply = @client.call(:get_teams)
     data = reply.body.dig(:get_teams_response,
