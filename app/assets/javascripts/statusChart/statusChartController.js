@@ -29,4 +29,35 @@ angular.module('ocWebGui.statusChart', ['ui.router', 'ocWebGui.statusChart.servi
         };
       });
     };
+
+    vm.getCSVData = function () {
+      if (vm.reportType === 'day') {
+        return vm.chartData.values.stats.map(function (d) {
+          return {
+            hour: d.hour,
+            busy: d.busy,
+            free: d.free,
+            other: d.other
+          };
+        });
+      }
+
+      if (vm.reportType === 'month') {
+        return vm.chartData.values.stats.map(function (d) {
+          return {
+            date: d.date,
+            busy: d.busy,
+            free: d.free,
+            other: d.other
+          };
+        });
+      }
+    };
+
+    vm.getCSVHeader = function () {
+      if (vm.reportType === 'day') {
+        return ["hour", "busy", "free", "other"];
+      }
+      return ["date", "busy", "free", "other"];
+    };
   });
