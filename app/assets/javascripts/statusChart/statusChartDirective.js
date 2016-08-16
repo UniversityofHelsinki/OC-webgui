@@ -115,8 +115,8 @@ angular.module('ocWebGui.statusChart.directive', [])
                 hour: i,
                 value: d
               };
-              $scope.options.chart.xAxis.tickFormat = function (d) { return d; };
             }).slice(7, 17);
+            $scope.options.chart.xAxis.tickFormat = function (d) { return d; };
           } else if (newData.type === 'month') {
             $scope.newData[3].values = newData.values.dropped.map(function (d) {
               return {
