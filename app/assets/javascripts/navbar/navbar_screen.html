@@ -1,7 +1,7 @@
 <div class="navbar navbar-screen overlay" ng-controller="NavbarController as navbar">
-  <a ui-sref-active="active" ui-sref="screen">Statukset</a>
+  <a ui-sref-active="active" ui-sref="status">Statukset</a>
   <a ui-sref-active="active" ui-sref="queue">Jono</a>
-  <a ui-sref-active="active" ui-sref="filterpanel">Filtteröi</a>
+  <a ui-sref-active="active" ui-sref="settings.filters">Filtteröi</a>
   <a href ng-click="navbar.goFullscreen()">
       {{ navbar.isFullscreen ? 'Pois kokoruudusta' : 'Kokoruutu' }}
   </a>

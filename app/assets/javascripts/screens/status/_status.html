@@ -1,10 +1,10 @@
 <div class="background screen-background">
     <div class="card-container">
-        <div ng-repeat="agent in screen.agents | orderBy: 'first_name' track by agent.id" ng-class="{'card': true, 'agent-card': true, 'after-call': agent.status === 'Jälkikirjaus', 'lunch': agent.lunch == true}" class="{{ screen.number_of_columns }}">
+        <div ng-repeat="agent in status.agents | orderBy: 'first_name' track by agent.id" ng-class="{'card': true, 'agent-card': true, 'after-call': agent.status === 'Jälkikirjaus', 'lunch': agent.lunch == true}" class="{{ status.number_of_columns }}">
             <div class="agent-status-color agent-status-color-{{agent.color}}" oc-color="statuses.{{ agent.color }}"></div>
             <div class="agent-status-info">
                 <div class="agent-name">
-                    {{ screen.trimName(agent.first_name, agent.last_name) }}
+                    {{ status.trimName(agent.first_name, agent.last_name) }}
                 </div>
                 <div ng-class="{'agent-status-container': true, 'agent-status-open': agent.status === 'Vapaa'}">
                     <div class="agent-status">{{ agent.status }}</div>
@@ -16,15 +16,15 @@
     <div class="sidebar">
         <div class="agent-status-count">
             <div class="agent-status-color agent-status-color-free" oc-color="statuses.free"></div>
-            <div class="free-count">{{ screen.counts.free }}</div>
+            <div class="free-count">{{ status.counts.free }}</div>
         </div>
         <div class="agent-status-count">
             <div class="agent-status-color agent-status-color-call" oc-color="statuses.call"></div>
-            <div class="call-count">{{ screen.counts.call }}</div>
+            <div class="call-count">{{ status.counts.call }}</div>
         </div>
         <div class="agent-status-count">
             <div class="agent-status-color agent-status-color-busy" oc-color="statuses.busy"></div>
-            <div class="busy-count">{{ screen.counts.busy }}</div>
+            <div class="busy-count">{{ status.counts.busy }}</div>
         </div>
     </div>
 </div>

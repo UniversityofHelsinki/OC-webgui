@@ -1,4 +1,4 @@
-angular.module('ocWebGui.screen.service', ['ngResource', 'ocWebGui.shared.filter'])
+angular.module('ocWebGui.screens.status.service', ['ngResource', 'ocWebGui.shared.filter'])
   .factory('Agents', function ($q, $http, Filter) {
     return {
       query: function () {

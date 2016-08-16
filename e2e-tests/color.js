@@ -60,10 +60,11 @@ describe('color', function () {
     });
 
     it('changes color from settings', function () {
-      element(by.linkText('Säädä värejä')).click();
+      element(by.linkText('Asetukset')).click();
+      element(by.linkText('Värit')).click();
 
-      var bgInput = browser.element(by.model('color.colors.background'));
-      bgInput.evaluate('color.colors.background = "#ff0000";');
+      var bgInput = browser.element(by.model('colors.colors.background'));
+      bgInput.evaluate('colors.colors.background = "#ff0000";');
       browser.element(by.buttonText('Tallenna')).click();
 
       var message = browser.element(by.tagName('p'));

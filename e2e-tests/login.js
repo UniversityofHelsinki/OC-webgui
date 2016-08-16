@@ -81,7 +81,7 @@ describe('login', function () {
   });
 
   it('should redirect back to protected route', function () {
-    browser.get('#/stats');
+    browser.get('#/stats/today');
 
     expect(browser.getLocationAbsUrl()).toMatch('/login');
     element(by.model('login.username')).sendKeys('jooseppi');
