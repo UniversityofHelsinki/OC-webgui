@@ -33,7 +33,7 @@ class AgentStatusService
       end
     end
     stats.map do |hour, data|
-      data.merge({hour: hour})
+      data.merge(hour: hour)
     end
   end
 
@@ -45,14 +45,14 @@ class AgentStatusService
     date = @start_time
     while date < @end_time
       stats[date.to_date] = { free: 0, busy: 0, other: 0 }
-      date = date + 1.day
+      date = date.tomorrow
     end
     @statuses.each do |status|
       date = status.created_at.to_date
       stats[date][status_type(status.status)] += status.closed - status.created_at
     end
     stats.map do |date, data|
-      data.merge({date: date})
+      data.merge(date: date)
     end
   end
 
