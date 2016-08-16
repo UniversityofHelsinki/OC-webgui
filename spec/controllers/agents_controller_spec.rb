@@ -2,7 +2,7 @@ RSpec.describe AgentsController, type: :controller do
   render_views
 
   it "returns all current agents in index" do
-    allow_any_instance_of(AgentsController).to receive(:get_all).and_return(nil)
+    allow_any_instance_of(AgentsController).to receive(:fetch_and_save_all_agents).and_return(nil)
     Agent.create(id: 1, first_name: "keke", last_name: "x")
     Agent.create(id: 2, first_name: "spede", last_name: "x")
     get :index, format: :json
