@@ -1,0 +1,17 @@
+<h1>Yleiset</h1>
+<p ng-if="general.message">{{ general.message }}</p>
+<form ng-submit="general.save()" ng-if="general.others">
+    <div class="form-group">
+        <label for="sla">Yleinen palvelutaso</label>
+        <input id="sla" type="number" ng-model="general.others.sla" min="0" required class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="working-day-start">Työpäivän alkamisajankohta</label>
+        <input id="working-day-start" type="number" ng-model="general.others.working_day_start" min="0" max="24" required class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="working-day-end">Työpäivän loppumisajankohta</label>
+        <input id="working-day-end" type="number" ng-model="general.others.working_day_end" min="0" max="24" required class="form-control">
+    </div>
+    <button class="btn btn-success" type="submit">Tallenna</button>
+</form>

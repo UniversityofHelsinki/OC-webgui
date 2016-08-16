@@ -1,21 +1,15 @@
-<div class="col-md-2"></div>
-<div class="col-md-8">
-    <div class="center-all foreground">
-        <h1>{{ login.title }}</h1>
-        <form ng-submit="login.login()">
-            <label>
-                Käyttäjä:
-                <input ng-model="login.username">
-            </label>
-            <br>
-            <label>
-                Salasana:
-                <input type="password" ng-model="login.password">
-            </label>
-            <br>
-            <p class="error">{{ login.error }}</p>
-            <input type="submit" value="Login" class="login-button btn btn-primary">
-        </form>
-    </div>
+<div class="container foreground">
+    <h1>Kirjaudu sisään</h1>
+    <form ng-submit="login.login()">
+        <div class="form-group">
+            <label for="username">Käyttäjä</label>
+            <input ng-model="login.username" id="username">
+        </div>
+        <div class="form-group">
+            <label for="password">Salasana</label>
+            <input type="password" ng-model="login.password" id="password">
+        </div>
+        <p class="error">{{ login.error }}</p>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
 </div>
-<div class="col-md-2"></div>
