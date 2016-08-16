@@ -1,23 +1,15 @@
-angular.module('ocWebGui.color', ['ui.router', 'ocWebGui.login'])
+angular.module('ocWebGui.settings.colors', ['ui.router'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('color', {
-        url: '/color',
-        views: {
-          nav: {
-            templateUrl: 'navbar/navbar_others.html'
-          },
-          content: {
-            templateUrl: 'color/_color.html',
-            controller: 'ColorController',
-            controllerAs: 'color'
-          }
-        }
+      .state('settings.colors', {
+        url: '/colors',
+        templateUrl: 'settings/colors/_colors.html',
+        controller: 'ColorsController',
+        controllerAs: 'colors'
       });
   })
-  .controller('ColorController', function ($interval, Settings) {
+  .controller('ColorsController', function ($interval, Settings) {
     var vm = this;
-    vm.title = 'Värit';
 
     function clearMessage() {
       vm.message = '';
