@@ -1,6 +1,8 @@
 # Calculates various statistics data based on Contact objects.
 class ContactsService
   def initialize(filter_by_model, start_time, end_time)
+    @start_time = start_time
+    @end_time = end_time
     if filter_by_model.is_a? Team
       @contacts = Contact.joins(:service).where(services: { team_id: filter_by_model.id }, arrived: start_time..end_time)
     elsif filter_by_model.is_a? Agent
@@ -78,6 +80,13 @@ class ContactsService
 
   def dropped_calls_by_day(sla)
     result = Hash.new 0
+
+    # initialize result array to contain all dates
+    d = @start_time
+    while d < @end_time
+      result[d.to_date] = 0
+      d = d + 1.day
+    end
     missed_contacts.select('contacts.arrived, EXTRACT(EPOCH FROM contacts.call_ended - contacts.arrived) AS duration')
                    .select { |c| c if c['duration'] > sla }
                    .each { |c| result[c['arrived'].to_date] += 1 }

@@ -3,6 +3,9 @@ class AgentStatusService
   def initialize(team_name, start_date, end_date)
     start_date = Time.zone.parse(start_date) if start_date.class == String
     end_date = Time.zone.parse(end_date) if end_date.class == String
+    # TODO: korjais tän ku on toistoa
+    @start_time = start_date.beginning_of_day
+    @end_time = end_date.end_of_day
     @statuses = AgentStatus.joins(agent: :team).where(teams: { name: team_name },
                                                       created_at: start_date.beginning_of_day..end_date.end_of_day,
                                                       open: false)
@@ -37,10 +40,12 @@ class AgentStatusService
   def stats_by_day
     gmt_offset = Time.now.getlocal.gmt_offset
     stats = {}
-    date = @statuses.first.created_at.to_date
-    while date != @statuses.last.created_at.to_date.tomorrow do
-      stats[date] = { free: 0, busy: 0, other: 0 }
-      date = date.tomorrow
+
+    # initialize result array to contain all dates
+    date = @start_time
+    while date < @end_time
+      stats[date.to_date] = { free: 0, busy: 0, other: 0 }
+      date = date + 1.day
     end
     @statuses.each do |status|
       date = status.created_at.to_date

@@ -6,7 +6,7 @@ angular.module('ocWebGui.statusChart.directive', [])
         data: '=',
         type: '='
       },
-      template: '<nvd3 options="options" data="newData" api="api"></nvd3>',
+      template: '<nvd3 options="options" data="newData" api="api" class="status-chart"></nvd3>',
       controller: function ($scope) {
         $scope.api = {};
         $scope.options = {
@@ -126,13 +126,12 @@ angular.module('ocWebGui.statusChart.directive', [])
             });
             $scope.options.chart.xAxis.tickFormat = function (seconds) { return d3.time.format('%d.%m %a')(new Date(seconds)); };
           }
-          var queueMax = d3.max($scope.newData[3].values, function (x) { return x.value; });
+          var queueMax = d3.max($scope.newData[3].values, function (x) { return x.value; }) + 1;
           var callMax = $scope.options.chart.yDomain1[1];
           var y1AxisOldTicks = $scope.options.chart.yAxis1.tickValues;
           var y2AxisOldTicks = $scope.options.chart.yAxis2.tickValues;
           var y1AxisNewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
           var y2AxisNewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
-
           if (!angular.equals(y1AxisOldTicks, y1AxisNewTicks) || !angular.equals(y2AxisOldTicks, y2AxisNewTicks)) {
             $scope.options.chart.yDomain1[1] = callMax;
             $scope.options.chart.yDomain2[1] = queueMax;
