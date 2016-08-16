@@ -19,6 +19,9 @@ angular.module('ocWebGui.statusChart.directive', [])
             margin: {
               left: 150
             },
+            lines: {
+              padData: true
+            },
             x: function (d) { return d.hour; },
             y: function (d) { return d.value; },
             xAxis: {
@@ -117,7 +120,7 @@ angular.module('ocWebGui.statusChart.directive', [])
           } else if (newData.type === 'month') {
             $scope.newData[3].values = newData.values.dropped.map(function (d) {
               return {
-                hour: d.date, //new Date(d.date).getTime(),
+                hour: new Date(d.date).getTime(),
                 value: d.count
               };
             });
@@ -129,6 +132,7 @@ angular.module('ocWebGui.statusChart.directive', [])
           var y2AxisOldTicks = $scope.options.chart.yAxis2.tickValues;
           var y1AxisNewTicks = [callMax / 4, callMax / 2, callMax / (1 + 1.0 / 3)];
           var y2AxisNewTicks = [queueMax / 4, queueMax / 2, queueMax / (1 + 1.0 / 3)];
+
           if (!angular.equals(y1AxisOldTicks, y1AxisNewTicks) || !angular.equals(y2AxisOldTicks, y2AxisNewTicks)) {
             $scope.options.chart.yDomain1[1] = callMax;
             $scope.options.chart.yDomain2[1] = queueMax;
