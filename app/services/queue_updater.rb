@@ -1,4 +1,4 @@
-# DEPRECATED: Class is currently not used as more accurate data is provided by ContactsService
+# THIS CLASS IS NOT CURRENTLY IN USE. More accurate data can be obtained using Contacts data.
 # Provides functionality for updating queue status. This is done by comparing the current status of the queue with a prior status.
 # This is done by supplying the class an array of QueueItem objects, which represents the current status of the queue, and comparing
 # them to QueueItem objects with an open:true status in the DB, which represent the last known state of the queue prior to the update.

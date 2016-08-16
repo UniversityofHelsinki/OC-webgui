@@ -1,4 +1,4 @@
-# Retrieves queue status information and passes it to QueueUpdater to update as necessary
+# Retrieves the current state of the queue and stores it temporarily in Rails Cache for Controllers to use.
 class TrackQueueItemsJob
   extend Now
 

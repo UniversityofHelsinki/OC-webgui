@@ -1,5 +1,4 @@
-# DEPRECATED: Class is not currently used as more accurate data is provided by ContactsService
-# Provides service for calculating Contact objects out of AgentStatus data that corresponds to answered contacts
+# Provides service for calculating Contact objects out of AgentStatus data that corresponds to answered contacts. NOT IN USE CURRENTLY.
 class AgentStatusContactsService
   def contacts_for_team(team_name, starttime, endtime)
     convert_to_contacts(contact_statuses(team_name, starttime, endtime))

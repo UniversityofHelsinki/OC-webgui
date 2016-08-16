@@ -14,6 +14,13 @@ class ContactsController < ApplicationController
     @contacts_service.contacts_for_team(@team_name, @start_time, @end_time)
   end
 
+  def settings
+    s = SettingsController.new
+    s.request = request
+    s.settings
+  end
+
+  # Statistics for the current day
   def stats
     render json: {
       answered_calls: @contacts_service.num_answered_calls,
