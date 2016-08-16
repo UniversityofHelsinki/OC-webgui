@@ -60,4 +60,8 @@ angular.module('ocWebGui.statusChart', ['ui.router', 'ocWebGui.statusChart.servi
       }
       return ["date", "busy", "free", "other"];
     };
+
+    vm.getCSVFilename = function () {
+      return "stats_by_" + vm.reportType + "_" + vm.startDate + "_" + vm.endDate;
+    };
   });
