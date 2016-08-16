@@ -28,6 +28,7 @@
 //= require_tree ./login
 //= require_tree ./personal
 //= require_tree ./settings
+//= require_tree ./statusChart
 //= require ./app.js
 //= require angularjs-datepicker
 //= require angular-i18n/angular-locale_fi.js
