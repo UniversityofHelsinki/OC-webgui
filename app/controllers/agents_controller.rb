@@ -7,7 +7,7 @@ class AgentsController < ApplicationController
 
   def get_all
     BackendService.new.get_agents.map do |data|
-      name = [data[:first_name], data[:last_name]].join(' ')
+      name = [data[:last_name], data[:first_name]].join(' ')
       Agent.find_or_create(data[:agent_id], name, data[:team])
     end
   end
