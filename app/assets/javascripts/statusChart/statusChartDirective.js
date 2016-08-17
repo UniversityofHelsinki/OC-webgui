@@ -34,7 +34,9 @@ angular.module('ocWebGui.statusChart.directive', [])
             yAxis2: {
             },
             yDomain1: [0, 10],
-            yDomain2: [0, 10]
+            yDomain2: [0, 10],
+            noData: 'Ei tilastotietoa',
+            // useInteractiveGuideline: true
           }
         };
 
@@ -99,10 +101,11 @@ angular.module('ocWebGui.statusChart.directive', [])
 
           // Workaround NVD3 because with multi chart type it doesn't get y domain from the stacked
           // bar but individual bars.
-          $scope.options.chart.yDomain1 = [0, d3.max(data, function (d) {
+          var yDomain1Max = d3.max(data, function (d) {
             return d.free + d.busy + d.other;
-          })];
-        }
+          }) || 1;
+          $scope.options.chart.yDomain1 = [0, yDomain1Max];
+        };
 
         $scope.$watch('data', function (newData) {
           if (!newData.type || !newData.values) {

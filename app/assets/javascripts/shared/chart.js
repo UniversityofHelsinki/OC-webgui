@@ -116,10 +116,7 @@ angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service']
       },
 
       getMaxValPlusOne: function (w) {
-        var maxVal = d3.max(w.values, function (x) { return x.calls; });
-        if (maxVal == null) {
-          return 1;
-        }
+        var maxVal = d3.max(w.values, function (x) { return x.calls; }) || 0;
         return maxVal + 1;
       }
     };
