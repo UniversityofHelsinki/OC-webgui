@@ -21,9 +21,12 @@ angular.module('ocWebGui.queue', ['ocWebGui.queue.service', 'ui.router', 'ocWebG
     vm.api = {
       sla: 150
     };
-
-    vm.sla_time = Settings.getOthers().then(function (others) {
-      return others.sla; 
+    vm.sla_time = 0;
+    
+    Settings.getOthers().then(function (others) {
+      vm.sla_time = others.sla;
+     // debugger;
+     // return others.sla; 
     });
     
     vm.options = Chart.queueChart;
