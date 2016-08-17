@@ -1,4 +1,4 @@
-angular.module('ocWebGui.stats.status2.service', ['ngResource'])
+angular.module('ocWebGui.stats.status.service', ['ngResource'])
   .factory('AgentStatusStats', function ($http) {
     return {
       stats: function (startDate, endDate, reportType) {
