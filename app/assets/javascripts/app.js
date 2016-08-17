@@ -1,7 +1,7 @@
 angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screens.status',
     'ocWebGui.screens.queue', 'ocWebGui.stats', 'ocWebGui.login', 'ocWebGui.navbar',
     'ocWebGui.personal', 'ocWebGui.shared.color', 'ocWebGui.shared.settings', 'ocWebGui.settings',
-    'ocWebGui.statusChart', 'ocWebGui.statusChart.service', '720kb.datepicker', 'ngSanitize', 'ngCsv'])
+    '720kb.datepicker', 'ngSanitize', 'ngCsv'])
   .run(function ($rootScope, $state, User, $interval, Settings) {
     var $body = $(document.body);
     var $navbar = $('.navbar');

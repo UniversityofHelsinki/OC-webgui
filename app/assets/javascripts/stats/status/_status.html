@@ -1,0 +1,36 @@
+<div class="col-md-6">
+    <h3>Aikaväli</h3>
+    <div style="display:flex;margin-bottom:1em">
+        <datepicker date-format="dd.MM.yyyy" style="flex-grow:1" ng-click="status.fetchData()">
+            <input type="text" ng-model="status.startDate" placeholder="Aloituspäivä" style="width:100%">
+        </datepicker>
+        <div style="padding:0.5em">-</div>
+        <datepicker date-format="dd.MM.yyyy" style="flex-grow:1" ng-click="status.fetchData()">
+            <input type="text" ng-model="status.endDate" placeholder="Lopetuspäivä" style="width:100%">
+        </datepicker>
+    </div>
+    <button type="submit" class="btn btn-success" ng-click="status.fetchData()">Hae</button>
+    <button type="button" class="btn" ng-csv="status.getCSVData()" csv-header="status.getCSVHeader()" filename="{{ status.getCSVFilename() }}.csv">Export</button>
+</div>
+<div class="col-md-6">
+    <h3>Raportin tyyppi</h3>
+    <div class="form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="reportTypes" value="day" ng-model="status.reportType" ng-click="status.fetchData()">
+            Päivä
+        </label>
+    </div>
+    <div class="form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="reportTypes" value="month" ng-model="status.reportType" ng-click="status.fetchData()">
+            Kuukausi
+        </label>
+    </div>
+    <div class="form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="reportTypes" value="year" ng-model="status.reportType" ng-click="status.fetchData()">
+            Vuosi
+        </label>
+    </div>
+</div>
+<oc-status-chart ng-if="status.chartData" data="status.chartData"></oc-status-chart>
