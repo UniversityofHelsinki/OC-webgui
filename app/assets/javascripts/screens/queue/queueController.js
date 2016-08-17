@@ -27,8 +27,6 @@ angular.module('ocWebGui.screens.queue', ['ocWebGui.screens.queue.service', 'ui.
     
     Settings.getOthers().then(function (others) {
       vm.sla_time = others.sla;
-     // debugger;
-     // return others.sla; 
     });
     
     vm.options = Chart.queueChart;
