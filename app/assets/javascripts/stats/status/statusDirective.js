@@ -1,5 +1,5 @@
 angular.module('ocWebGui.stats.status.directive', [])
-  .directive('ocStatusChart', function (CustomDate, Chart) {
+  .directive('ocStatusChart', function (CustomDate) {
     return {
       restrict: 'E',
       scope: {
@@ -35,7 +35,7 @@ angular.module('ocWebGui.stats.status.directive', [])
             },
             yDomain1: [0, 10],
             yDomain2: [0, 10],
-            noData: 'Ei tilastotietoa',
+            noData: 'Ei tilastotietoa'
             // useInteractiveGuideline: true
           }
         };
@@ -119,7 +119,7 @@ angular.module('ocWebGui.stats.status.directive', [])
                 value: d
               };
             }).slice(7, 17);
-            $scope.options.chart.xAxis.tickFormat = function (d) { return d; };
+            $scope.options.chart.xAxis.tickFormat = function (d) { return d; };
           } else if (newData.type === 'month') {
             $scope.newData[3].values = newData.values.dropped.map(function (d) {
               return {

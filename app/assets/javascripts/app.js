@@ -1,8 +1,9 @@
 angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screens.status',
     'ocWebGui.screens.queue', 'ocWebGui.stats', 'ocWebGui.login', 'ocWebGui.navbar',
     'ocWebGui.personal', 'ocWebGui.shared.color', 'ocWebGui.shared.settings', 'ocWebGui.settings',
-    '720kb.datepicker', 'ngSanitize', 'ngCsv'])
-  .run(function ($rootScope, $state, User, $interval, Settings) {
+    '720kb.datepicker', 'ngSanitize', 'ngCsv', 'tmh.dynamicLocale'])
+  .run(function ($rootScope, $state, User, $interval, Settings, tmhDynamicLocale) {
+tmhDynamicLocale.set('it');
     var $body = $(document.body);
     var $navbar = $('.navbar');
     var mouseHideTimeout;

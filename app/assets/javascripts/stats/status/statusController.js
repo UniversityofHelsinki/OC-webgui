@@ -49,12 +49,12 @@ angular.module('ocWebGui.stats.status', ['ui.router', 'ocWebGui.stats.status.ser
 
     vm.getCSVHeader = function () {
       if (vm.reportType === 'day') {
-        return ["hour", "busy", "free", "other"];
+        return ['hour', 'busy', 'free', 'other'];
       }
-      return ["date", "busy", "free", "other"];
+      return ['date', 'busy', 'free', 'other'];
     };
 
     vm.getCSVFilename = function () {
-      return "stats_by_" + vm.reportType + "_" + vm.startDate + "_" + vm.endDate;
+      return 'stats_by_' + vm.reportType + '_' + vm.startDate + '_' + vm.endDate;
     };
   });

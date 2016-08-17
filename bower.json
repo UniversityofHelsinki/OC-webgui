@@ -24,7 +24,8 @@
     "angular-nvd3": "^1.0.7",
     "angular-fullscreen": "^1.0.1",
     "angularjs-datepicker": "^2.1.6",
-    "ng-csv": "^0.3.6"
+    "ng-csv": "^0.3.6",
+    "angular-dynamic-locale": "^0.1.32"
   },
   "resolutions": {
     "d3": "^3.4.4",

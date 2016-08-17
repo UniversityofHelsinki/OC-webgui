@@ -1,7 +1,7 @@
 <div class="col-md-6">
     <h3>Aikaväli</h3>
     <div style="display:flex;margin-bottom:1em">
-        <datepicker date-format="dd.MM.yyyy" style="flex-grow:1" ng-click="status.fetchData()">
+        <datepicker date-format="dd.MM.yyyy" style="flex-grow:1" ng-click="status.fetchData()" startWeek="1">
             <input type="text" ng-model="status.startDate" placeholder="Aloituspäivä" style="width:100%">
         </datepicker>
         <div style="padding:0.5em">-</div>
