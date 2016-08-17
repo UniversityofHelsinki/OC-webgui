@@ -109,7 +109,7 @@ describe('screen', function () {
         });
     });
 
-    browser.get('#/screen');
+    browser.get('#/status');
     agentCards = element.all(by.className('agent-card'));
   });
 

@@ -1,23 +1,15 @@
-angular.module('ocWebGui.others', ['ui.router', 'ocWebGui.login'])
+angular.module('ocWebGui.settings.general', ['ui.router'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('others', {
-        url: '/others',
-        views: {
-          nav: {
-            templateUrl: 'navbar/navbar_others.html'
-          },
-          content: {
-            templateUrl: 'others/_others.html',
-            controller: 'OthersController',
-            controllerAs: 'others'
-          }
-        }
+      .state('settings.general', {
+        url: '/general',
+        templateUrl: 'settings/general/_general.html',
+        controller: 'GeneralController',
+        controllerAs: 'general'
       });
   })
-  .controller('OthersController', function ($interval, Settings) {
+  .controller('GeneralController', function ($interval, Settings) {
     var vm = this;
-    vm.title = 'Muut asetukset';
 
     function clearMessage() {
       vm.message = '';

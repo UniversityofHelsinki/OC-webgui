@@ -1,7 +1,6 @@
-angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'ocWebGui.queue',
-    'ocWebGui.filterpanel', 'ocWebGui.stats', 'ocWebGui.login', 'ocWebGui.navbar',
-    'ocWebGui.personal', 'ocWebGui.color', 'ocWebGui.shared.color', 'ocWebGui.others',
-    'ocWebGui.shared.settings', 'ocWebGui.userAdmin'])
+angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screens.status',
+    'ocWebGui.screens.queue', 'ocWebGui.stats', 'ocWebGui.login', 'ocWebGui.navbar',
+    'ocWebGui.personal', 'ocWebGui.shared.color', 'ocWebGui.shared.settings', 'ocWebGui.settings'])
   .run(function ($rootScope, $state, User, $interval, Settings) {
     var $body = $(document.body);
     var $color_menu = $('.legend');
@@ -66,7 +65,7 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screen', 'oc
         disableNavbarOverlay();
       }
 
-      if (toState.name === 'stats' && !User.isAuthenticated()) {
+      if (toState.name.indexOf('stats') === 0 && !User.isAuthenticated()) {
         $rootScope.returnToState = toState;
         $rootScope.returnToParams = toParams;
         event.preventDefault();
