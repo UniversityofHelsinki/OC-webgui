@@ -1,4 +1,4 @@
-angular.module('ocWebGui.stats.status.directive', [])
+angular.module('ocWebGui.stats.status2.directive', [])
   .directive('ocStatusChart', function (CustomDate, Chart) {
     return {
       restrict: 'E',

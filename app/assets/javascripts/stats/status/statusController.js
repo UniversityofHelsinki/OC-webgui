@@ -1,15 +1,15 @@
-angular.module('ocWebGui.stats.status', ['ui.router', 'ocWebGui.stats.status.service',
-    'ocWebGui.stats.status.directive'])
+angular.module('ocWebGui.stats.status2', ['ui.router', 'ocWebGui.stats.status2.service',
+    'ocWebGui.stats.status2.directive'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('stats.status', {
-        url: '/status',
+      .state('stats.status2', {
+        url: '/status2',
         templateUrl: 'stats/status/_status.html',
-        controller: 'StatusController',
+        controller: 'StatusController2',
         controllerAs: 'status'
       });
   })
-  .controller('StatusController', function (AgentStatusStats) {
+  .controller('StatusController2', function (AgentStatusStats) {
     var vm = this;
     vm.reportType = 'day';
     vm.chartData = null;
