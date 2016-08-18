@@ -3,12 +3,30 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screens.stat
     'ocWebGui.personal', 'ocWebGui.shared.color', 'ocWebGui.shared.settings', 'ocWebGui.settings'])
   .run(function ($rootScope, $state, User, $interval, Settings) {
     var $body = $(document.body);
+    var $colorMenu = $('.legend');
     var $navbar = $('.navbar');
+    var $queue = $('.answer');
+    var $personal = $('.personal-statistics');
     var mouseHideTimeout;
+
+    Settings.getColor('font').then(function (color) {
+      $body.css('color', color);
+      $colorMenu.css('color', color);
+      $colorMenu.css('border-bottom-color', color);
+
+      $queue.css('border-bottom-color', color);
+      $personal.css('color', color);
+      $personal.css('border-bottom-color', color);
+    });
 
     $rootScope.$on('settings:colors:update', function () {
       Settings.getColor('font').then(function (color) {
         $body.css('color', color);
+        $colorMenu.css('color', color);
+        $colorMenu.css('border-bottom-color', color);
+
+        $queue.css('border-bottom-color', color);
+        $personal.css('color', color);
       });
     });
 
@@ -55,3 +73,7 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screens.stat
       }
     });
   });
+
+function colorChange(Settings) {
+  // never used?
+}

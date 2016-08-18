@@ -7,17 +7,20 @@ describe('userAdmin', function () {
             {
               first_name: 'Etunimi',
               last_name: 'Sukunimi',
-              id: 1
+              id: 1,
+              team_id: 2
             },
             {
               first_name: 'Jaska',
               last_name: 'Jokunen',
-              id: 2
+              id: 2,
+              team_id: 1
             },
             {
               first_name: 'Aapeli',
               last_name: 'B',
-              id: 3
+              id: 3,
+              team_id: 3
             }
           ]);
           $httpBackend.whenGET('users.json').respond([
@@ -67,5 +70,12 @@ describe('userAdmin', function () {
     element.all(by.buttonText('X')).get(0).click();
     browser.switchTo().alert().accept();
     expect(element.all(by.id('td-username')).count()).toBe(1);
+  });
+
+  it('should list users from OC ordered by team_id', function () {
+    var parent = element(by.tagName('select'));
+    var elements = parent.all(by.tagName('option'));
+
+    expect(elements.get(0).getText()).toBe('Jaska Jokunen');
   });
 });

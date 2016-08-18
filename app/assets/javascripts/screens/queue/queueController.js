@@ -18,9 +18,16 @@ angular.module('ocWebGui.screens.queue', ['ocWebGui.screens.queue.service', 'ui.
         navbarOverlay: true
       });
   })
-  .controller('QueueController', function ($q, $interval, $scope, $http, Queue, Chart, Stats) {
+  .controller('QueueController', function ($q, $interval, $scope, $http, Queue, Chart, Stats, Settings) {
     var vm = this;
-    vm.api = {};
+    vm.api = {
+      sla: 150
+    };
+    vm.sla_time = 0;
+
+    Settings.getOthers().then(function (others) {
+      vm.sla_time = others.sla;
+    });
 
     vm.options = Chart.queueChart;
     vm.data = [{
