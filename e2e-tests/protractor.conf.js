@@ -11,16 +11,27 @@ exports.config = {
   jasmineNodeOpts: {
     defaultTimeoutInterval: 30000
   },
-  onPrepare: function() {
-    setTimeout(function() {
-        browser.driver.executeScript(function() {
-            return {
-                width: window.screen.availWidth,
-                height: window.screen.availHeight
-            };
-        }).then(function(result) {
-            browser.driver.manage().window().setSize(result.width, result.height);
-        });
+  onPrepare: function () {
+    setTimeout(function () {
+      browser.driver.executeScript(function () {
+        return {
+          width: window.screen.availWidth,
+          height: window.screen.availHeight
+        };
+      }).then(function (result) {
+        browser.driver.manage().window().setSize(result.width, result.height);
+      });
+    });
+
+    var disableNgAnimate = function () {
+      angular.module('disableNgAnimate', []).run(['$animate', function ($animate) {
+        $animate.enabled(false);
+      }]);
+    };
+
+    browser.addMockModule('disableNgAnimate', disableNgAnimate);
+    browser.getCapabilities().then(function (caps) {
+      browser.params.browser = caps.get('browserName');
     });
   }
 };

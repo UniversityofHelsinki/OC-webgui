@@ -12,6 +12,7 @@ module.exports = function(config) {
             '../../../vendor/assets/bower_components/d3/d3.js',
             '../../../vendor/assets/bower_components/nvd3/build/nv.d3.js',
             '../../../vendor/assets/bower_components/angular-fullscreen/src/angular-fullscreen.js',
+            '../../../vendor/assets/bower_components/angular-animate/angular-animate.js',
             '**/*.js',
             '*.html',
         ],
