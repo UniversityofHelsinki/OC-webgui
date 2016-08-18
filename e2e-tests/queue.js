@@ -13,17 +13,17 @@ describe('queue', function () {
             ]);
             $httpBackend.whenGET('queue.json').respond([
               {
-              	id: 2,
-              	team: 'Helpdesk',
-              	language: 'Swedish',
-              	created_at: new Date(baseTime - 73 * 1000)
+                id: 2,
+                team: 'Helpdesk',
+                language: 'Swedish',
+                created_at: new Date(baseTime - 73 * 1000)
               },
               {
-              	id: 1,
-              	team: 'Helpdesk',
-              	language: 'Finnish',
-              	created_at: new Date(baseTime - (4 * 60 + 25) * 1000)
-          	  }
+                id: 1,
+                team: 'Helpdesk',
+                language: 'Finnish',
+                created_at: new Date(baseTime - (4 * 60 + 25) * 1000)
+              }
             ]);
             $httpBackend.whenGET('settings.json').respond({
               colors: {
@@ -230,7 +230,7 @@ describe('queue', function () {
       expect(rows.get(1).element(by.tagName('th')).getText()).toBe('Puhelut:');
       expect(rows.get(1).element(by.tagName('td')).getText()).toBe('11 / 11');
     });
-    
+
     it('should contain average call duration', function () {
       expect(rows.get(2).element(by.tagName('th')).getText()).toBe('Puheluiden ka:');
       expect(rows.get(2).element(by.tagName('td')).getText()).toBe('02:15');
