@@ -76,6 +76,6 @@ describe('userAdmin', function () {
     var parent = element(by.tagName('select'));
     var elements = parent.all(by.tagName('option'));
 
-    expect(elements.get(0).getText()).toBe('Jaska Jokunen'); 
+    expect(elements.get(0).getText()).toBe('Jaska Jokunen');
   });
 });
