@@ -36,8 +36,9 @@
 .time-date-week {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  //justify-content: center;
+  //align-items: center;
+  text-align: left;
   width: 50%;
   font-size: 3.5vw;
 
@@ -116,7 +117,10 @@
   padding: 0.5em;
 
   td {
+    //text-align: left;
     text-align: right;
+    //margin-left: 2em;
+    //padding-left: 1.1em;
   }
 
   th {
