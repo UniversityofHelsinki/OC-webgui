@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     get 'agents' => 'agents#index'
     get 'users' => 'users#index'
     get 'personal' => 'personal_status#index'
+    get 'helpdesk' => 'helpdesk#index'
   end
 
   get 'settings' => 'settings#get', format: :json
