@@ -24,11 +24,11 @@ angular.module('ocWebGui.screens.queue', ['ocWebGui.screens.queue.service', 'ui.
       sla: 150
     };
     vm.sla_time = 0;
-    
+
     Settings.getOthers().then(function (others) {
       vm.sla_time = others.sla;
     });
-    
+
     vm.options = Chart.queueChart;
     vm.data = [{
       'key': 'Puheluja tunnissa',

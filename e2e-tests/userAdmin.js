@@ -71,11 +71,11 @@ describe('userAdmin', function () {
     browser.switchTo().alert().accept();
     expect(element.all(by.id('td-username')).count()).toBe(1);
   });
-  
-  it('should list users from OC ordered by team_id', function() {
-   var parent = element(by.tagName('select'));
-   var elements = parent.all(by.tagName('option'));
-   
-   expect(elements.get(0).getText()).toBe('Jaska Jokunen'); 
+
+  it('should list users from OC ordered by team_id', function () {
+    var parent = element(by.tagName('select'));
+    var elements = parent.all(by.tagName('option'));
+
+    expect(elements.get(0).getText()).toBe('Jaska Jokunen'); 
   });
 });

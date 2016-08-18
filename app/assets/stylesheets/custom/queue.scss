@@ -33,7 +33,7 @@
   text-shadow: $card-shadow;
 }
 
-.time-date-week{
+.time-date-week {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -45,7 +45,7 @@
     height: 33.3%;
     padding: 3%;
   }
-  
+
   .time {
     font-weight: bold;
     font-size: 120%;
@@ -114,14 +114,14 @@
   border-spacing: 0 1em;
   font-size: 2.5em;
   padding: 0.5em;
-  
-td {
-  text-align: right;
-}
 
-th {
-  text-align: left;
-}
+  td {
+    text-align: right;
+  }
+
+  th {
+    text-align: left;
+  }
 
   .stats_td {
     width: 50%;
@@ -132,10 +132,10 @@ th {
     font-size: 150%;
     font-weight: normal;
   }
-  
+
   .answer {
-  font-size: 1.75em;
-  border-bottom: 2px solid;
+    font-size: 1.75em;
+    border-bottom: 2px solid;
   }
 
   .percentage {
