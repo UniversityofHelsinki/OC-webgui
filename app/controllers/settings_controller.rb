@@ -13,7 +13,7 @@ class SettingsController < ApplicationController
       'sla' => 300,
       'working_day_start' => 8,
       'working_day_end' => 18,
-      'animated' => true,
+      'animated' => true
     }.freeze
   }.freeze
 
