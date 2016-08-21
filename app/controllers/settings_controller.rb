@@ -12,7 +12,8 @@ class SettingsController < ApplicationController
     }.freeze, 'others' => {
       'sla' => 300,
       'working_day_start' => 8,
-      'working_day_end' => 18
+      'working_day_end' => 18,
+      'animated' => true,
     }.freeze
   }.freeze
 
@@ -51,7 +52,7 @@ class SettingsController < ApplicationController
     return render json: { error: 'not logged in' }, status: :unauthorized unless current_user
     new_settings = DEFAULT_SETTINGS.deep_merge(params.permit(
       colors: [:background, :font, statuses: [:free, :call, :busy]],
-      others: [:sla, :working_day_start, :working_day_end]))
+      others: [:sla, :working_day_start, :working_day_end, :animated]))
     errors_colors = check_colors(new_settings['colors'])
     errors_others = check_others(new_settings['others'])
     return render json: { colors: errors_colors, others: errors_others }, status: :bad_request unless errors_colors.empty? && errors_others.empty?
