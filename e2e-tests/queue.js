@@ -37,7 +37,8 @@ describe('queue', function () {
               }, others: {
                 sla: 300,
                 working_day_start: 8,
-                working_day_end: 18
+                working_day_end: 18,
+                animated: false
               }
             });
           });
@@ -113,7 +114,8 @@ describe('queue', function () {
               }, others: {
                 sla: 300,
                 working_day_start: 8,
-                working_day_end: 18
+                working_day_end: 18,
+                animated: false
               }
             });
           });
@@ -155,7 +157,8 @@ describe('queue', function () {
               }, others: {
                 sla: 300,
                 working_day_start: 8,
-                working_day_end: 18
+                working_day_end: 18,
+                animated: false
               }
             });
           });
@@ -208,7 +211,8 @@ describe('queue', function () {
               }, others: {
                 sla: 300,
                 working_day_start: 8,
-                working_day_end: 18
+                working_day_end: 18,
+                animated: false
               }
             });
           });
