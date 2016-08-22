@@ -56,7 +56,6 @@ RSpec.describe SettingsController, type: :controller do
             'working_day_end' => 18,
             'animated' => true
           }
-
         }
         session['user_id'] = 1
         get :get, format: :json
