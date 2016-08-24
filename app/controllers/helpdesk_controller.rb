@@ -15,9 +15,7 @@ class HelpdeskController < ApplicationController
   end
 
   def queuers_count
-    BackendService.new.get_general_queue.inject (0) do |sum, data|
-      sum += 1 if Service.find(data[:service_id]).team.name == 'Helpdesk'
-    end
+    @contacts_service.queue_contacts.length
   end
 
   def index

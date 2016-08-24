@@ -1,5 +1,6 @@
 require 'rails_helper'
 require Rails.root.to_s + '/app/controllers/helpdesk_controller.rb'
+require Rails.root.to_s + '/app/controllers/contacts_controller.rb'
 require Rails.root.to_s + '/app/controllers/application_controller.rb'
 require Rails.root.to_s + '/app/services/backend_service.rb'
 
@@ -7,7 +8,9 @@ RSpec.describe HelpdeskController, type: :controller do
   render_views
 
   before (:each) do
-    team1 = Team.create(id: 1, name: 'Hakijapalvelut')
+    allow(Time).to receive(:now) { Time.utc(2016, 8, 10) }
+
+    team2 = Team.create(id: 1, name: 'Hakijapalvelut')
     team2 = Team.create(id: 2, name: 'Opiskelijaneuvonta')
     team3 = Team.create(id: 3, name: 'Helpdesk')
 
@@ -24,18 +27,16 @@ RSpec.describe HelpdeskController, type: :controller do
     Service.create(id: 123, language: 'Finnish', team: team3)
     Service.create(id: 321, language: 'English', team: team3)
 
-    allow_any_instance_of(BackendService).to receive(:get_general_queue).and_return([
-      {
-        service_id: 123,
-        service_name: 'Finnish Service',
-        time_in_queue: 20
-      },
-      {
-        service_id: 321,
-        service_name: 'English Service',
-        time_in_queue: 11
-      }
-    ])
+    Contact.create(ticket_id: '123',
+                   service_id: 123,
+                   direction: 'I',
+                   contact_type: 'PBX',
+                   arrived: Time.utc(2016, 8, 10, 9))
+    Contact.create(ticket_id: '321',
+                   service_id: 321,
+                   direction: 'I',
+                   contact_type: 'PBX',
+                   arrived: Time.utc(2016, 8, 10, 9, 5))
 
     allow_any_instance_of(ContactsService).to receive(:average_queue_duration).and_return(301.0)
   end
