@@ -3,11 +3,10 @@ class AgentStatusService
   def initialize(team_name, start_date, end_date)
     start_date = Time.zone.parse(start_date) if start_date.class == String
     end_date = Time.zone.parse(end_date) if end_date.class == String
-    # TODO: korjais tän ku on toistoa
     @start_time = start_date.beginning_of_day
     @end_time = end_date.end_of_day
     @statuses = AgentStatus.joins(agent: :team).where(teams: { name: team_name },
-                                                      created_at: start_date.beginning_of_day..end_date.end_of_day,
+                                                      created_at: @start_time..@end_time,
                                                       open: false)
                                                .where('agent_statuses.created_at::date = agent_statuses.closed::date')
                                                .order(:created_at)
