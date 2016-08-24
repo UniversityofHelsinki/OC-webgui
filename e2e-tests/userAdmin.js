@@ -8,19 +8,28 @@ describe('userAdmin', function () {
               first_name: 'Etunimi',
               last_name: 'Sukunimi',
               id: 1,
-              team_id: 2
+              team: {
+                id: 1,
+                name: 'A-Team'
+              }
             },
             {
               first_name: 'Jaska',
               last_name: 'Jokunen',
               id: 2,
-              team_id: 1
+              team: {
+                id: 1,
+                name: 'A-Team'
+              }
             },
             {
               first_name: 'Aapeli',
               last_name: 'B',
               id: 3,
-              team_id: 3
+              team: {
+                id: 2,
+                name: 'B-Team'
+              }
             }
           ]);
           $httpBackend.whenGET('users.json').respond([
@@ -72,10 +81,24 @@ describe('userAdmin', function () {
     expect(element.all(by.id('td-username')).count()).toBe(1);
   });
 
-  it('should list users from OC ordered by team_id', function () {
-    var parent = element(by.tagName('select'));
-    var elements = parent.all(by.tagName('option'));
+  it('should group agents by team in dropdown', function () {
+    var data = element(by.tagName('select')).all(by.tagName('optgroup')).map(function (optgroup) {
+      return [
+        optgroup.getAttribute('label'),
+        optgroup.all(by.tagName('option')).map(function (option) {
+          return [option.getAttribute('value'), option.getText()];
+        })
+      ];
+    });
 
-    expect(elements.get(0).getText()).toBe('Jaska Jokunen');
+    expect(data).toEqual([
+      ['A-Team', [
+        ['number:1', 'Etunimi Sukunimi'],
+        ['number:2', 'Jaska Jokunen']
+      ]],
+      ['B-Team', [
+        ['number:3', 'Aapeli B']
+      ]]
+    ]);
   });
 });

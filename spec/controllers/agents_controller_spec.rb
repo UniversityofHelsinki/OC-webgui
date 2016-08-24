@@ -3,24 +3,35 @@ RSpec.describe AgentsController, type: :controller do
 
   it "returns all current agents in index" do
     allow_any_instance_of(AgentsController).to receive(:fetch_and_save_all_agents).and_return(nil)
-    Agent.create(id: 1, first_name: "keke", last_name: "x")
-    Agent.create(id: 2, first_name: "spede", last_name: "x")
+    a_team = Team.create(id: 1, name: 'A-Team')
+    Agent.create(id: 1, first_name: "keke", last_name: "x", team: a_team)
+    Agent.create(id: 2, first_name: "spede", last_name: "x", team: a_team)
     get :index, format: :json
     agent1 = {
       "id"=>1,
       "first_name"=>"keke",
       "last_name"=>"x",
+      "team"=>{
+        "id"=>1,
+        "name"=>"A-Team"
+      }
     }
     agent2 = {
       "id"=>2,
       "first_name"=>"spede",
-      "last_name"=>"x"
+      "last_name"=>"x",
+      "team"=>{
+        "id"=>1,
+        "name"=>"A-Team"
+      }
     }
     expect(JSON.parse(response.body)).to include(agent1)
     expect(JSON.parse(response.body)).to include(agent2)
   end
 
   it "returns all current agents in index and new found from soap" do
+    Team.create(id: 1, name: 'Helpdesk')
+    Team.create(id: 2, name: 'Puhelinvaihde')
     agents_map = [{:first_name => "keke",
                    :last_name => "x",
                    :agent_id => 1,
@@ -41,16 +52,28 @@ RSpec.describe AgentsController, type: :controller do
       "id"=>1,
       "first_name"=>"keke",
       "last_name"=>"x",
+      "team"=>{
+        "id"=>1,
+        "name"=>"Helpdesk"
+      }
     }
     agent2 = {
       "id"=>2,
       "first_name"=>"spede",
-      "last_name"=>"x"
+      "last_name"=>"x",
+      "team"=>{
+        "id"=>1,
+        "name"=>"Helpdesk"
+      }
     }
     agent3 = {
       "id"=>3,
       "first_name"=>"harri",
       "last_name"=>"x",
+      "team"=>{
+        "id"=>2,
+        "name"=>"Puhelinvaihde"
+      }
     }
     expect(JSON.parse(response.body)).to include(agent1)
     expect(JSON.parse(response.body)).to include(agent2)
