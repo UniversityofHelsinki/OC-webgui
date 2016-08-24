@@ -16,13 +16,13 @@ describe('queue', function () {
                 id: 2,
                 team: 'Helpdesk',
                 language: 'Swedish',
-                created_at: new Date(baseTime - 73 * 1000)
+                created_at: new Date(baseTime - 73 * 1000).toISOString()
               },
               {
                 id: 1,
                 team: 'Helpdesk',
                 language: 'Finnish',
-                created_at: new Date(baseTime - (4 * 60 + 25) * 1000)
+                created_at: new Date(baseTime - (4 * 60 + 25) * 1000).toISOString()
               }
             ]);
             $httpBackend.whenGET('settings.json').respond({
@@ -95,11 +95,11 @@ describe('queue', function () {
               }
             ]);
             $httpBackend.whenGET('queue.json').respond([
-              { id: 1, team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { id: 2, team: 'Helpdesk', language: 'Swedish', created_at: new Date() },
-              { id: 3, team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { id: 4, team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { id: 5, team: 'Helpdesk', language: 'Finnish', created_at: new Date() }
+              { id: 1, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() },
+              { id: 2, team: 'Helpdesk', language: 'Swedish', created_at: new Date().toISOString() },
+              { id: 3, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() },
+              { id: 4, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() },
+              { id: 5, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() }
             ]);
             $httpBackend.whenGET('settings.json').respond({
               colors: {
@@ -136,12 +136,12 @@ describe('queue', function () {
               }
             ]);
             $httpBackend.whenGET('queue.json').respond([
-              { id: 1, team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { id: 2, team: 'Helpdesk', language: 'Swedish', created_at: new Date() },
-              { id: 3, team: 'Helpdesk', language: 'English', created_at: new Date() },
-              { id: 4, team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { id: 5, team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
-              { id: 6, team: 'Helpdesk', language: 'Finnish', created_at: new Date() }
+              { id: 1, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() },
+              { id: 2, team: 'Helpdesk', language: 'Swedish', created_at: new Date().toISOString() },
+              { id: 3, team: 'Helpdesk', language: 'English', created_at: new Date().toISOString() },
+              { id: 4, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() },
+              { id: 5, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() },
+              { id: 6, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() }
             ]);
             $httpBackend.whenGET('settings.json').respond({
               colors: {

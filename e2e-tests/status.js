@@ -12,7 +12,7 @@ describe('screen', function () {
               first_name: 'Benjamin',
               last_name: 'Kekkonen',
               status: 'Tauko',
-              created_at: new Date(baseTime - (10 * 60 + 15) * 1000),
+              created_at: new Date(baseTime - (10 * 60 + 15) * 1000).toISOString(),
               lunch: false,
               team: {
                 id: 1,
@@ -24,7 +24,7 @@ describe('screen', function () {
               first_name: 'Aallotar',
               last_name: 'Kanerva',
               status: 'Vapaa',
-              created_at: new Date(baseTime - 45 * 1000),
+              created_at: new Date(baseTime - 45 * 1000).toISOString(),
               lunch: true,
               team: {
                 id: 1,
@@ -36,7 +36,7 @@ describe('screen', function () {
               first_name: 'Tuomas',
               last_name: 'Ansala',
               status: 'Tauko',
-              created_at: new Date(baseTime - 30 * 1000),
+              created_at: new Date(baseTime - 30 * 1000).toISOString(),
               lunch: false,
               team: {
                 id: 1,
@@ -48,7 +48,7 @@ describe('screen', function () {
               first_name: 'Jenni',
               last_name: 'Ahola',
               status: 'Chat',
-              created_at: new Date(baseTime - (3600 + 1 * 60 + 5) * 1000),
+              created_at: new Date(baseTime - (3600 + 1 * 60 + 5) * 1000).toISOString(),
               lunch: false,
               team: {
                 id: 1,
