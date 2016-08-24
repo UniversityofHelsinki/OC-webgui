@@ -1,6 +1,6 @@
 <div class="background screen-background">
     <div class="card-container">
-        <div ng-repeat="agent in status.agents | orderBy: 'first_name' track by agent.id" ng-class="{'card': true, 'agent-card': true, 'after-call': agent.status === 'Jälkikirjaus', 'lunch': agent.lunch == true, 'notransition': status.otherSettings.animated != true}" class="{{ status.number_of_columns }}">
+        <div ng-repeat="agent in status.agents | orderBy: 'first_name' track by agent.id" ng-class="{'card': true, 'agent-card': true, 'after-call': agent.status === 'Jälkikirjaus', 'lunch': agent.lunch == true, 'ani': status.animated == true}" class="{{ status.number_of_columns }}">
             <div class="agent-status-color agent-status-color-{{agent.color}}" oc-color="statuses.{{ agent.color }}"></div>
             <div class="agent-status-info">
                 <div class="agent-name">

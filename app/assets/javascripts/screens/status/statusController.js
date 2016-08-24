@@ -27,7 +27,7 @@ angular.module('ocWebGui.screens.status', ['ocWebGui.screens.status.service', 'u
 
     function fetchData() {
       Settings.getOthers().then(function (othersSettings) {
-        vm.otherSettings = othersSettings;
+        vm.animated = othersSettings.animated;
       });
 
       Agents.query().then(function (agents) {
