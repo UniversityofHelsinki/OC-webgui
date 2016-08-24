@@ -16,7 +16,7 @@ class HelpdeskController < ApplicationController
 
   def queuers_count
     c = 0
-    BackendService.new.get_general_queue.each do |queuer|
+    BackendService.new.get_general_queue.each do |data|
       service = Service.find(data[:service_id])
       c += 1 if service.team.name == 'Helpdesk'
     end
