@@ -23,11 +23,18 @@ class HelpdeskController < ApplicationController
     c
   end
 
+  def zzzz
+    BackendService.new.get_general_queue.inject (0) do |sum, data|
+      sum += 1 if Service.find(data[:service_id]).name == 'Helpdesk'
+    end
+  end
+
   def index
     render json: {
       agents_online_all: @agent_statuses.length,
       agents_online_free: free_agents.length,
       queue_count: queuers_count,
+      zzzz: zzzz,
       average_queue_duration: @contacts_service.average_queue_duration
     }
   end
