@@ -91,6 +91,14 @@ angular.module('ocWebGui.stats.status.directive', [])
                 value: d[name]
               };
             });
+          },
+          'year': function (data, name) {
+            return data.map(function (d) {
+              return {
+                hour: new Date(d.date).getTime(),
+                value: d[name]
+              };
+            });
           }
         };
 
@@ -128,7 +136,16 @@ angular.module('ocWebGui.stats.status.directive', [])
               };
             });
             $scope.options.chart.xAxis.tickFormat = function (seconds) { return d3.time.format('%d.%m %a')(new Date(seconds)); };
+          } else if (newData.type === 'year') {
+            $scope.newData[3].values = newData.values.dropped.map(function (d) {
+              return {
+                hour: new Date(d.date).getTime(),
+                value: d.count
+              };
+            });
+            $scope.options.chart.xAxis.tickFormat = function (seconds) { return d3.time.format('%m %Y')(new Date(seconds)); };
           }
+
           var queueMax = d3.max($scope.newData[3].values, function (x) { return x.value; }) + 1;
           var callMax = $scope.options.chart.yDomain1[1];
           var y1AxisOldTicks = $scope.options.chart.yAxis1.tickValues;

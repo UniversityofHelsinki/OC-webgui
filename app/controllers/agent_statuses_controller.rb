@@ -28,6 +28,10 @@ class AgentStatusesController < ApplicationController
       stats: stats.stats_by_day,
       dropped: contacts.dropped_calls_by_day(settings['others']['sla'])
     } if params[:report_type] == 'month'
+    return render json: {
+      stats: stats.stats_by_month,
+      dropped: contacts.dropped_calls_by_month(settings['others']['sla'])
+    } if params[:report_type] == 'year'
     render json: { error: 'Invalid report type requested' }, status: 400
   end
 

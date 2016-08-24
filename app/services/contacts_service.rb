@@ -109,6 +109,23 @@ class ContactsService
     end
   end
 
+  def dropped_calls_by_month(sla)
+    result = Hash.new 0
+
+    # initialize result array to contain all dates
+    d = @start_time.beginning_of_month
+    while d < @end_time
+      result[d.to_date] = 0
+      d = d + 1.month
+    end
+    missed_contacts.select('contacts.arrived, EXTRACT(EPOCH FROM contacts.call_ended - contacts.arrived) AS duration')
+                   .select { |c| c if c['duration'] > sla }
+                   .each { |c| result[c['arrived'].to_date.beginning_of_month] += 1 }
+    result.map do |date, count|
+      { date: date, count: count }
+    end
+  end
+
   # Returns the percentage of calls that were answered within the specified time limit
   def service_level_agreement_percentage(time_limit)
     all = num_answered_calls + num_missed_calls

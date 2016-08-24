@@ -56,6 +56,25 @@ class AgentStatusService
     end
   end
 
+  def stats_by_month
+    gmt_offset = Time.now.getlocal.gmt_offset
+    stats = {}
+
+    # initialize result array to contain all months
+    date = @start_time.beginning_of_month
+    while date < @end_time
+      stats[date.to_date] = { free: 0, busy: 0, other: 0 }
+      date = date + 1.month
+    end
+    @statuses.each do |status|
+      date = status.created_at.to_date.beginning_of_month
+      stats[date][status_type(status.status)] += status.closed - status.created_at
+    end
+    stats.map do |date, data|
+      data.merge(date: date)
+    end
+  end
+
   def duration(statuses)
     statuses.inject(0) { |sum, status| sum += status.closed - status.created_at }
   end
