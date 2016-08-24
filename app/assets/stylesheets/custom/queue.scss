@@ -9,47 +9,30 @@
   max-height: 26% !important;
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
 }
+
+$time-font-size: 6vw;
+$date-font-size: 4vw;
+$total-height: 2 * $date-font-size + $time-font-size;
 
 .q-length {
-  font-size: 12vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  span {
-    margin: 0.25em;
-  }
-}
-
-.plus-5 {
-  display: flex;
-  font-size: 2.5vw;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1%;
-  color: $card-bg;
-  text-shadow: $card-shadow;
+  font-size: $total-height * 1.25;
+  line-height: $total-height;
+  align-items: right;
 }
 
 .time-date-week {
   display: flex;
   flex-direction: column;
-  //justify-content: center;
-  //align-items: center;
   text-align: left;
-  width: 50%;
-  font-size: 3.5vw;
-
-  div {
-    height: 33.3%;
-    padding: 3%;
-  }
+  font-size: $date-font-size;
+  line-height: 1;
 
   .time {
     font-weight: bold;
-    font-size: 120%;
+    font-size: $time-font-size;
   }
 }
 
@@ -68,8 +51,6 @@
   align-items: center;
   justify-content: center;
   height: 15%;
- // flex-grow: 1;
-  flex-wrap: nowrap;
 
   .queuer-index {
     width: 20%;
@@ -100,6 +81,16 @@
 
 .queuer-flag-English {
   background-image: image-url("Flag_of_the_United_Kingdom.svg");
+}
+
+.plus-5 {
+  display: flex;
+  font-size: 2.5vw;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1%;
+  color: $card-bg;
+  text-shadow: $card-shadow;
 }
 
 .queue-stats {
