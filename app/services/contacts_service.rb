@@ -6,6 +6,8 @@ class ContactsService
   def initialize(filter_by_model, start_time, end_time)
     @start_time = start_time
     @end_time = end_time
+    @start_time = Time.zone.parse(start_time) if start_time.class == String
+    @end_time = Time.zone.parse(end_time) if end_time.class == String
     if filter_by_model.is_a? Team
       @contacts = Contact.joins(:service).where(services: { team_id: filter_by_model.id }, arrived: start_time..end_time)
     elsif filter_by_model.is_a? Agent

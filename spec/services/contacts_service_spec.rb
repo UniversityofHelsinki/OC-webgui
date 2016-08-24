@@ -123,15 +123,15 @@ RSpec.describe ContactsService, type: :service do
     end
 
     it "Returns correct dropped calls by hour" do
-      expect(@contacts_service.dropped_calls_by_hour(300)).to eq('lz')
+      expect(@contacts_service.dropped_calls_by_hour(300)).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     end
 
     it "Returns correct dropped calls by day" do
-      expect(@contacts_service.dropped_calls_by_day(300)).to eq('zzzz')
+      expect(@contacts_service.dropped_calls_by_day(300)).to eq([{date: Date.new(2016, 7, 18), count: 0}])
     end
 
     it "Returns correct dropped calls by month" do
-      expect(@contacts_service.dropped_calls_by_month(300)).to eq('33z')
+      expect(@contacts_service.dropped_calls_by_month(300)).to eq([{date: Date.new(2016, 7, 1), count: 0}])
     end
   end
 end
