@@ -15,9 +15,8 @@ end
 # Determines the schedule for running any recurring background jobs
 module Clockwork
   every(5.seconds, 'track_agent_statuses.job') { Backburner.enqueue TrackAgentStatusesJob }
-  every(1.second, 'track_queue_items.job') { Backburner.enqueue TrackQueueItemsJob }
   every(1.day, 'clear_rails_cache.job', at: '00:00', tz: 'UTC') { Backburner.enqueue CacheDeleteJob, 'lunched' }
-  every(30.seconds, 'get_helpdesk_contacts.job') do
+  every(5.seconds, 'get_helpdesk_contacts.job') do
     Backburner.enqueue GetTeamContactsJob,
                        'Helpdesk',
                        xsd_time(Time.now.beginning_of_day),

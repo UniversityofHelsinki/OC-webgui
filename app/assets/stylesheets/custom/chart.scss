@@ -27,3 +27,19 @@
 .queue-chart .nvtooltip {
   display: none !important;
 }
+
+.queue-chart .nv-y2 {
+  fill: red;
+}
+
+.queue-chart .nv-y2.nv-axis path.domain {
+  stroke: red;
+}
+
+.stats-chart2 .nv-y2 {
+  fill: #0f0;
+}
+
+.stats-chart2 .nv-y2.nv-axis path.domain {
+  stroke: #0f0;
+}

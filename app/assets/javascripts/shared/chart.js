@@ -4,12 +4,12 @@ angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service']
       queueChart: {
         chart: {
           type: 'linePlusBarChart',
-          height: 550,
+          height: 500,
           margin: {
             top: 30,
-            right: 70,
+            right: 130,
             bottom: 40,
-            left: 70
+            left: 80
           },
           pointSize: 200,
           x: function (d) { return d.hour; },
@@ -30,15 +30,16 @@ angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service']
             showMaxMin: true
           },
           y1Axis: {
+            axisLabel: 'Puheluja tunnissa',
           },
           y2Axis: {
+            axisLabel: 'Keskim. jonotusaika',
+            axisLabelDistance: 30,
             tickFormat: function (seconds) {
               return CustomDate.niceFormatting(seconds);
             }
           },
-          legend: {
-            maxKeyLength: 100
-          },
+          showLegend: false,
           duration: 500
         }
       },
@@ -46,7 +47,6 @@ angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service']
       scatterOptions: {
         chart: {
           type: 'scatterChart',
-          width: 700,
           height: 300,
           margin: {
             top: 30,
@@ -73,14 +73,14 @@ angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service']
             }
           },
           x: function (d) { return d.hour; },
-          y: function (d) { return d.calls; }
+          y: function (d) { return d.calls; },
+          showLegend: false
         }
       },
 
       multiChartOptions: {
         chart: {
           type: 'multiChart',
-          width: 700,
           height: 550,
           margin: {
             top: 30,
@@ -99,7 +99,7 @@ angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service']
             axisLabel: 'Jonottajat',
           },
           yAxis2: {
-            axisLabel: 'Aikaa',
+            axisLabel: 'Jonotusaika',
             tickFormat: function (seconds) {
               return CustomDate.niceFormatting(seconds);
             }

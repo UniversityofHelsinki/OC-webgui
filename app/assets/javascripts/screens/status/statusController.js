@@ -1,4 +1,4 @@
-angular.module('ocWebGui.screens.status', ['ocWebGui.screens.status.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.trimName.service'])
+angular.module('ocWebGui.screens.status', ['ocWebGui.screens.status.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.trimName.service', 'ngAnimate'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('status', {
@@ -16,7 +16,7 @@ angular.module('ocWebGui.screens.status', ['ocWebGui.screens.status.service', 'u
         navbarOverlay: true
       });
   })
-  .controller('StatusController', function ($interval, $scope, Agents, TrimName) {
+  .controller('StatusController', function ($interval, $scope, Agents, TrimName, Settings) {
     var vm = this;
     var fetchDataInterval;
 
@@ -26,6 +26,10 @@ angular.module('ocWebGui.screens.status', ['ocWebGui.screens.status.service', 'u
     vm.number_of_columns = 0;
 
     function fetchData() {
+      Settings.getOthers().then(function (othersSettings) {
+        vm.animated = othersSettings.animated;
+      });
+
       Agents.query().then(function (agents) {
         vm.agents = agents;
 
