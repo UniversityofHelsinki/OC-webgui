@@ -28,7 +28,8 @@ RSpec.describe SettingsController, type: :controller do
           'others' => {
             'sla' => 300,
             'working_day_start' => 8,
-            'working_day_end' => 18
+            'working_day_end' => 18,
+            'animated' => true
           }
         }
         get :get, format: :json
@@ -52,9 +53,9 @@ RSpec.describe SettingsController, type: :controller do
           'others' => {
             'sla' => 300,
             'working_day_start' => 8,
-            'working_day_end' => 18
+            'working_day_end' => 18,
+            'animated' => true
           }
-
         }
         session['user_id'] = 1
         get :get, format: :json
@@ -78,7 +79,8 @@ RSpec.describe SettingsController, type: :controller do
           'others' => {
             'sla' => 300,
             'working_day_start' => 8,
-            'working_day_end' => 18
+            'working_day_end' => 18,
+            'animated' => true
           }
         }
         session['user_id'] = 2
@@ -104,6 +106,9 @@ RSpec.describe SettingsController, type: :controller do
           'colors' => {
             'background' => '#123456',
             'font' => '#654321'
+          },
+          'others' => {
+            'animated' => false
           }
         }
 
@@ -120,7 +125,8 @@ RSpec.describe SettingsController, type: :controller do
           'others' => {
             'sla' => 300,
             'working_day_start' => 8,
-            'working_day_end' => 18
+            'working_day_end' => 18,
+            'animated' => false
           }
         }
 

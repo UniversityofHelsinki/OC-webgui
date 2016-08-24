@@ -47,7 +47,6 @@ angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service']
       scatterOptions: {
         chart: {
           type: 'scatterChart',
-          width: 700,
           height: 300,
           margin: {
             top: 30,
@@ -82,7 +81,6 @@ angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service']
       multiChartOptions: {
         chart: {
           type: 'multiChart',
-          width: 700,
           height: 550,
           margin: {
             top: 30,

@@ -160,13 +160,13 @@
   background-position: right 5px top 5px;
 }
 
-.agent-card.ng-leave,
-.agent-card.ng-enter {
+.ani.ng-leave,
+.ani.ng-enter {
   transition: max-width 2s ease-out, opacity 2s ease-out;
 }
 
-.agent-card.ng-enter.ng-enter-active,
-.agent-card.ng-leave {
+.ani.ng-enter.ng-enter-active,
+.ani.ng-leave {
   opacity: 1;
 }
 
@@ -180,9 +180,8 @@
   @include card-width(25%);
 }
 
-.agent-card.ng-enter,
-.agent-card.ng-leave.ng-leave-active {
+.ani.ng-enter,
+.ani.ng-leave.ng-leave-active {
   max-width: 0;
   opacity: 0;
 }
-
