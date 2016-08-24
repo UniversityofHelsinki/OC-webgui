@@ -15,17 +15,8 @@ class HelpdeskController < ApplicationController
   end
 
   def queuers_count
-    c = 0
-    BackendService.new.get_general_queue.each do |data|
-      service = Service.find(data[:service_id])
-      c += 1 if service.team.name == 'Helpdesk'
-    end
-    c
-  end
-
-  def zzzz
     BackendService.new.get_general_queue.inject (0) do |sum, data|
-      sum += 1 if Service.find(data[:service_id]).name == 'Helpdesk'
+      sum += 1 if Service.find(data[:service_id]).team.name == 'Helpdesk'
     end
   end
 
@@ -34,7 +25,6 @@ class HelpdeskController < ApplicationController
       agents_online_all: @agent_statuses.length,
       agents_online_free: free_agents.length,
       queue_count: queuers_count,
-      zzzz: zzzz,
       average_queue_duration: @contacts_service.average_queue_duration
     }
   end
