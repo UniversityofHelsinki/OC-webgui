@@ -79,5 +79,29 @@ describe('color', function () {
       var body = browser.element(by.tagName('body'));
       expect(body.getCssValue('background-color')).toBe('rgba(0, 0, 255, 1)');
     });
+
+    it('changes font color from color settings', function () {
+      element(by.linkText('Asetukset')).click();
+      element(by.linkText('Värit')).click();
+
+      var fontInput = browser.element(by.model('colors.colors.font'));
+      fontInput.evaluate('colors.colors.font = "#00ff00";');
+      browser.element(by.buttonText('Tallenna')).click();
+
+      var message = browser.element(by.tagName('p'));
+      expect(message.getCssValue('color')).toBe('rgba(0, 255, 0, 1)');
+    });
+
+    it('changes underline color from color settings', function () {
+      element(by.linkText('Asetukset')).click();
+      element(by.linkText('Värit')).click();
+
+      var fontInput = browser.element(by.model('colors.colors.font'));
+      fontInput.evaluate('colors.colors.font = "#00ff00";');
+      browser.element(by.buttonText('Tallenna')).click();
+
+      var message = browser.element(by.tagName('h3'));
+      expect(message.getCssValue('border-bottom-color')).toBe('rgba(0, 255, 0, 1)');
+    });
   });
 });

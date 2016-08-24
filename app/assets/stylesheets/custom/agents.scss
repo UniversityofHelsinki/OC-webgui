@@ -67,6 +67,7 @@
 .agent-name {
   font-size: 4em;
   line-height: 1;
+  white-space: nowrap;
 
   .three-col & {
     font-size: 6em;
@@ -79,6 +80,7 @@
   margin-top: 0.2em;
   font-size: 2.5em;
   line-height: 1;
+  white-space: nowrap;
 
   .three-col & {
     font-size: 4em;
@@ -157,3 +159,30 @@
   background-size: 60px 60px;
   background-position: right 5px top 5px;
 }
+
+.agent-card.ng-leave,
+.agent-card.ng-enter {
+  transition: max-width 2s ease-out, opacity 2s ease-out;
+}
+
+.agent-card.ng-enter.ng-enter-active,
+.agent-card.ng-leave {
+  opacity: 1;
+}
+
+.three-col.agent-card.ng-enter.ng-enter-active,
+.three-col.agent-card.ng-leave {
+  @include card-max-width(100% / 3);
+}
+
+.four-col.agent-card.ng-enter.ng-enter-active,
+.four-col.agent-card.ng-leave {
+  @include card-width(25%);
+}
+
+.agent-card.ng-enter,
+.agent-card.ng-leave.ng-leave-active {
+  max-width: 0;
+  opacity: 0;
+}
+

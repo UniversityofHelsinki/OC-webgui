@@ -37,3 +37,4 @@
 //= require angular-fullscreen
 //= require angular-sanitize
 //= require ng-csv
+//= require angular-animate

@@ -4,6 +4,7 @@ describe('queue', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
+            var baseTime = new Date(2013, 9, 23, 12, 0).getTime();
             $httpBackend.whenGET('teams.json').respond([
               {
                 name: "Helpdesk",
@@ -11,8 +12,18 @@ describe('queue', function () {
               }
             ]);
             $httpBackend.whenGET('queue.json').respond([
-              { team: 'Helpdesk', language: 'Finnish', time_in_queue: 71 },
-              { team: 'Helpdesk', language: 'Swedish', time_in_queue: 34 }
+              {
+                id: 2,
+                team: 'Helpdesk',
+                language: 'Swedish',
+                created_at: new Date(baseTime - 73 * 1000)
+              },
+              {
+                id: 1,
+                team: 'Helpdesk',
+                language: 'Finnish',
+                created_at: new Date(baseTime - (4 * 60 + 25) * 1000)
+              }
             ]);
             $httpBackend.whenGET('settings.json').respond({
               colors: {
@@ -65,9 +76,9 @@ describe('queue', function () {
 
       expect(queue.count()).toBe(2);
 
-      expect(queue.get(0).element(by.className('queuer-time')).getText()).toBe('01:11');
+      expect(queue.get(0).element(by.className('queuer-time')).getText()).toBe('04:25');
       expect(queue.get(0).isElementPresent(by.className('queuer-flag-Finnish'))).toBe(true);
-      expect(queue.get(1).element(by.className('queuer-time')).getText()).toBe('00:34');
+      expect(queue.get(1).element(by.className('queuer-time')).getText()).toBe('01:13');
       expect(queue.get(1).isElementPresent(by.className('queuer-flag-Swedish'))).toBe(true);
 
       expect(browser.isElementPresent(by.className('plus-5'))).toBe(false);
@@ -84,11 +95,11 @@ describe('queue', function () {
               }
             ]);
             $httpBackend.whenGET('queue.json').respond([
-              { team: 'Helpdesk', language: 'Finnish' },
-              { team: 'Helpdesk', language: 'Swedish' },
-              { team: 'Helpdesk', language: 'Finnish' },
-              { team: 'Helpdesk', language: 'Finnish' },
-              { team: 'Helpdesk', language: 'Finnish' }
+              { id: 1, team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { id: 2, team: 'Helpdesk', language: 'Swedish', created_at: new Date() },
+              { id: 3, team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { id: 4, team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { id: 5, team: 'Helpdesk', language: 'Finnish', created_at: new Date() }
             ]);
             $httpBackend.whenGET('settings.json').respond({
               colors: {
@@ -125,12 +136,12 @@ describe('queue', function () {
               }
             ]);
             $httpBackend.whenGET('queue.json').respond([
-              { team: 'Helpdesk', language: 'Finnish' },
-              { team: 'Helpdesk', language: 'Swedish' },
-              { team: 'Helpdesk', language: 'English' },
-              { team: 'Helpdesk', language: 'Finnish' },
-              { team: 'Helpdesk', language: 'Finnish' },
-              { team: 'Helpdesk', language: 'Finnish' }
+              { id: 1, team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { id: 2, team: 'Helpdesk', language: 'Swedish', created_at: new Date() },
+              { id: 3, team: 'Helpdesk', language: 'English', created_at: new Date() },
+              { id: 4, team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { id: 5, team: 'Helpdesk', language: 'Finnish', created_at: new Date() },
+              { id: 6, team: 'Helpdesk', language: 'Finnish', created_at: new Date() }
             ]);
             $httpBackend.whenGET('settings.json').respond({
               colors: {
@@ -219,7 +230,7 @@ describe('queue', function () {
       expect(rows.get(1).element(by.tagName('th')).getText()).toBe('Puhelut:');
       expect(rows.get(1).element(by.tagName('td')).getText()).toBe('11 / 11');
     });
-    
+
     it('should contain average call duration', function () {
       expect(rows.get(2).element(by.tagName('th')).getText()).toBe('Puheluiden ka:');
       expect(rows.get(2).element(by.tagName('td')).getText()).toBe('02:15');
@@ -237,7 +248,7 @@ describe('queue', function () {
 
     it('should contain testtest', function () {
       expect(rows.get(5).element(by.tagName('th')).getText()).toBe('Palvelutaso:');
-      expect(rows.get(5).element(by.tagName('td')).getText()).toBe('91%');
+      expect(rows.get(5).element(by.tagName('td')).getText()).toBe('91% (05:00)');
     });
   });
 });

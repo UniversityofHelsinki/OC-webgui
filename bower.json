@@ -25,6 +25,7 @@
     "angular-fullscreen": "^1.0.1",
     "angularjs-datepicker": "^2.1.6",
     "ng-csv": "^0.3.6"
+    "angular-animate": "^1.5.8"
   },
   "resolutions": {
     "d3": "^3.4.4",
