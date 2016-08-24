@@ -14,11 +14,20 @@ class HelpdeskController < ApplicationController
     @agent_statuses.where(status: ['Sisäänkirjaus', 'Sisäänkirjautuminen'])
   end
 
+  def queuers_count
+    c = 0
+    BackendService.new.get_general_queue.each do |queuer|
+      service = Service.find(data[:service_id])
+      c += 1 if service.team.name == 'Helpdesk'
+    end
+    c
+  end
+
   def index
     render json: {
       agents_online_all: @agent_statuses.length,
       agents_online_free: free_agents.length,
-      queue_count: BackendService.new.get_general_queue.count, #vai length
+      queue_count: queuers_count,
       average_queue_duration: @contacts_service.average_queue_duration
     }
   end
