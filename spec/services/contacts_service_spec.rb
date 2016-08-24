@@ -121,5 +121,17 @@ RSpec.describe ContactsService, type: :service do
     it "Returns correct missed calls by hour" do
       expect(@contacts_service.missed_calls_by_hour).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     end
+
+    it "Returns correct dropped calls by hour" do
+      expect(@contacts_service.dropped_calls_by_hour(300)).to eq('lz')
+    end
+
+    it "Returns correct dropped calls by day" do
+      expect(@contacts_service.dropped_calls_by_day(300)).to eq('zzzz')
+    end
+
+    it "Returns correct dropped calls by month" do
+      expect(@contacts_service.dropped_calls_by_month(300)).to eq('33z')
+    end
   end
 end
