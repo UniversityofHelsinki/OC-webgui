@@ -3,7 +3,7 @@ angular.module('ocWebGui.stats.status.service', ['ngResource'])
     return {
       stats: function (startDate, endDate, reportType) {
         // swap dates other way around if startDate is after endDate
-        if (startDate > endDate) {
+        if (Date.parse(startDate) > Date.parse(endDate)) {
           [startDate, endDate] = [endDate, startDate];
         }
         return $http.post('agent_statuses/stats', {
