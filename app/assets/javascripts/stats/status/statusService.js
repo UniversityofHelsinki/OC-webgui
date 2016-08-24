@@ -10,7 +10,9 @@ angular.module('ocWebGui.stats.status.service', ['ngResource'])
         var endDateObject = new Date(endDateParts[2], endDateParts[1] - 1, endDateParts[0]);
 
         if (startDateObject > endDateObject) {
-          [startDate, endDate] = [endDate, startDate];
+          var temp = startDate;
+          startDate = endDate;
+          endDate = temp;
         }
         return $http.post('agent_statuses/stats', {
           report_type: reportType,
