@@ -24,7 +24,8 @@ angular.module('ocWebGui.stats.status', ['ui.router', 'ocWebGui.stats.status.ser
     };
 
     vm.getCSVData = function () {
-      if (vm.reportType === 'day') {
+      switch (vm.reportType) {
+      case 'day':
         return vm.chartData.values.stats.map(function (d) {
           return {
             hour: d.hour,
@@ -33,12 +34,21 @@ angular.module('ocWebGui.stats.status', ['ui.router', 'ocWebGui.stats.status.ser
             other: d.other
           };
         });
-      }
 
-      if (vm.reportType === 'month') {
+      case 'month':
         return vm.chartData.values.stats.map(function (d) {
           return {
             date: d.date,
+            busy: d.busy,
+            free: d.free,
+            other: d.other
+          };
+        });
+
+      case 'year':
+        return vm.chartData.values.stats.map(function (d) {
+          return {
+            date: d.date.split("-")[1],
             busy: d.busy,
             free: d.free,
             other: d.other
@@ -48,10 +58,14 @@ angular.module('ocWebGui.stats.status', ['ui.router', 'ocWebGui.stats.status.ser
     };
 
     vm.getCSVHeader = function () {
-      if (vm.reportType === 'day') {
+      switch (vm.reportType) {
+      case 'day':
         return ['hour', 'busy', 'free', 'other'];
+      case 'month':
+        return ['date', 'busy', 'free', 'other'];
+      case 'year':
+        return ['month', 'busy', 'free', 'other'];
       }
-      return ['date', 'busy', 'free', 'other'];
     };
 
     vm.getCSVFilename = function () {
