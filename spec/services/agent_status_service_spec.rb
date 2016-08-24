@@ -16,6 +16,16 @@ RSpec.describe AgentStatusService, type: :service do
     expect(a.stats_by_hour).to include({hour: 10, free: 0, busy: 0, other: 300})
     expect(a.stats_by_hour).to include({hour: 9, free: 0, busy: 0, other: 2100})
     expect(a.stats_by_hour).to include({hour: 8, free: 0, busy: 0, other: 1800})
+
+    expect(a.stats_by_day).to include({free: 0, busy: 0, other: 0, date: 'Sun, 17 Jul 2016'})
+ #      {:free=>0, :busy=>0, :other=>4200.0, :date=>'Mon, 18 Jul 2016'},
+  #     {:free=>0, :busy=>0, :other=>0, :date=>'Tue, 19 Jul 2016'}])
+#    expect(a.stats_by_day).to include({free: 0, busy: 0, other: 0, date: 'Sun, 17 Jul 2016'})
+ #   expect(a.stats_by_day).to include({free: 0, busy: 0, other: 4200.0, date: 'Mon, 18 Jul 2016'})
+  #  expect(a.stats_by_day).to include({free: 0, busy: 0, other: 0, date: 'Tue, 19 Jul 2016'})
+
+
+    expect(a.stats_by_month).to eq('jesz')
   end
 
 end
