@@ -1,9 +1,10 @@
 angular.module('ocWebGui.stats.status.directive', [])
-  .directive('ocStatusChart', function (CustomDate) {
+  .directive('ocStatusChart', function (CustomDate, Settings) {
     return {
       restrict: 'E',
       scope: {
         data: '=',
+        settings: '=',
         type: '='
       },
       template: '<nvd3 options="options" data="newData" api="api" class="status-chart"></nvd3>',
@@ -77,7 +78,7 @@ angular.module('ocWebGui.stats.status.directive', [])
 
         var factories = {
           'day': function (data, name) {
-            return data.slice(7, 17).map(function (d) {
+            return data.slice($scope.settings.working_day_start, $scope.settings.working_day_end).map(function (d) {
               return {
                 hour: d.hour,
                 value: d[name]
@@ -119,6 +120,7 @@ angular.module('ocWebGui.stats.status.directive', [])
           if (!newData.type || !newData.values) {
             return;
           }
+
           setData(newData.values.stats, factories[newData.type]);
           if (newData.type === 'day') {
             $scope.newData[3].values = newData.values.dropped.map(function (d, i) {
@@ -126,7 +128,7 @@ angular.module('ocWebGui.stats.status.directive', [])
                 hour: i,
                 value: d
               };
-            }).slice(7, 17);
+            }).slice($scope.settings.working_day_start, $scope.settings.working_day_end);
             $scope.options.chart.xAxis.tickFormat = function (d) { return d; };
           } else if (newData.type === 'month') {
             $scope.newData[3].values = newData.values.dropped.map(function (d) {

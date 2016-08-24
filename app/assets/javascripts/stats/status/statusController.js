@@ -15,10 +15,11 @@ angular.module('ocWebGui.stats.status', ['ui.router', 'ocWebGui.stats.status.ser
     vm.chartData = null;
 
     vm.fetchData = function () {
-      AgentStatusStats.stats(vm.startDate, vm.endDate, vm.reportType).then(function (response) {
+      AgentStatusStats.stats(vm.startDate, vm.endDate, vm.reportType).then(function (values) {
+        vm.settings = values.otherSettings;
         vm.chartData = {
           type: vm.reportType,
-          values: response.data
+          values: values.response.data
         };
       });
     };

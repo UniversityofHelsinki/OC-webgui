@@ -1,5 +1,5 @@
 angular.module('ocWebGui.stats.status.service', ['ngResource'])
-  .factory('AgentStatusStats', function ($http) {
+  .factory('AgentStatusStats', function ($q, $http, Settings) {
     return {
       stats: function (startDate, endDate, reportType) {
         // swap dates other way around if startDate is after endDate
@@ -14,11 +14,17 @@ angular.module('ocWebGui.stats.status.service', ['ngResource'])
           startDate = endDate;
           endDate = temp;
         }
-        return $http.post('agent_statuses/stats', {
-          report_type: reportType,
-          team_name: 'Helpdesk',
-          start_date: startDate,
-          end_date: endDate
+
+        return $q.all({
+          otherSettings: Settings.getOthers(),
+          response: $http.post('agent_statuses/stats', {
+            report_type: reportType,
+            team_name: 'Helpdesk',
+            start_date: startDate,
+            end_date: endDate
+          })
+        }).then(function (values) {
+          return values;
         });
       }
     };
