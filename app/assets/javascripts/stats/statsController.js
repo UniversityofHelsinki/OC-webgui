@@ -1,4 +1,4 @@
-angular.module('ocWebGui.stats', ['ui.router', 'ocWebGui.stats.today'])
+angular.module('ocWebGui.stats', ['ui.router', 'ocWebGui.stats.today', 'ocWebGui.stats.status'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('stats', {

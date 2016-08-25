@@ -1,11 +1,17 @@
-.queue-chart .nv-point {
-  stroke-opacity: 1 !important;
-  stroke-width: 0.7em;
-  fill-opacity: 1 !important;
-}
+// Convert line chart to dot chart.
+.queue-chart,
+.status-chart {
+  // Make data points bigger and always visible.
+  .nv-point {
+    stroke-opacity: 1 !important;
+    stroke-width: 0.7em;
+    fill-opacity: 1 !important;
+  }
 
-.queue-chart .nvd3 g.nv-groups path.nv-line {
-  stroke-width: 0;
+  // Hide line itself.
+  path.nv-line {
+    stroke-width: 0;
+  }
 }
 
 .queue-chart .nv-context {

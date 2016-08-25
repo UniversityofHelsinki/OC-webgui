@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe ContactsService, type: :service do
   time = Time.zone.parse("2016-07-18T08:00:00 #{Time.now.strftime("%z")}")
 
@@ -82,6 +84,12 @@ RSpec.describe ContactsService, type: :service do
     it "Returns correct service level agreement percentage"do
       expect(@contacts_service.service_level_agreement_percentage(300)).to eq(37.5)
     end
+
+    it "Returns dropped calls by hour" do
+      expect(@contacts_service.dropped_calls_by_hour(0)).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+      expect(@contacts_service.dropped_calls_by_hour(6 * 60)).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+      expect(@contacts_service.dropped_calls_by_hour(9 * 60)).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    end
   end
 
   context "When searching for stats by agent" do
@@ -112,6 +120,18 @@ RSpec.describe ContactsService, type: :service do
 
     it "Returns correct missed calls by hour" do
       expect(@contacts_service.missed_calls_by_hour).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    end
+
+    it "Returns correct dropped calls by hour" do
+      expect(@contacts_service.dropped_calls_by_hour(300)).to eq([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    end
+
+    it "Returns correct dropped calls by day" do
+      expect(@contacts_service.dropped_calls_by_day(300)).to eq([{date: Date.new(2016, 7, 18), count: 0}])
+    end
+
+    it "Returns correct dropped calls by month" do
+      expect(@contacts_service.dropped_calls_by_month(300)).to eq([{date: Date.new(2016, 7, 1), count: 0}])
     end
   end
 end

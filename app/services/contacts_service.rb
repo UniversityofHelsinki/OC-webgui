@@ -4,6 +4,10 @@ class ContactsService
   # If it is an Agent, service will provide data for contacts for the specified agent within the specified timeframe
   # If it is a Team, data will be provided for the specified team within the specified timeframe
   def initialize(filter_by_model, start_time, end_time)
+    @start_time = start_time
+    @end_time = end_time
+    @start_time = Time.zone.parse(start_time) if start_time.class == String
+    @end_time = Time.zone.parse(end_time) if end_time.class == String
     if filter_by_model.is_a? Team
       @contacts = Contact.joins(:service).where(services: { team_id: filter_by_model.id }, arrived: start_time..end_time)
     elsif filter_by_model.is_a? Agent
@@ -76,6 +80,54 @@ class ContactsService
     result = Array.new(24, 0)
     data.each { |d| result[(d['hour'])] = d['count'] }
     result
+  end
+
+  def dropped_calls_by_hour(sla)
+    gmt_offset = Time.now.getlocal.gmt_offset
+    select = [
+      "EXTRACT(HOUR FROM contacts.arrived + '#{gmt_offset} seconds') AS hour",
+      'EXTRACT(EPOCH FROM contacts.call_ended - contacts.arrived) AS duration'
+    ].join(',')
+
+    result = Array.new(24, 0)
+    missed_contacts.select(select)
+                   .select { |c| c if c['duration'] > sla }
+                   .each { |c| result[c['hour']] += 1 }
+    result
+  end
+
+  def dropped_calls_by_day(sla)
+    result = Hash.new 0
+
+    # initialize result array to contain all dates
+    d = @start_time
+    while d < @end_time
+      result[d.to_date] = 0
+      d = d + 1.day
+    end
+    missed_contacts.select('contacts.arrived, EXTRACT(EPOCH FROM contacts.call_ended - contacts.arrived) AS duration')
+                   .select { |c| c if c['duration'] > sla }
+                   .each { |c| result[c['arrived'].to_date] += 1 }
+    result.map do |date, count|
+      { date: date, count: count }
+    end
+  end
+
+  def dropped_calls_by_month(sla)
+    result = Hash.new 0
+
+    # initialize result array to contain all dates
+    d = @start_time.beginning_of_month
+    while d < @end_time
+      result[d.to_date] = 0
+      d = d + 1.month
+    end
+    missed_contacts.select('contacts.arrived, EXTRACT(EPOCH FROM contacts.call_ended - contacts.arrived) AS duration')
+                   .select { |c| c if c['duration'] > sla }
+                   .each { |c| result[c['arrived'].to_date.beginning_of_month] += 1 }
+    result.map do |date, count|
+      { date: date, count: count }
+    end
   end
 
   # Returns the percentage of calls that were answered within the specified time limit

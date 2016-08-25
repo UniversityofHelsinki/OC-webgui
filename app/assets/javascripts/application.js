@@ -29,9 +29,12 @@
 //= require_tree ./personal
 //= require_tree ./settings
 //= require ./app.js
+//= require angularjs-datepicker
 //= require angular-i18n/angular-locale_fi.js
 //= require d3
 //= require nvd3
 //= require angular-nvd3
 //= require angular-fullscreen
+//= require angular-sanitize
+//= require ng-csv
 //= require angular-animate

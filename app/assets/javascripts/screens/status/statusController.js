@@ -24,7 +24,6 @@ angular.module('ocWebGui.screens.status', ['ocWebGui.screens.status.service', 'u
     vm.agents = [];
     vm.counts = { free: 0, call: 0, busy: 0 };
     vm.number_of_columns = 0;
-
     function fetchData() {
       Settings.getOthers().then(function (othersSettings) {
         vm.animated = othersSettings.animated;

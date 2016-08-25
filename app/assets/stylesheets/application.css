@@ -12,6 +12,7 @@
  *
  *= require_self
  *= require nvd3 
+ *= require angularjs-datepicker
  *= require_tree ./bootstrap
  *= require_tree ./custom
  */

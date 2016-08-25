@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   post 'users/update', to: 'users#update'
   post 'users/delete', to: 'users#destroy'
 
+  post 'agent_statuses/stats', to: 'agent_statuses#stats'
+
   scope :format => true, :constraints => { :format => 'json' } do
     get 'agent_statuses' => 'agent_statuses#index'
     get 'queue' => 'queue_items#index'

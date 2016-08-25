@@ -5,7 +5,7 @@ angular.module('ocWebGui.settings.users.service', ['ngResource'])
   .factory('Users', function ($resource) {
     return $resource('users.json');
   })
-  .factory('UserAdmin', function ($resource, $http) {
+  .factory('UserAdmin', function ($http) {
     return {
       createUser: function (username, password, onSuccess, onError) {
         $http.post('users', { user: { username: username,
