@@ -8,8 +8,8 @@ angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service']
           margin: {
             top: 30,
             right: 130,
-            bottom: 40,
-            left: 80
+            bottom: 30,
+            left: 100
           },
           pointSize: 200,
           x: function (d) { return d.hour; },
@@ -27,10 +27,12 @@ angular.module('ocWebGui.shared.chart.service', ['ocWebGui.shared.time.service']
               return d3.format(',f')(d);
             },
             axisLabel: 'Kellonaika',
-            showMaxMin: true
+            showMaxMin: true,
+            axisLabelDistance: 20,
           },
           y1Axis: {
             axisLabel: 'Puheluja tunnissa',
+            axisLabelDistance: 20,
           },
           y2Axis: {
             axisLabel: 'Keskim. jonotusaika',

@@ -172,8 +172,6 @@ describe('queue', function () {
   });
 
   describe('stats', function () {
-    var rows;
-
     beforeEach(function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
@@ -218,41 +216,22 @@ describe('queue', function () {
           });
       });
       browser.get('#/queue');
-      var statsTable = element.all(by.className('queue-stats-table'));
-      rows = statsTable.all(by.tagName('tr'));
     });
 
-    it('should contain 6 rows', function () {
-      expect(rows.count()).toBe(6);
-    });
-
-    it('should contain answered calls', function () {
-      expect(rows.get(0).element(by.tagName('td')).getText()).toBe('100%');
-    });
-
-    it('should contain calls (answered / all)', function() {
-      expect(rows.get(1).element(by.tagName('th')).getText()).toBe('Puhelut:');
-      expect(rows.get(1).element(by.tagName('td')).getText()).toBe('11 / 11');
-    });
-
-    it('should contain average call duration', function () {
-      expect(rows.get(2).element(by.tagName('th')).getText()).toBe('Puheluiden ka:');
-      expect(rows.get(2).element(by.tagName('td')).getText()).toBe('02:15');
-    });
-
-    it('should contain average call duration', function () {
-      expect(rows.get(3).element(by.tagName('th')).getText()).toBe('Jälkikirjausten ka:');
-      expect(rows.get(3).element(by.tagName('td')).getText()).toBe('01:05');
-    });
-
-    it('should contain average queue waiting duration', function () {
-      expect(rows.get(4).element(by.tagName('th')).getText()).toBe('Jonotusten ka:');
-      expect(rows.get(4).element(by.tagName('td')).getText()).toBe('01:40');
-    });
-
-    it('should contain testtest', function () {
-      expect(rows.get(5).element(by.tagName('th')).getText()).toBe('Palvelutaso:');
-      expect(rows.get(5).element(by.tagName('td')).getText()).toBe('91% (05:00)');
+    it('should contain correct data', function () {
+      var stats = element.all(by.css('.queue-stats > div')).map(function (row) {
+        return row.all(by.tagName('div')).map(function (column) {
+          return column.getText();
+        });
+      });
+      expect(stats).toEqual([
+        ['Vastausprosentti:', '100%'],
+        ['Puhelut:', '11 / 11'],
+        ['Puheluiden ka:', '02:15'],
+        ['Jälkikirjausten ka:', '01:05'],
+        ['Jonotusten ka:', '01:40'],
+        ['Palvelutaso:', '91% (05:00)']
+      ]);
     });
   });
 });

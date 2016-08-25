@@ -1,11 +1,6 @@
 <div class="background queue-background card-container">
     <div class="queue-div">
         <div class="queue_length card">
-            <!--
-                      |  TIME
-               LENGTH |  DATE
-                      |  WEEK
-            -->
             <div class="time-date-week">
                 <div class="time"> {{ queue.date | date:'HH.mm' }}</div>
                 <div> {{ queue.date | date:'EEE d.M.' }}</div>
@@ -15,7 +10,6 @@
                 {{ queue.queue.length }}
             </div>
         </div>
-        <!-- Show first five in queue -->
         <div ng-repeat="queuer in queue.queue | limitTo: 5 | orderBy: 'created_at' track by queuer.id" class="queuer card">
             <span class="queuer-index">{{ $index + 1 }}.</span>
             <oc-time dateobj="queuer.created_at" class="queuer-time"></oc-time>
@@ -24,35 +18,31 @@
         <div ng-if="queue.queue.length > 5" class="plus-5">&#9660</div>
     </div>
     <div class="outer">
-        <div class="queue-stats card">            
-            <table class="queue-stats-table">
-                <tr>
-                    <th class="answer">Vastausprosentti:</th>
-                    <td class="answer percentage">{{queue.stats.answered_percentage}}%</td>
-                </tr>
-                <tr>
-                    <th class="stats_th">Puhelut:</th>
-                    <td class="stats_td">{{queue.stats.answered_calls}} / 
-                        {{queue.stats.answered_calls + queue.stats.missed_calls}}</td>
-                </tr>
-                <tr>
-                    <th class="stats_th">Puheluiden ka:</th>
-                    <td class="stats_td"><oc-time seconds="queue.stats.average_call_duration"></oc-time></td>
-                </tr>
-                <tr>
-                    <th class="stats_th">Jälkikirjausten ka:</th>
-                    <td class="stats_td"><oc-time seconds="queue.stats.average_after_call_duration"></oc-time></td>
-                </tr>
-                <tr>
-                    <th class="stats_th">Jonotusten ka:</th>
-                    <td class="stats_td"><oc-time seconds="queue.stats.average_queue_duration"></oc-time></td>
-                </tr>
-                <tr>
-                    <th class="stats_th">Palvelutaso:</th>
-                    <td class="stats_td">{{queue.stats.service_level_agreement}}% 
-                        (<oc-time seconds="queue.sla_time"></oc-time>)</td>
-                </tr>
-            </table>
+        <div class="queue-stats card">
+            <div class="answer">
+                <div>Vastausprosentti:</div>
+                <div>{{ queue.stats.answered_percentage }}%</div>
+            </div>
+            <div>
+                <div>Puhelut:</div>
+                <div>{{ queue.stats.answered_calls }} / {{ queue.stats.answered_calls + queue.stats.missed_calls }}</div>
+            </div>
+            <div>
+                <div>Puheluiden ka:</div>
+                <div><oc-time seconds="queue.stats.average_call_duration"></oc-time></div>
+            </div>
+            <div>
+                <div>Jälkikirjausten ka:</div>
+                <div><oc-time seconds="queue.stats.average_after_call_duration"></oc-time></div>
+            </div>
+            <div>
+                <div>Jonotusten ka:</div>
+                <div><oc-time seconds="queue.stats.average_queue_duration"></oc-time></div>
+            </div>
+            <div>
+                <div>Palvelutaso:</div>
+                <div>{{ queue.stats.service_level_agreement }}% (<oc-time seconds="queue.sla_time"></oc-time>)</div>
+            </div>
         </div>
         <div class="chart card">
             <nvd3 options="queue.options" data="queue.data" api="queue.api" class="queue-chart"></nvd3>
