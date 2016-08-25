@@ -5,7 +5,7 @@ angular.module('ocWebGui.shared.user', [])
 
     return {
       login: function (username, password) {
-        return $http.post('login', { username: username, password: password })
+        return $http.post('api/login', { username: username, password: password })
           .then(function (response) {
             isAuthenticated = true;
             userData = response.data;
@@ -18,7 +18,7 @@ angular.module('ocWebGui.shared.user', [])
           });
       },
       logout: function () {
-        return $http.delete('logout')
+        return $http.delete('api/logout')
           .then(function () {
             isAuthenticated = false;
             userData = null;
@@ -29,7 +29,7 @@ angular.module('ocWebGui.shared.user', [])
         if (isAuthenticated) {
           return $q.resolve(true);
         }
-        return $http.get('user.json').then(function (response) {
+        return $http.get('api/user').then(function (response) {
           isAuthenticated = true;
           userData = response.data;
           return true;

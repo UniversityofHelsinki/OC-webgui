@@ -4,7 +4,7 @@ describe('login', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
         .run(function ($httpBackend) {
           var loggedIn = false;
-          $httpBackend.whenPOST('login').respond(function (method, url, data) {
+          $httpBackend.whenPOST('api/login').respond(function (method, url, data) {
             var creds = angular.fromJson(data);
             if (creds.username === 'jooseppi') {
               if (creds.password !== 'oikee') {
@@ -17,11 +17,11 @@ describe('login', function () {
             loggedIn = false;
             return [401, { error: 'invalid username' }];
           });
-          $httpBackend.whenDELETE('logout').respond(function () {
+          $httpBackend.whenDELETE('api/logout').respond(function () {
             loggedIn = false;
             return [204];
           });
-          $httpBackend.whenGET('user.json').respond(function () {
+          $httpBackend.whenGET('api/user').respond(function () {
             if (!loggedIn) {
               return [401];
             }

@@ -17,7 +17,7 @@ angular.module('ocWebGui.stats.status.service', ['ngResource'])
 
         return $q.all({
           otherSettings: Settings.getOthers(),
-          response: $http.post('agent_statuses/stats', {
+          response: $http.post('api/agent_statuses/stats', {
             report_type: reportType,
             team_name: 'Helpdesk',
             start_date: startDate,

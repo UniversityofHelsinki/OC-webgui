@@ -6,7 +6,7 @@ describe('screen', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
         .run(function ($httpBackend) {
           var baseTime = new Date(2013, 9, 23, 12, 0).getTime();
-          $httpBackend.whenGET('agent_statuses.json').respond([
+          $httpBackend.whenGET('api/agent_statuses').respond([
             {
               id: 1234,
               first_name: 'Benjamin',
@@ -56,19 +56,19 @@ describe('screen', function () {
               }
             }
           ]);
-          $httpBackend.whenGET('teams.json').respond([
+          $httpBackend.whenGET('api/teams').respond([
             {
               name: 'Helpdesk',
               filter: true
             }
           ]);
-          $httpBackend.whenGET('states.json').respond([
+          $httpBackend.whenGET('api/states').respond([
             {
               name: 'Tauko',
               filter: true
             }
           ]);
-          $httpBackend.whenGET('settings.json').respond({
+          $httpBackend.whenGET('api/settings').respond({
             colors: {
               background: '#87aade',
               font: '#333333',

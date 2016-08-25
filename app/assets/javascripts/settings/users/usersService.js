@@ -1,14 +1,14 @@
 angular.module('ocWebGui.settings.users.service', ['ngResource'])
   .factory('AgentObjects', function ($resource) {
-    return $resource('agents.json');
+    return $resource('api/agents');
   })
   .factory('Users', function ($resource) {
-    return $resource('users.json');
+    return $resource('api/users');
   })
   .factory('UserAdmin', function ($http) {
     return {
       createUser: function (username, password, onSuccess, onError) {
-        $http.post('users', { user: { username: username,
+        $http.post('api/users', { user: { username: username,
                                       password: password }
                             })
           .then(function (response) {
@@ -18,7 +18,7 @@ angular.module('ocWebGui.settings.users.service', ['ngResource'])
           });
       },
       updateUser: function (user, onSuccess, onError) {
-        $http.post('users/update', { user: { username: user.username,
+        $http.post('api/users/update', { user: { username: user.username,
                                              agent_id: user.agent_id,
                                              id: user.id,
                                              is_admin: user.is_admin }
@@ -30,7 +30,7 @@ angular.module('ocWebGui.settings.users.service', ['ngResource'])
           });
       },
       deleteUser: function (user, onSuccess, onError) {
-        $http.post('users/delete', { user: { id: user.id } })
+        $http.post('api/users/delete', { user: { id: user.id } })
           .then(function (response) {
             onSuccess(response.data);
           }, function (response) {

@@ -3,7 +3,7 @@ describe('userAdmin', function () {
     browser.addMockModule('httpBackendMock', function () {
       angular.module('httpBackendMock', ['ngMockE2E'])
         .run(function ($httpBackend) {
-          $httpBackend.whenGET('agents.json').respond([
+          $httpBackend.whenGET('api/agents').respond([
             {
               first_name: 'Etunimi',
               last_name: 'Sukunimi',
@@ -32,7 +32,7 @@ describe('userAdmin', function () {
               }
             }
           ]);
-          $httpBackend.whenGET('users.json').respond([
+          $httpBackend.whenGET('api/users').respond([
             {
               id: 1,
               username: 'user1',
@@ -46,10 +46,10 @@ describe('userAdmin', function () {
               agent_id: null
             }
           ]);
-          $httpBackend.whenPOST('users').respond(function (method, url, data) {
+          $httpBackend.whenPOST('api/users').respond(function (method, url, data) {
             return [200, { id: 3, username: 'user3', agent_id: 0 }];
           });
-          $httpBackend.whenPOST('users/delete').respond(function (method, url, data) {
+          $httpBackend.whenPOST('api/users/delete').respond(function (method, url, data) {
             return [200, { id: 1, username: 'user1', agent_id: 0 }];
           });
           $httpBackend.whenGET('user.json').respond({

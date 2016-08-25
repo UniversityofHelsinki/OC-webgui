@@ -4,7 +4,7 @@ angular.module('ocWebGui.stats.today.service', ['ngResource'])
       query: function () {
         return $q.all({
           otherSettings: Settings.getOthers(),
-          response: $http.get('contacts/stats.json')
+          response: $http.get('api/contacts/stats')
         }).then(function (values) {
           return values;
         });
