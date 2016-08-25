@@ -10,7 +10,9 @@
                 {{ queue.queue.length }}
             </div>
         </div>
-        <div ng-repeat="queuer in queue.queue | limitTo: 5 | orderBy: 'created_at' track by queuer.id" class="queuer card">
+        <div ng-repeat="queuer in queue.queue | limitTo: 5 | orderBy: 'created_at' track by queuer.id"
+             ng-class="{transition: queue.animated}" class="queuer card"
+        >
             <span class="queuer-index">{{ $index + 1 }}.</span>
             <oc-time dateobj="queuer.created_at" class="queuer-time"></oc-time>
             <span class="queuer-flag queuer-flag-{{ queuer.language }}"></span>

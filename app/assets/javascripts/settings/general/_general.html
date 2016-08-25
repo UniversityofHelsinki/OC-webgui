@@ -13,9 +13,11 @@
         <label for="working-day-end">Työpäivän loppumisajankohta</label>
         <input id="working-day-end" type="number" ng-model="general.others.working_day_end" min="0" max="24" required class="form-control">
     </div>
-    <div class="form-group">
-        <label for="animated">Animoitu statusnäkymä</label>
-        <input id="animated" type="checkbox" ng-model="general.others.animated" class="form-control">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="general.others.animated">
+            Animoi asiakaspalvejoiden ja jonottajien tuleminen ja poistuminen
+        </label>
     </div>
     <button class="btn btn-success" type="submit">Tallenna</button>
 </form>

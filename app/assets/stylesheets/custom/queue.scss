@@ -63,6 +63,33 @@ $total-height: 2 * $date-font-size + $time-font-size;
     background-position: right;
     background-repeat: no-repeat;
   }
+
+  &.transition {
+    &.ng-leave,
+    &.ng-enter {
+      transition: all 1s ease;
+    }
+
+    &.ng-enter.ng-enter-active,
+    &.ng-leave {
+      opacity: 1;
+      height: 12%;
+      transform: translateY(0);
+    }
+
+    &.ng-enter {
+      opacity: 0;
+      transform: translateY(10em);
+    }
+
+    &.ng-leave.ng-leave-active {
+      height: 0;
+      opacity: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding: 0;
+    }
+  }
 }
 
 .queuer-flag-Finnish {

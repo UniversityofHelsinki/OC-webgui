@@ -27,6 +27,7 @@ angular.module('ocWebGui.screens.queue', ['ocWebGui.screens.queue.service', 'ui.
 
     Settings.getOthers().then(function (others) {
       vm.sla_time = others.sla;
+      vm.animated = others.animated;
     });
 
     vm.options = Chart.queueChart;
