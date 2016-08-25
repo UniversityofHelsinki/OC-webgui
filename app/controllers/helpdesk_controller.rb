@@ -14,7 +14,7 @@ class HelpdeskController < ApplicationController
     @agent_statuses.where(status: ['Sisäänkirjaus', 'Sisäänkirjautuminen'])
   end
 
-  def queuer_length
+  def queue_length
     @contacts_service.queue_contacts.length
   end
 
