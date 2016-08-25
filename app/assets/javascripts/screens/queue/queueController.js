@@ -78,7 +78,7 @@ angular.module('ocWebGui.screens.queue', ['ocWebGui.screens.queue.service', 'ui.
       // Also update date/time
       vm.date = new Date();
     }
-    var fetchDataInterval = $interval(fetchData, 1000);
+    var fetchDataInterval = $interval(fetchData, 5000);
     var fetchContactStatsInterval = $interval(fetchContactStats, 30 * 1000);
     $scope.$on('$destroy', function () {
       $interval.cancel(fetchDataInterval);
