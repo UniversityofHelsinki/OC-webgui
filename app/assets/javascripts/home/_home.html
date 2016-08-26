@@ -7,6 +7,6 @@
         <a ui-sref="stats.today" class="card" ng-if="home.isAuthenticated()">Tilastot</a>
         <a ui-sref="settings.general" class="card" ng-if="home.isAuthenticated()">Asetukset</a>
         <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Kirjaudu sisään</a>
-        <a ng-if="home.isAuthenticated()" ng-click="home.logout()" class="card">Kirjaudu ulos</a>
+        <a ng-if="home.isAuthenticated()" ng-click="home.logout()" class="card" href="">Kirjaudu ulos</a>
     </div>
 </div>
