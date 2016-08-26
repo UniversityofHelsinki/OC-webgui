@@ -49,10 +49,10 @@ describe('userAdmin', function () {
           $httpBackend.whenPOST('api/users').respond(function (method, url, data) {
             return [200, { id: 3, username: 'user3', agent_id: 0 }];
           });
-          $httpBackend.whenPOST('api/users/delete').respond(function (method, url, data) {
-            return [200, { id: 1, username: 'user1', agent_id: 0 }];
+          $httpBackend.whenDELETE('api/users/1').respond(function (method, url, data) {
+            return [204];
           });
-          $httpBackend.whenGET('user.json').respond({
+          $httpBackend.whenGET('api/user').respond({
             is_admin: true
           });
         });

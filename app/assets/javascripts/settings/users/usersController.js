@@ -13,7 +13,7 @@ angular.module('ocWebGui.settings.users', ['ui.router', 'ocWebGui.settings.users
         }
       });
   })
-  .controller('UsersController', function ($scope, $interval, AgentObjects, Users, UserAdmin) {
+  .controller('UsersController', function ($scope, $interval, AgentObjects, Users) {
     var vm = this;
 
     // Setting agent reference for users requires fetching Agents to be complete first
@@ -74,15 +74,19 @@ angular.module('ocWebGui.settings.users', ['ui.router', 'ocWebGui.settings.users
         errorNotify('Salasanat eivät täsmää.');
         return;
       }
-      UserAdmin.createUser(vm.newUserUsername, vm.newUserPassword, createUserSuccess, errorNotify);
+      var newUser = new Users({
+        username: vm.newUserUsername,
+        password: vm.newUserPassword
+      });
+      newUser.$save(createUserSuccess, errorNotify);
     };
 
     vm.updateUser = function (user) {
-      UserAdmin.updateUser(user, updateUserSuccess, errorNotify);
+      Users.update({ userId: user.id }, user, updateUserSuccess, errorNotify);
     };
 
     vm.deleteUser = function (user) {
-      UserAdmin.deleteUser(user, deleteUserSuccess, errorNotify);
+      user.$delete(deleteUserSuccess, errorNotify);
     };
   });
 

@@ -26,30 +26,28 @@ RSpec.describe UsersController, type: :controller do
   end
 
   it "returns 403 if attempting to access create, edit or delete without logging in" do
-    post :create, format: :json
+    post :create, { username: "a", password: "b" }, format: :json
     expect(response.status).to eq(403)
-    post :update, format: :json
+    put :update, { id: 1, is_admin: true }, format: :json
     expect(response.status).to eq(403)
-    post :destroy, format: :json
+    delete :destroy, id: 1
     expect(response.status).to eq(403)
   end
 
   it "returns 403 if attempting to access create, edit or delete as non-admin" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(User.new())
-    post :create, format: :json
+    post :create, { username: "a", password: "b" }, format: :json
     expect(response.status).to eq(403)
-    post :update, format: :json
+    put :update, { id: 1, is_admin: true }, format: :json
     expect(response.status).to eq(403)
-    post :destroy, format: :json
+    delete :destroy, id: 1
     expect(response.status).to eq(403)
   end
 
   context "when logged in as an admin" do
-    
     it "allows creating new users" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(User.new(is_admin: true))
-      params = { format: :json, user: { username: "a", password: "b" }}
-      post :create, params
+      post :create, { username: "a", password: "b", format: :json }
       expect(User.all.count).to eq(1)
     end
 
@@ -57,8 +55,7 @@ RSpec.describe UsersController, type: :controller do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(User.new(is_admin: true))
       User.create(id: 1, username: "keke", password: "x")
       expect(User.all.count).to eq(1)
-      params = { format: :json, user: { id: 1 }}
-      post :destroy, params
+      delete :destroy, id: 1
       expect(User.all.count).to eq(0)
     end
 
@@ -66,8 +63,7 @@ RSpec.describe UsersController, type: :controller do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(User.new(is_admin: true))
       User.create(id: 1, username: "keke", password: "x", is_admin: false)
       expect(User.first.is_admin).to be(false)
-      params = { format: :json, user: { id: 1, is_admin: true }}
-      post :update, params
+      put :update, { id: 1, is_admin: true, format: :json }
       expect(User.first.is_admin).to be(true)
     end
   end

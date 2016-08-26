@@ -16,7 +16,6 @@ Rails.application.routes.draw do
       get 'contacts/stats' => 'contacts#stats'
       get 'queue/stats' => 'queue_items#stats'
       get 'agents' => 'agents#index'
-      get 'users' => 'users#index'
       get 'personal' => 'personal_status#index'
 
       post 'login', to: 'session#create'
@@ -27,14 +26,12 @@ Rails.application.routes.draw do
       get 'teams/:id' => 'teams#show'
       get 'teams/:id/summary' => 'teams#summary'
 
-      post 'users', to: 'users#create'
-      post 'users/update', to: 'users#update'
-      post 'users/delete', to: 'users#destroy'
-
       post 'agent_statuses/stats', to: 'agent_statuses#stats'
 
       get 'settings' => 'settings#get'
       post 'settings' => 'settings#update'
+
+      resources :users, except: [:edit]
     end
   end
 
