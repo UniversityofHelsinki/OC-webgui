@@ -15,10 +15,8 @@ angular.module('ocWebGui.settings.colors', ['ui.router'])
       vm.message = '';
     }
 
-    vm.message = 'Ladataan...';
     Settings.getColors().then(function (colors) {
       vm.colors = colors;
-      clearMessage();
     });
     vm.save = function () {
       Settings.setColors(vm.colors).then(function () {

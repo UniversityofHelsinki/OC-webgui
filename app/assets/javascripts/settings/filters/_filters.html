@@ -1,6 +1,4 @@
-<p class="alert {{ filters.notification ? 'alert-success' : 'alert-hidden' }}">
-    {{ filters.notification || 'placeholder' }}
-</p>
+<p class="alert alert-success" ng-if="filters.notification">{{ filters.notification }}</p>
 <div class="col-md-6">
     <h2>Ryhmät</h2>
     <label class="label-filter" ng-repeat="(team, enabled) in filters.teams">

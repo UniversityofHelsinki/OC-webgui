@@ -1,5 +1,5 @@
 <h1>Yleiset</h1>
-<p ng-if="general.message">{{ general.message }}</p>
+<p class="alert alert-success" ng-if="general.message">{{ general.message }}</p>
 <form ng-submit="general.save()" ng-if="general.others">
     <div class="form-group">
         <label for="sla">Yleinen palvelutaso</label>

@@ -88,7 +88,7 @@ describe('color', function () {
       fontInput.evaluate('colors.colors.font = "#00ff00";');
       browser.element(by.buttonText('Tallenna')).click();
 
-      var message = browser.element(by.tagName('p'));
+      var message = browser.element(by.tagName('h1'));
       expect(message.getCssValue('color')).toBe('rgba(0, 255, 0, 1)');
     });
 
