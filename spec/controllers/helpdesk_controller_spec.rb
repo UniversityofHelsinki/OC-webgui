@@ -41,10 +41,10 @@ RSpec.describe HelpdeskController, type: :controller do
     allow_any_instance_of(ContactsService).to receive(:average_queue_duration).and_return(301.0)
   end
 
-  context 'no queue' do
-    it 'returns empty array' do
+  context 'helpdesk summary' do
+    it 'returns correct statistics' do
       get :index, format: :json
-      expect(JSON.parse(response.body)).to eq({"agents_online_all"=>2, "agents_online_free"=>1, "queue_count"=>2, "average_queue_duration"=>301.0})
+      expect(JSON.parse(response.body)).to eq({"agents_online_all"=>2, "agents_online_free"=>1, "queue_length"=>2, "average_queue_duration"=>301.0})
     end
   end
 end
