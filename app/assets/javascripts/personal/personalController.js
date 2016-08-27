@@ -1,5 +1,5 @@
 angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screens.status.service',
-    'ocWebGui.screens.queue.service', 'ocWebGui.personal.service', 'ocWebGui.login',
+    'ocWebGui.screens.queue.service', 'ocWebGui.personal.service', 'ocWebGui.shared.user',
     'ocWebGui.shared.trimName.service'])
   .config(function ($stateProvider) {
     $stateProvider

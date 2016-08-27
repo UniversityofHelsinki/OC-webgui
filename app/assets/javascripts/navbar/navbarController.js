@@ -1,4 +1,4 @@
-angular.module('ocWebGui.navbar', ['ui.router', 'ocWebGui.login', 'FBAngular'])
+angular.module('ocWebGui.navbar', ['ui.router', 'FBAngular', 'ocWebGui.shared.user'])
   .controller('NavbarController', function ($scope, $http, $state, User, Fullscreen) {
     var vm = this;
 

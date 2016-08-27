@@ -1,4 +1,5 @@
-angular.module('ocWebGui.stats', ['ui.router', 'ocWebGui.stats.today', 'ocWebGui.stats.status', 'ocWebGui.login'])
+angular.module('ocWebGui.stats', ['ui.router', 'ocWebGui.stats.today', 'ocWebGui.stats.status',
+    'ocWebGui.shared.user'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('stats', {

@@ -1,4 +1,4 @@
-angular.module('ocWebGui.home', ['ui.router', 'ocWebGui.login'])
+angular.module('ocWebGui.home', ['ui.router', 'ocWebGui.shared.user'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {

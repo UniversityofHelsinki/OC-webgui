@@ -1,6 +1,6 @@
 angular.module('ocWebGui.settings', ['ui.router', 'ocWebGui.settings.filters',
     'ocWebGui.settings.general', 'ocWebGui.settings.colors',
-    'ocWebGui.settings.users', 'ocWebGui.login'])
+    'ocWebGui.settings.users', 'ocWebGui.shared.user'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('settings', {
