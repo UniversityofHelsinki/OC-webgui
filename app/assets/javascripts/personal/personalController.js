@@ -11,8 +11,7 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screens.status.servi
             controller: 'PersonalController',
             controllerAs: 'personal'
           }
-        },
-        navbarOverlay: true
+        }
       });
   })
   .controller('PersonalController', function ($q, TrimName, Agents, Queue, User, Personal, $interval, $scope) {
@@ -21,7 +20,7 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screens.status.servi
     vm.trimName = TrimName.trim;
 
     function fetchData() {
-      Agents.query(function (agents) {
+      Agents.query().then(function (agents) {
         vm.agents = agents;
         vm.currentAgent = vm.agents.find(function (agent) {
           return User.getAgentId() === agent.id;

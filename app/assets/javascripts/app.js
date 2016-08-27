@@ -8,7 +8,7 @@ angular.module('ocWebGui', ['ui.router', 'templates', 'ocWebGui.home', 'ocWebGui
         abstract: true,
         template: '<ui-view name="nav"></ui-view><ui-view name="content"></ui-view>',
         resolve: {
-          auth: function (UserMiddleware) {
+          preloadUser: function (UserMiddleware) {
             return UserMiddleware.preload();
           }
         }
@@ -76,6 +76,10 @@ angular.module('ocWebGui', ['ui.router', 'templates', 'ocWebGui.home', 'ocWebGui
         activateNavbarOverlay();
       } else {
         disableNavbarOverlay();
+      }
+      if (toState.name !== 'app.login') {
+        $rootScope.returnToState = toState;
+        $rootScope.returnToParams = toParams;
       }
     });
   });

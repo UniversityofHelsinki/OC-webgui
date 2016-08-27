@@ -12,7 +12,7 @@ describe('login', function () {
                 return [401, { error: 'wrong password' }];
               }
               loggedIn = true;
-              return [200, { id: 1, username: 'jooseppi' }];
+              return [200, { id: 1, username: 'jooseppi', is_admin: true }];
             }
             loggedIn = false;
             return [401, { error: 'invalid username' }];
@@ -29,7 +29,7 @@ describe('login', function () {
               id: 1,
               agent_id: null,
               username: 'jooseppi',
-              is_admin: false
+              is_admin: true
             }];
           });
         });
@@ -43,7 +43,7 @@ describe('login', function () {
     element(by.model('login.password')).sendKeys('1337');
     element(by.buttonText('Login')).click();
 
-    expect(element(by.className('error')).getText()).toBe('invalid username');
+    expect(element(by.className('alert')).getText()).toBe('invalid username');
   });
 
   it('should fail with wrong password', function () {
@@ -53,7 +53,7 @@ describe('login', function () {
     element(by.model('login.password')).sendKeys('eioo');
     element(by.buttonText('Login')).click();
 
-    expect(element(by.className('error')).getText()).toBe('wrong password');
+    expect(element(by.className('alert')).getText()).toBe('wrong password');
   });
 
   it('should redirect to /home with no history', function () {
@@ -88,7 +88,7 @@ describe('login', function () {
     element(by.model('login.password')).sendKeys('oikee');
     element(by.buttonText('Login')).click();
 
-    expect(browser.getLocationAbsUrl()).toMatch('/stats');
+    expect(browser.getLocationAbsUrl()).toMatch('/stats/today');
 
     element(by.className('navbar')).element(by.linkText('Kirjaudu ulos')).click();
   });

@@ -14,7 +14,7 @@ angular.module('ocWebGui.stats', ['ui.router', 'ocWebGui.stats.today', 'ocWebGui
           }
         },
         resolve: {
-          requireAdmin: function (UserMiddleware) {
+          requireAdmin: function (preloadUser, UserMiddleware) {
             return UserMiddleware.requireAdmin();
           }
         }

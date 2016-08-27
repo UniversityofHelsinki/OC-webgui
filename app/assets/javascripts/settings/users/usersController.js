@@ -7,7 +7,7 @@ angular.module('ocWebGui.settings.users', ['ui.router', 'ocWebGui.settings.users
         controller: 'UsersController',
         controllerAs: 'users',
         resolve: {
-          requireAdmin: function (UserMiddleware) {
+          requireAdmin: function (preloadUser, UserMiddleware) {
             return UserMiddleware.requireAdmin();
           }
         }
