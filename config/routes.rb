@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     get 'agent_statuses' => 'agent_statuses#index'
     get 'queue' => 'queue_items#index'
     get 'teams' => 'teams#index'
+    get 'teams/:id' => 'teams#show'
+    get 'teams/:id/summary' => 'teams#summary'
     get 'states' => 'states#index'
     get 'contacts/today' => 'contacts#today'
     get 'contacts/stats' => 'contacts#stats'
@@ -26,7 +28,6 @@ Rails.application.routes.draw do
     get 'agents' => 'agents#index'
     get 'users' => 'users#index'
     get 'personal' => 'personal_status#index'
-    get 'helpdesk' => 'helpdesk#index'
   end
 
   get 'settings' => 'settings#get', format: :json

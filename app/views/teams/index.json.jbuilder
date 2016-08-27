@@ -1,3 +1,1 @@
-json.array!(@teams) do |team|
-  json.extract! team, :name, :filter
-end
+json.array! @teams, partial: 'teams/team', as: :team

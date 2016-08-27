@@ -1,10 +1,9 @@
 require 'rails_helper'
-require Rails.root.to_s + '/app/controllers/helpdesk_controller.rb'
 require Rails.root.to_s + '/app/controllers/contacts_controller.rb'
 require Rails.root.to_s + '/app/controllers/application_controller.rb'
 require Rails.root.to_s + '/app/services/backend_service.rb'
 
-RSpec.describe HelpdeskController, type: :controller do
+RSpec.describe TeamsController, type: :controller do
   render_views
 
   before (:each) do
@@ -41,10 +40,8 @@ RSpec.describe HelpdeskController, type: :controller do
     allow_any_instance_of(ContactsService).to receive(:average_queue_duration).and_return(301.0)
   end
 
-  context 'helpdesk summary' do
-    it 'returns correct statistics' do
-      get :index, format: :json
-      expect(JSON.parse(response.body)).to eq({"agents_online_all"=>2, "agents_online_free"=>1, "queue_length"=>2, "average_queue_duration"=>301.0})
-    end
+  it 'returns correct statistics' do
+    get :summary, id: 3, format: :json
+    expect(JSON.parse(response.body)).to eq({"agents_online_all"=>2, "agents_online_free"=>1, "queue_length"=>2, "average_queue_duration"=>301.0})
   end
 end
