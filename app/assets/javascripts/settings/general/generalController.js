@@ -1,7 +1,7 @@
 angular.module('ocWebGui.settings.general', ['ui.router'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('settings.general', {
+      .state('app.settings.general', {
         url: '/general',
         templateUrl: 'settings/general/_general.html',
         controller: 'GeneralController',

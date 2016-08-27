@@ -3,7 +3,7 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screens.status.servi
     'ocWebGui.shared.trimName.service'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('personal', {
+      .state('app.personal', {
         url: '/personal',
         views: {
           content: {
@@ -21,13 +21,10 @@ angular.module('ocWebGui.personal', ['ui.router', 'ocWebGui.screens.status.servi
     vm.trimName = TrimName.trim;
 
     function fetchData() {
-      $q.all({
-        agents: Agents.query(),
-        userData: User.getUserData()
-      }).then(function (values) {
-        vm.agents = values.agents;
+      Agents.query(function (agents) {
+        vm.agents = agents;
         vm.currentAgent = vm.agents.find(function (agent) {
-          return values.userData.agent_id === agent.id;
+          return User.getAgentId() === agent.id;
         });
         if (vm.currentAgent) {
           vm.agents = vm.agents.filter(function (agent) {

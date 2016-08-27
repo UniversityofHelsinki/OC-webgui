@@ -1,7 +1,7 @@
 angular.module('ocWebGui.home', ['ui.router', 'ocWebGui.shared.user'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('home', {
+      .state('app.home', {
         url: '/home',
         views: {
           nav: {
@@ -19,9 +19,6 @@ angular.module('ocWebGui.home', ['ui.router', 'ocWebGui.shared.user'])
   .controller('HomeController', function (User) {
     var vm = this;
     vm.isAuthenticated = User.isAuthenticated;
-    vm.isAdmin = false;
-    User.isAdmin().then(function (isAdmin) {
-      vm.isAdmin = isAdmin;
-    });
+    vm.isAdmin = User.isAdmin;
     vm.logout = User.logout;
   });

@@ -3,7 +3,7 @@ angular.module('ocWebGui.settings', ['ui.router', 'ocWebGui.settings.filters',
     'ocWebGui.settings.users', 'ocWebGui.shared.user'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('settings', {
+      .state('app.settings', {
         abstract: true,
         url: '/settings',
         views: {
@@ -20,8 +20,5 @@ angular.module('ocWebGui.settings', ['ui.router', 'ocWebGui.settings.filters',
   })
   .controller('SettingsController', function (User) {
     var vm = this;
-    vm.isAdmin = false;
-    User.isAdmin().then(function (isAdmin) {
-      vm.isAdmin = isAdmin;
-    });
+    vm.isAdmin = User.isAdmin;
   });

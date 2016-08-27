@@ -2,7 +2,7 @@ angular.module('ocWebGui.stats.status', ['ui.router', 'ocWebGui.stats.status.ser
     'ocWebGui.stats.status.directive'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('stats.status', {
+      .state('app.stats.status', {
         url: '/status',
         templateUrl: 'stats/status/_status.html',
         controller: 'StatusChartController',

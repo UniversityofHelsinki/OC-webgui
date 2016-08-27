@@ -1,22 +1,7 @@
 angular.module('ocWebGui.shared.user', [])
   .factory('User', function ($q, $http, Settings) {
     var isAuthenticated = false;
-    var userData = { username: null };
-
-    function fetchUserData() {
-      if (isAuthenticated) {
-        return $q.resolve(userData);
-      }
-      return $http.get('user.json').then(function (response) {
-        isAuthenticated = true;
-        userData = response.data;
-        return userData;
-      }, function () {
-        isAuthenticated = false;
-        userData = { username: null };
-        return $q.reject();
-      });
-    }
+    var userData = null;
 
     return {
       login: function (username, password) {
@@ -28,37 +13,49 @@ angular.module('ocWebGui.shared.user', [])
             return userData;
           }, function (response) {
             isAuthenticated = false;
+            userData = null;
             return $q.reject(response.data.error);
           });
-      },
-      isAuthenticated: function () {
-        return isAuthenticated;
-      },
-      getUsername: function () {
-        return fetchUserData().then(function (userData) {
-          return userData.username;
-        });
-      },
-      getUserData: function () {
-        return fetchUserData();
-      },
-      isAdmin: function () {
-        return fetchUserData().then(function (userData) {
-          if (!userData.is_admin) {
-            return $q.reject(false);
-          }
-          return true;
-        }, function () {
-          return $q.reject(false);
-        });
       },
       logout: function () {
         return $http.delete('logout')
           .then(function () {
             isAuthenticated = false;
-            userData = { username: null };
+            userData = null;
             Settings.invalidateCache();
           });
+      },
+      fetchUser: function () {
+        if (isAuthenticated) {
+          return $q.resolve(true);
+        }
+        return $http.get('user.json').then(function (response) {
+          isAuthenticated = true;
+          userData = response.data;
+          return true;
+        }, function () {
+          isAuthenticated = false;
+          userData = null;
+          return false;
+        });
+      },
+      isAuthenticated: function () {
+        return isAuthenticated;
+      },
+      getUsername: function () {
+        if (!isAuthenticated) {
+          return null;
+        }
+        return userData.username;
+      },
+      getAgentId: function () {
+        if (!isAuthenticated) {
+          return null;
+        }
+        return userData.agent_id;
+      },
+      isAdmin: function () {
+        return isAuthenticated && userData.is_admin;
       }
     };
-  })
+  });

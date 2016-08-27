@@ -1,7 +1,7 @@
 angular.module('ocWebGui.settings.filters', ['ui.router', 'ocWebGui.shared.filter'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('settings.filters', {
+      .state('app.settings.filters', {
         url: '/filters',
         templateUrl: 'settings/filters/_filters.html',
         controller: 'FiltersController',

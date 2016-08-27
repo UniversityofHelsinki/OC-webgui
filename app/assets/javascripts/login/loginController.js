@@ -1,7 +1,7 @@
 angular.module('ocWebGui.login', ['ui.router', 'ocWebGui.shared.user'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('login', {
+      .state('app.login', {
         url: '/login',
         views: {
           nav: {

@@ -1,12 +1,12 @@
 <div class="container foreground">
     <div class="home-menu">
         <h1>Koti</h1>
-        <a ui-sref="status" class="card">Statusnäkymä</a>
-        <a ui-sref="queue" class="card">Jononäkymä</a>
-        <a ui-sref="settings.filters" class="card">Filtteröi</a>
-        <a ui-sref="stats.today" class="card" ng-if="home.isAdmin">Tilastot</a>
-        <a ui-sref="settings.general" class="card" ng-if="home.isAuthenticated()">Asetukset</a>
-        <a ui-sref="login" ng-if="!home.isAuthenticated()" class="card">Kirjaudu sisään</a>
+        <a ui-sref="app.status" class="card">Statusnäkymä</a>
+        <a ui-sref="app.queue" class="card">Jononäkymä</a>
+        <a ui-sref="app.settings.filters" class="card">Filtteröi</a>
+        <a ui-sref="app.stats.today" class="card" ng-if="home.isAdmin()">Tilastot</a>
+        <a ui-sref="app.settings.general" class="card" ng-if="home.isAuthenticated()">Asetukset</a>
+        <a ui-sref="app.login" ng-if="!home.isAuthenticated()" class="card">Kirjaudu sisään</a>
         <a ng-if="home.isAuthenticated()" ng-click="home.logout()" class="card" href="">Kirjaudu ulos</a>
     </div>
 </div>
