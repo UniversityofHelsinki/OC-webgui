@@ -19,6 +19,9 @@ angular.module('ocWebGui.home', ['ui.router', 'ocWebGui.login'])
   .controller('HomeController', function (User) {
     var vm = this;
     vm.isAuthenticated = User.isAuthenticated;
-    vm.username = User.getUsername;
+    vm.isAdmin = false;
+    User.isAdmin().then(function (isAdmin) {
+      vm.isAdmin = isAdmin;
+    });
     vm.logout = User.logout;
   });

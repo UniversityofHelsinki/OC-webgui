@@ -61,8 +61,11 @@ angular.module('ocWebGui.login', ['ui.router'])
       isAdmin: function () {
         return fetchUserData().then(function (userData) {
           if (!userData.is_admin) {
-            return $q.reject();
+            return $q.reject(false);
           }
+          return true;
+        }, function () {
+          return $q.reject(false);
         });
       },
       logout: function () {

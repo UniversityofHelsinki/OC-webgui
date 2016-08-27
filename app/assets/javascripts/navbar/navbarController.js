@@ -2,6 +2,10 @@ angular.module('ocWebGui.navbar', ['ui.router', 'ocWebGui.login', 'FBAngular'])
   .controller('NavbarController', function ($scope, $http, $state, User, Fullscreen) {
     var vm = this;
 
+    vm.isAdmin = false;
+    User.isAdmin().then(function (isAdmin) {
+      vm.isAdmin = isAdmin;
+    });
     vm.isAuthenticated = User.isAuthenticated;
     User.getUsername().then(function (username) {
       vm.username = username;

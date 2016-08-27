@@ -7,7 +7,7 @@
                 <li><a ng-if="navbar.isAuthenticated()" href="" ng-click="navbar.openPersonalView()">Oma näkymä</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a ui-sref-active="active" ui-sref="stats.today" ng-if="navbar.isAuthenticated()">Tilastot</a></li>
+                <li><a ui-sref-active="active" ui-sref="stats.today" ng-if="navbar.isAdmin">Tilastot</a></li>
                 <li><a us-sref-active="active" ui-sref="settings.general" ng-if="navbar.isAuthenticated()">Asetukset</a></li>
                 <li><a ui-sref-active="active" ui-sref="login" ng-if="!navbar.isAuthenticated()">Kirjaudu sisään</a></li>
                 <li><a ng-if="navbar.isAuthenticated()" href="" ng-click="navbar.logout()">Kirjaudu ulos</a></li>
