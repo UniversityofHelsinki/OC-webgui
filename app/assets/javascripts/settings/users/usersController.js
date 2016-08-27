@@ -10,7 +10,6 @@ angular.module('ocWebGui.settings.users', ['ui.router', 'ocWebGui.settings.users
   })
   .controller('UsersController', function ($scope, $interval, AgentObjects, Users, UserAdmin) {
     var vm = this;
-    vm.notification = 'placeholder';
 
     // Setting agent reference for users requires fetching Agents to be complete first
     vm.agents = AgentObjects.query(function (agents) {
@@ -27,18 +26,14 @@ angular.module('ocWebGui.settings.users', ['ui.router', 'ocWebGui.settings.users
     var notificationTimeout;
 
     var setNotification = function (message) {
-      var notificationElement = $('.alert');
-      notificationElement.removeClass('alert-hidden');
       vm.notification = message;
       // If a previous notification was already visible, reset the timer to hide the notification
       $interval.cancel(notificationTimeout);
 
       notificationTimeout = $interval(function () {
-        notificationElement.addClass('alert-hidden');
-        vm.notification = 'placeholder';
+        vm.notification = '';
         vm.notifyClass = '';
-        $interval.cancel(notificationTimeout);
-      }, 10000);
+      }, 5000, 1);
     };
 
     var errorNotify = function (message) {

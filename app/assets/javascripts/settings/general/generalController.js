@@ -15,10 +15,8 @@ angular.module('ocWebGui.settings.general', ['ui.router'])
       vm.message = '';
     }
 
-    vm.message = 'Ladataan...';
     Settings.getOthers().then(function (others) {
       vm.others = others;
-      clearMessage();
     });
     vm.save = function () {
       Settings.setOthers(vm.others).then(function () {

@@ -1,15 +1,15 @@
 <div class="container foreground">
-    <h1>Kirjaudu sisään</h1>
-    <form ng-submit="login.login()">
+    <form class="col-md-4 col-md-offset-4" ng-submit="login.login()">
+        <h1>Kirjaudu sisään</h1>
         <div class="form-group">
             <label for="username">Käyttäjä</label>
-            <input ng-model="login.username" id="username">
+            <input ng-model="login.username" id="username"  class="form-control">
         </div>
         <div class="form-group">
             <label for="password">Salasana</label>
-            <input type="password" ng-model="login.password" id="password">
+            <input type="password" ng-model="login.password" id="password" class="form-control">
         </div>
         <p class="error">{{ login.error }}</p>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
     </form>
 </div>
