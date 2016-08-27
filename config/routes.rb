@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     get 'agent_statuses' => 'agent_statuses#index'
     get 'queue' => 'queue_items#index'
     get 'teams' => 'teams#index'
+    get 'teams/:id' => 'teams#show'
+    get 'teams/:id/summary' => 'teams#summary'
     get 'states' => 'states#index'
     get 'contacts/today' => 'contacts#today'
     get 'contacts/stats' => 'contacts#stats'
