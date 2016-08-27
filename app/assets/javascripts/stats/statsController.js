@@ -1,4 +1,4 @@
-angular.module('ocWebGui.stats', ['ui.router', 'ocWebGui.stats.today', 'ocWebGui.stats.status'])
+angular.module('ocWebGui.stats', ['ui.router', 'ocWebGui.stats.today', 'ocWebGui.stats.status', 'ocWebGui.login'])
   .config(function ($stateProvider) {
     $stateProvider
       .state('stats', {
@@ -10,6 +10,13 @@ angular.module('ocWebGui.stats', ['ui.router', 'ocWebGui.stats.today', 'ocWebGui
           },
           content: {
             templateUrl: 'stats/_stats.html'
+          }
+        },
+        resolve: {
+          auth: function (User, $state) {
+            return User.isAdmin().catch(function () {
+              $state.go('login');
+            });
           }
         }
       });

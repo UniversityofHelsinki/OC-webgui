@@ -65,13 +65,6 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screens.stat
       } else {
         disableNavbarOverlay();
       }
-
-      if (toState.name.indexOf('stats') === 0 && !User.isAuthenticated()) {
-        $rootScope.returnToState = toState;
-        $rootScope.returnToParams = toParams;
-        event.preventDefault();
-        $state.go('login');
-      }
     });
   });
 

@@ -30,20 +30,21 @@ angular.module('ocWebGui.login', ['ui.router'])
       }, function () {
         isAuthenticated = false;
         userData = { username: null };
+        return $q.reject();
       });
     }
 
     return {
-      login: function (username, password, onSuccess, onError) {
-        $http.post('login', { username: username, password: password })
+      login: function (username, password) {
+        return $http.post('login', { username: username, password: password })
           .then(function (response) {
             isAuthenticated = true;
             userData = response.data;
             Settings.invalidateCache();
-            onSuccess();
+            return userData;
           }, function (response) {
             isAuthenticated = false;
-            onError(response.data.error);
+            return $q.reject(response.data.error);
           });
       },
       isAuthenticated: function () {
@@ -56,6 +57,13 @@ angular.module('ocWebGui.login', ['ui.router'])
       },
       getUserData: function () {
         return fetchUserData();
+      },
+      isAdmin: function () {
+        return fetchUserData().then(function (userData) {
+          if (!userData.is_admin) {
+            return $q.reject();
+          }
+        });
       },
       logout: function () {
         $http.delete('logout')
@@ -70,7 +78,7 @@ angular.module('ocWebGui.login', ['ui.router'])
   .controller('LoginController', function (User, $rootScope, $state) {
     var vm = this;
     vm.login = function () {
-      User.login(vm.username, vm.password, function () {
+      User.login(vm.username, vm.password).then(function () {
         $state.go($rootScope.returnToState, $rootScope.returnToParams);
       }, function (errorMessage) {
         vm.error = errorMessage;
