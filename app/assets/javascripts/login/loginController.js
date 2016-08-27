@@ -66,7 +66,7 @@ angular.module('ocWebGui.login', ['ui.router'])
         });
       },
       logout: function () {
-        $http.delete('logout')
+        return $http.delete('logout')
           .then(function () {
             isAuthenticated = false;
             userData = { username: null };
