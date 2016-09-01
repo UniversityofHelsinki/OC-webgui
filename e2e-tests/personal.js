@@ -11,7 +11,7 @@ describe('personal', function () {
               first_name: 'Benjamin',
               last_name: 'Kekkonen',
               status: 'Vapaa',
-              created_at: new Date(baseTime - (10 * 60 + 15) * 1000),
+              created_at: new Date(baseTime - (10 * 60 + 15) * 1000).toISOString(),
               lunch: false,
               team: {
                 id: 1,
@@ -23,7 +23,7 @@ describe('personal', function () {
               first_name: 'Aallotar',
               last_name: 'Kanerva',
               status: 'Puhelu',
-              created_at: new Date(baseTime - 45 * 1000),
+              created_at: new Date(baseTime - 45 * 1000).toISOString(),
               lunch: true,
               team: {
                 id: 1,
@@ -35,7 +35,7 @@ describe('personal', function () {
               first_name: 'Tuomas',
               last_name: 'Ansala',
               status: 'Tauko',
-              created_at: new Date(baseTime - 30 * 1000),
+              created_at: new Date(baseTime - 30 * 1000).toISOString(),
               lunch: false,
               team: {
                 id: 1,
@@ -68,7 +68,7 @@ describe('personal', function () {
 
           $httpBackend.whenGET('queue.json').respond([
             {
-              created_at: new Date(baseTime - (3 * 60 + 22) * 1000),
+              created_at: new Date(baseTime - (3 * 60 + 22) * 1000).toISOString(),
               team: 'Helpdesk',
               language: 'Finnish'
             }

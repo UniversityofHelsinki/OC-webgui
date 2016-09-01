@@ -52,6 +52,9 @@ describe('userAdmin', function () {
           $httpBackend.whenPOST('users/delete').respond(function (method, url, data) {
             return [200, { id: 1, username: 'user1', agent_id: 0 }];
           });
+          $httpBackend.whenGET('user.json').respond({
+            is_admin: true
+          });
         });
     });
     browser.get('#/settings/users');

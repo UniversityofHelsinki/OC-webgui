@@ -1,11 +1,16 @@
 angular.module('ocWebGui.settings.users', ['ui.router', 'ocWebGui.settings.users.service', 'ocWebGui.shared.confirmClick'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('settings.users', {
+      .state('app.settings.users', {
         url: '/users',
         templateUrl: 'settings/users/_users.html',
         controller: 'UsersController',
-        controllerAs: 'users'
+        controllerAs: 'users',
+        resolve: {
+          requireAdmin: function (preloadUser, UserMiddleware) {
+            return UserMiddleware.requireAdmin();
+          }
+        }
       });
   })
   .controller('UsersController', function ($scope, $interval, AgentObjects, Users, UserAdmin) {

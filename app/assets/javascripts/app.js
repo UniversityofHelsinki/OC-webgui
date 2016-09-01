@@ -1,7 +1,19 @@
-angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screens.status',
+angular.module('ocWebGui', ['ui.router', 'templates', 'ocWebGui.home', 'ocWebGui.screens.status',
     'ocWebGui.screens.queue', 'ocWebGui.stats', 'ocWebGui.login', 'ocWebGui.navbar',
     'ocWebGui.personal', 'ocWebGui.shared.color', 'ocWebGui.shared.settings', 'ocWebGui.settings',
-    '720kb.datepicker', 'ngSanitize', 'ngCsv'])
+    '720kb.datepicker', 'ngSanitize', 'ngCsv', 'ocWebGui.shared.user.middleware'])
+  .config(function ($stateProvider) {
+    $stateProvider
+      .state('app', {
+        abstract: true,
+        template: '<ui-view name="nav"></ui-view><ui-view name="content"></ui-view>',
+        resolve: {
+          preloadUser: function (UserMiddleware) {
+            return UserMiddleware.preload();
+          }
+        }
+      });
+  })
   .run(function ($rootScope, $state, User, $interval, Settings) {
     var $body = $(document.body);
     var $colorMenu = $('.legend');
@@ -56,7 +68,7 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screens.stat
       $body.removeClass('body-screen');
     }
 
-    $rootScope.returnToState = 'home';
+    $rootScope.returnToState = 'app.home';
     $rootScope.returnToParams = {};
 
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
@@ -65,12 +77,9 @@ angular.module('ocWebGui', ['templates', 'ocWebGui.home', 'ocWebGui.screens.stat
       } else {
         disableNavbarOverlay();
       }
-
-      if (toState.name.indexOf('stats') === 0 && !User.isAuthenticated()) {
+      if (toState.name !== 'app.login') {
         $rootScope.returnToState = toState;
         $rootScope.returnToParams = toParams;
-        event.preventDefault();
-        $state.go('login');
       }
     });
   });

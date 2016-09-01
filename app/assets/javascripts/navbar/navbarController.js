@@ -1,12 +1,14 @@
-angular.module('ocWebGui.navbar', ['ui.router', 'ocWebGui.login', 'FBAngular'])
-  .controller('NavbarController', function ($scope, $http, User, Fullscreen) {
+angular.module('ocWebGui.navbar', ['ui.router', 'FBAngular', 'ocWebGui.shared.user'])
+  .controller('NavbarController', function ($scope, $http, $state, User, Fullscreen) {
     var vm = this;
 
     vm.isAuthenticated = User.isAuthenticated;
-    User.getUsername().then(function (username) {
-      vm.username = username;
-    });
-    vm.logout = User.logout;
+    vm.isAdmin = User.isAdmin;
+    vm.logout = function () {
+      User.logout().then(function () {
+        $state.go('app.home');
+      });
+    };
 
     vm.isFullscreen = Fullscreen.isEnabled();
 

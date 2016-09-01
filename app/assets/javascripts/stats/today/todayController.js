@@ -1,7 +1,7 @@
 angular.module('ocWebGui.stats.today', ['ocWebGui.stats.today.service', 'ui.router', 'nvd3'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('stats.today', {
+      .state('app.stats.today', {
         url: '/today',
         templateUrl: 'stats/today/_today.html',
         controller: 'TodayController',

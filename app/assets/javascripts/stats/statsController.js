@@ -1,7 +1,8 @@
-angular.module('ocWebGui.stats', ['ui.router', 'ocWebGui.stats.today', 'ocWebGui.stats.status'])
+angular.module('ocWebGui.stats', ['ui.router', 'ocWebGui.stats.today', 'ocWebGui.stats.status',
+    'ocWebGui.shared.user.middleware'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('stats', {
+      .state('app.stats', {
         abstract: true,
         url: '/stats',
         views: {
@@ -10,6 +11,11 @@ angular.module('ocWebGui.stats', ['ui.router', 'ocWebGui.stats.today', 'ocWebGui
           },
           content: {
             templateUrl: 'stats/_stats.html'
+          }
+        },
+        resolve: {
+          requireAdmin: function (preloadUser, UserMiddleware) {
+            return UserMiddleware.requireAdmin();
           }
         }
       });

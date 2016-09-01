@@ -1,9 +1,9 @@
 <div class="container foreground">
     <ul class="col-md-2 nav nav-pills nav-stacked" style="margin-top:1em">
-        <li ui-sref-active="active"><a ui-sref="settings.general">Yleiset</a></li>
-        <li ui-sref-active="active"><a ui-sref="settings.filters">Filteröinti</a></li>
-        <li ui-sref-active="active"><a ui-sref="settings.colors">Värit</a></li>
-        <li ui-sref-active="active"><a ui-sref="settings.users">Käyttäjät</a></li>
+        <li ui-sref-active="active"><a ui-sref="app.settings.general">Yleiset</a></li>
+        <li ui-sref-active="active"><a ui-sref="app.settings.filters">Filteröinti</a></li>
+        <li ui-sref-active="active"><a ui-sref="app.settings.colors">Värit</a></li>
+        <li ui-sref-active="active" ng-if="settings.isAdmin()"><a ui-sref="app.settings.users">Käyttäjät</a></li>
     </ul>
     <div class="col-md-10">
         <ui-view></ui-view>

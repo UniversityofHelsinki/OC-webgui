@@ -1,7 +1,7 @@
 angular.module('ocWebGui.screens.status', ['ocWebGui.screens.status.service', 'ui.router', 'ocWebGui.shared.time', 'ocWebGui.shared.trimName.service', 'ngAnimate'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('status', {
+      .state('app.status', {
         url: '/status',
         views: {
           nav: {

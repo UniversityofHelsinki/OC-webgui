@@ -1,7 +1,7 @@
 angular.module('ocWebGui.settings.colors', ['ui.router'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('settings.colors', {
+      .state('app.settings.colors', {
         url: '/colors',
         templateUrl: 'settings/colors/_colors.html',
         controller: 'ColorsController',

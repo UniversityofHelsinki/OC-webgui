@@ -9,7 +9,7 @@
             <label for="password">Salasana</label>
             <input type="password" ng-model="login.password" id="password" class="form-control">
         </div>
-        <p class="error">{{ login.error }}</p>
+        <p class="alert alert-danger" ng-if="login.error">{{ login.error }}</p>
         <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
     </form>
 </div>

@@ -3,7 +3,7 @@ angular.module('ocWebGui.screens.queue', ['ocWebGui.screens.queue.service', 'ui.
     'nvd3'])
   .config(function ($stateProvider) {
     $stateProvider
-      .state('queue', {
+      .state('app.queue', {
         url: '/queue',
         views: {
           nav: {
