@@ -5,13 +5,13 @@ describe('queue', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
             var baseTime = new Date(2013, 9, 23, 12, 0).getTime();
-            $httpBackend.whenGET('teams.json').respond([
+            $httpBackend.whenGET('api/teams').respond([
               {
                 name: "Helpdesk",
                 filter: true
               }
             ]);
-            $httpBackend.whenGET('queue.json').respond([
+            $httpBackend.whenGET('api/queue').respond([
               {
                 id: 2,
                 team: 'Helpdesk',
@@ -25,7 +25,7 @@ describe('queue', function () {
                 created_at: new Date(baseTime - (4 * 60 + 25) * 1000).toISOString()
               }
             ]);
-            $httpBackend.whenGET('settings.json').respond({
+            $httpBackend.whenGET('api/settings').respond({
               colors: {
                 background: "#87aade",
                 font: "#333333",
@@ -89,20 +89,20 @@ describe('queue', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
-            $httpBackend.whenGET('teams.json').respond([
+            $httpBackend.whenGET('api/teams').respond([
               {
                 name: "Helpdesk",
                 filter: true
               }
             ]);
-            $httpBackend.whenGET('queue.json').respond([
+            $httpBackend.whenGET('api/queue').respond([
               { id: 1, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() },
               { id: 2, team: 'Helpdesk', language: 'Swedish', created_at: new Date().toISOString() },
               { id: 3, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() },
               { id: 4, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() },
               { id: 5, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() }
             ]);
-            $httpBackend.whenGET('settings.json').respond({
+            $httpBackend.whenGET('api/settings').respond({
               colors: {
                 background: "#87aade",
                 font: "#333333",
@@ -131,13 +131,13 @@ describe('queue', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
-            $httpBackend.whenGET('teams.json').respond([
+            $httpBackend.whenGET('api/teams').respond([
               {
                 name: "Helpdesk",
                 filter: true
               }
             ]);
-            $httpBackend.whenGET('queue.json').respond([
+            $httpBackend.whenGET('api/queue').respond([
               { id: 1, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() },
               { id: 2, team: 'Helpdesk', language: 'Swedish', created_at: new Date().toISOString() },
               { id: 3, team: 'Helpdesk', language: 'English', created_at: new Date().toISOString() },
@@ -145,7 +145,7 @@ describe('queue', function () {
               { id: 5, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() },
               { id: 6, team: 'Helpdesk', language: 'Finnish', created_at: new Date().toISOString() }
             ]);
-            $httpBackend.whenGET('settings.json').respond({
+            $httpBackend.whenGET('api/settings').respond({
               colors: {
                 background: "#87aade",
                 font: "#333333",
@@ -176,7 +176,7 @@ describe('queue', function () {
       browser.addMockModule('httpBackendMock', function () {
         angular.module('httpBackendMock', ['ngMockE2E'])
           .run(function ($httpBackend) {
-            $httpBackend.whenGET('contacts/stats.json').respond({
+            $httpBackend.whenGET('api/contacts/stats').respond({
               answered_calls: 11,
               average_call_duration: 2 * 60 + 15,
               answered_percentage: 100,
@@ -197,7 +197,7 @@ describe('queue', function () {
                 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 11, 11, 11, 11, 11, 11, 11, 11
               ]
             });
-            $httpBackend.whenGET('settings.json').respond({
+            $httpBackend.whenGET('api/settings').respond({
               colors: {
                 background: "#87aade",
                 font: "#333333",

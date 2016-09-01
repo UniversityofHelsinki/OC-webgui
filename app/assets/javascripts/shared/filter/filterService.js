@@ -5,7 +5,7 @@ angular.module('ocWebGui.shared.filter', ['ngResource'])
 
     return {
       getTeams: function () {
-        return $http.get('teams.json', { cache: true }).then(function (response) {
+        return $http.get('api/teams', { cache: true }).then(function (response) {
           if (teams) {
             return teams;
           }
@@ -17,7 +17,7 @@ angular.module('ocWebGui.shared.filter', ['ngResource'])
         });
       },
       getStates: function () {
-        return $http.get('states.json', { cache: true }).then(function (response) {
+        return $http.get('api/states', { cache: true }).then(function (response) {
           if (states) {
             return states;
           }

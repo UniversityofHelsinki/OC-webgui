@@ -4,7 +4,7 @@ angular.module('ocWebGui.screens.queue.service', ['ngResource', 'ocWebGui.shared
       query: function () {
         return $q.all({
           teams: Filter.getTeams(),
-          queue: $http.get('queue.json')
+          queue: $http.get('api/queue')
         }).then(function (values) {
           return values.queue.data
             .map(function (queuer) {

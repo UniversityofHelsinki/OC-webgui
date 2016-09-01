@@ -7,33 +7,33 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'application#angular'
 
-  post 'login', to: 'session#create'
-  get 'user', to: 'session#get', format: :json
-  delete 'logout', to: 'session#destroy'
+  scope 'api' do
+    scope :format => false, :defaults => { :format => 'json' } do
+      get 'agent_statuses' => 'agent_statuses#index'
+      get 'queue' => 'queue_items#index'
+      get 'states' => 'states#index'
+      get 'contacts/today' => 'contacts#today'
+      get 'contacts/stats' => 'contacts#stats'
+      get 'queue/stats' => 'queue_items#stats'
+      get 'agents' => 'agents#index'
+      get 'personal' => 'personal_status#index'
 
-  post 'users', to: 'users#create'
-  post 'users/update', to: 'users#update'
-  post 'users/delete', to: 'users#destroy'
+      post 'login', to: 'session#create'
+      get 'user', to: 'session#get'
+      delete 'logout', to: 'session#destroy'
 
-  post 'agent_statuses/stats', to: 'agent_statuses#stats'
+      get 'teams' => 'teams#index'
+      get 'teams/:id' => 'teams#show'
+      get 'teams/:id/summary' => 'teams#summary'
 
-  scope :format => true, :constraints => { :format => 'json' } do
-    get 'agent_statuses' => 'agent_statuses#index'
-    get 'queue' => 'queue_items#index'
-    get 'teams' => 'teams#index'
-    get 'teams/:id' => 'teams#show'
-    get 'teams/:id/summary' => 'teams#summary'
-    get 'states' => 'states#index'
-    get 'contacts/today' => 'contacts#today'
-    get 'contacts/stats' => 'contacts#stats'
-    get 'queue/stats' => 'queue_items#stats'
-    get 'agents' => 'agents#index'
-    get 'users' => 'users#index'
-    get 'personal' => 'personal_status#index'
+      post 'agent_statuses/stats', to: 'agent_statuses#stats'
+
+      get 'settings' => 'settings#get'
+      post 'settings' => 'settings#update'
+
+      resources :users, except: [:edit]
+    end
   end
-
-  get 'settings' => 'settings#get', format: :json
-  post 'settings' => 'settings#update', format: :json
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

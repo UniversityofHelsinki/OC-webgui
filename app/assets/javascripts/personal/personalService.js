@@ -1,4 +1,4 @@
 angular.module('ocWebGui.personal.service', ['ngResource', 'ocWebGui.login'])
   .factory('Personal', function ($resource) {
-    return $resource('personal.json');
+    return $resource('api/personal');
   });
