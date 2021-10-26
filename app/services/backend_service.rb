@@ -172,38 +172,18 @@ class BackendService
     data
   end
 
+  # Map only the necessary fields for Contacts model, comments after are the Elisa column #
   def map_contacts_data(data)
     data.map do |attrs|
       {
-        ticket_id: attrs[:string][0],
-        arrived: with_utc_offset(attrs[:string][1]),
-        time_in_queue: attrs[:string][2],
-        forwarded_to_agent: with_utc_offset(attrs[:string][5]),
-        answered: with_utc_offset(attrs[:string][6]),
-        call_ended: with_utc_offset(attrs[:string][7]),
-        after_call_ended: with_utc_offset(attrs[:string][8]),
-        total_response_time: attrs[:string][9],
-        total_handle_time: attrs[:string][10],
-        service_name: attrs[:string][14],
-        direction: attrs[:string][15],
-        contact_type: attrs[:string][16],
-        contact_information: attrs[:string][17],
-        agent_name: attrs[:string][18],
-        customer_id: attrs[:string][20],
-        contact_reason: attrs[:string][21],
-        information: attrs[:string][22],
-        ivr_feedback: attrs[:string][23],
-        category_of_recording: attrs[:string][24],
-        recorded: attrs[:string][25],
-        inserted_to_db: with_utc_offset(attrs[:string][26]),
-        task_count: attrs[:string][27],
-        task_time: attrs[:string][28],
-        processing_total_sum: attrs[:string][29],
-        subject: attrs[:string][31],
-        outbound_campaign_name: attrs[:string][32],
-        outbound_campaign_id: attrs[:string][33],
-        additional_info: attrs[:string][34],
-        destination: attrs[:string][35]
+        ticket_id: attrs[:string][0], # 21100
+        arrived: with_utc_offset(attrs[:string][1]), # 21101
+        forwarded_to_agent: with_utc_offset(attrs[:string][5]), # 21103
+        answered: with_utc_offset(attrs[:string][6]), # 21102
+        call_ended: with_utc_offset(attrs[:string][7]), # 21104
+        after_call_ended: with_utc_offset(attrs[:string][8]), # 21105
+        direction: attrs[:string][15], # 21108
+        contact_type: attrs[:string][16], #21109
       }
     end
   end
