@@ -7,37 +7,49 @@
 	  <string>21100</string>
 	  <string>21101</string>
 	  <string>21102</string>
+    <string>40026</string>
+    <string>21136</string>
 	  <string>21103</string>
 	  <string>21120</string>
 	  <string>21104</string>
 	  <string>21105</string>
 	  <string>21106</string>
+    <string>40027</string>
 	  <string>20113</string>
+    <string>40028</string>
+    <string>21137</string>
 	  <string>21107</string>
 	  <string>21108</string>
 	  <string>21109</string>
 	  <string>21110</string>
 	  <string>21111</string>
+    <string>21221</string>
 	  <string>21112</string>
 	  <string>21113</string>
 	  <string>21114</string>
 	  <string>21115</string>
-	</ArrayOfString>	
+    </ArrayOfString>
         <ArrayOfString>
           <string>20160614091049336435</string>
           <string>14.6.2016 9:11:43</string>
           <string>1</string>
+          <string>nil</string>
+          <string>nil</string>
           <string>14.6.2016 9:11:44</string>
           <string>14.6.2016 9:11:57</string>
           <string>14.6.2016 9:13:59</string>
           <string>14.6.2016 9:21:41</string>
           <string>598</string>
+          <string>nil</string>
           <string>597</string>
+          <string>nil</string>
+          <string>nil</string>
           <string>Neuvonta Fin</string>
           <string>I</string>
           <string>PBX</string>
           <string>0405882759</string>
           <string>Seppänen Pekka</string>
+          <string>nil</string>
           <string>-1</string>
           <string>Onnistunut kontakti</string>
           <string>nil</string>
