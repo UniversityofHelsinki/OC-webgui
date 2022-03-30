@@ -1,0 +1,53 @@
+CURRENT RETURN ENDPOINT 26.10.2021
+    <GetContactsResponse xmlns="http://elisa.ccreport.fi/">
+      <GetContactsResult>
+        <ArrayOfString>
+          x<string>21100</string> ticket_id 0
+          x<string>21101</string> arrived 1
+          x<string>21102</string> time_in_queue 2
+          x<string>40026</string> PreparationTimeBeforeCall 3
+          x<string>21136</string> TimeInQueueServiceTime 4
+          x<string>21103</string> forwarded_to_agent 5
+          x<string>21120</string> answered 6
+          x<string>21104</string> call_ended 7
+          x<string>21105</string> after_call_ended 8
+          x<string>21106</string> total_response_time 9
+          x<string>40027</string> CallLength 10
+          x<string>20113</string> total_handle_time 11
+          x<string>40028</string> WrapupTime 12
+          x<string>21137</string> LengthAndConsultationCalls 13
+          x<string>21107</string> service_name 14
+          x<string>21108</string> direction 15
+          x<string>21109</string> contact_type 16
+          x<string>21110</string> contact_information 17
+          x<string>21111</string> agent_name 18
+          x<string>21221</string> OtherAgents 19
+          x<string>21112</string> customer_id 20
+          x<string>21113</string> contact_reason 21
+          x<string>21114</string> information 22
+          x<string>21115</string> ivr_feedback 23
+          x<string>21116</string> category_of_recording 24
+          x<string>21117</string> recorded 25
+          x<string>21126</string> inserted_to_db 26
+          x<string>20115</string> task_count 27
+          x<string>20116</string> TaskHandlingTime 28
+          x<string>20117</string> TotalHandlingTime 29
+          x<string>20126</string> TotalResponseTime 30
+          x<string>21119</string> Subject 31
+          x<string>21998</string> OutboundCampaignName 32
+          x<string>21999</string> OutboundCampaignId 33
+          x<string>21997</string> AdditionalInformation 34
+          x<string>21118</string> Destination 35
+          x<string>21127</string> ReturnCode
+          x<string>21128</string> OriginalServiceID
+          x<string>21129</string> ServiceID
+          x<string>21130</string> TransferHistory
+          x<string>21131</string> LengthAndConsultationCalls
+          x<string>AGENT_ID</string> AgentID
+          x<string>21135</string> AdditionalChannels
+          x<string>21138</string> CallReason
+          x<string>21139</string> CallType
+        </ArrayOfString>
+      </GetContactsResult>
+    </GetContactsResponse>
+
