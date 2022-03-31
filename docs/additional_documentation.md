@@ -33,8 +33,10 @@ which ruby
 
 ## If using NVM
 
+```
 nvm use (12)
-npm install
+npm ci
+```
 
 ## Installation history command for production
 
