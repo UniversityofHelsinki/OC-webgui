@@ -35,7 +35,7 @@ which ruby
 
 ```
 nvm use (12)
-npm ci
+npm install
 ```
 
 ## Installation history command for production
