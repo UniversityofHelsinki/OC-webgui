@@ -1,0 +1,21 @@
+SPEC RETURN MOCK
+	<ArrayOfString>
+	  <string>21100</string> ticket_id 0
+	  <string>21101</string> arrived 1
+	  <string>21102</string> time_in_queue 2
+	  <string>21103</string> forwarded_to_agent 3
+	  <string>21120</string> answered 4
+	  <string>21104</string> call_ended 5
+	  <string>21105</string> after_call_ended 6
+	  <string>21106</string> total_response_time 7
+	  <string>20113</string> total_handle_time 8
+	  <string>21107</string> service_name 9
+	  <string>21108</string> direction 10
+	  <string>21109</string> contact_type 11
+	  <string>21110</string> contact_information 12
+	  <string>21111</string> agent_name 13
+	  <string>21112</string> customer_id 14 
+	  <string>21113</string> contact_reason 15
+	  <string>21114</string> information 16
+	  <string>21115</string> ivr_feedback 17
+	</ArrayOfString>	

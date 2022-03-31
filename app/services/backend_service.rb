@@ -172,38 +172,18 @@ class BackendService
     data
   end
 
+  # Map only the necessary fields for Contacts model, comments after are the Elisa column #
   def map_contacts_data(data)
     data.map do |attrs|
       {
-        ticket_id: attrs[:string][0],
-        arrived: with_utc_offset(attrs[:string][1]),
-        time_in_queue: attrs[:string][2],
-        forwarded_to_agent: with_utc_offset(attrs[:string][3]),
-        answered: with_utc_offset(attrs[:string][4]),
-        call_ended: with_utc_offset(attrs[:string][5]),
-        after_call_ended: with_utc_offset(attrs[:string][6]),
-        total_response_time: attrs[:string][7],
-        total_handle_time: attrs[:string][8],
-        service_name: attrs[:string][9],
-        direction: attrs[:string][10],
-        contact_type: attrs[:string][11],
-        contact_information: attrs[:string][12],
-        agent_name: attrs[:string][13],
-        customer_id: attrs[:string][14],
-        contact_reason: attrs[:string][15],
-        information: attrs[:string][16],
-        ivr_feedback: attrs[:string][17],
-        category_of_recording: attrs[:string][18],
-        recorded: attrs[:string][19],
-        inserted_to_db: with_utc_offset(attrs[:string][20]),
-        task_count: attrs[:string][21],
-        task_time: attrs[:string][22],
-        processing_total_sum: attrs[:string][23],
-        subject: attrs[:string][24],
-        outbound_campaign_name: attrs[:string][25],
-        outbound_campaign_id: attrs[:string][26],
-        additional_info: attrs[:string][27],
-        destination: attrs[:string][28]
+        ticket_id: attrs[:string][0], # 21100
+        arrived: with_utc_offset(attrs[:string][1]), # 21101
+        forwarded_to_agent: with_utc_offset(attrs[:string][5]), # 21103
+        answered: with_utc_offset(attrs[:string][6]), # 21102
+        call_ended: with_utc_offset(attrs[:string][7]), # 21104
+        after_call_ended: with_utc_offset(attrs[:string][8]), # 21105
+        direction: attrs[:string][15], # 21108
+        contact_type: attrs[:string][16], #21109
       }
     end
   end

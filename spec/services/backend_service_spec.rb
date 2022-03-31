@@ -83,33 +83,12 @@ RSpec.describe BackendService, type: :service do
     expected = [
       {:ticket_id=>"20160614091049336435", 
 :arrived=>with_utc_offset("14.6.2016 9:11:43"), 
-:time_in_queue=>"1", 
 :forwarded_to_agent=>with_utc_offset("14.6.2016 9:11:44"), 
 :answered=>with_utc_offset("14.6.2016 9:11:57"), 
 :call_ended=>with_utc_offset("14.6.2016 9:13:59"), 
 :after_call_ended=>with_utc_offset("14.6.2016 9:21:41"), 
-:total_response_time=>"598", 
-:total_handle_time=>"597",
-:service_name=>"Neuvonta Fin", 
 :direction=>"I", 
-:contact_type=>"PBX",
-:contact_information=>"0405882759", 
-:agent_name=>"Seppänen Pekka", 
-:customer_id=>"-1",
-:contact_reason=>"Onnistunut kontakti", 
-:information=>"nil",
-:ivr_feedback=>"-1",
-:category_of_recording=>nil,
-:recorded=>nil,
-:inserted_to_db=>nil,
-:task_count=>nil,
-:task_time=>nil,
-:processing_total_sum=>nil,
-:subject=>nil,
-:outbound_campaign_name=>nil,
-:outbound_campaign_id=>nil,
-:additional_info=>nil,
-:destination=>nil}
+:contact_type=>"PBX"}
     ]
 
     savon.expects(:get_contacts).with(message: message).returns(fixture)
