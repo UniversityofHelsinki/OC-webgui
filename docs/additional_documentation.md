@@ -50,12 +50,22 @@ sudo systemctl start beanstalkd.socket
 sudo apt install ruby-god
 RAILS_ENV=production bundle exec rake db:create
 RAILS_ENV=production bundle exec rake db:migrate
+RAILS_ENV=production OC_WEBGUI_PASSWORD=<password> bundle exec rake db:seed
 RAILS_ENV=production bundle exec rake assets:precompile
 ```
 
 `config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?`
 
 Remember to set to `true`, if running locally a production environment and can't find assets, http 404, even though they are in public/assets
+
+## Creating the admin user
+
+Admin user login is needed so that the user interface looks pretty,
+to create the first admin user as local production env run:
+``` 
+RAILS_ENV=production rails c
+User.create(username: 'admin', password: 'admin', is_admin: true)
+```
 
 ## Logging when god running
 
